@@ -8,8 +8,8 @@ import {
   SET_OVERVIEW,
   SET_OVERVIEW_STATISTICS,
   SET_RATING_STATISTICS,
-  SET_TIME_AND_SALARY,
-  SET_TIME_AND_SALARY_STATISTICS,
+  SET_SALARY_WORK_TIME,
+  SET_SALARY_WORK_TIME_STATISTICS,
   SET_WORK_EXPERIENCES,
 } from 'actions/company';
 import { WorkExperience } from 'apis/experience';
@@ -49,11 +49,11 @@ export type CompanyOverviewStatistics = {
   overtimeFrequencyCount: OvertimeFrequencyCount | null;
 };
 
-// TODO: replace with proper CompanyTimeAndSalaryResult type
-export type CompanyTimeAndSalaryResult = unknown;
+// TODO: replace with proper CompanySalaryWorkTimeResult type
+export type CompanySalaryWorkTimeResult = unknown;
 
-// TODO: replace with proper CompanyTimeAndSalaryStatistics type
-export type CompanyTimeAndSalaryStatistics = unknown;
+// TODO: replace with proper CompanySalaryWorkTimeStatistics type
+export type CompanySalaryWorkTimeStatistics = unknown;
 
 // TODO: replace with proper CompanyInterviewExperienceResult type
 export type CompanyInterviewExperienceResult = unknown;
@@ -82,11 +82,11 @@ type State = {
   >;
   timeAndSalaryByName: Record<
     string,
-    FetchBox<CompanyTimeAndSalaryResult | null>
+    FetchBox<CompanySalaryWorkTimeResult | null>
   >;
   timeAndSalaryStatisticsByName: Record<
     string,
-    FetchBox<CompanyTimeAndSalaryStatistics | null>
+    FetchBox<CompanySalaryWorkTimeStatistics | null>
   >;
   interviewExperiencesByName: Record<
     string,
@@ -182,14 +182,14 @@ const reducer = createReducer(preloadedState, {
       },
     };
   },
-  [SET_TIME_AND_SALARY]: (
+  [SET_SALARY_WORK_TIME]: (
     state,
     {
       companyName,
       box,
     }: {
       companyName: string;
-      box: FetchBox<CompanyTimeAndSalaryResult | null>;
+      box: FetchBox<CompanySalaryWorkTimeResult | null>;
     },
   ) => {
     return {
@@ -200,14 +200,14 @@ const reducer = createReducer(preloadedState, {
       },
     };
   },
-  [SET_TIME_AND_SALARY_STATISTICS]: (
+  [SET_SALARY_WORK_TIME_STATISTICS]: (
     state,
     {
       companyName,
       box,
     }: {
       companyName: string;
-      box: FetchBox<CompanyTimeAndSalaryStatistics | null>;
+      box: FetchBox<CompanySalaryWorkTimeStatistics | null>;
     },
   ) => {
     return {

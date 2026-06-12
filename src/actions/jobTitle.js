@@ -14,8 +14,8 @@ import {
   jobTitleInterviewExperiencesBoxSelectorByName,
   jobTitleOverviewBoxSelectorByName,
   jobTitleOverviewStatisticsBoxSelectorByName,
-  jobTitleTimeAndSalaryBoxSelectorByName,
-  jobTitleTimeAndSalaryStatisticsBoxSelectorByName,
+  jobTitleSalaryWorktimeBoxSelectorByName,
+  jobTitleSalaryWorkTimeStatisticsBoxSelectorByName,
   jobTitleWorkExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { isGraphqlError } from 'utils/errors';
@@ -31,9 +31,9 @@ import { setExperience } from './experience';
 
 export const SET_OVERVIEW = '@@JOB_TITLE/SET_OVERVIEW';
 export const SET_OVERVIEW_STATISTICS = '@@JOB_TITLE/SET_OVERVIEW_STATISTICS';
-export const SET_TIME_AND_SALARY = '@@JOB_TITLE/SET_TIME_AND_SALARY';
-export const SET_TIME_AND_SALARY_STATISTICS =
-  '@@JOB_TITLE/SET_TIME_AND_SALARY_STATISTICS';
+export const SET_SALARY_WORK_TIME = '@@JOB_TITLE/SET_SALARY_WORK_TIME';
+export const SET_SALARY_WORK_TIME_STATISTICS =
+  '@@JOB_TITLE/SET_SALARY_WORK_TIME_STATISTICS';
 export const SET_INTERVIEW_EXPERIENCES =
   '@@JOB_TITLE/SET_INTERVIEW_EXPERIENCES';
 export const SET_WORK_EXPERIENCES = '@@JOB_TITLE/SET_WORK_EXPERIENCES';
@@ -197,13 +197,28 @@ export const queryJobTitleOverviewStatistics = jobTitle => async (
   }
 };
 
-const setTimeAndSalary = (jobTitle, box) => ({
-  type: SET_TIME_AND_SALARY,
+const setSalaryWorkTime = (jobTitle, box) => ({
+  type: SET_SALARY_WORK_TIME,
   jobTitle,
   box,
 });
 
-export const queryJobTitleTimeAndSalary = (
+/**
+ * @type {(
+ *   params: {
+ *     companyName?: string;
+ *     jobTitle: string;
+ *     start: number;
+ *     limit: number;
+ *     dataTimeRange?: import('apis/salaryWorkTime').DataTimeRange;
+ *     experienceInYearRange?: import('apis/salaryWorkTime').ExperienceInYearRange;
+ *     gender?: string;
+ *     sortBy?: string;
+ *   },
+ *   options?: { force?: boolean }
+ * ) => (dispatch: any, getState: any) => Promise<void>}
+ */
+export const queryJobTitleSalaryWorkTime = (
   {
     companyName,
     jobTitle,
@@ -216,7 +231,7 @@ export const queryJobTitleTimeAndSalary = (
   },
   { force = false } = {},
 ) => async (dispatch, getState) => {
-  const box = jobTitleTimeAndSalaryBoxSelectorByName(jobTitle)(getState());
+  const box = jobTitleSalaryWorktimeBoxSelectorByName(jobTitle)(getState());
   if (
     !force &&
     (isFetching(box) ||
@@ -234,7 +249,7 @@ export const queryJobTitleTimeAndSalary = (
     return;
   }
 
-  dispatch(setTimeAndSalary(jobTitle, toFetching(box)));
+  dispatch(setSalaryWorkTime(jobTitle, toFetching(box)));
 
   try {
     const data = await getJobTitleTimeAndSalary({
@@ -250,10 +265,10 @@ export const queryJobTitleTimeAndSalary = (
 
     // Not found case
     if (data == null) {
-      return dispatch(setTimeAndSalary(jobTitle, getFetched(data)));
+      return dispatch(setSalaryWorkTime(jobTitle, getFetched(data)));
     }
 
-    const timeAndSalaryData = {
+    const salaryWorkTimeData = {
       name: data.name,
       companyName,
       start,
@@ -266,23 +281,23 @@ export const queryJobTitleTimeAndSalary = (
       salaryWorkTimesCount: data.salaryWorkTimesResult.count,
     };
 
-    dispatch(setTimeAndSalary(jobTitle, getFetched(timeAndSalaryData)));
+    dispatch(setSalaryWorkTime(jobTitle, getFetched(salaryWorkTimeData)));
   } catch (error) {
-    dispatch(setTimeAndSalary(jobTitle, getError(error)));
+    dispatch(setSalaryWorkTime(jobTitle, getError(error)));
   }
 };
 
-const setTimeAndSalaryStatistics = (jobTitle, box) => ({
-  type: SET_TIME_AND_SALARY_STATISTICS,
+const setSalaryWorkTimeStatistics = (jobTitle, box) => ({
+  type: SET_SALARY_WORK_TIME_STATISTICS,
   jobTitle,
   box,
 });
 
-export const queryJobTitleTimeAndSalaryStatistics = ({ jobTitle }) => async (
+export const queryJobTitleSalaryWorkTimeStatistics = ({ jobTitle }) => async (
   dispatch,
   getState,
 ) => {
-  const box = jobTitleTimeAndSalaryStatisticsBoxSelectorByName(jobTitle)(
+  const box = jobTitleSalaryWorkTimeStatisticsBoxSelectorByName(jobTitle)(
     getState(),
   );
   if (
@@ -292,7 +307,7 @@ export const queryJobTitleTimeAndSalaryStatistics = ({ jobTitle }) => async (
     return;
   }
 
-  dispatch(setTimeAndSalaryStatistics(jobTitle, toFetching(box)));
+  dispatch(setSalaryWorkTimeStatistics(jobTitle, toFetching(box)));
 
   try {
     const data = await getJobTitleTimeAndSalaryStatistics({
@@ -301,22 +316,22 @@ export const queryJobTitleTimeAndSalaryStatistics = ({ jobTitle }) => async (
 
     // Not found case
     if (data == null) {
-      return dispatch(setTimeAndSalaryStatistics(jobTitle, getFetched(data)));
+      return dispatch(setSalaryWorkTimeStatistics(jobTitle, getFetched(data)));
     }
 
-    const timeAndSalaryStatisticsData = {
+    const salaryWorkTimeStatisticsData = {
       name: data.name,
       salary_work_time_statistics: data.salary_work_time_statistics,
     };
 
     dispatch(
-      setTimeAndSalaryStatistics(
+      setSalaryWorkTimeStatistics(
         jobTitle,
-        getFetched(timeAndSalaryStatisticsData),
+        getFetched(salaryWorkTimeStatisticsData),
       ),
     );
   } catch (error) {
-    dispatch(setTimeAndSalaryStatistics(jobTitle, getError(error)));
+    dispatch(setSalaryWorkTimeStatistics(jobTitle, getError(error)));
   }
 };
 

@@ -10,7 +10,7 @@ import EmptyView from '../EmptyView';
 import ViewLog from './ViewLog';
 import WorkingHourBlock from './WorkingHourBlock';
 
-const TimeAndSalary = ({
+const SalaryWorkTimeSection = ({
   salaryWorkTimes,
   pageType,
   pageName,
@@ -56,7 +56,7 @@ const TimeAndSalary = ({
   );
 };
 
-TimeAndSalary.propTypes = {
+SalaryWorkTimeSection.propTypes = {
   createPageLinkTo: PropTypes.func.isRequired,
   onCloseReport: PropTypes.func.isRequired,
   page: PropTypes.number,
@@ -68,4 +68,4 @@ TimeAndSalary.propTypes = {
   totalCount: PropTypes.number.isRequired,
 };
 
-export default TimeAndSalary;
+export default SalaryWorkTimeSection;

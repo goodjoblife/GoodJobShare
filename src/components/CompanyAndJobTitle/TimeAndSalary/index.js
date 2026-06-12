@@ -9,16 +9,16 @@ import { fetchBoxPropType } from 'utils/fetchBox';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import PageBoxRenderer from '../PageBoxRenderer';
+import EsgBlock from './EsgBlock';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
 import SalaryFilter from './SalaryFilter';
-import TimeAndSalarySection from './TimeAndSalary';
+import SalaryWorkTimeSection from './SalaryWorkTimeSection';
 import SearchBar from '../SearchBar';
+import styles from './SalaryWorkTime.module.css';
 import SummarySection from './SummarySection';
-import styles from './TimeAndSalary.module.css';
-import EsgBlock from '../TimeAndSalary/EsgBlock';
 
-const TimeAndSalary = ({
+const SalaryWorkTime = ({
   pageType,
   pageName,
   tabType,
@@ -117,7 +117,7 @@ const TimeAndSalary = ({
                   page={page}
                   topNJobTitles={topNJobTitles}
                 />
-                <TimeAndSalarySection
+                <SalaryWorkTimeSection
                   pageType={pageType}
                   pageName={pageName}
                   tabType={tabType}
@@ -137,7 +137,7 @@ const TimeAndSalary = ({
   );
 };
 
-TimeAndSalary.propTypes = {
+SalaryWorkTime.propTypes = {
   boxSelector: PropTypes.func.isRequired,
   esgSalaryDataBox: PropTypes.object.isRequired,
   onCloseReport: PropTypes.func.isRequired,
@@ -155,4 +155,4 @@ TimeAndSalary.propTypes = {
   ),
 };
 
-export default TimeAndSalary;
+export default SalaryWorkTime;
