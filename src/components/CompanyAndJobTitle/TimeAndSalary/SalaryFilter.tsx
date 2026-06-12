@@ -4,6 +4,11 @@ import qs from 'qs';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router';
 
+import {
+  DataTimeRange,
+  ExperienceInYearRange,
+  YearMonth,
+} from 'apis/salaryWorkTime';
 import { GENDER_OPTIONS } from 'constants/gender';
 import {
   DATA_TIME_OPTIONS,
@@ -30,12 +35,6 @@ export {
   sortByFromQuerySelector,
 } from 'selectors/salaryFilter';
 
-type TYearMonth = { year: number; month: number };
-
-type TDataTimeRange = { start: TYearMonth; end: TYearMonth } | undefined;
-
-type TExperienceRange = { start: number; end: number } | undefined;
-
 type TUseUpdateQuery = (
   key: string,
   state?: LocationState,
@@ -59,15 +58,15 @@ type TQueryHookResult = readonly [
   ReturnType<TUseUpdateQuery>,
 ];
 
-const createYearMonth = (date: Date): TYearMonth => ({
+const createYearMonth = (date: Date): YearMonth => ({
   year: date.getFullYear(),
   month: date.getMonth() + 1,
 });
 
 export const getDataTimeRange = (
-  dataTime: DataTime | null | undefined,
+  dataTime: DataTime | undefined,
   now = new Date(),
-): TDataTimeRange => {
+): DataTimeRange | undefined => {
   if (!dataTime) return undefined;
   const end = createYearMonth(now);
   switch (dataTime) {
@@ -77,14 +76,12 @@ export const getDataTimeRange = (
       return { start: createYearMonth(subYears(now, 1)), end };
     case DataTime.PAST_TWO_YEARS:
       return { start: createYearMonth(subYears(now, 2)), end };
-    default:
-      return undefined;
   }
 };
 
 export const getExperienceInYearRange = (
   experience: ExperienceInYears | null | undefined,
-): TExperienceRange => {
+): ExperienceInYearRange | undefined => {
   switch (experience) {
     case ExperienceInYears.ZERO_THREE:
       return { start: 0, end: 3 };
@@ -118,7 +115,9 @@ const useUpdateQuery: TUseUpdateQuery = (key, state) => {
   );
 };
 
-export const useDataTimeFromQuery = (y: TScrollY = null): TQueryHookResult => {
+export const useDataTimeFromQuery = (
+  y: TScrollY = null,
+): readonly [DataTime | undefined, ReturnType<TUseUpdateQuery>] => {
   const query = useQuery();
   const state = useMemo(() => ({ y }), [y]);
   const setDataTime = useUpdateQuery(SalaryFilterQueryKey.DATA_TIME, state);

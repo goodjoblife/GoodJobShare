@@ -203,6 +203,21 @@ const setSalaryWorkTime = (jobTitle, box) => ({
   box,
 });
 
+/**
+ * @type {(
+ *   params: {
+ *     companyName?: string;
+ *     jobTitle: string;
+ *     start: number;
+ *     limit: number;
+ *     dataTimeRange?: import('apis/salaryWorkTime').DataTimeRange;
+ *     experienceInYearRange?: import('apis/salaryWorkTime').ExperienceInYearRange;
+ *     gender?: string;
+ *     sortBy?: string;
+ *   },
+ *   options?: { force?: boolean }
+ * ) => (dispatch: any, getState: any) => Promise<void>}
+ */
 export const queryJobTitleSalaryWorkTime = (
   {
     companyName,
