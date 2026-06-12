@@ -26,8 +26,8 @@ import { usePage } from 'hooks/routing/page';
 import usePermission from 'hooks/usePermission';
 import {
   jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
-  jobTitleTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
-  jobTitleTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  jobTitleSalaryWorktimeBoxSelectorByName as timeAndSalaryBoxSelectorByName,
+  jobTitleSalaryWorkTimeStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
 } from 'selectors/companyAndJobTitle';
 import {

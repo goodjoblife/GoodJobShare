@@ -14,8 +14,8 @@ import {
   jobTitleInterviewExperiencesBoxSelectorByName,
   jobTitleOverviewBoxSelectorByName,
   jobTitleOverviewStatisticsBoxSelectorByName,
-  jobTitleTimeAndSalaryBoxSelectorByName,
-  jobTitleTimeAndSalaryStatisticsBoxSelectorByName,
+  jobTitleSalaryWorktimeBoxSelectorByName,
+  jobTitleSalaryWorkTimeStatisticsBoxSelectorByName,
   jobTitleWorkExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { isGraphqlError } from 'utils/errors';
@@ -216,7 +216,7 @@ export const queryJobTitleTimeAndSalary = (
   },
   { force = false } = {},
 ) => async (dispatch, getState) => {
-  const box = jobTitleTimeAndSalaryBoxSelectorByName(jobTitle)(getState());
+  const box = jobTitleSalaryWorktimeBoxSelectorByName(jobTitle)(getState());
   if (
     !force &&
     (isFetching(box) ||
@@ -282,7 +282,7 @@ export const queryJobTitleTimeAndSalaryStatistics = ({ jobTitle }) => async (
   dispatch,
   getState,
 ) => {
-  const box = jobTitleTimeAndSalaryStatisticsBoxSelectorByName(jobTitle)(
+  const box = jobTitleSalaryWorkTimeStatisticsBoxSelectorByName(jobTitle)(
     getState(),
   );
   if (
