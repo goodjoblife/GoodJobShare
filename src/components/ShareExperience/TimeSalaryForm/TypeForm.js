@@ -42,7 +42,12 @@ import {
 import { ER0007, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
 import { parseSalaryAmount, evolve } from '../utils';
-import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
+import {
+  generateTabURL,
+  PageType,
+  TabType,
+  tabTypeTranslation,
+} from 'constants/companyJobTitle';
 
 import { createSalaryWorkTime } from 'actions/salaryWorkTime';
 import { transferKeyToSnakecase } from 'utils/objectUtil';
@@ -79,7 +84,7 @@ const questions = [
   createOvertimeFrequencyQuestion(),
   createOvertimeSalaryQuestion(),
   createCompensatoryDayOffQuestion(),
-  createSubmitQuestion({ type: TabType.TIME_AND_SALARY }),
+  createSubmitQuestion({ label: tabTypeTranslation[TabType.TIME_AND_SALARY] }),
 ];
 
 const bodyFromDraft = evolve({

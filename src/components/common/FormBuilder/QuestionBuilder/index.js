@@ -29,6 +29,7 @@ import Date from './Date';
 import SelectText from './SelectText';
 import TextList from './TextList';
 import CheckboxRatingTextAreaList from './CheckboxRatingTextAreaList';
+import CheckboxRadioElseRadioTextAreaList from './CheckboxRadioElseRadioTextAreaList';
 
 import TitleBlock from '../TitleBlock';
 import Scrollable from '../Scrollable';
@@ -44,6 +45,8 @@ export const QUESTION_TYPE = {
   RADIO_ELSE_RADIO: 'RADIO_ELSE_RADIO',
   RADIO_ELSE_DATE: 'RADIO_ELSE_DATE',
   RADIO_RATING_TEXTAREA_LIST: 'RADIO_RATING_TEXTAREA_LIST',
+  CHECKBOX_RADIO_ELSE_RADIO_TEXTAREA_LIST:
+    'CHECKBOX_RADIO_ELSE_RADIO_TEXTAREA_LIST',
   CHECKBOX: 'CHECKBOX',
   CHECKBOX_ELSE: 'CHECKBOX_ELSE',
   RATING: 'RATING',
@@ -152,6 +155,13 @@ const useQuestionNode = ({
           validateOrWarnItem={validateOrWarnItem}
         />
       );
+    case QUESTION_TYPE.CHECKBOX_RADIO_ELSE_RADIO_TEXTAREA_LIST:
+      return (
+        <CheckboxRadioElseRadioTextAreaList
+          {...commonProps}
+          options={options}
+        />
+      );
     case QUESTION_TYPE.CHECKBOX:
       return <Checkbox {...commonProps} options={options} />;
     case QUESTION_TYPE.CHECKBOX_ELSE:
@@ -198,6 +208,7 @@ const useFillMode = ({ type }) => {
     case QUESTION_TYPE.RADIO_ELSE_RADIO:
     case QUESTION_TYPE.RADIO_ELSE_DATE:
     case QUESTION_TYPE.RADIO_RATING_TEXTAREA_LIST:
+    case QUESTION_TYPE.CHECKBOX_RADIO_ELSE_RADIO_TEXTAREA_LIST:
     case QUESTION_TYPE.CHECKBOX:
     case QUESTION_TYPE.CHECKBOX_ELSE:
     case QUESTION_TYPE.TEXT_LIST:
