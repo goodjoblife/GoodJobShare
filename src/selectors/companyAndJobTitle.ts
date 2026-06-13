@@ -3,6 +3,7 @@ import R from 'ramda';
 import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
+import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import { RootState } from 'reducers';
 import {
   CompanyAspectExperienceResult,
@@ -14,7 +15,6 @@ import {
   CompanySalaryWorkTimeResult,
   CompanySalaryWorkTimeStatistics,
   CompanyWorkExperienceResult,
-  TopNJobTitles,
 } from 'reducers/companyIndex';
 import {
   JobTitleInIndex,

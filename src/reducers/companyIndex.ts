@@ -22,6 +22,7 @@ import {
 } from 'apis/overview';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
+import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import {
   JobAverageSalary,
   OvertimeFrequencyCount,
@@ -84,9 +85,6 @@ export type CompanyAspectExperienceResult = {
 
 // TODO: replace with proper CompanyIsSubscribed type
 export type CompanyIsSubscribed = unknown;
-
-// TODO: replace with proper TopNJobTitles type
-export type TopNJobTitles = unknown;
 
 type State = {
   indexesByPage: Record<number, FetchBox<CompanyInIndex[]>>;

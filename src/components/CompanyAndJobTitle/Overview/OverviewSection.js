@@ -33,7 +33,7 @@ const GenderAspectSnippetBlock = () => {
   );
 };
 
-const Overview = ({
+const OverviewSection = ({
   pageType,
   pageName,
   interviewExperiences,
@@ -130,7 +130,7 @@ const Overview = ({
   );
 };
 
-Overview.propTypes = {
+OverviewSection.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   interviewExperiencesCount: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
@@ -141,4 +141,4 @@ Overview.propTypes = {
   workExperiencesCount: PropTypes.number.isRequired,
 };
 
-export default Overview;
+export default OverviewSection;
