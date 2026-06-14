@@ -1,6 +1,6 @@
+import { SET_POPULAR_JOB_TITLE_SALARY_DISTRIBUTION } from 'actions/popularJobTitleSalaryDistribution';
 import createReducer from 'utils/createReducer';
 import { getUnfetched } from 'utils/fetchBox';
-import { SET_POPULAR_JOB_TITLE_SALARY_DISTRIBUTION } from 'actions/popularJobTitleSalaryDistribution';
 
 /*
   PropTypes.arrayOf(

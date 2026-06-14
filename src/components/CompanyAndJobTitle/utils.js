@@ -1,10 +1,10 @@
 import {
-  pageTypeTranslation,
-  tabTypeTranslation,
-  TabType,
   generateIndexURL,
   generatePageURL,
   generateTabURL,
+  pageTypeTranslation,
+  TabType,
+  tabTypeTranslation,
 } from 'constants/companyJobTitle';
 
 const generateRootLayer = () => ({

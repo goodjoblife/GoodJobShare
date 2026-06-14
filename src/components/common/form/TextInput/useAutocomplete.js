@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const useBoundedIndex = (bound, initialIndex) => {
   const [index, setIndex] = useState(initialIndex);

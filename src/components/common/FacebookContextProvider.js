@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import FacebookContext from 'contexts/FacebookContext';
+import React, { useEffect, useState } from 'react';
+
 import Facebook from 'common/facebook/Facebook';
+import FacebookContext from 'contexts/FacebookContext';
+
 import { FACEBOOK_APP_ID } from '../../config';
 
 const FacebookContextProvider = ({ children }) => {

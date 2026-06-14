@@ -1,8 +1,10 @@
-import React from 'react';
-import ThumbImage from 'common/icons/thumb.svg';
 import cn from 'classnames';
-import styles from './Thumbs.module.css';
 import PropTypes from 'prop-types';
+import React from 'react';
+
+import ThumbImage from 'common/icons/thumb.svg';
+
+import styles from './Thumbs.module.css';
 
 const GrayThumb = ({ className }) => {
   return (

@@ -1,10 +1,10 @@
-import { PageType } from 'constants/companyJobTitle';
 import {
   fetchSearchCompany as fetchSearchCompanyApi,
   fetchSearchJobTitle as fetchSearchJobTitleApi,
 } from 'apis/timeAndSalaryApi';
+import { PageType } from 'constants/companyJobTitle';
 import { searchByKeywordSelector } from 'selectors/search';
-import { isFetching, toFetching, getFetched, getError } from 'utils/fetchBox';
+import { getError, getFetched, isFetching, toFetching } from 'utils/fetchBox';
 
 export const SET_SEARCH_BY_KEYWORD = '@@SEARCH/SET_SEARCH_BY_KEYWORD';
 

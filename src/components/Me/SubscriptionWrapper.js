@@ -1,12 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import { Section, Wrapper } from 'common/base';
 import Heading from 'common/base/Heading';
 import TabLinkGroup from 'common/TabLinkGroup';
 
 import AuthMask from './AuthMask';
-
 import styles from './SubscriptionWrapper.module.css';
 
 const options = [

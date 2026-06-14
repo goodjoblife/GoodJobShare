@@ -1,6 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import styles from './InfoBlock.module.css';
 
 export const InfoBlocks = ({ children }) => (

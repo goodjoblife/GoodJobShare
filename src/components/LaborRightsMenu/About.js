@@ -1,5 +1,7 @@
 import React from 'react';
-import { Section, P } from 'common/base';
+
+import { P, Section } from 'common/base';
+
 import styles from './About.module.css';
 import LaborRightsImage from './labor-rights-about.png';
 import CcImage from './logo-cc.svg';

@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { queryExperienceCountIfUnfetched } from 'actions/experiences';
+import { querySalaryWorkTimeCountIfUnfetched } from 'actions/salaryWorkTime';
 import {
   experienceCountSelector,
   salaryWorkTimeCountSelector,
 } from 'selectors/countSelector';
-import { queryExperienceCountIfUnfetched } from 'actions/experiences';
-import { querySalaryWorkTimeCountIfUnfetched } from 'actions/salaryWorkTime';
 
 export const useExperienceCount = (): number => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export const useSalaryWorkTimeCount = (): number => {
 
 export const useTotalCount = (): number => {
   const experienceCount = useExperienceCount();
-  const timeAndSalaryCount = useSalaryWorkTimeCount();
+  const salaryWorkTimeCount = useSalaryWorkTimeCount();
 
-  return experienceCount + timeAndSalaryCount;
+  return experienceCount + salaryWorkTimeCount;
 };

@@ -1,18 +1,20 @@
-import React, { useEffect } from 'react';
-import cn from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
-import { PageType, generatePageURL } from 'constants/companyJobTitle';
-import ChartWrapper from '../../LandingPage/ChartWrapper';
 import loadable from '@loadable/component';
-import styles from '../../LandingPage/SummarySection.module.css';
-import moduleStyles from './ChartsZone.module.css';
+import cn from 'classnames';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { queryCompanyOverviewStatistics } from 'actions/company';
 import { queryJobTitleOverviewStatistics } from 'actions/jobTitle';
+import BoxesRenderer from 'common/StatusRenderer/BoxesRenderer';
+import { generatePageURL, PageType } from 'constants/companyJobTitle';
 import {
   companyOverviewStatisticsBoxSelectorByName,
   jobTitleOverviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
-import BoxesRenderer from 'common/StatusRenderer/BoxesRenderer';
+
+import moduleStyles from './ChartsZone.module.css';
+import ChartWrapper from '../../LandingPage/ChartWrapper';
+import styles from '../../LandingPage/SummarySection.module.css';
 
 const SalaryDistributionChart = loadable(() =>
   import('common/Charts/SalaryDistributionChart'),

@@ -1,23 +1,23 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import { Section } from 'common/base';
 import BoxRenderer from 'common/StatusRenderer';
-
-import SnippetBlock from './SnippetBlock';
-import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
-import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
-import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import {
+  generateTabURL,
   TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
-  generateTabURL,
 } from 'constants/companyJobTitle';
-import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
 import { fetchBoxPropType } from 'utils/fetchBox';
 
-const Overview = ({
+import SnippetBlock from './SnippetBlock';
+import SummaryBlock from './SummaryBlock';
+import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
+import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
+import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
+
+const OverviewSection = ({
   pageType,
   pageName,
   interviewExperiences,
@@ -120,7 +120,7 @@ const Overview = ({
   );
 };
 
-Overview.propTypes = {
+OverviewSection.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   interviewExperiencesCount: PropTypes.number.isRequired,
   onCloseReport: PropTypes.func.isRequired,
@@ -133,4 +133,4 @@ Overview.propTypes = {
   workExperiencesCount: PropTypes.number.isRequired,
 };
 
-export default Overview;
+export default OverviewSection;

@@ -1,18 +1,18 @@
-import graphqlClient from 'utils/graphqlClient';
+import { InboxMessage } from 'constants/inbox';
 import {
-  queryInboxGql,
-  openInboxGql,
-  readInboxMessageGql,
-  QueryInboxResult,
-  OpenInboxResult,
-  ReadInboxMessageResult,
+  ExperienceType,
   Notification,
-  UserReplyMyExperienceNotification,
+  openInboxGql,
+  OpenInboxResult,
+  queryInboxGql,
+  QueryInboxResult,
+  readInboxMessageGql,
+  ReadInboxMessageResult,
   UserLikeMyExperienceNotification,
   UserLikeMyReplyNotification,
-  ExperienceType,
+  UserReplyMyExperienceNotification,
 } from 'graphql/inbox';
-import { InboxMessage } from 'constants/inbox';
+import graphqlClient from 'utils/graphqlClient';
 
 // queries
 

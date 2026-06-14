@@ -1,6 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
+import React from 'react';
 
 import styles from './SummaryBlock.module.css';
 

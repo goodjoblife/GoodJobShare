@@ -1,12 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Heading, P } from 'common/base';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+import { Heading, P } from 'common/base';
 
 import styles from './Heading.module.css';
 import {
-  originalCompanyNameSelector,
   jobTitleSelector,
+  originalCompanyNameSelector,
 } from '../experienceSelector';
 
 const formatType = type => {

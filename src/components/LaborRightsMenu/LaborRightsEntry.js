@@ -1,6 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
+
 import styles from './LaborRightsEntry.module.css';
 
 const LaborRightsEntry = ({ link, title, coverUrl }) => (

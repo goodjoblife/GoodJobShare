@@ -1,13 +1,13 @@
-import { combineReducers, Action, AnyAction } from 'redux';
+import { Action, AnyAction, combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { PERSIST_KEY } from '../config';
 
-// sort by reducers a-z
+import { PERSIST_KEY } from '../config';
 import auth from './auth';
 import companyIndex from './companyIndex';
 import experience from './experience';
 import experiences from './experiences';
+import inbox from './inbox';
 import jobTitleIndex from './jobTitleIndex';
 import laborRights from './laborRights';
 import me from './me';
@@ -19,7 +19,6 @@ import questionnaireExpandedModal from './questionnaireExpandedModal';
 import salaryWorkTime from './salaryWorkTime';
 import search from './search';
 import toastNotification from './toastNotification';
-import inbox from './inbox';
 
 const persistConfig = {
   key: PERSIST_KEY,

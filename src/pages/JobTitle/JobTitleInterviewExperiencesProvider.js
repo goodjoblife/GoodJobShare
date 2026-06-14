@@ -1,24 +1,26 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
-import usePermission from 'hooks/usePermission';
-import { usePage } from 'hooks/routing/page';
-import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
+
 import { queryJobTitleInterviewExperiences } from 'actions/jobTitle';
-import { jobTitleInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import useJobTitle, { jobTitleSelector } from './useJobTitle';
-import {
-  queryFromQuerySelector,
-  pageFromQuerySelector,
-} from 'selectors/routing';
+import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 import {
   sortByFromQuerySelector,
   useSortByFromQuery,
 } from 'components/CompanyAndJobTitle/Sorter';
-import { isFetched, getFetched } from 'utils/fetchBox';
+import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
+import { usePage } from 'hooks/routing/page';
+import usePermission from 'hooks/usePermission';
+import { jobTitleInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
+import {
+  pageFromQuerySelector,
+  queryFromQuerySelector,
+} from 'selectors/routing';
+import { getFetched, isFetched } from 'utils/fetchBox';
+
+import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
 const useInterviewExperiencesBoxSelector = jobTitle => {
   return useCallback(
@@ -43,7 +45,7 @@ const useInterviewExperiencesBoxSelector = jobTitle => {
   );
 };
 
-const JobTitleTimeAndSalaryProvider = () => {
+const JobTitleInterviewExperiencesProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.JOB_TITLE;
   const jobTitle = useJobTitle();
@@ -84,7 +86,7 @@ const JobTitleTimeAndSalaryProvider = () => {
   );
 };
 
-JobTitleTimeAndSalaryProvider.fetchData = ({
+JobTitleInterviewExperiencesProvider.fetchData = ({
   store: { dispatch },
   ...props
 }) => {
@@ -107,4 +109,4 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   );
 };
 
-export default JobTitleTimeAndSalaryProvider;
+export default JobTitleInterviewExperiencesProvider;

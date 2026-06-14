@@ -1,44 +1,46 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import TimeAndSalary from 'components/CompanyAndJobTitle/TimeAndSalary';
-import usePermission from 'hooks/usePermission';
-import { usePage } from 'hooks/routing/page';
-import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   queryCompanyEsgSalaryData,
   queryCompanyOverviewStatistics,
-  queryCompanyTimeAndSalary,
-  queryCompanyTimeAndSalaryStatistics,
+  queryCompanySalaryWorkTime,
+  queryCompanySalaryWorkTimeStatistics,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
-import {
-  salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
-  companyTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
-  companyTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
-  companyEsgSalaryDataBoxSelectorByName,
-  companyOverviewStatisticsBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import useCompanyName, { companyNameSelector } from './useCompanyName';
-import { useTopNJobTitles } from './useTopNJobTitles';
+import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
+import SalaryWorkTime from 'components/CompanyAndJobTitle/TimeAndSalary';
 import {
   dataTimeFromQuerySelector,
   experienceFromQuerySelector,
   genderFromQuerySelector,
+  getDataTimeRange,
+  getExperienceInYearRange,
   sortByFromQuerySelector,
   useDataTimeFromQuery,
   useExperienceFromQuery,
   useGenderFromQuery,
   useSortByFromQuery,
-  getDataTimeRange,
-  getExperienceInYearRange,
 } from 'components/CompanyAndJobTitle/TimeAndSalary/SalaryFilter';
+import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
+import { usePage } from 'hooks/routing/page';
+import usePermission from 'hooks/usePermission';
 import {
-  queryFromQuerySelector,
+  companyEsgSalaryDataBoxSelectorByName,
+  companyOverviewStatisticsBoxSelectorByName,
+  companySalaryWorkTimeBoxSelectorByName,
+  companySalaryWorkTimeStatisticsBoxSelectorByName,
+  salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
+} from 'selectors/companyAndJobTitle';
+import {
   pageFromQuerySelector,
+  queryFromQuerySelector,
 } from 'selectors/routing';
-import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
+
+import useCompanyName, { companyNameSelector } from './useCompanyName';
+import { useTopNJobTitles } from './useTopNJobTitles';
 
 const useOverviewStatisticsBox = pageName => {
   const selector = useMemo(
@@ -48,10 +50,12 @@ const useOverviewStatisticsBox = pageName => {
   return useSelector(selector);
 };
 
-const useTimeAndSalaryStatisticsBox = pageName => {
+const useSalaryWorkTimeStatisticsBox = pageName => {
   const selector = useCallback(
     state => {
-      const company = timeAndSalaryStatisticsBoxSelectorByName(pageName)(state);
+      const company = companySalaryWorkTimeStatisticsBoxSelectorByName(
+        pageName,
+      )(state);
       return salaryWorkTimeStatisticsSelector(company);
     },
     [pageName],
@@ -59,10 +63,12 @@ const useTimeAndSalaryStatisticsBox = pageName => {
   return useSelector(selector);
 };
 
-const useTimeAndSalaryBoxSelector = companyName => {
+const useSalaryWorkTimeBoxSelector = companyName => {
   return useCallback(
     state => {
-      const company = timeAndSalaryBoxSelectorByName(companyName)(state);
+      const company = companySalaryWorkTimeBoxSelectorByName(companyName)(
+        state,
+      );
       return company;
     },
     [companyName],
@@ -78,7 +84,7 @@ const useEsgSalaryDataBox = companyName => {
   return useSelector(selector);
 };
 
-const CompanyTimeAndSalaryProvider = () => {
+const CompanySalaryWorkTimeProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
   const companyName = useCompanyName();
@@ -98,10 +104,10 @@ const CompanyTimeAndSalaryProvider = () => {
     [experience],
   );
 
-  const handleQueryCompanyTimeAndSalary = useCallback(
+  const handleQueryCompanySalaryWorkTime = useCallback(
     ({ force = false } = {}) => {
       dispatch(
-        queryCompanyTimeAndSalary(
+        queryCompanySalaryWorkTime(
           {
             companyName,
             jobTitle: jobTitle || undefined,
@@ -135,7 +141,7 @@ const CompanyTimeAndSalaryProvider = () => {
 
   useEffect(() => {
     dispatch(
-      queryCompanyTimeAndSalaryStatistics({
+      queryCompanySalaryWorkTimeStatistics({
         companyName,
       }),
     );
@@ -162,8 +168,8 @@ const CompanyTimeAndSalaryProvider = () => {
   }, [dispatch, companyName]);
 
   useEffect(() => {
-    handleQueryCompanyTimeAndSalary();
-  }, [handleQueryCompanyTimeAndSalary]);
+    handleQueryCompanySalaryWorkTime();
+  }, [handleQueryCompanySalaryWorkTime]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -171,14 +177,14 @@ const CompanyTimeAndSalaryProvider = () => {
   }, [pageType, companyName, fetchPermission]);
 
   const statisticsBox = useOverviewStatisticsBox(companyName);
-  const salaryWorkTimeStatistics = useTimeAndSalaryStatisticsBox(companyName);
+  const salaryWorkTimeStatistics = useSalaryWorkTimeStatisticsBox(companyName);
   const topNJobTitles = useTopNJobTitles(companyName);
   const esgSalaryDataBox = useEsgSalaryDataBox(companyName);
 
-  const boxSelector = useTimeAndSalaryBoxSelector(companyName);
+  const boxSelector = useSalaryWorkTimeBoxSelector(companyName);
 
   return (
-    <TimeAndSalary
+    <SalaryWorkTime
       pageType={pageType}
       pageName={companyName}
       page={page}
@@ -189,12 +195,12 @@ const CompanyTimeAndSalaryProvider = () => {
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onCloseReport={() => handleQueryCompanyTimeAndSalary({ force: true })}
+      onCloseReport={() => handleQueryCompanySalaryWorkTime({ force: true })}
     />
   );
 };
 
-CompanyTimeAndSalaryProvider.fetchData = ({
+CompanySalaryWorkTimeProvider.fetchData = ({
   store: { dispatch },
   ...props
 }) => {
@@ -211,45 +217,37 @@ CompanyTimeAndSalaryProvider.fetchData = ({
   const sortBy = sortByFromQuerySelector(query);
   const dataTimeRange = getDataTimeRange(dataTime);
   const experienceInYearRange = getExperienceInYearRange(experience);
-  const dispatchOverviewStatistics = dispatch(
-    queryCompanyOverviewStatistics(companyName),
-  );
-  const dispatchTimeAndSalaryStatistics = dispatch(
-    queryCompanyTimeAndSalaryStatistics({
-      companyName,
-    }),
-  );
-  const dispatchTimeAndSalary = dispatch(
-    queryCompanyTimeAndSalary({
-      companyName,
-      jobTitle,
-      start,
-      limit,
-      dataTimeRange,
-      experienceInYearRange,
-      gender: gender || undefined,
-      sortBy: sortBy || undefined,
-    }),
-  );
-  const dispatchRatingStatistics = dispatch(queryRatingStatistics(companyName));
-  const dispatchTopNJobTitles = dispatch(
-    queryCompanyTopNJobTitles({
-      companyName,
-    }),
-  );
-  const dispatchEsgSalaryData = dispatch(
-    queryCompanyEsgSalaryData({
-      companyName,
-    }),
-  );
   return Promise.all([
-    dispatchTimeAndSalary,
-    dispatchTimeAndSalaryStatistics,
-    dispatchOverviewStatistics,
-    dispatchRatingStatistics,
-    dispatchTopNJobTitles,
-    dispatchEsgSalaryData,
+    dispatch(
+      queryCompanySalaryWorkTime({
+        companyName,
+        jobTitle,
+        start,
+        limit,
+        dataTimeRange,
+        experienceInYearRange,
+        gender: gender || undefined,
+        sortBy: sortBy || undefined,
+      }),
+    ),
+    dispatch(
+      queryCompanySalaryWorkTimeStatistics({
+        companyName,
+      }),
+    ),
+    dispatch(queryCompanyOverviewStatistics(companyName)),
+    dispatch(queryRatingStatistics(companyName)),
+    dispatch(
+      queryCompanyTopNJobTitles({
+        companyName,
+      }),
+    ),
+    dispatch(
+      queryCompanyEsgSalaryData({
+        companyName,
+      }),
+    ),
   ]);
 };
 
-export default CompanyTimeAndSalaryProvider;
+export default CompanySalaryWorkTimeProvider;

@@ -1,12 +1,12 @@
 import ReactGA from 'react-ga4';
+
+import { pushErrorNotificationAndRollbarAndThrowError } from 'actions/toastNotification';
 import {
   postAuthFacebook as postAuthFacebookApi,
   postAuthGoogle as postAuthGoogleApi,
 } from 'apis/auth';
 import queryMeApi from 'apis/queryMe';
 import AuthStatus from 'constants/authStatus';
-import { pushErrorNotificationAndRollbarAndThrowError } from 'actions/toastNotification';
-import { GraphqlError } from 'utils/errors';
 import {
   ER0001,
   ER0002,
@@ -22,6 +22,7 @@ import {
   ER0015,
   ER0016,
 } from 'constants/errorCodeMsg';
+import { GraphqlError } from 'utils/errors';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';

@@ -1,49 +1,51 @@
 import R from 'ramda';
-import { isGraphqlError } from 'utils/errors';
+
 import {
-  isFetching,
-  isFetched,
-  toFetching,
-  getFetched,
-  getError,
-} from 'utils/fetchBox';
-import {
-  companyIndexesBoxSelectorAtPage,
-  companyOverviewBoxSelectorByName,
-  companyOverviewStatisticsBoxSelectorByName,
-  companyTimeAndSalaryBoxSelectorByName,
-  companyTimeAndSalaryStatisticsBoxSelectorByName,
-  companyInterviewExperiencesBoxSelectorByName,
-  companyWorkExperiencesBoxSelectorByName,
-  companyRatingStatisticsBoxSelectorByName,
-  companyTopNJobTitlesBoxSelectorByName,
-  companyEsgSalaryDataBoxSelectorByName,
-  companyIsSubscribedBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
-import {
-  getCompanyTimeAndSalary,
   getCompanyInterviewExperiences,
-  queryCompaniesApi,
+  getCompanyTimeAndSalary,
   getCompanyTimeAndSalaryStatistics,
-  getCompanyTopNJobTitles,
+  queryCompaniesApi,
 } from 'apis/company';
-import queryCompanyWorkExperiencesApi from 'apis/queryCompanyWorkExperiences';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
 import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
 import queryCompanyOverviewStatisticsApi from 'apis/queryCompanyOverviewStatistics';
 import queryCompanyRatingStatisticsApi from 'apis/queryCompanyRatingStatistics';
+import queryCompanyTopNJobTitlesApi from 'apis/queryCompanyTopNJobTitles';
+import queryCompanyWorkExperiencesApi from 'apis/queryCompanyWorkExperiences';
 import subscribeCompanyApi from 'apis/subscribeCompany';
 import unsubscribeCompanyApi from 'apis/unsubscribeCompany';
 import { tokenSelector } from 'selectors/authSelector';
+import {
+  companyEsgSalaryDataBoxSelectorByName,
+  companyIndexesBoxSelectorAtPage,
+  companyInterviewExperiencesBoxSelectorByName,
+  companyIsSubscribedBoxSelectorByName,
+  companyOverviewBoxSelectorByName,
+  companyOverviewStatisticsBoxSelectorByName,
+  companyRatingStatisticsBoxSelectorByName,
+  companySalaryWorkTimeBoxSelectorByName,
+  companySalaryWorkTimeStatisticsBoxSelectorByName,
+  companyTopNJobTitlesBoxSelectorByName,
+  companyWorkExperiencesBoxSelectorByName,
+} from 'selectors/companyAndJobTitle';
+import { isGraphqlError } from 'utils/errors';
+import {
+  getError,
+  getFetched,
+  isFetched,
+  isFetching,
+  toFetching,
+} from 'utils/fetchBox';
+
 import { setExperience } from './experience';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
 export const SET_OVERVIEW_STATISTICS = '@@COMPANY/SET_OVERVIEW_STATISTICS';
-export const SET_TIME_AND_SALARY = '@@COMPANY/SET_TIME_AND_SALARY';
-export const SET_TIME_AND_SALARY_STATISTICS =
-  '@@COMPANY/SET_TIME_AND_SALARY_STATISTICS';
+export const SET_SALARY_WORK_TIME = '@@COMPANY/SET_SALARY_WORK_TIME';
+export const SET_SALARY_WORK_TIME_STATISTICS =
+  '@@COMPANY/SET_SALARY_WORK_TIME_STATISTICS';
 export const SET_INTERVIEW_EXPERIENCES = '@@COMPANY/SET_INTERVIEW_EXPERIENCES';
 export const SET_WORK_EXPERIENCES = '@@COMPANY/SET_WORK_EXPERIENCES';
 export const SET_INDEX = '@@COMPANY/SET_INDEX';
@@ -250,8 +252,8 @@ export const queryCompanyOverviewStatistics = companyName => async (
   }
 };
 
-const setTimeAndSalary = (companyName, box) => ({
-  type: SET_TIME_AND_SALARY,
+const setSalaryWorkTime = (companyName, box) => ({
+  type: SET_SALARY_WORK_TIME,
   companyName,
   box,
 });
@@ -262,7 +264,22 @@ const setInterviewExperiences = (companyName, box) => ({
   box,
 });
 
-export const queryCompanyTimeAndSalary = (
+/**
+ * @type {(
+ *   params: {
+ *     companyName: string;
+ *     jobTitle?: string;
+ *     start: number;
+ *     limit: number;
+ *     dataTimeRange?: import('apis/salaryWorkTime').DataTimeRange;
+ *     experienceInYearRange?: import('apis/salaryWorkTime').ExperienceInYearRange;
+ *     gender?: string;
+ *     sortBy?: string;
+ *   },
+ *   options?: { force?: boolean }
+ * ) => (dispatch: any, getState: any) => Promise<void>}
+ */
+export const queryCompanySalaryWorkTime = (
   {
     companyName,
     jobTitle,
@@ -275,7 +292,7 @@ export const queryCompanyTimeAndSalary = (
   },
   { force = false } = {},
 ) => async (dispatch, getState) => {
-  const box = companyTimeAndSalaryBoxSelectorByName(companyName)(getState());
+  const box = companySalaryWorkTimeBoxSelectorByName(companyName)(getState());
   if (
     !force &&
     (isFetching(box) ||
@@ -293,7 +310,7 @@ export const queryCompanyTimeAndSalary = (
     return;
   }
 
-  dispatch(setTimeAndSalary(companyName, toFetching(box)));
+  dispatch(setSalaryWorkTime(companyName, toFetching(box)));
 
   try {
     const data = await getCompanyTimeAndSalary({
@@ -309,10 +326,10 @@ export const queryCompanyTimeAndSalary = (
 
     // Not found case
     if (data == null) {
-      return dispatch(setTimeAndSalary(companyName, getFetched(data)));
+      return dispatch(setSalaryWorkTime(companyName, getFetched(data)));
     }
 
-    const timeAndSalaryData = {
+    const salaryWorkTimeData = {
       name: data.name,
       jobTitle,
       start,
@@ -325,14 +342,14 @@ export const queryCompanyTimeAndSalary = (
       salaryWorkTimesCount: data.salaryWorkTimesResult.count,
     };
 
-    dispatch(setTimeAndSalary(companyName, getFetched(timeAndSalaryData)));
+    dispatch(setSalaryWorkTime(companyName, getFetched(salaryWorkTimeData)));
   } catch (error) {
-    dispatch(setTimeAndSalary(companyName, getError(error)));
+    dispatch(setSalaryWorkTime(companyName, getError(error)));
   }
 };
 
-const setTimeAndSalaryStatistics = (companyName, box) => ({
-  type: SET_TIME_AND_SALARY_STATISTICS,
+const setSalaryWorkTimeStatistics = (companyName, box) => ({
+  type: SET_SALARY_WORK_TIME_STATISTICS,
   companyName,
   box,
 });
@@ -343,11 +360,11 @@ const setCompanyTopNJobTitles = (companyName, box) => ({
   box,
 });
 
-export const queryCompanyTimeAndSalaryStatistics = ({ companyName }) => async (
+export const queryCompanySalaryWorkTimeStatistics = ({ companyName }) => async (
   dispatch,
   getState,
 ) => {
-  const box = companyTimeAndSalaryStatisticsBoxSelectorByName(companyName)(
+  const box = companySalaryWorkTimeStatisticsBoxSelectorByName(companyName)(
     getState(),
   );
   if (
@@ -357,7 +374,7 @@ export const queryCompanyTimeAndSalaryStatistics = ({ companyName }) => async (
     return;
   }
 
-  dispatch(setTimeAndSalaryStatistics(companyName, toFetching(box)));
+  dispatch(setSalaryWorkTimeStatistics(companyName, toFetching(box)));
 
   try {
     const data = await getCompanyTimeAndSalaryStatistics({
@@ -367,23 +384,23 @@ export const queryCompanyTimeAndSalaryStatistics = ({ companyName }) => async (
     // Not found case
     if (data == null) {
       return dispatch(
-        setTimeAndSalaryStatistics(companyName, getFetched(data)),
+        setSalaryWorkTimeStatistics(companyName, getFetched(data)),
       );
     }
 
-    const timeAndSalaryStatisticsData = {
+    const salaryWorkTimeStatisticsData = {
       name: data.name,
       salary_work_time_statistics: data.salary_work_time_statistics,
     };
 
     dispatch(
-      setTimeAndSalaryStatistics(
+      setSalaryWorkTimeStatistics(
         companyName,
-        getFetched(timeAndSalaryStatisticsData),
+        getFetched(salaryWorkTimeStatisticsData),
       ),
     );
   } catch (error) {
-    dispatch(setTimeAndSalaryStatistics(companyName, getError(error)));
+    dispatch(setSalaryWorkTimeStatistics(companyName, getError(error)));
   }
 };
 
@@ -434,7 +451,7 @@ export const queryCompanyTopNJobTitles = ({ companyName }) => async (
   dispatch(setCompanyTopNJobTitles(companyName, toFetching()));
 
   try {
-    const data = await getCompanyTopNJobTitles({
+    const data = await queryCompanyTopNJobTitlesApi({
       companyName,
     });
 

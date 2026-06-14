@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import cn from 'classnames';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faFile from '@fortawesome/fontawesome-free-solid/faFile';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback, useState } from 'react';
 
 import styles from './File.module.css';
 

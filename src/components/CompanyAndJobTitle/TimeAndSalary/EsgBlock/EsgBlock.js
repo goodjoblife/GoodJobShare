@@ -1,16 +1,17 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import linkStyles from 'common/base/Link.module.css';
-import Caret from 'common/icons/Caret';
 import Card from 'common/Card';
-import Info from 'common/icons/Info';
 import Select from 'common/form/Select';
-import styles from './EsgBlock.module.css';
-import overviewStyles from '../../Overview/Overview.module.css';
+import Caret from 'common/icons/Caret';
+import Info from 'common/icons/Info';
 import { formatNumberWithSign } from 'utils/stringUtil';
+
+import styles from './EsgBlock.module.css';
 import { getAvailableYears, getStatisticsByYear } from './esgYearUtils';
+import overviewStyles from '../../Overview/Overview.module.css';
 
 const EsgItemBlock = ({
   className,

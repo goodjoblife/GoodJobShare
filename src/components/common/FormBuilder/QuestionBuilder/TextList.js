@@ -1,11 +1,12 @@
-import React, { useRef, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback, useRef } from 'react';
+
+import TextInput from 'common/form/TextInput';
 
 import Scrollable from '../Scrollable';
-import TextInput from 'common/form/TextInput';
-import styles from './TextList.module.css';
 import commonStyles from './styles.module.css';
+import styles from './TextList.module.css';
 
 const TextList = ({ value: values, onChange, warning, placeholder }) => {
   const ref = useRef(null);

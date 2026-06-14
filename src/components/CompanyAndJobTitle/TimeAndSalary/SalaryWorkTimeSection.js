@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 
-import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
+import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
 import usePermission from 'hooks/usePermission';
 
 import EmptyView from '../EmptyView';
-import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
+import WorkingHourBlock from './WorkingHourBlock';
 
-const TimeAndSalary = ({
+const SalaryWorkTimeSection = ({
   salaryWorkTimes,
   pageType,
   pageName,
@@ -56,7 +56,7 @@ const TimeAndSalary = ({
   );
 };
 
-TimeAndSalary.propTypes = {
+SalaryWorkTimeSection.propTypes = {
   createPageLinkTo: PropTypes.func.isRequired,
   onCloseReport: PropTypes.func.isRequired,
   page: PropTypes.number,
@@ -68,4 +68,4 @@ TimeAndSalary.propTypes = {
   totalCount: PropTypes.number.isRequired,
 };
 
-export default TimeAndSalary;
+export default SalaryWorkTimeSection;

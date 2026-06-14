@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
+import React, { useCallback } from 'react';
 
-import useDebouncedConfirm from '../../../useDebouncedConfirm';
 import styles from './private.module.css';
 import { toggle } from './utils';
+import useDebouncedConfirm from '../../../useDebouncedConfirm';
 import { OptionPropType, ValuePropType } from '../PropTypes';
 
 const BlockSelect = ({

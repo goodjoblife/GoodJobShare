@@ -1,10 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import Textarea from 'react-textarea-autosize';
 
-import variables from 'common/variables.module.css';
-
 import P from 'common/base/P';
+import variables from 'common/variables.module.css';
 
 import styles from './ReportForm.module.css';
 

@@ -1,20 +1,22 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
-import { useWindowScroll, useWindowSize } from 'react-use';
 import PropTypes from 'prop-types';
-import usePermission from 'hooks/usePermission';
-import { useTrackEvent } from 'hooks/viewLog';
-import Article from 'components/ExperienceDetail/Article';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useWindowScroll, useWindowSize } from 'react-use';
+
 import { Heading, Wrapper } from 'common/base';
-import MessageBoard from '../ExperienceDetail/MessageBoard';
+import Article from 'components/ExperienceDetail/Article';
 import VISIBILITY from 'components/ExperienceDetail/Article/visibility';
-import styles from './Experience.module.css';
-import { formatSimpleDate } from 'utils/dateUtil';
-import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
 import {
   PageType,
   TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
 } from 'constants/companyJobTitle';
+import { ACTION, CONTENT_TYPE } from 'constants/viewLog';
+import usePermission from 'hooks/usePermission';
+import { useTrackEvent } from 'hooks/viewLog';
+import { formatSimpleDate } from 'utils/dateUtil';
+
+import styles from './Experience.module.css';
+import MessageBoard from '../ExperienceDetail/MessageBoard';
 
 const useTracePreviewRef = ({ experience }) => {
   const { height: windowHeight } = useWindowSize();

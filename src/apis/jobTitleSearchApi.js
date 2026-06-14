@@ -1,5 +1,5 @@
-import graphqlClient from 'utils/graphqlClient';
 import { queryJobTitles } from 'graphql/jobTitle';
+import graphqlClient from 'utils/graphqlClient';
 
 export const getJobTitlesSearch = ({ key }) =>
   graphqlClient({

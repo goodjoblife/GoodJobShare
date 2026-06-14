@@ -1,27 +1,28 @@
 import R from 'ramda';
+
+import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
+import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
+import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import { RootState } from 'reducers';
 import {
   CompanyInIndex,
+  CompanyInterviewExperienceResult,
+  CompanyIsSubscribed,
   CompanyOverview,
   CompanyOverviewStatistics,
-  CompanyTimeAndSalaryResult,
-  CompanyTimeAndSalaryStatistics,
-  CompanyInterviewExperienceResult,
+  CompanySalaryWorkTimeResult,
+  CompanySalaryWorkTimeStatistics,
   CompanyWorkExperienceResult,
-  CompanyIsSubscribed,
-  TopNJobTitles,
 } from 'reducers/companyIndex';
 import {
   JobTitleInIndex,
+  JobTitleInterviewExperienceResult,
   JobTitleOverview,
   JobTitleOverviewStatistics,
-  JobTitleTimeAndSalaryResult,
-  JobTitleTimeAndSalaryStatistics,
-  JobTitleInterviewExperienceResult,
+  JobTitleSalaryWorkTimeResult,
+  JobTitleSalaryWorkTimeStatistics,
   JobTitleWorkExperienceResult,
 } from 'reducers/jobTitleIndex';
-import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
-import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import FetchBox, { getUnfetched, isFetched } from 'utils/fetchBox';
 
 export const salaryWorkTimeStatistics: (
@@ -57,14 +58,14 @@ export const companyOverviewStatisticsBoxSelectorByName = (
 ) => (state: RootState): FetchBox<CompanyOverviewStatistics | null> =>
   state.companyIndex.overviewStatisticsByName[companyName] || getUnfetched();
 
-export const companyTimeAndSalaryBoxSelectorByName = (companyName: string) => (
+export const companySalaryWorkTimeBoxSelectorByName = (companyName: string) => (
   state: RootState,
-): FetchBox<CompanyTimeAndSalaryResult | null> =>
+): FetchBox<CompanySalaryWorkTimeResult | null> =>
   state.companyIndex.timeAndSalaryByName[companyName] || getUnfetched();
 
-export const companyTimeAndSalaryStatisticsBoxSelectorByName = (
+export const companySalaryWorkTimeStatisticsBoxSelectorByName = (
   companyName: string,
-) => (state: RootState): FetchBox<CompanyTimeAndSalaryStatistics | null> =>
+) => (state: RootState): FetchBox<CompanySalaryWorkTimeStatistics | null> =>
   state.companyIndex.timeAndSalaryStatisticsByName[companyName] ||
   getUnfetched();
 
@@ -113,14 +114,14 @@ export const jobTitleOverviewStatisticsBoxSelectorByName = (
 ) => (state: RootState): FetchBox<JobTitleOverviewStatistics | null> =>
   state.jobTitleIndex.overviewStatisticsByName[jobTitle] || getUnfetched();
 
-export const jobTitleTimeAndSalaryBoxSelectorByName = (jobTitle: string) => (
+export const jobTitleSalaryWorktimeBoxSelectorByName = (jobTitle: string) => (
   state: RootState,
-): FetchBox<JobTitleTimeAndSalaryResult | null> =>
+): FetchBox<JobTitleSalaryWorkTimeResult | null> =>
   state.jobTitleIndex.timeAndSalaryByName[jobTitle] || getUnfetched();
 
-export const jobTitleTimeAndSalaryStatisticsBoxSelectorByName = (
+export const jobTitleSalaryWorkTimeStatisticsBoxSelectorByName = (
   jobTitle: string,
-) => (state: RootState): FetchBox<JobTitleTimeAndSalaryStatistics | null> =>
+) => (state: RootState): FetchBox<JobTitleSalaryWorkTimeStatistics | null> =>
   state.jobTitleIndex.timeAndSalaryStatisticsByName[jobTitle] || getUnfetched();
 
 export const jobTitleInterviewExperiencesBoxSelectorByName = (

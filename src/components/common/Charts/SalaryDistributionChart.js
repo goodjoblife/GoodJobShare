@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { useWindowSize } from 'react-use';
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import breakpoints from 'constants/breakpoints';
 
 const LabelOnSmallDevice = ({ viewBox: { x, y, width, height } }) => {

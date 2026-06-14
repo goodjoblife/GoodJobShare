@@ -1,23 +1,30 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { toPairs, compose, map } from 'ramda';
+
+import { Wrapper } from 'common/base';
 import Heading from 'common/base/Heading';
-import FanPageBlock from 'common/FanPageBlock';
 import BreadCrumb from 'common/BreadCrumb';
-import { tabTypeTranslation, generateTabURL } from 'constants/companyJobTitle';
-import { generateBreadCrumbData } from './utils';
+import FanPageBlock from 'common/FanPageBlock';
 import TabLinkGroup from 'common/TabLinkGroup';
-import styles from './CompanyAndJobTitleWrapper.module.css';
-import SubscribeNotificationButton from 'components/CompanyAndJobTitle/SubscribeNotificationButton';
 import StatisticsCard from 'components/CompanyAndJobTitle/StatisticsCard';
+import SubscribeNotificationButton from 'components/CompanyAndJobTitle/SubscribeNotificationButton';
 import {
+  generateTabURL,
   PageType,
   TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
+  tabTypeTranslation,
 } from 'constants/companyJobTitle';
-import { Wrapper } from 'common/base';
 
-const CompanyAndJobTitleWrapper = ({
+import styles from './CompanyAndJobTitleWrapper.module.css';
+import { generateBreadCrumbData } from './utils';
+
+type CompanyAndJobTitleWrapperProps = React.PropsWithChildren<{
+  pageName: string;
+  pageType: PageType;
+  tabType: TabType;
+}>;
+
+const CompanyAndJobTitleWrapper: React.FC<CompanyAndJobTitleWrapperProps> = ({
   children,
   pageType,
   pageName,
@@ -25,17 +32,16 @@ const CompanyAndJobTitleWrapper = ({
 }) => {
   const tabLinkOptions = useMemo(
     () =>
-      compose(
-        map(([type, label]) => ({
+      (Object.entries(tabTypeTranslation) as [TabType, string][]).map(
+        ([type, label]) => ({
           label,
           to: generateTabURL({
             pageType,
             pageName,
             tabType: type,
           }),
-        })),
-        toPairs,
-      )(tabTypeTranslation),
+        }),
+      ),
     [pageType, pageName],
   );
 
@@ -68,6 +74,7 @@ const CompanyAndJobTitleWrapper = ({
           <StatisticsCard pageType={pageType} pageName={pageName} />
         </div>
         <TabLinkGroup
+          className=""
           options={tabLinkOptions}
           style={{
             marginBottom: '24px',
@@ -80,13 +87,6 @@ const CompanyAndJobTitleWrapper = ({
       </Wrapper>
     </div>
   );
-};
-
-CompanyAndJobTitleWrapper.propTypes = {
-  children: PropTypes.node,
-  pageName: PropTypes.string.isRequired,
-  pageType: PropTypes.string.isRequired,
-  tabType: PropTypes.string.isRequired,
 };
 
 export default CompanyAndJobTitleWrapper;

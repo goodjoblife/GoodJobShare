@@ -1,12 +1,13 @@
-import React, { useCallback, useRef, useEffect, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
-import R from 'ramda';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import R from 'ramda';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 
-import styles from './private.module.css';
 import TextInput from 'common/form/TextInput';
+
 import BlockSelect from './BlockSelect';
+import styles from './private.module.css';
 import { OptionPropType, ValuePropType } from '../PropTypes';
 
 const BlockSelectElse = ({

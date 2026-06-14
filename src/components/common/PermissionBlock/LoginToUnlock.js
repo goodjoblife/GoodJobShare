@@ -1,17 +1,19 @@
-import React from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import { P } from 'common/base';
-import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
-import styles from './PermissionBlock.module.css';
 import linkStyles from 'common/base/Link.module.css';
-import CallToLoginShareButton from './CallToLoginShareButton';
 import { useLogin } from 'hooks/login';
+import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
+
+import CallToLoginShareButton from './CallToLoginShareButton';
+import styles from './PermissionBlock.module.css';
 import useUnlockedDescriptionBySubmission from './useUnlockedDescriptionBySubmission';
 
 const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
   const experienceCount = useExperienceCount();
-  const timeAndSalaryCount = useSalaryWorkTimeCount();
+  const salaryWorkTimeCount = useSalaryWorkTimeCount();
   const [isLoggedIn, login] = useLogin();
   const unlockedDescription = useUnlockedDescriptionBySubmission();
 
@@ -23,7 +25,7 @@ const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
         </P>
       </div>
       <P size="l" className={styles.ctaText}>
-        解鎖全站共 {timeAndSalaryCount + experienceCount} 筆薪資、面試資料
+        解鎖全站共 {salaryWorkTimeCount + experienceCount} 筆薪資、面試資料
       </P>
       {!isLoggedIn && (
         <P

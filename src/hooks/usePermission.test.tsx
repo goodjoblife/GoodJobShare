@@ -1,16 +1,18 @@
+import { act, renderHook } from '@testing-library/react-hooks';
 import React from 'react';
-import { renderHook, act } from '@testing-library/react-hooks';
-import usePermission from './usePermission';
-import PermissionContextProvider from 'components/common/PermissionContextProvider';
-import { queryHasSearchPermissionApi } from 'apis/me';
-import useIsMyPublishId from './useIsMyPublishId';
 
-jest.mock('apis/me', () => ({ queryHasSearchPermissionApi: jest.fn() }));
+import queryPermission from 'apis/queryPermission';
+import PermissionContextProvider from 'components/common/PermissionContextProvider';
+
+import useIsMyPublishId from './useIsMyPublishId';
+import usePermission from './usePermission';
+
+jest.mock('apis/queryPermission');
 jest.mock('hooks/auth', () => ({ useToken: jest.fn(() => 'test-token') }));
 jest.mock('./useIsMyPublishId');
 
-const mockQueryHasSearchPermissionApi = queryHasSearchPermissionApi as jest.MockedFunction<
-  typeof queryHasSearchPermissionApi
+const mockQueryPermission = queryPermission as jest.MockedFunction<
+  typeof queryPermission
 >;
 const mockUseIsMyPublishId = useIsMyPublishId as jest.Mock;
 
@@ -26,7 +28,7 @@ describe('usePermission', () => {
 
   describe('fetchPermission', () => {
     it('sets canView = true and writes to localStorage on first visit', async () => {
-      mockQueryHasSearchPermissionApi.mockResolvedValue(false);
+      mockQueryPermission.mockResolvedValue(false);
 
       const { result } = renderHook(() => usePermission(), { wrapper });
       await act(() => result.current[1]());
@@ -39,7 +41,7 @@ describe('usePermission', () => {
 
     it('sets canView = true based on API result on subsequent visits', async () => {
       localStorage.setItem('visitedWebsite', 'true');
-      mockQueryHasSearchPermissionApi.mockResolvedValue(true);
+      mockQueryPermission.mockResolvedValue(true);
 
       const { result } = renderHook(() => usePermission(), { wrapper });
       await act(() => result.current[1]());
@@ -51,7 +53,7 @@ describe('usePermission', () => {
 
     it('sets canView = false based on API result on subsequent visits', async () => {
       localStorage.setItem('visitedWebsite', 'true');
-      mockQueryHasSearchPermissionApi.mockResolvedValue(false);
+      mockQueryPermission.mockResolvedValue(false);
 
       const { result } = renderHook(() => usePermission(), { wrapper });
       await act(() => result.current[1]());
@@ -65,7 +67,7 @@ describe('usePermission', () => {
   describe('canViewPublishId', () => {
     it("returns true for the user's own publishId regardless of canView", async () => {
       localStorage.setItem('visitedWebsite', 'true');
-      mockQueryHasSearchPermissionApi.mockResolvedValue(false);
+      mockQueryPermission.mockResolvedValue(false);
       mockUseIsMyPublishId.mockReturnValue((id: string) => id === 'my-id');
 
       const { result } = renderHook(() => usePermission(), { wrapper });
