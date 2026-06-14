@@ -1,4 +1,5 @@
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
+
 import { getAvailableYears, getStatisticsByYear } from './esgYearUtils';
 
 const sample: ESGSalaryData = {
