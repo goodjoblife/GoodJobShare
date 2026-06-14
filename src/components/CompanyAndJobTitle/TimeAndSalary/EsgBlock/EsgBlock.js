@@ -64,6 +64,7 @@ const EsgBlock = ({
   showsToggle = true,
   hasPreviewed,
   esgSalaryData,
+  yearSelectInContent = false,
 }) => {
   const [isCollapsed, setCollapsed] = useState(hasPreviewed);
 
@@ -98,6 +99,21 @@ const EsgBlock = ({
     setSelectedYear(Number(e.target.value));
   }, []);
 
+  const yearSelect = availableYears.length > 0 && (
+    <div
+      className={
+        yearSelectInContent ? styles.mobileYearSelect : styles.yearSelect
+      }
+    >
+      <Select
+        hasNullOption={false}
+        value={selectedYear}
+        options={yearOptions}
+        onChange={handleYearChange}
+      />
+    </div>
+  );
+
   return (
     <Card className={cn(styles.card, className)}>
       <div className={styles.header}>
@@ -112,22 +128,15 @@ const EsgBlock = ({
             </button>
           )}
         </div>
-        {availableYears.length > 0 && (
-          <div className={styles.yearSelect}>
-            <Select
-              hasNullOption={false}
-              value={selectedYear}
-              options={yearOptions}
-              onChange={handleYearChange}
-            />
-          </div>
-        )}
+        {!yearSelectInContent && yearSelect}
       </div>
       <div
         className={cn(styles.content, {
           [styles.collapsed]: isCollapsed,
         })}
       >
+        {yearSelectInContent && yearSelect}
+
         <div className={styles.items}>
           {avgSalaryStatisticsItem && (
             <EsgItemBlock
@@ -202,6 +211,7 @@ EsgBlock.propTypes = {
   }),
   hasPreviewed: PropTypes.bool,
   showsToggle: PropTypes.bool,
+  yearSelectInContent: PropTypes.bool,
 };
 
 export default EsgBlock;

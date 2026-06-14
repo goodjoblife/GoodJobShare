@@ -28,6 +28,7 @@ const EsgBlockMobile = ({ className, ...props }) => {
         className={cn(styles.mobile, { [styles.preview]: !hasPreviewed })}
         showsToggle={hasPreviewed}
         hasPreviewed={hasPreviewed}
+        yearSelectInContent
         {...props}
       />
     </GradientMask>

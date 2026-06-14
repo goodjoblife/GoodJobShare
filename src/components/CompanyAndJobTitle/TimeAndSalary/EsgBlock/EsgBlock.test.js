@@ -22,6 +22,19 @@ const esgSalaryData = {
   ],
 };
 
+beforeAll(() => {
+  window.matchMedia = query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  });
+});
+
 test('預設顯示最新年份 2024，四張卡片皆為該年', () => {
   render(<EsgBlock esgSalaryData={esgSalaryData} hasPreviewed />);
   expect(screen.getAllByText('2024 年')).toHaveLength(4);

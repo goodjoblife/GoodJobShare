@@ -28,10 +28,11 @@
   display: grid;
   grid-template: auto / repeat(4, 1fr);
   gap: 26px;
-  margin: 20px 0;
+  padding: 1rem 0;
 
   @media (max-width: below-small) {
     grid-template: auto / repeat(1, 1fr);
+    padding: 0 0 1rem;
   }
 }
 
@@ -144,7 +145,11 @@
 }
 
 .yearSelect {
-  width: 110px;
   flex: none;
-  margin-left: 16px;
+}
+
+.mobileYearSelect {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
 }
