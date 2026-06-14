@@ -1,6 +1,7 @@
+import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { getAvailableYears, getStatisticsByYear } from './esgYearUtils';
 
-const sample = {
+const sample: ESGSalaryData = {
   avgSalaryStatistics: [
     { year: 2023, average: 973000, sameIndustryAverage: 1000000 },
     { year: 2024, average: 1010000, sameIndustryAverage: 1020000 },
@@ -59,7 +60,9 @@ describe('getStatisticsByYear', () => {
   test('該年缺資料的指標回 undefined', () => {
     const r = getStatisticsByYear(sample, 2023);
     expect(r.nonManagerAvgSalaryStatisticsItem).toBeUndefined();
-    expect(r.avgSalaryStatisticsItem.year).toBe(2023);
+    expect(r.avgSalaryStatisticsItem && r.avgSalaryStatisticsItem.year).toBe(
+      2023,
+    );
   });
 
   test('null 輸入 → 四個 item 皆 undefined', () => {
