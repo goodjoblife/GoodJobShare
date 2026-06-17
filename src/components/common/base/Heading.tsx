@@ -1,12 +1,24 @@
 import cn from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import styles from './Heading.module.css';
 
-const sizeOptions = ['l', 'm', 'sl', 'sm'];
+type HeadingSize = 'l' | 'm' | 'sl' | 'sm';
 
-const Heading = ({
+type Props = {
+  Tag?: React.ElementType;
+  size?: HeadingSize;
+  bold?: boolean;
+  light?: boolean;
+  center?: boolean;
+  marginBottom?: boolean;
+  marginBottomS?: boolean;
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+  className?: string;
+};
+
+const Heading: React.FC<Props> = ({
   Tag = 'h1',
   size = 'm',
   bold = false,
@@ -14,9 +26,9 @@ const Heading = ({
   center = false,
   marginBottom = false,
   marginBottomS = false,
-  children = '',
-  style = {},
-  className = '',
+  children,
+  style,
+  className,
 }) => (
   <Tag
     className={cn(styles[size], className, {
@@ -31,17 +43,5 @@ const Heading = ({
     {children}
   </Tag>
 );
-Heading.propTypes = {
-  Tag: PropTypes.string,
-  bold: PropTypes.bool,
-  center: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  light: PropTypes.bool,
-  marginBottom: PropTypes.bool,
-  marginBottomS: PropTypes.bool,
-  size: PropTypes.oneOf(sizeOptions),
-  style: PropTypes.object,
-};
 
 export default Heading;

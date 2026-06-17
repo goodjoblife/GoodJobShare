@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   queryJobTitleOverviewStatistics,
-  queryJobTitleTimeAndSalary,
-  queryJobTitleTimeAndSalaryStatistics,
+  queryJobTitleSalaryWorkTime,
+  queryJobTitleSalaryWorkTimeStatistics,
 } from 'actions/jobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
-import TimeAndSalary from 'components/CompanyAndJobTitle/TimeAndSalary';
+import SalaryWorkTime from 'components/CompanyAndJobTitle/TimeAndSalary';
 import {
   dataTimeFromQuerySelector,
   experienceFromQuerySelector,
@@ -25,9 +25,9 @@ import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
 import usePermission from 'hooks/usePermission';
 import {
-  jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
-  jobTitleTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
-  jobTitleTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  jobTitleOverviewStatisticsBoxSelectorByName,
+  jobTitleSalaryWorktimeBoxSelectorByName,
+  jobTitleSalaryWorkTimeStatisticsBoxSelectorByName,
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
 } from 'selectors/companyAndJobTitle';
 import {
@@ -39,7 +39,7 @@ import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
 const useOverviewStatisticsBox = pageName => {
   const selector = useMemo(
-    () => overviewStatisticsBoxSelectorByName(pageName),
+    () => jobTitleOverviewStatisticsBoxSelectorByName(pageName),
     [pageName],
   );
   return useSelector(selector);
@@ -48,9 +48,9 @@ const useOverviewStatisticsBox = pageName => {
 const useSalaryWorkTimeStatistics = pageName => {
   const selector = useCallback(
     state => {
-      const jobTitle = timeAndSalaryStatisticsBoxSelectorByName(pageName)(
-        state,
-      );
+      const jobTitle = jobTitleSalaryWorkTimeStatisticsBoxSelectorByName(
+        pageName,
+      )(state);
       return salaryWorkTimeStatisticsSelector(jobTitle);
     },
     [pageName],
@@ -59,17 +59,17 @@ const useSalaryWorkTimeStatistics = pageName => {
   return useSelector(selector);
 };
 
-const useTimeAndSalaryBoxSelector = pageName => {
+const useSalaryWorkTimeBoxSelector = pageName => {
   return useCallback(
     state => {
-      const jobTitle = timeAndSalaryBoxSelectorByName(pageName)(state);
+      const jobTitle = jobTitleSalaryWorktimeBoxSelectorByName(pageName)(state);
       return jobTitle;
     },
     [pageName],
   );
 };
 
-const JobTitleTimeAndSalaryProvider = () => {
+const JobTitleSalaryWorkTimeProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.JOB_TITLE;
   const jobTitle = useJobTitle();
@@ -89,10 +89,10 @@ const JobTitleTimeAndSalaryProvider = () => {
     [experience],
   );
 
-  const handleQueryJobTitleTimeAndSalary = useCallback(
+  const handleQueryJobTitleSalaryWorkTime = useCallback(
     ({ force = false } = {}) => {
       dispatch(
-        queryJobTitleTimeAndSalary(
+        queryJobTitleSalaryWorkTime(
           {
             jobTitle,
             companyName: companyName || undefined,
@@ -126,28 +126,28 @@ const JobTitleTimeAndSalaryProvider = () => {
 
   useEffect(() => {
     dispatch(
-      queryJobTitleTimeAndSalaryStatistics({
+      queryJobTitleSalaryWorkTimeStatistics({
         jobTitle,
       }),
     );
   }, [dispatch, jobTitle]);
 
   useEffect(() => {
-    handleQueryJobTitleTimeAndSalary();
-  }, [handleQueryJobTitleTimeAndSalary]);
+    handleQueryJobTitleSalaryWorkTime();
+  }, [handleQueryJobTitleSalaryWorkTime]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [pageType, jobTitle, fetchPermission]);
 
-  const boxSelector = useTimeAndSalaryBoxSelector(jobTitle);
+  const boxSelector = useSalaryWorkTimeBoxSelector(jobTitle);
 
   const statisticsBox = useOverviewStatisticsBox(jobTitle);
   const salaryWorkTimeStatistics = useSalaryWorkTimeStatistics(jobTitle);
 
   return (
-    <TimeAndSalary
+    <SalaryWorkTime
       pageType={pageType}
       pageName={jobTitle}
       page={page}
@@ -156,12 +156,12 @@ const JobTitleTimeAndSalaryProvider = () => {
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onCloseReport={() => handleQueryJobTitleTimeAndSalary({ force: true })}
+      onCloseReport={() => handleQueryJobTitleSalaryWorkTime({ force: true })}
     />
   );
 };
 
-JobTitleTimeAndSalaryProvider.fetchData = ({
+JobTitleSalaryWorkTimeProvider.fetchData = ({
   store: { dispatch },
   ...props
 }) => {
@@ -181,7 +181,7 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   return Promise.all([
     dispatch(queryJobTitleOverviewStatistics(jobTitle)),
     dispatch(
-      queryJobTitleTimeAndSalary({
+      queryJobTitleSalaryWorkTime({
         jobTitle,
         companyName,
         start,
@@ -195,4 +195,4 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   ]);
 };
 
-export default JobTitleTimeAndSalaryProvider;
+export default JobTitleSalaryWorkTimeProvider;

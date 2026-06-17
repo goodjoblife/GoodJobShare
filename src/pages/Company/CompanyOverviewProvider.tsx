@@ -8,29 +8,34 @@ import {
   queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
-import { paramsSelector } from 'common/routing/selectors';
 import Overview from 'components/CompanyAndJobTitle/Overview';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import usePermission from 'hooks/usePermission';
+import { RootState } from 'reducers';
+import {
+  CompanyOverview,
+  CompanyOverviewStatistics,
+} from 'reducers/companyIndex';
 import {
   companyOverviewBoxSelectorByName as overviewBoxSelectorByName,
   companyOverviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
+import { ServerSideRender } from 'types/serverSideRender';
+import FetchBox from 'utils/fetchBox';
 
 import useCompanyName, { companyNameSelector } from './useCompanyName';
-import { useTopNJobTitles } from './useTopNJobTitles';
 
-const useOverviewBoxSelector = pageName => {
-  return useCallback(
-    state => {
-      const box = overviewBoxSelectorByName(pageName)(state);
-      return box;
-    },
-    [pageName],
-  );
-};
+// Matches the React Router route params for Company pages
+type Params = { companyName: string };
 
-const useOverviewStatisticsBox = pageName => {
+const useOverviewBoxSelector = (
+  pageName: string,
+): ((state: RootState) => FetchBox<CompanyOverview | null>) =>
+  useMemo(() => overviewBoxSelectorByName(pageName), [pageName]);
+
+const useOverviewStatisticsBox = (
+  pageName: string,
+): FetchBox<CompanyOverviewStatistics | null> => {
   const selector = useMemo(
     () => companyOverviewStatisticsBoxSelectorByName(pageName),
     [pageName],
@@ -38,13 +43,13 @@ const useOverviewStatisticsBox = pageName => {
   return useSelector(selector);
 };
 
-const CompanyOverviewProvider = () => {
+const CompanyOverviewProvider: React.FC & ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
   const companyName = useCompanyName();
 
   const handleQueryCompanyOverview = useCallback(
-    ({ force = false } = {}) => {
+    ({ force = false }: { force?: boolean } = {}) => {
       dispatch(queryCompanyOverview(companyName, { force }));
     },
     [dispatch, companyName],
@@ -82,29 +87,28 @@ const CompanyOverviewProvider = () => {
   const boxSelector = useOverviewBoxSelector(companyName);
   const statisticsBox = useOverviewStatisticsBox(companyName);
 
-  const topNJobTitles = useTopNJobTitles(companyName);
-
   return (
     <Overview
       pageType={pageType}
       pageName={companyName}
       tabType={TabType.OVERVIEW}
-      topNJobTitles={topNJobTitles.all}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onCloseReport={() => handleQueryCompanyOverview({ force: true })}
     />
   );
 };
 
-CompanyOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
-  const params = paramsSelector(props);
+CompanyOverviewProvider.fetchData = ({
+  store: { dispatch },
+  match: { params },
+}): Promise<unknown> => {
   const companyName = companyNameSelector(params);
   return Promise.all([
     dispatch(queryCompanyOverview(companyName)),
     dispatch(queryCompanyOverviewStatistics(companyName)),
     dispatch(queryRatingStatistics(companyName)),
     dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName })),
+    // helmet use
     dispatch(queryCompanyTopNJobTitles({ companyName })),
   ]);
 };
