@@ -8,6 +8,7 @@ import {
   YAxis,
 } from 'recharts';
 
+import { Link } from 'common/base';
 import Card from 'common/Card';
 
 import styles from './PolicyBarChart.module.css';
@@ -25,9 +26,13 @@ export type PolicyDistribution = {
 
 type PolicyBarChartProps = {
   distribution: PolicyDistribution;
+  linkTo?: string;
 };
 
-const PolicyBarChart: React.FC<PolicyBarChartProps> = ({ distribution }) => (
+const PolicyBarChart: React.FC<PolicyBarChartProps> = ({
+  distribution,
+  linkTo,
+}) => (
   <Card className={styles.card}>
     <div className={styles.title}>{distribution.title}</div>
     <div className={styles.chart}>
@@ -62,7 +67,13 @@ const PolicyBarChart: React.FC<PolicyBarChartProps> = ({ distribution }) => (
         </BarChart>
       </ResponsiveContainer>
     </div>
-    <div className={styles.footer}>資料數：{distribution.dataCount}</div>
+    {linkTo ? (
+      <Link to={linkTo} className={styles.footer}>
+        資料數：{distribution.dataCount}
+      </Link>
+    ) : (
+      <div className={styles.footer}>資料數：{distribution.dataCount}</div>
+    )}
   </Card>
 );
 

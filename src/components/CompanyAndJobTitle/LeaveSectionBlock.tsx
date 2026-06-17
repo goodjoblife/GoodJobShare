@@ -37,8 +37,10 @@ const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
         </Link>
       )}
     </Card>
-    <PolicyBarChart distribution={section.availability} />
-    {section.compliance && <PolicyBarChart distribution={section.compliance} />}
+    <PolicyBarChart distribution={section.availability} linkTo={linkTo} />
+    {section.compliance && (
+      <PolicyBarChart distribution={section.compliance} linkTo={linkTo} />
+    )}
   </div>
 );
 
