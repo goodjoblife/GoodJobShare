@@ -23,6 +23,9 @@ export const companyFamilyChildcareParentalLeavePath =
 export const companyFamilyChildcareFamilyCareLeave =
   '/companies/:companyName/family-childcare/family-care-leave';
 
+export const companyFamilyChildcareFlexibleHoursPath =
+  '/companies/:companyName/family-childcare/flexible-hours';
+
 export const companyFamilyChildcareRemoteWorkPath =
   '/companies/:companyName/family-childcare/remote-work';
 

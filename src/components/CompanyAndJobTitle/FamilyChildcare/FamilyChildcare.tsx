@@ -19,6 +19,7 @@ type Props = {
   data: FamilyChildcareData;
   parentalLeaveLinkTo?: string;
   familyCareLeaveLinkTo?: string;
+  flexibleHoursLinkTo?: string;
   remoteWorkLinkTo?: string;
 };
 
@@ -26,6 +27,7 @@ const FamilyChildcare: React.FC<Props> = ({
   data,
   parentalLeaveLinkTo,
   familyCareLeaveLinkTo,
+  flexibleHoursLinkTo,
   remoteWorkLinkTo,
 }) => (
   <Section Tag="main" paddingBottom>
@@ -60,7 +62,10 @@ const FamilyChildcare: React.FC<Props> = ({
       <Heading className={styles.sectionTitle} Tag="h2">
         彈性上下班時間制度
       </Heading>
-      <PolicyBarChart distribution={data.flexibleHours} />
+      <PolicyBarChart
+        distribution={data.flexibleHours}
+        linkTo={flexibleHoursLinkTo}
+      />
     </div>
     <div className={styles.section}>
       <Heading className={styles.sectionTitle} Tag="h2">

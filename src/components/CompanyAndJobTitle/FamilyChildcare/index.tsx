@@ -31,6 +31,7 @@ const FamilyChildcare: React.FC<Props> = ({
           data={data}
           parentalLeaveLinkTo={`${tabBase}/parental-leave`}
           familyCareLeaveLinkTo={`${tabBase}/family-care-leave`}
+          flexibleHoursLinkTo={`${tabBase}/flexible-hours`}
           remoteWorkLinkTo={`${tabBase}/remote-work`}
         />
       </Wrapper>
