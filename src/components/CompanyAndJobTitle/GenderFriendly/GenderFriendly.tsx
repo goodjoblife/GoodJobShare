@@ -24,11 +24,13 @@ type FemaleManagerItem = {
 type GenderFriendlyProps = {
   data: GenderFriendlyData;
   femaleManagerStatisticsItem: FemaleManagerItem | null;
+  menstrualLeaveLinkTo?: string;
 };
 
 const GenderFriendly: React.FC<GenderFriendlyProps> = ({
   data,
   femaleManagerStatisticsItem,
+  menstrualLeaveLinkTo,
 }) => (
   <Section Tag="main" paddingBottom>
     <div className={styles.section}>
@@ -46,7 +48,10 @@ const GenderFriendly: React.FC<GenderFriendlyProps> = ({
       <Heading className={styles.sectionTitle} Tag="h2">
         {data.menstrualLeave.title}
       </Heading>
-      <LeaveSectionBlock section={data.menstrualLeave} />
+      <LeaveSectionBlock
+        section={data.menstrualLeave}
+        linkTo={menstrualLeaveLinkTo}
+      />
     </div>
     <div className={styles.section}>
       <Heading className={styles.sectionTitle} Tag="h2">

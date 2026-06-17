@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Wrapper } from 'common/base';
-import { PageType, TabType } from 'constants/companyJobTitle';
+import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import FamilyChildcareSection, { FamilyChildcareData } from './FamilyChildcare';
@@ -18,16 +18,24 @@ const FamilyChildcare: React.FC<Props> = ({
   pageName,
   tabType,
   data,
-}) => (
-  <CompanyAndJobTitleWrapper
-    pageType={pageType}
-    pageName={pageName}
-    tabType={tabType}
-  >
-    <Wrapper size="l">
-      <FamilyChildcareSection data={data} />
-    </Wrapper>
-  </CompanyAndJobTitleWrapper>
-);
+}) => {
+  const tabBase = generateTabURL({ pageType, pageName, tabType });
+  return (
+    <CompanyAndJobTitleWrapper
+      pageType={pageType}
+      pageName={pageName}
+      tabType={tabType}
+    >
+      <Wrapper size="l">
+        <FamilyChildcareSection
+          data={data}
+          parentalLeaveLinkTo={`${tabBase}/parental-leave`}
+          familyCareLeaveLinkTo={`${tabBase}/family-care-leave`}
+          remoteWorkLinkTo={`${tabBase}/remote-work`}
+        />
+      </Wrapper>
+    </CompanyAndJobTitleWrapper>
+  );
+};
 
 export default FamilyChildcare;

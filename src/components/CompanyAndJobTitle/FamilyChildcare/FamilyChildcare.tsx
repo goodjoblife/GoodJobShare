@@ -17,9 +17,17 @@ export type FamilyChildcareData = {
 
 type Props = {
   data: FamilyChildcareData;
+  parentalLeaveLinkTo?: string;
+  familyCareLeaveLinkTo?: string;
+  remoteWorkLinkTo?: string;
 };
 
-const FamilyChildcare: React.FC<Props> = ({ data }) => (
+const FamilyChildcare: React.FC<Props> = ({
+  data,
+  parentalLeaveLinkTo,
+  familyCareLeaveLinkTo,
+  remoteWorkLinkTo,
+}) => (
   <Section Tag="main" paddingBottom>
     <div className={styles.section}>
       <Heading className={styles.sectionTitle} Tag="h2">
@@ -34,13 +42,19 @@ const FamilyChildcare: React.FC<Props> = ({ data }) => (
       <Heading className={styles.sectionTitle} Tag="h2">
         {data.parentalLeave.title}
       </Heading>
-      <LeaveSectionBlock section={data.parentalLeave} />
+      <LeaveSectionBlock
+        section={data.parentalLeave}
+        linkTo={parentalLeaveLinkTo}
+      />
     </div>
     <div className={styles.section}>
       <Heading className={styles.sectionTitle} Tag="h2">
         {data.familyCareLeave.title}
       </Heading>
-      <LeaveSectionBlock section={data.familyCareLeave} />
+      <LeaveSectionBlock
+        section={data.familyCareLeave}
+        linkTo={familyCareLeaveLinkTo}
+      />
     </div>
     <div className={styles.section}>
       <Heading className={styles.sectionTitle} Tag="h2">
@@ -52,7 +66,7 @@ const FamilyChildcare: React.FC<Props> = ({ data }) => (
       <Heading className={styles.sectionTitle} Tag="h2">
         {data.remoteWork.title}
       </Heading>
-      <LeaveSectionBlock section={data.remoteWork} />
+      <LeaveSectionBlock section={data.remoteWork} linkTo={remoteWorkLinkTo} />
     </div>
   </Section>
 );
