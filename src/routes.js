@@ -22,14 +22,14 @@ import CompanyGenderFriendlyProvider from 'pages/Company/CompanyGenderFriendlyPr
 import CompanyIndexProvider from 'pages/Company/CompanyIndexProvider';
 import CompanyInterviewExperiencesProvider from 'pages/Company/CompanyInterviewExperiencesProvider';
 import CompanyOverviewProvider from 'pages/Company/CompanyOverviewProvider';
-import CompanyTimeAndSalaryProvider from 'pages/Company/CompanyTimeAndSalaryProvider';
+import CompanySalaryWorkTimeProvider from 'pages/Company/CompanySalaryWorkTimeProvider';
 import CompanyWorkExperiencesAspectProvider from 'pages/Company/CompanyWorkExperiencesAspectProvider';
 import CompanyWorkExperiencesProvider from 'pages/Company/CompanyWorkExperiencesProvider';
 import { companyNameSelector } from 'pages/Company/useCompanyName';
 import JobTitleIndexProvider from 'pages/JobTitle/JobTitleIndexProvider';
 import JobTitleInterviewExperiencesProvider from 'pages/JobTitle/JobTitleInterviewExperiencesProvider';
 import JobTitleOverviewProvider from 'pages/JobTitle/JobTitleOverviewProvider';
-import JobTitleTimeAndSalaryProvider from 'pages/JobTitle/JobTitleTimeAndSalaryProvider';
+import JobTitleSalaryWorkTimeProvider from 'pages/JobTitle/JobTitleSalaryWorkTimeProvider';
 import JobTitleWorkExperiencesProvider from 'pages/JobTitle/JobTitleWorkExperiencesProvider';
 import { jobTitleSelector } from 'pages/JobTitle/useJobTitle';
 import SearchPage from 'pages/SearchPage';
@@ -139,7 +139,7 @@ const routes = [
       },
       {
         path: companySalaryWorkTimesPath,
-        component: CompanyTimeAndSalaryProvider,
+        component: CompanySalaryWorkTimeProvider,
         exact: true,
       },
       {
@@ -197,7 +197,7 @@ const routes = [
       },
       {
         path: jobTitleSalaryWorkTimesPath,
-        component: JobTitleTimeAndSalaryProvider,
+        component: JobTitleSalaryWorkTimeProvider,
         exact: true,
       },
       {

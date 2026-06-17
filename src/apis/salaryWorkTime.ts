@@ -35,6 +35,21 @@ export const fragmentSalaryWorkTimeFields = /* GraphQL */ `
   }
 `;
 
+export type YearMonth = {
+  year: number;
+  month: number;
+};
+
+export type DataTimeRange = {
+  start: YearMonth;
+  end: YearMonth;
+};
+
+export type ExperienceInYearRange = {
+  start: number;
+  end: number;
+};
+
 // Must be the same as fragment
 export type SalaryWorkTime = {
   id: string;

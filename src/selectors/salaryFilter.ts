@@ -1,15 +1,21 @@
 import { ParsedQs } from 'qs';
 
-import { SalaryFilterQueryKey } from 'constants/salaryFilter';
+import { DataTime, SalaryFilterQueryKey } from 'constants/salaryFilter';
 
 const stringFromQuery = (query: ParsedQs, key: string): string | undefined => {
   const val = query[key];
   return typeof val === 'string' ? val : undefined;
 };
 
+const isDataTime = (val: string): val is DataTime =>
+  (Object.values(DataTime) as string[]).includes(val);
+
 export const dataTimeFromQuerySelector = (
   query: ParsedQs,
-): string | undefined => stringFromQuery(query, SalaryFilterQueryKey.DATA_TIME);
+): DataTime | undefined => {
+  const val = stringFromQuery(query, SalaryFilterQueryKey.DATA_TIME);
+  return val !== undefined && isDataTime(val) ? val : undefined;
+};
 
 export const experienceFromQuerySelector = (
   query: ParsedQs,
