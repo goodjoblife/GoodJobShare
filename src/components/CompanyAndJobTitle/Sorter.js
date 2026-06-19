@@ -1,11 +1,11 @@
 import qs from 'qs';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useHistory } from 'react-router';
 
 import Sort from 'common/icons/Sort';
 import RoundedSelect from 'common/RoundedSelect';
 import { useQuery } from 'hooks/routing';
-import useMobile from 'hooks/useMobile';
+import useSectionY from 'hooks/useSectionY';
 
 export const SORT_BY = {
   LATEST_FIRST: 'LATEST_FIRST',
@@ -17,32 +17,6 @@ export const sortByFromQuerySelector = query => {
   const availableSortBy = Object.values(SORT_BY);
   if (availableSortBy.includes(sortBy)) return sortBy;
   return SORT_BY.FEATURED_FIRST;
-};
-
-const useSectionY = () => {
-  const sectionRef = useRef(null);
-  const isMobile = useMobile();
-  const [y, setY] = useState(null);
-
-  /* eslint-disable react-hooks/exhaustive-deps */
-  // DOM state changes don't notify React,
-  // so dependencies are omitted to always run the effect
-  // to ensure the latest scroll position is calculated.
-  useEffect(() => {
-    if (sectionRef.current) {
-      const rect = sectionRef.current.getBoundingClientRect();
-      let newY = rect.top + window.scrollY;
-      if (isMobile) {
-        newY -= 50; /* nav height */
-      }
-      if (newY !== y) {
-        setY(newY);
-      }
-    }
-  });
-  /* eslint-enable react-hooks/exhaustive-deps */
-
-  return [y, sectionRef];
 };
 
 export const useSortByFromQuery = () => {

@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { P } from 'common/base';
 import ArrowLeft from 'common/icons/ArrowLeft';
 import { useQuery } from 'hooks/routing';
-import useMobile from 'hooks/useMobile';
+import useSectionY from 'hooks/useSectionY';
 
 import {
   getCurrentCount,
@@ -17,32 +17,6 @@ import {
   isPreviousDisabled,
 } from './helpers';
 import styles from './Pagination.module.css';
-
-const useSectionY = () => {
-  const sectionRef = useRef(null);
-  const isMobile = useMobile();
-  const [y, setY] = useState(null);
-
-  /* eslint-disable react-hooks/exhaustive-deps */
-  // DOM state changes don't notify React,
-  // so dependencies are omitted to always run the effect
-  // to ensure the latest scroll position is calculated.
-  useEffect(() => {
-    if (sectionRef.current) {
-      const rect = sectionRef.current.getBoundingClientRect();
-      let newY = rect.top + window.scrollY;
-      if (isMobile) {
-        newY -= 50; /* nav height */
-      }
-      if (newY !== y) {
-        setY(newY);
-      }
-    }
-  });
-  /* eslint-enable react-hooks/exhaustive-deps */
-
-  return [y, sectionRef];
-};
 
 // Portal for generating the link and ref
 export const useCreatePageLinkTo = () => {
