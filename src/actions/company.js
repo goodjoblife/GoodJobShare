@@ -624,7 +624,7 @@ export const queryCompanyWorkExperiencesAspectStatistics = ({
     return;
   }
 
-  dispatch(setWorkExperiencesAspectStatistics(companyName, toFetching()));
+  dispatch(setWorkExperiencesAspectStatistics(companyName, toFetching(box)));
 
   try {
     const data = await queryCompanyAspectRatingStatisticsApi({
@@ -666,7 +666,7 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
     return;
   }
 
-  dispatch(setWorkExperiencesAspectExperiences(companyName, toFetching()));
+  dispatch(setWorkExperiencesAspectExperiences(companyName, toFetching(box)));
 
   try {
     const data = await queryCompanyWorkExperiencesApi({
