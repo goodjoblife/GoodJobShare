@@ -49,7 +49,7 @@ const useOverviewStatisticsBox = pageName => {
   return useSelector(selector);
 };
 
-const useCompanySalaryWorkTimeStatisticsBox = pageName => {
+const useSalaryWorkTimeStatisticsBox = pageName => {
   const selector = useMemo(
     () => companySalaryWorkTimeStatisticsBoxSelectorByName(pageName),
     [pageName],
@@ -171,7 +171,7 @@ const CompanySalaryWorkTimeProvider = () => {
   }, [pageType, companyName, fetchPermission]);
 
   const statisticsBox = useOverviewStatisticsBox(companyName);
-  const salaryWorkTimeStatisticsBox = useCompanySalaryWorkTimeStatisticsBox(
+  const salaryWorkTimeStatisticsBox = useSalaryWorkTimeStatisticsBox(
     companyName,
   );
   const topNJobTitles = useTopNJobTitles(companyName);

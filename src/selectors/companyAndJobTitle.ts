@@ -5,7 +5,6 @@ import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { CompanySalaryWorkTimeStatistics } from 'apis/queryCompanySalaryWorkTimeStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import { JobTitleSalaryWorkTimeStatistics } from 'apis/queryJobTitleSalaryWorkTimeStatistics';
-import { SalaryWorkTimeStats } from 'apis/salaryWorkTime';
 import { RootState } from 'reducers';
 import {
   CompanyAspectExperienceResult,
@@ -25,15 +24,6 @@ import {
   JobTitleWorkExperienceResult,
 } from 'reducers/jobTitleIndex';
 import FetchBox, { getUnfetched, isFetched } from 'utils/fetchBox';
-
-export const salaryWorkTimeStatistics = (
-  box: FetchBox<
-    CompanySalaryWorkTimeStatistics | JobTitleSalaryWorkTimeStatistics | null
-  >,
-): SalaryWorkTimeStats | null => {
-  const data = box.data;
-  return data ? data.salary_work_time_statistics : null;
-};
 
 export const companyIndexesBoxSelectorAtPage = (page: number) => (
   state: RootState,
