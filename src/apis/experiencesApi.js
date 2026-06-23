@@ -4,7 +4,6 @@ import {
   changeExperienceStatusGql,
   createExperienceLikeGql,
   deleteExpereinceLikeGql,
-  queryExperienceCountGql,
   queryExperienceGql,
   queryExperienceLikeGql,
   queryExperienceRepliesGql,
@@ -130,11 +129,4 @@ export const queryRelatedExperiences = async ({ id, start, limit }) => {
   });
   const relatedExperiences = data.experience.relatedExperiences;
   return relatedExperiences.map(resolveSubtitlesInExperience);
-};
-
-export const queryExperienceCountApi = async () => {
-  const data = await graphqlClient({
-    query: queryExperienceCountGql,
-  });
-  return data.experienceCount;
 };
