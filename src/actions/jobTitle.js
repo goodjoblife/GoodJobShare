@@ -3,11 +3,11 @@ import R from 'ramda';
 import {
   getJobTitleInterviewExperiences,
   getJobTitleTimeAndSalary,
-  getJobTitleTimeAndSalaryStatistics,
   queryJobTitlesApi,
 } from 'apis/jobTitle';
 import queryJobTitleOverviewApi from 'apis/queryJobTitleOverview';
 import queryJobTitleOverviewStatisticsApi from 'apis/queryJobTitleOverviewStatistics';
+import queryJobTitleSalaryWorkTimeStatisticsApi from 'apis/queryJobTitleSalaryWorkTimeStatistics';
 import queryJobTitleWorkExperiencesApi from 'apis/queryJobTitleWorkExperiences';
 import {
   jobTitleIndexesBoxSelectorAtPage,
@@ -310,26 +310,11 @@ export const queryJobTitleSalaryWorkTimeStatistics = ({ jobTitle }) => async (
   dispatch(setSalaryWorkTimeStatistics(jobTitle, toFetching(box)));
 
   try {
-    const data = await getJobTitleTimeAndSalaryStatistics({
+    const data = await queryJobTitleSalaryWorkTimeStatisticsApi({
       jobTitle,
     });
 
-    // Not found case
-    if (data == null) {
-      return dispatch(setSalaryWorkTimeStatistics(jobTitle, getFetched(data)));
-    }
-
-    const salaryWorkTimeStatisticsData = {
-      name: data.name,
-      salary_work_time_statistics: data.salary_work_time_statistics,
-    };
-
-    dispatch(
-      setSalaryWorkTimeStatistics(
-        jobTitle,
-        getFetched(salaryWorkTimeStatisticsData),
-      ),
-    );
+    dispatch(setSalaryWorkTimeStatistics(jobTitle, getFetched(data)));
   } catch (error) {
     dispatch(setSalaryWorkTimeStatistics(jobTitle, getError(error)));
   }

@@ -1,9 +1,9 @@
 import { SalaryWorkTimeStatistics } from 'apis/salaryWorkTime';
 import graphqlClient from 'utils/graphqlClient';
 
-const queryCompanySalaryWorkTimeStatisticsGql = /* GraphQL */ `
-  query($companyName: String!) {
-    company(name: $companyName) {
+const queryJobTitleSalaryWorkTimeStatisticsGql = /* GraphQL */ `
+  query($jobTitle: String!) {
+    job_title(name: $jobTitle) {
       name
       salary_work_time_statistics {
         count
@@ -27,7 +27,7 @@ const queryCompanySalaryWorkTimeStatisticsGql = /* GraphQL */ `
   }
 `;
 
-export type CompanySalaryWorkTimeStatistics = {
+export type JobTitleSalaryWorkTimeStatistics = {
   name: string;
   salary_work_time_statistics: Pick<
     SalaryWorkTimeStatistics,
@@ -38,18 +38,18 @@ export type CompanySalaryWorkTimeStatistics = {
   >;
 };
 
-type QueryCompanySalaryWorkTimeStatisticsData = {
-  company: CompanySalaryWorkTimeStatistics | null;
+type QueryJobTitleSalaryWorkTimeStatisticsData = {
+  job_title: JobTitleSalaryWorkTimeStatistics | null;
 };
 
-const queryCompanySalaryWorkTimeStatistics = ({
-  companyName,
+const queryJobTitleSalaryWorkTimeStatistics = ({
+  jobTitle,
 }: {
-  companyName: string;
-}): Promise<QueryCompanySalaryWorkTimeStatisticsData['company']> =>
-  graphqlClient<QueryCompanySalaryWorkTimeStatisticsData>({
-    query: queryCompanySalaryWorkTimeStatisticsGql,
-    variables: { companyName },
-  }).then(data => data.company);
+  jobTitle: string;
+}): Promise<QueryJobTitleSalaryWorkTimeStatisticsData['job_title']> =>
+  graphqlClient<QueryJobTitleSalaryWorkTimeStatisticsData>({
+    query: queryJobTitleSalaryWorkTimeStatisticsGql,
+    variables: { jobTitle },
+  }).then(data => data.job_title);
 
-export default queryCompanySalaryWorkTimeStatistics;
+export default queryJobTitleSalaryWorkTimeStatistics;

@@ -391,7 +391,7 @@ export const queryCompanySalaryWorkTimeStatistics = ({ companyName }) => async (
     // Not found case
     if (data == null) {
       return dispatch(
-        setSalaryWorkTimeStatistics(companyName, getFetched(data)),
+        setSalaryWorkTimeStatistics(companyName, getFetched(null)),
       );
     }
 

@@ -13,6 +13,7 @@ import {
   InterviewExperienceInOverview,
   WorkExperienceInOverview,
 } from 'apis/overview';
+import { JobTitleSalaryWorkTimeStatistics as _JobTitleSalaryWorkTimeStatistics } from 'apis/queryJobTitleSalaryWorkTimeStatistics';
 import {
   OvertimeFrequencyCount,
   SalaryDistributionBin,
@@ -45,8 +46,7 @@ export type JobTitleOverviewStatistics = {
 // TODO: replace with proper JobTitleSalaryWorkTimeResult type
 export type JobTitleSalaryWorkTimeResult = unknown;
 
-// TODO: replace with proper JobTitleSalaryWorkTimeStatistics type
-export type JobTitleSalaryWorkTimeStatistics = unknown;
+export type JobTitleSalaryWorkTimeStatistics = _JobTitleSalaryWorkTimeStatistics;
 
 // TODO: replace with proper JobTitleInterviewExperienceResult type
 export type JobTitleInterviewExperienceResult = unknown;
