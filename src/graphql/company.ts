@@ -69,32 +69,6 @@ export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
   }
 `;
 
-export const getCompanyTimeAndSalaryStatisticsQuery = /* GraphQL */ `
-  query($companyName: String!) {
-    company(name: $companyName) {
-      name
-      salary_work_time_statistics {
-        count
-        is_overtime_salary_legal_count {
-          yes
-          no
-          unknown
-        }
-        has_compensatory_dayoff_count {
-          yes
-          no
-          unknown
-        }
-        has_overtime_salary_count {
-          yes
-          no
-          unknown
-        }
-      }
-    }
-  }
-`;
-
 export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
   query(
     $companyName: String!

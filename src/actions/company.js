@@ -3,7 +3,6 @@ import R from 'ramda';
 import {
   getCompanyInterviewExperiences,
   getCompanyTimeAndSalary,
-  getCompanyTimeAndSalaryStatistics,
 } from 'apis/company';
 import queryCompaniesApi from 'apis/queryCompanies';
 import queryCompanyAspectRatingStatisticsApi from 'apis/queryCompanyAspectRatingStatistics';
@@ -12,6 +11,7 @@ import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
 import queryCompanyOverviewStatisticsApi from 'apis/queryCompanyOverviewStatistics';
 import queryCompanyRatingStatisticsApi from 'apis/queryCompanyRatingStatistics';
+import queryCompanySalaryWorkTimeStatisticsApi from 'apis/queryCompanySalaryWorkTimeStatistics';
 import queryCompanyTopNJobTitlesApi from 'apis/queryCompanyTopNJobTitles';
 import queryCompanyWorkExperiencesApi from 'apis/queryCompanyWorkExperiences';
 import subscribeCompanyApi from 'apis/subscribeCompany';
@@ -384,7 +384,7 @@ export const queryCompanySalaryWorkTimeStatistics = ({ companyName }) => async (
   dispatch(setSalaryWorkTimeStatistics(companyName, toFetching(box)));
 
   try {
-    const data = await getCompanyTimeAndSalaryStatistics({
+    const data = await queryCompanySalaryWorkTimeStatisticsApi({
       companyName,
     });
 
@@ -395,17 +395,7 @@ export const queryCompanySalaryWorkTimeStatistics = ({ companyName }) => async (
       );
     }
 
-    const salaryWorkTimeStatisticsData = {
-      name: data.name,
-      salary_work_time_statistics: data.salary_work_time_statistics,
-    };
-
-    dispatch(
-      setSalaryWorkTimeStatistics(
-        companyName,
-        getFetched(salaryWorkTimeStatisticsData),
-      ),
-    );
+    dispatch(setSalaryWorkTimeStatistics(companyName, getFetched(data)));
   } catch (error) {
     dispatch(setSalaryWorkTimeStatistics(companyName, getError(error)));
   }

@@ -4,6 +4,7 @@ import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { CompanyInIndex } from 'apis/queryCompanies';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
+import { CompanySalaryWorkTimeStatistics } from 'apis/queryCompanySalaryWorkTimeStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import { RootState } from 'reducers';
 import {
@@ -13,7 +14,6 @@ import {
   CompanyOverview,
   CompanyOverviewStatistics,
   CompanySalaryWorkTimeResult,
-  CompanySalaryWorkTimeStatistics,
   CompanyWorkExperienceResult,
 } from 'reducers/companyIndex';
 import {
