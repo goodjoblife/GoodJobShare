@@ -75,7 +75,11 @@ const SalaryWorkTime = ({
       <BoxRenderer
         box={statisticsBox}
         render={data => {
-          if (!data || salaryWorkTimeStatistics.count === 0) {
+          if (
+            !data ||
+            !salaryWorkTimeStatistics ||
+            salaryWorkTimeStatistics.count === 0
+          ) {
             return null;
           }
           const {

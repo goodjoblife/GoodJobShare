@@ -1,5 +1,3 @@
-import R from 'ramda';
-
 import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { CompanyInIndex } from 'apis/queryCompanies';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
@@ -7,7 +5,7 @@ import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { CompanySalaryWorkTimeStatistics } from 'apis/queryCompanySalaryWorkTimeStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import { JobTitleSalaryWorkTimeStatistics } from 'apis/queryJobTitleSalaryWorkTimeStatistics';
-import { SalaryWorkTimeStatistics } from 'apis/salaryWorkTime';
+import { SalaryWorkTimeStats } from 'apis/salaryWorkTime';
 import { RootState } from 'reducers';
 import {
   CompanyAspectExperienceResult,
@@ -28,23 +26,14 @@ import {
 } from 'reducers/jobTitleIndex';
 import FetchBox, { getUnfetched, isFetched } from 'utils/fetchBox';
 
-type SalaryWorkTimeStats = Pick<
-  SalaryWorkTimeStatistics,
-  | 'count'
-  | 'is_overtime_salary_legal_count'
-  | 'has_compensatory_dayoff_count'
-  | 'has_overtime_salary_count'
->;
-
-export const salaryWorkTimeStatistics: (
+export const salaryWorkTimeStatistics = (
   box: FetchBox<
     CompanySalaryWorkTimeStatistics | JobTitleSalaryWorkTimeStatistics | null
   >,
-) => SalaryWorkTimeStats | Record<string, never> = R.pipe(
-  state => state.data,
-  R.when(R.is(Object), R.prop('salary_work_time_statistics')),
-  R.defaultTo({}),
-);
+): SalaryWorkTimeStats | null => {
+  const data = box.data;
+  return data ? data.salary_work_time_statistics : null;
+};
 
 export const companyIndexesBoxSelectorAtPage = (page: number) => (
   state: RootState,
