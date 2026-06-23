@@ -1,20 +1,36 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
+import { SalaryWorkTimeStatistics } from 'apis/salaryWorkTime';
 import { P } from 'common/base';
 import Clock from 'common/icons/Clock';
 import Coin2 from 'common/icons/Coin2';
 
 import styles from './OvertimeBlock.module.css';
 
-const formatNum = num => {
+type Statistics = Partial<
+  Pick<
+    SalaryWorkTimeStatistics,
+    | 'count'
+    | 'is_overtime_salary_legal_count'
+    | 'has_compensatory_dayoff_count'
+    | 'has_overtime_salary_count'
+  >
+>;
+
+type Props = {
+  type: 'salary' | 'dayoff';
+  heading: string;
+  statistics: Statistics;
+};
+
+const formatNum = (num: number | undefined): number | string => {
   if (num === 0 || num === undefined) {
     return '-';
   }
   return num;
 };
 
-const OvertimeBlock = ({ type, heading, statistics }) => (
+const OvertimeBlock: React.FC<Props> = ({ type, heading, statistics }) => (
   <div className={styles.overtimeBlock}>
     <P className={styles.heading}>
       {type === 'salary' ? <Coin2 /> : <Clock />}
@@ -22,7 +38,7 @@ const OvertimeBlock = ({ type, heading, statistics }) => (
         {heading}
       </P>
     </P>
-    {statistics.count >= 5 ? (
+    {(statistics.count || 0) >= 5 ? (
       <div className={styles.item}>
         <div className={styles.positive}>
           <div>
@@ -32,27 +48,27 @@ const OvertimeBlock = ({ type, heading, statistics }) => (
                 <li>
                   <div className={styles.statHeading}>優於或符合勞基法</div>
                   <div className={styles.num}>
-                    {formatNum(statistics.is_overtime_salary_legal_count.yes)}
+                    {formatNum(statistics.is_overtime_salary_legal_count!.yes)}
                   </div>
                 </li>
                 <li>
                   <div className={styles.statHeading}>不符合勞基法</div>
                   <div className={styles.num}>
-                    {formatNum(statistics.is_overtime_salary_legal_count.no)}
+                    {formatNum(statistics.is_overtime_salary_legal_count!.no)}
                   </div>
                 </li>
                 <li>
                   <div className={styles.statHeading}>不清楚是否符合勞基法</div>
                   <div className={styles.num}>
                     {formatNum(
-                      statistics.is_overtime_salary_legal_count.unknown,
+                      statistics.is_overtime_salary_legal_count!.unknown,
                     )}
                   </div>
                 </li>
               </ul>
             ) : (
               <div className={styles.num}>
-                {formatNum(statistics.has_compensatory_dayoff_count.yes)}
+                {formatNum(statistics.has_compensatory_dayoff_count!.yes)}
               </div>
             )}
           </div>
@@ -63,16 +79,18 @@ const OvertimeBlock = ({ type, heading, statistics }) => (
               <div className={styles.statName}>沒有</div>
               <div className={styles.num}>
                 {type === 'salary'
-                  ? formatNum(statistics.has_overtime_salary_count.no)
-                  : formatNum(statistics.has_compensatory_dayoff_count.no)}
+                  ? formatNum(statistics.has_overtime_salary_count!.no)
+                  : formatNum(statistics.has_compensatory_dayoff_count!.no)}
               </div>
             </div>
             <div className={styles.negativeStat}>
               <div className={styles.statName}>不知道</div>
               <div className={styles.num}>
                 {type === 'salary'
-                  ? formatNum(statistics.has_overtime_salary_count.unknown)
-                  : formatNum(statistics.has_compensatory_dayoff_count.unknown)}
+                  ? formatNum(statistics.has_overtime_salary_count!.unknown)
+                  : formatNum(
+                      statistics.has_compensatory_dayoff_count!.unknown,
+                    )}
               </div>
             </div>
           </div>
@@ -83,32 +101,5 @@ const OvertimeBlock = ({ type, heading, statistics }) => (
     )}
   </div>
 );
-
-OvertimeBlock.propTypes = {
-  heading: PropTypes.string.isRequired,
-  statistics: PropTypes.shape({
-    count: PropTypes.number,
-    has_compensatory_dayoff_count: PropTypes.shape({
-      no: PropTypes.number.isRequired,
-      unknown: PropTypes.number.isRequired,
-      yes: PropTypes.number.isRequired,
-    }),
-    has_overtime_salary_count: PropTypes.shape({
-      no: PropTypes.number.isRequired,
-      unknown: PropTypes.number.isRequired,
-      yes: PropTypes.number.isRequired,
-    }),
-    is_overtime_salary_legal_count: PropTypes.shape({
-      no: PropTypes.number.isRequired,
-      unknown: PropTypes.number.isRequired,
-      yes: PropTypes.number.isRequired,
-    }),
-  }).isRequired,
-  type: PropTypes.oneOf(['salary', 'dayoff']).isRequired,
-};
-
-OvertimeBlock.defaultProps = {
-  type: 'salary',
-};
 
 export default OvertimeBlock;
