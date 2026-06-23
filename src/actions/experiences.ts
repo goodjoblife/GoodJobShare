@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 
-import { queryExperienceCountApi } from 'apis/experiencesApi';
 import { postInterviewExperience as postInterviewExperienceApi } from 'apis/interviewExperiencesApi';
+import queryExperienceCountApi from 'apis/queryExperienceCount';
 import { postWorkExperienceWithRating as postWorkExperienceWithRatingApi } from 'apis/workExperiencesApi';
 import { Thunk } from 'reducers';
 import { tokenSelector } from 'selectors/authSelector';
