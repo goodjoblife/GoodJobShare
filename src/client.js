@@ -39,7 +39,7 @@ function shouldUpdateScroll(prevProps, props) {
     props && props.location && props.location.state && props.location.state.y;
 
   if (shouldScroll && shouldScrollToY && scrollY) {
-    return [0, scrollY];
+    return [0, Math.min(scrollY, window.scrollY)];
   }
 
   return shouldScroll;
