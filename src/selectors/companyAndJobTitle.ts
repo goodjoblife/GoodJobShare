@@ -6,6 +6,7 @@ import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { CompanySalaryWorkTimeStatistics } from 'apis/queryCompanySalaryWorkTimeStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
+import { JobTitleSalaryWorkTimeStatistics } from 'apis/queryJobTitleSalaryWorkTimeStatistics';
 import { RootState } from 'reducers';
 import {
   CompanyAspectExperienceResult,
@@ -22,7 +23,6 @@ import {
   JobTitleOverview,
   JobTitleOverviewStatistics,
   JobTitleSalaryWorkTimeResult,
-  JobTitleSalaryWorkTimeStatistics,
   JobTitleWorkExperienceResult,
 } from 'reducers/jobTitleIndex';
 import FetchBox, { getUnfetched, isFetched } from 'utils/fetchBox';
