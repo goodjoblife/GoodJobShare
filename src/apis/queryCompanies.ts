@@ -13,7 +13,7 @@ const queryCompaniesHavingDataGql = /* GraphQL */ `
 
 export type CompanyInIndex = {
   name: string;
-  businessNumber: string;
+  businessNumber: string | null;
   dataCount: number;
 };
 
