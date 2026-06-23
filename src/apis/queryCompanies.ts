@@ -11,14 +11,14 @@ const queryCompaniesHavingDataGql = /* GraphQL */ `
   }
 `;
 
-type CompanyHavingData = {
+export type CompanyInIndex = {
   name: string;
   businessNumber: string;
   dataCount: number;
 };
 
 type QueryCompaniesData = {
-  companiesHavingData: CompanyHavingData[];
+  companiesHavingData: CompanyInIndex[];
   companiesHavingDataCount: number;
 };
 

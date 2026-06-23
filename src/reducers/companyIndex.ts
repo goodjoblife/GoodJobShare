@@ -20,6 +20,7 @@ import {
   InterviewExperienceInOverview,
   WorkExperienceInOverview,
 } from 'apis/overview';
+import { CompanyInIndex } from 'apis/queryCompanies';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
@@ -31,9 +32,6 @@ import {
 import { Aspect } from 'constants/companyJobTitle';
 import createReducer from 'utils/createReducer';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
-
-// TODO: replace with proper CompanyInIndex type
-export type CompanyInIndex = unknown;
 
 // Flattened from QueryCompanyOverviewData, so a type is defined here
 export type CompanyOverview = {
