@@ -27,8 +27,6 @@ import usePermission from 'hooks/usePermission';
 import {
   jobTitleOverviewStatisticsBoxSelectorByName,
   jobTitleSalaryWorktimeBoxSelectorByName,
-  jobTitleSalaryWorkTimeStatisticsBoxSelectorByName,
-  salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
 } from 'selectors/companyAndJobTitle';
 import {
   pageFromQuerySelector,
@@ -36,26 +34,13 @@ import {
 } from 'selectors/routing';
 
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
+import useSalaryWorkTimeStatistics from './useSalaryWorkTimeStatistics';
 
 const useOverviewStatisticsBox = pageName => {
   const selector = useMemo(
     () => jobTitleOverviewStatisticsBoxSelectorByName(pageName),
     [pageName],
   );
-  return useSelector(selector);
-};
-
-const useSalaryWorkTimeStatistics = pageName => {
-  const selector = useCallback(
-    state => {
-      const jobTitle = jobTitleSalaryWorkTimeStatisticsBoxSelectorByName(
-        pageName,
-      )(state);
-      return salaryWorkTimeStatisticsSelector(jobTitle);
-    },
-    [pageName],
-  );
-
   return useSelector(selector);
 };
 

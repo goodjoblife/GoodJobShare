@@ -31,8 +31,6 @@ import {
   companyEsgSalaryDataBoxSelectorByName,
   companyOverviewStatisticsBoxSelectorByName,
   companySalaryWorkTimeBoxSelectorByName,
-  companySalaryWorkTimeStatisticsBoxSelectorByName,
-  salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
 } from 'selectors/companyAndJobTitle';
 import {
   pageFromQuerySelector,
@@ -40,24 +38,12 @@ import {
 } from 'selectors/routing';
 
 import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useSalaryWorkTimeStatisticsBox from './useSalaryWorkTimeStatisticsBox';
 import { useTopNJobTitles } from './useTopNJobTitles';
 
 const useOverviewStatisticsBox = pageName => {
   const selector = useMemo(
     () => companyOverviewStatisticsBoxSelectorByName(pageName),
-    [pageName],
-  );
-  return useSelector(selector);
-};
-
-const useSalaryWorkTimeStatisticsBox = pageName => {
-  const selector = useCallback(
-    state => {
-      const company = companySalaryWorkTimeStatisticsBoxSelectorByName(
-        pageName,
-      )(state);
-      return salaryWorkTimeStatisticsSelector(company);
-    },
     [pageName],
   );
   return useSelector(selector);
