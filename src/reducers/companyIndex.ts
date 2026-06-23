@@ -23,6 +23,7 @@ import {
 import { CompanyInIndex } from 'apis/queryCompanies';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
+import { CompanySalaryWorkTimeStatistics } from 'apis/queryCompanySalaryWorkTimeStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import {
   JobAverageSalary,
@@ -53,9 +54,6 @@ export type CompanyOverviewStatistics = {
 
 // TODO: replace with proper CompanySalaryWorkTimeResult type
 export type CompanySalaryWorkTimeResult = unknown;
-
-// TODO: replace with proper CompanySalaryWorkTimeStatistics type
-export type CompanySalaryWorkTimeStatistics = unknown;
 
 // TODO: replace with proper CompanyInterviewExperienceResult type
 export type CompanyInterviewExperienceResult = unknown;

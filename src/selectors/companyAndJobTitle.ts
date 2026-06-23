@@ -1,10 +1,10 @@
-import R from 'ramda';
-
 import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { CompanyInIndex } from 'apis/queryCompanies';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
+import { CompanySalaryWorkTimeStatistics } from 'apis/queryCompanySalaryWorkTimeStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
+import { JobTitleSalaryWorkTimeStatistics } from 'apis/queryJobTitleSalaryWorkTimeStatistics';
 import { RootState } from 'reducers';
 import {
   CompanyAspectExperienceResult,
@@ -13,7 +13,6 @@ import {
   CompanyOverview,
   CompanyOverviewStatistics,
   CompanySalaryWorkTimeResult,
-  CompanySalaryWorkTimeStatistics,
   CompanyWorkExperienceResult,
 } from 'reducers/companyIndex';
 import {
@@ -22,18 +21,9 @@ import {
   JobTitleOverview,
   JobTitleOverviewStatistics,
   JobTitleSalaryWorkTimeResult,
-  JobTitleSalaryWorkTimeStatistics,
   JobTitleWorkExperienceResult,
 } from 'reducers/jobTitleIndex';
 import FetchBox, { getUnfetched, isFetched } from 'utils/fetchBox';
-
-export const salaryWorkTimeStatistics: (
-  box: FetchBox<unknown>,
-) => unknown = R.pipe(
-  state => state.data,
-  R.when(R.is(Object), R.prop('salary_work_time_statistics')),
-  R.defaultTo({}),
-);
 
 export const companyIndexesBoxSelectorAtPage = (page: number) => (
   state: RootState,

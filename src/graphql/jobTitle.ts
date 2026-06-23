@@ -78,32 +78,6 @@ export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
   }
 `;
 
-export const getJobTitleTimeAndSalaryStatisticsQuery = /* GraphQL */ `
-  query($jobTitle: String!) {
-    job_title(name: $jobTitle) {
-      name
-      salary_work_time_statistics {
-        count
-        is_overtime_salary_legal_count {
-          yes
-          no
-          unknown
-        }
-        has_compensatory_dayoff_count {
-          yes
-          no
-          unknown
-        }
-        has_overtime_salary_count {
-          yes
-          no
-          unknown
-        }
-      }
-    }
-  }
-`;
-
 export const getJobTitleInterviewExperiencesQuery = /* GraphQL */ `
   query(
     $jobTitle: String!

@@ -3,7 +3,7 @@ import React from 'react';
 
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
-import BoxRenderer from 'common/StatusRenderer';
+import BoxRenderer, { BoxesRenderer } from 'common/StatusRenderer';
 import { PageType } from 'constants/companyJobTitle';
 import { fetchBoxPropType } from 'utils/fetchBox';
 
@@ -24,7 +24,7 @@ const SalaryWorkTime = ({
   tabType,
   boxSelector,
   statisticsBox,
-  salaryWorkTimeStatistics,
+  salaryWorkTimeStatisticsBox,
   page,
   pageSize,
   topNJobTitles,
@@ -72,10 +72,16 @@ const SalaryWorkTime = ({
           }}
         />
       )}
-      <BoxRenderer
-        box={statisticsBox}
-        render={data => {
-          if (!data || salaryWorkTimeStatistics.count === 0) {
+      <BoxesRenderer
+        boxes={[statisticsBox, salaryWorkTimeStatisticsBox]}
+        render={([statisticsData, salaryWorkTimeStatisticsData]) => {
+          const salaryWorkTimeStatistics =
+            salaryWorkTimeStatisticsData?.salary_work_time_statistics ?? null;
+          if (
+            !statisticsData ||
+            !salaryWorkTimeStatistics ||
+            salaryWorkTimeStatistics.count === 0
+          ) {
             return null;
           }
           const {
@@ -83,7 +89,7 @@ const SalaryWorkTime = ({
             jobAverageSalaries,
             averageWeekWorkTime,
             overtimeFrequencyCount,
-          } = data;
+          } = statisticsData;
           return (
             <Wrapper size="l">
               <SummarySection
@@ -145,7 +151,7 @@ SalaryWorkTime.propTypes = {
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
-  salaryWorkTimeStatistics: PropTypes.object.isRequired,
+  salaryWorkTimeStatisticsBox: fetchBoxPropType.isRequired,
   statisticsBox: fetchBoxPropType.isRequired,
   tabType: PropTypes.string.isRequired,
   topNJobTitles: PropTypes.arrayOf(

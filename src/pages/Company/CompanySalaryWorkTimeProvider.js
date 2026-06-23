@@ -32,7 +32,6 @@ import {
   companyOverviewStatisticsBoxSelectorByName,
   companySalaryWorkTimeBoxSelectorByName,
   companySalaryWorkTimeStatisticsBoxSelectorByName,
-  salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
 } from 'selectors/companyAndJobTitle';
 import {
   pageFromQuerySelector,
@@ -51,13 +50,8 @@ const useOverviewStatisticsBox = pageName => {
 };
 
 const useSalaryWorkTimeStatisticsBox = pageName => {
-  const selector = useCallback(
-    state => {
-      const company = companySalaryWorkTimeStatisticsBoxSelectorByName(
-        pageName,
-      )(state);
-      return salaryWorkTimeStatisticsSelector(company);
-    },
+  const selector = useMemo(
+    () => companySalaryWorkTimeStatisticsBoxSelectorByName(pageName),
     [pageName],
   );
   return useSelector(selector);
@@ -177,7 +171,9 @@ const CompanySalaryWorkTimeProvider = () => {
   }, [pageType, companyName, fetchPermission]);
 
   const statisticsBox = useOverviewStatisticsBox(companyName);
-  const salaryWorkTimeStatistics = useSalaryWorkTimeStatisticsBox(companyName);
+  const salaryWorkTimeStatisticsBox = useSalaryWorkTimeStatisticsBox(
+    companyName,
+  );
   const topNJobTitles = useTopNJobTitles(companyName);
   const esgSalaryDataBox = useEsgSalaryDataBox(companyName);
 
@@ -192,7 +188,7 @@ const CompanySalaryWorkTimeProvider = () => {
       topNJobTitles={topNJobTitles.salary}
       esgSalaryDataBox={esgSalaryDataBox}
       tabType={TabType.TIME_AND_SALARY}
-      salaryWorkTimeStatistics={salaryWorkTimeStatistics}
+      salaryWorkTimeStatisticsBox={salaryWorkTimeStatisticsBox}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
       onCloseReport={() => handleQueryCompanySalaryWorkTime({ force: true })}
