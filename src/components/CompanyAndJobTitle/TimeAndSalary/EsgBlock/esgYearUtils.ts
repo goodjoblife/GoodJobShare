@@ -2,8 +2,6 @@ import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 
 type TEsgSalaryDataLike = Partial<ESGSalaryData> | null | undefined;
 
-type TYearItem = { year: number };
-
 type TAvgSalaryStatisticsItem = ESGSalaryData['avgSalaryStatistics'][number];
 type TNonManagerMedianSalaryStatisticsItem = ESGSalaryData['nonManagerMedianSalaryStatistics'][number];
 type TFemaleManagerStatisticsItem = ESGSalaryData['femaleManagerStatistics'][number];
@@ -17,21 +15,13 @@ type TStatisticsByYear = {
   femaleManagerStatisticsItem: TFemaleManagerStatisticsItem | undefined;
 };
 
-const STAT_KEYS = [
-  'avgSalaryStatistics',
-  'nonManagerAvgSalaryStatistics',
-  'nonManagerMedianSalaryStatistics',
-  'femaleManagerStatistics',
-] as const;
-
 export const getAvailableYears = (
   esgSalaryData: TEsgSalaryDataLike,
 ): number[] => {
   if (!esgSalaryData) return [];
   const years = new Set<number>();
-  STAT_KEYS.forEach(key => {
-    const items: TYearItem[] = esgSalaryData[key] || [];
-    items.forEach(item => years.add(item.year));
+  Object.values(esgSalaryData).forEach(items => {
+    (items || []).forEach(item => years.add(item.year));
   });
   return Array.from(years).sort((a, b) => b - a);
 };

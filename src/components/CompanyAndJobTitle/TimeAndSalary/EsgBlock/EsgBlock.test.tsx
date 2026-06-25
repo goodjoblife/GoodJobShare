@@ -2,9 +2,11 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
+import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
+
 import EsgBlock from './EsgBlock';
 
-const esgSalaryData = {
+const esgSalaryData: ESGSalaryData = {
   avgSalaryStatistics: [
     { year: 2023, average: 973000, sameIndustryAverage: 1000000 },
     { year: 2024, average: 1010000, sameIndustryAverage: 1020000 },
@@ -62,6 +64,22 @@ test('某指標缺選取年份資料 → 該卡片不渲染', () => {
   };
   render(<EsgBlock esgSalaryData={partial} hasPreviewed />);
   expect(screen.getAllByText('2025 年')).toHaveLength(1);
+});
+
+test('只有單一年份時不顯示年份下拉，但仍顯示卡片', () => {
+  const singleYear = {
+    avgSalaryStatistics: [
+      { year: 2024, average: 1010000, sameIndustryAverage: 1020000 },
+    ],
+    nonManagerAvgSalaryStatistics: [
+      { year: 2024, average: 1005000, sameIndustryAverage: 950000 },
+    ],
+    nonManagerMedianSalaryStatistics: [{ year: 2024, median: 880000 }],
+    femaleManagerStatistics: [{ year: 2024, percentage: 0.2 }],
+  };
+  render(<EsgBlock esgSalaryData={singleYear} hasPreviewed />);
+  expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
+  expect(screen.getAllByText('2024 年')).toHaveLength(4);
 });
 
 test('空資料不會 crash，仍顯示標題', () => {
