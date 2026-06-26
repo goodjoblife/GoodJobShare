@@ -1,11 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import useMobile from 'hooks/useMobile';
 
-const useSectionY = () => {
-  const sectionRef = useRef(null);
+const useSectionY = (): [
+  number | null,
+  React.RefObject<HTMLElement | null>,
+] => {
+  const sectionRef = useRef<HTMLElement | null>(null);
   const isMobile = useMobile();
-  const [y, setY] = useState(null);
+  const [y, setY] = useState<number | null>(null);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   // DOM state changes don't notify React,

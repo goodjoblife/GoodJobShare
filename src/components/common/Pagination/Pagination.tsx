@@ -21,7 +21,7 @@ export const useCreatePageLinkTo = (): readonly [
   (
     p: number,
   ) => { pathname: string; search: string; state: { y: number | null } },
-  React.RefObject<HTMLElement>,
+  React.RefObject<HTMLElement | null>,
   number | null,
 ] => {
   const location = useLocation();
@@ -83,7 +83,10 @@ const Pagination = ({
             前一頁
           </div>
         ) : (
-          <Link className="buttonPage" to={createPageLinkTo(currentPage - 1)}>
+          <Link
+            className="buttonPage"
+            to={createPageLinkTo((currentPage || 1) - 1)}
+          >
             <ArrowLeft />
             前一頁
           </Link>
@@ -94,7 +97,10 @@ const Pagination = ({
             <ArrowLeft style={{ transform: 'scaleX(-1)' }} />
           </div>
         ) : (
-          <Link className="buttonPage" to={createPageLinkTo(currentPage + 1)}>
+          <Link
+            className="buttonPage"
+            to={createPageLinkTo((currentPage || 1) + 1)}
+          >
             下一頁
             <ArrowLeft style={{ transform: 'scaleX(-1)' }} />
           </Link>
