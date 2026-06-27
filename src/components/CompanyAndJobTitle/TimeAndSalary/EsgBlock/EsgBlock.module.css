@@ -28,10 +28,11 @@
   display: grid;
   grid-template: auto / repeat(4, 1fr);
   gap: 26px;
-  margin: 20px 0;
+  padding: 1rem 0;
 
   @media (max-width: below-small) {
     grid-template: auto / repeat(1, 1fr);
+    padding: 0 0 1rem;
   }
 }
 
@@ -135,4 +136,20 @@
   top: -4px;
   left: -4px;
   padding: 4px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.yearSelect {
+  flex: none;
+}
+
+.mobileYearSelect {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
 }
