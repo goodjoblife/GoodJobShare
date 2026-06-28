@@ -46,7 +46,7 @@ const SalaryWorkTime = ({
             if (!data) return null;
             return (
               <Wrapper size="l">
-                <EsgBlock esgSalaryData={data} />
+                <EsgBlock data={data} />
               </Wrapper>
             );
           }}

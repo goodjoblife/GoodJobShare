@@ -1,7 +1,7 @@
 import cn from 'classnames';
-import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import linkStyles from 'common/base/Link.module.css';
 import Card from 'common/Card';
 import Select from 'common/form/Select';
@@ -13,7 +13,24 @@ import styles from './EsgBlock.module.css';
 import { getAvailableYears, getStatisticsByYear } from './esgYearUtils';
 import overviewStyles from '../../Overview/Overview.module.css';
 
-const EsgItemBlock = ({
+type TEsgItemBlockProps = {
+  className?: string;
+  title: string;
+  year: number;
+  value: number;
+  valueCompared?: number;
+  unit?: string;
+};
+
+type EsgBlockProps = {
+  className?: string;
+  showsToggle?: boolean;
+  hasPreviewed?: boolean;
+  data: ESGSalaryData;
+  yearSelectInContent?: boolean;
+};
+
+const EsgItemBlock: React.FC<TEsgItemBlockProps> = ({
   className,
   title,
   year,
@@ -38,40 +55,32 @@ const EsgItemBlock = ({
       <span
         className={cn(
           styles.value,
-          value >= valueCompared ? styles.positive : styles.negative,
+          valueCompared && value >= valueCompared
+            ? styles.positive
+            : styles.negative,
         )}
       >
-        {formatNumberWithSign(
-          ((value - valueCompared) / valueCompared) * 100,
-          0,
-        )}
+        {valueCompared &&
+          formatNumberWithSign(
+            ((value - valueCompared) / valueCompared) * 100,
+            0,
+          )}
         %
       </span>
     </div>
   </Card>
 );
 
-EsgItemBlock.propTypes = {
-  className: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  unit: PropTypes.string,
-  value: PropTypes.number.isRequired,
-  valueCompared: PropTypes.number,
-  year: PropTypes.number.isRequired,
-};
-
-const EsgBlock = ({
+const EsgBlock: React.FC<EsgBlockProps> = ({
   className,
   showsToggle = true,
   hasPreviewed,
-  esgSalaryData,
+  data,
   yearSelectInContent = false,
 }) => {
   const [isCollapsed, setCollapsed] = useState(hasPreviewed);
 
-  const availableYears = useMemo(() => getAvailableYears(esgSalaryData), [
-    esgSalaryData,
-  ]);
+  const availableYears = useMemo(() => getAvailableYears(data), [data]);
   const [selectedYear, setSelectedYear] = useState(() => availableYears[0]);
   useEffect(() => {
     setSelectedYear(availableYears[0]);
@@ -82,8 +91,8 @@ const EsgBlock = ({
     nonManagerAvgSalaryStatisticsItem,
     nonManagerMedianSalaryStatisticsItem,
     femaleManagerStatisticsItem,
-  } = useMemo(() => getStatisticsByYear(esgSalaryData, selectedYear), [
-    esgSalaryData,
+  } = useMemo(() => getStatisticsByYear(data, selectedYear), [
+    data,
     selectedYear,
   ]);
 
@@ -96,11 +105,14 @@ const EsgBlock = ({
     setCollapsed(isCollapsed => !isCollapsed);
   }, []);
 
-  const handleYearChange = useCallback(e => {
-    setSelectedYear(Number(e.target.value));
-  }, []);
+  const handleYearChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setSelectedYear(Number(e.target.value));
+    },
+    [],
+  );
 
-  const yearSelect = availableYears.length > 0 && (
+  const yearSelect = availableYears.length > 1 && (
     <div
       className={
         yearSelectInContent ? styles.mobileYearSelect : styles.yearSelect
@@ -196,23 +208,6 @@ const EsgBlock = ({
       </div>
     </Card>
   );
-};
-
-const statisticsArrayPropType = PropTypes.arrayOf(
-  PropTypes.shape({ year: PropTypes.number }),
-);
-
-EsgBlock.propTypes = {
-  className: PropTypes.string,
-  esgSalaryData: PropTypes.shape({
-    avgSalaryStatistics: statisticsArrayPropType,
-    femaleManagerStatistics: statisticsArrayPropType,
-    nonManagerAvgSalaryStatistics: statisticsArrayPropType,
-    nonManagerMedianSalaryStatistics: statisticsArrayPropType,
-  }),
-  hasPreviewed: PropTypes.bool,
-  showsToggle: PropTypes.bool,
-  yearSelectInContent: PropTypes.bool,
 };
 
 export default EsgBlock;
