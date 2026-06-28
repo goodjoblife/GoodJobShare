@@ -44,29 +44,9 @@ const SalaryWorkTime = ({
           box={esgSalaryDataBox}
           render={data => {
             if (!data) return null;
-
-            const {
-              avgSalaryStatistics: [avgSalaryStatisticsItem],
-              nonManagerAvgSalaryStatistics: [
-                nonManagerAvgSalaryStatisticsItem,
-              ],
-              nonManagerMedianSalaryStatistics: [
-                nonManagerMedianSalaryStatisticsItem,
-              ],
-              femaleManagerStatistics: [femaleManagerStatisticsItem],
-            } = data;
             return (
               <Wrapper size="l">
-                <EsgBlock
-                  avgSalaryStatisticsItem={avgSalaryStatisticsItem}
-                  nonManagerAvgSalaryStatisticsItem={
-                    nonManagerAvgSalaryStatisticsItem
-                  }
-                  nonManagerMedianSalaryStatisticsItem={
-                    nonManagerMedianSalaryStatisticsItem
-                  }
-                  femaleManagerStatisticsItem={femaleManagerStatisticsItem}
-                />
+                <EsgBlock data={data} />
               </Wrapper>
             );
           }}
