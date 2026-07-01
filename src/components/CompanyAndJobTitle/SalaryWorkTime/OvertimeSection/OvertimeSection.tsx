@@ -1,15 +1,10 @@
 import cn from 'classnames';
 import React from 'react';
 
-<<<<<<<< HEAD:src/components/CompanyAndJobTitle/SalaryWorkTime/OvertimeSection.tsx
 import { OvertimeStats } from 'apis/salaryWorkTime';
 
-import OvertimeBlock from '../../TimeAndSalary/common/OvertimeBlock';
-import styles from '../../TimeAndSalary/common/WorkingHourBlock.module.css';
-========
 import OvertimeBlock from './OvertimeBlock';
 import styles from '../WorkingHourBlock.module.css';
->>>>>>>> upstream/master:src/components/CompanyAndJobTitle/SalaryWorkTime/OvertimeSection/OvertimeSection.js
 
 type Props = {
   statistics: OvertimeStats;
