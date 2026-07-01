@@ -11,8 +11,6 @@ import { PageType } from 'constants/companyJobTitle';
 import { GENDER_TRANSLATION } from 'constants/gender';
 import usePermission from 'hooks/usePermission';
 
-import { InfoSalaryModal, InfoTimeModal } from './InfoModal';
-import styles from './WorkingHourTable.module.css';
 import {
   formatDate,
   formatWage,
@@ -24,8 +22,10 @@ import {
   getWeekWorkTime,
   getWorkingHour,
   getYear,
-} from '../../TimeAndSalary/common/formatter';
-import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
+} from './formatter';
+import { InfoSalaryModal, InfoTimeModal } from './InfoModal';
+import injectHideContentBlock from './injectHideContentBlock';
+import styles from './WorkingHourTable.module.css';
 
 const formatGender = gender => GENDER_TRANSLATION[gender] ?? '-';
 
