@@ -2,8 +2,8 @@ import cn from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import OvertimeBlock from '../../TimeAndSalary/common/OvertimeBlock';
-import styles from '../../TimeAndSalary/common/WorkingHourBlock.module.css';
+import OvertimeBlock from './OvertimeBlock';
+import styles from '../WorkingHourBlock.module.css';
 
 const OvertimeSection = ({ statistics }) => {
   return (
