@@ -8,6 +8,8 @@ import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import BoxRenderer, { BoxesRenderer } from 'common/StatusRenderer';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { RootState } from 'reducers';
+import { CompanyOverviewStatistics } from 'reducers/companyIndex';
+import { JobTitleOverviewStatistics } from 'reducers/jobTitleIndex';
 import FetchBox from 'utils/fetchBox';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
@@ -33,7 +35,9 @@ type Props = {
   pageName: string;
   tabType: TabType;
   boxSelector: (state: RootState) => FetchBox<SalaryWorkTimePageData | null>;
-  statisticsBox: FetchBox<unknown>;
+  statisticsBox: FetchBox<
+    CompanyOverviewStatistics | JobTitleOverviewStatistics | null
+  >;
   salaryWorkTimeStatisticsBox: FetchBox<
     CompanySalaryWorkTimeStatistics | JobTitleSalaryWorkTimeStatistics | null
   >;
@@ -115,20 +119,9 @@ const SalaryWorkTime: React.FC<Props> = ({
           ) {
             return null;
           }
-          const {
-            salaryDistribution,
-            jobAverageSalaries,
-            averageWeekWorkTime,
-            overtimeFrequencyCount,
-          } = statisticsData as Record<string, unknown>;
           return (
             <Wrapper size="l">
-              <SummarySection
-                salaryDistribution={salaryDistribution}
-                jobAverageSalaries={jobAverageSalaries}
-                averageWeekWorkTime={averageWeekWorkTime}
-                overtimeFrequencyCount={overtimeFrequencyCount}
-              />
+              <SummarySection {...statisticsData} />
               <OvertimeSection statistics={salaryWorkTimeStatistics} />
             </Wrapper>
           );
