@@ -108,17 +108,11 @@ const SalaryWorkTime: React.FC<Props> = ({
           statisticsData,
           salaryWorkTimeStatisticsData,
         ]): React.ReactNode => {
-          const salaryWorkTimeStatistics =
-            salaryWorkTimeStatisticsData != null
-              ? salaryWorkTimeStatisticsData.salary_work_time_statistics
-              : null;
-          if (
-            !statisticsData ||
-            !salaryWorkTimeStatistics ||
-            salaryWorkTimeStatistics.count === 0
-          ) {
-            return null;
-          }
+          if (!statisticsData || !salaryWorkTimeStatisticsData) return null;
+          const {
+            salary_work_time_statistics: salaryWorkTimeStatistics,
+          } = salaryWorkTimeStatisticsData;
+          if (salaryWorkTimeStatistics.count === 0) return null;
           return (
             <Wrapper size="l">
               <SummarySection {...statisticsData} />
