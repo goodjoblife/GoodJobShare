@@ -374,10 +374,7 @@ export const queryCompanySalaryWorkTimeStatistics = ({ companyName }) => async (
   const box = companySalaryWorkTimeStatisticsBoxSelectorByName(companyName)(
     getState(),
   );
-  if (
-    isFetching(box) ||
-    (isFetched(box) && box.data && box.data.name === companyName)
-  ) {
+  if (isFetching(box) || isFetched(box)) {
     return;
   }
 
@@ -388,14 +385,12 @@ export const queryCompanySalaryWorkTimeStatistics = ({ companyName }) => async (
       companyName,
     });
 
-    // Not found case
-    if (data == null) {
-      return dispatch(
-        setSalaryWorkTimeStatistics(companyName, getFetched(null)),
-      );
-    }
-
-    dispatch(setSalaryWorkTimeStatistics(companyName, getFetched(data)));
+    dispatch(
+      setSalaryWorkTimeStatistics(
+        companyName,
+        getFetched(data ? data.salary_work_time_statistics : null),
+      ),
+    );
   } catch (error) {
     dispatch(setSalaryWorkTimeStatistics(companyName, getError(error)));
   }

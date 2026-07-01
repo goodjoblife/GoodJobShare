@@ -13,11 +13,11 @@ import {
   InterviewExperienceInOverview,
   WorkExperienceInOverview,
 } from 'apis/overview';
-import { JobTitleSalaryWorkTimeStatistics } from 'apis/queryJobTitleSalaryWorkTimeStatistics';
 import {
   OvertimeFrequencyCount,
   SalaryDistributionBin,
   SalaryWorkTime,
+  SalaryWorkTimeStats,
 } from 'apis/salaryWorkTime';
 import createReducer from 'utils/createReducer';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
@@ -73,7 +73,7 @@ type State = {
   >;
   timeAndSalaryStatisticsByName: Record<
     string,
-    FetchBox<JobTitleSalaryWorkTimeStatistics | null>
+    FetchBox<SalaryWorkTimeStats | null>
   >;
   interviewExperiencesByName: Record<
     string,
@@ -173,7 +173,7 @@ const reducer = createReducer(preloadedState, {
       box,
     }: {
       jobTitle: string;
-      box: FetchBox<JobTitleSalaryWorkTimeStatistics | null>;
+      box: FetchBox<SalaryWorkTimeStats | null>;
     },
   ) => {
     return {

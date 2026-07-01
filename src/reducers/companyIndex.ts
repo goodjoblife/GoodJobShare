@@ -23,12 +23,12 @@ import {
 import { CompanyInIndex } from 'apis/queryCompanies';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
-import { CompanySalaryWorkTimeStatistics } from 'apis/queryCompanySalaryWorkTimeStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import {
   JobAverageSalary,
   OvertimeFrequencyCount,
   SalaryWorkTime,
+  SalaryWorkTimeStats,
 } from 'apis/salaryWorkTime';
 import { Aspect } from 'constants/companyJobTitle';
 import createReducer from 'utils/createReducer';
@@ -97,7 +97,7 @@ type State = {
   >;
   timeAndSalaryStatisticsByName: Record<
     string,
-    FetchBox<CompanySalaryWorkTimeStatistics | null>
+    FetchBox<SalaryWorkTimeStats | null>
   >;
   interviewExperiencesByName: Record<
     string,
@@ -228,7 +228,7 @@ const reducer = createReducer(preloadedState, {
       box,
     }: {
       companyName: string;
-      box: FetchBox<CompanySalaryWorkTimeStatistics | null>;
+      box: FetchBox<SalaryWorkTimeStats | null>;
     },
   ) => {
     return {

@@ -300,10 +300,7 @@ export const queryJobTitleSalaryWorkTimeStatistics = ({ jobTitle }) => async (
   const box = jobTitleSalaryWorkTimeStatisticsBoxSelectorByName(jobTitle)(
     getState(),
   );
-  if (
-    isFetching(box) ||
-    (isFetched(box) && box.data && box.data.name === jobTitle)
-  ) {
+  if (isFetching(box) || isFetched(box)) {
     return;
   }
 
@@ -314,7 +311,12 @@ export const queryJobTitleSalaryWorkTimeStatistics = ({ jobTitle }) => async (
       jobTitle,
     });
 
-    dispatch(setSalaryWorkTimeStatistics(jobTitle, getFetched(data)));
+    dispatch(
+      setSalaryWorkTimeStatistics(
+        jobTitle,
+        getFetched(data ? data.salary_work_time_statistics : null),
+      ),
+    );
   } catch (error) {
     dispatch(setSalaryWorkTimeStatistics(jobTitle, getError(error)));
   }
