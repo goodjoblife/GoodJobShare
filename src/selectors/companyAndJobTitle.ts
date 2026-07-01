@@ -1,10 +1,9 @@
-import R from 'ramda';
-
 import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { CompanyInIndex } from 'apis/queryCompanies';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
+import { OvertimeStats } from 'apis/salaryWorkTime';
 import { RootState } from 'reducers';
 import {
   CompanyAspectExperienceResult,
@@ -13,7 +12,6 @@ import {
   CompanyOverview,
   CompanyOverviewStatistics,
   CompanySalaryWorkTimeResult,
-  CompanySalaryWorkTimeStatistics,
   CompanyWorkExperienceResult,
 } from 'reducers/companyIndex';
 import {
@@ -22,18 +20,9 @@ import {
   JobTitleOverview,
   JobTitleOverviewStatistics,
   JobTitleSalaryWorkTimeResult,
-  JobTitleSalaryWorkTimeStatistics,
   JobTitleWorkExperienceResult,
 } from 'reducers/jobTitleIndex';
 import FetchBox, { getUnfetched, isFetched } from 'utils/fetchBox';
-
-export const salaryWorkTimeStatistics: (
-  box: FetchBox<unknown>,
-) => unknown = R.pipe(
-  state => state.data,
-  R.when(R.is(Object), R.prop('salary_work_time_statistics')),
-  R.defaultTo({}),
-);
 
 export const companyIndexesBoxSelectorAtPage = (page: number) => (
   state: RootState,
@@ -67,7 +56,7 @@ export const companySalaryWorkTimeBoxSelectorByName = (companyName: string) => (
 
 export const companySalaryWorkTimeStatisticsBoxSelectorByName = (
   companyName: string,
-) => (state: RootState): FetchBox<CompanySalaryWorkTimeStatistics | null> =>
+) => (state: RootState): FetchBox<OvertimeStats | null> =>
   state.companyIndex.timeAndSalaryStatisticsByName[companyName] ||
   getUnfetched();
 
@@ -135,7 +124,7 @@ export const jobTitleSalaryWorktimeBoxSelectorByName = (jobTitle: string) => (
 
 export const jobTitleSalaryWorkTimeStatisticsBoxSelectorByName = (
   jobTitle: string,
-) => (state: RootState): FetchBox<JobTitleSalaryWorkTimeStatistics | null> =>
+) => (state: RootState): FetchBox<OvertimeStats | null> =>
   state.jobTitleIndex.timeAndSalaryStatisticsByName[jobTitle] || getUnfetched();
 
 export const jobTitleInterviewExperiencesBoxSelectorByName = (

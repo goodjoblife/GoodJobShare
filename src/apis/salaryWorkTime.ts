@@ -134,3 +134,11 @@ export type SalaryWorkTimeStatistics = {
   overtime_frequency_count: OvertimeFrequencyCount | null;
   job_average_salaries: JobAverageSalary[];
 };
+
+export type OvertimeStats = Pick<
+  SalaryWorkTimeStatistics,
+  | 'count'
+  | 'is_overtime_salary_legal_count'
+  | 'has_compensatory_dayoff_count'
+  | 'has_overtime_salary_count'
+>;

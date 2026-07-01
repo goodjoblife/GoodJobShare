@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
+import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
+import { OvertimeStats } from 'apis/salaryWorkTime';
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
-import BoxRenderer from 'common/StatusRenderer';
-import { PageType } from 'constants/companyJobTitle';
-import { fetchBoxPropType } from 'utils/fetchBox';
+import BoxRenderer, { BoxesRenderer } from 'common/StatusRenderer';
+import { PageType, TabType } from 'constants/companyJobTitle';
+import { RootState } from 'reducers';
+import { CompanyOverviewStatistics } from 'reducers/companyIndex';
+import { JobTitleOverviewStatistics } from 'reducers/jobTitleIndex';
+import FetchBox from 'utils/fetchBox';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import PageBoxRenderer from '../PageBoxRenderer';
@@ -18,13 +22,36 @@ import SearchBar from '../SearchBar';
 import styles from './SalaryWorkTime.module.css';
 import SummarySection from './SummarySection';
 
-const SalaryWorkTime = ({
+type SalaryWorkTimePageData = {
+  name: string;
+  salaryWorkTimes: unknown[];
+  salaryWorkTimesCount: number;
+  [key: string]: unknown;
+};
+
+type Props = {
+  pageType: PageType;
+  pageName: string;
+  tabType: TabType;
+  boxSelector: (state: RootState) => FetchBox<SalaryWorkTimePageData | null>;
+  statisticsBox: FetchBox<
+    CompanyOverviewStatistics | JobTitleOverviewStatistics | null
+  >;
+  salaryWorkTimeStatisticsBox: FetchBox<OvertimeStats | null>;
+  page: number;
+  pageSize: number;
+  topNJobTitles?: { name: string }[];
+  onCloseReport: () => void;
+  esgSalaryDataBox: FetchBox<ESGSalaryData | null>;
+};
+
+const SalaryWorkTime: React.FC<Props> = ({
   pageType,
   pageName,
   tabType,
   boxSelector,
   statisticsBox,
-  salaryWorkTimeStatistics,
+  salaryWorkTimeStatisticsBox,
   page,
   pageSize,
   topNJobTitles,
@@ -42,7 +69,7 @@ const SalaryWorkTime = ({
       {pageType === PageType.COMPANY && (
         <BoxRenderer
           box={esgSalaryDataBox}
-          render={data => {
+          render={(data): React.ReactNode => {
             if (!data) return null;
 
             const {
@@ -72,34 +99,30 @@ const SalaryWorkTime = ({
           }}
         />
       )}
-      <BoxRenderer
-        box={statisticsBox}
-        render={data => {
-          if (!data || salaryWorkTimeStatistics.count === 0) {
+      <BoxesRenderer
+        boxes={[statisticsBox, salaryWorkTimeStatisticsBox]}
+        render={([statisticsData, overtimeStatisticsData]): React.ReactNode => {
+          if (
+            !statisticsData ||
+            !overtimeStatisticsData ||
+            overtimeStatisticsData.count === 0
+          )
             return null;
-          }
-          const {
-            salaryDistribution,
-            jobAverageSalaries,
-            averageWeekWorkTime,
-            overtimeFrequencyCount,
-          } = data;
           return (
             <Wrapper size="l">
-              <SummarySection
-                salaryDistribution={salaryDistribution}
-                jobAverageSalaries={jobAverageSalaries}
-                averageWeekWorkTime={averageWeekWorkTime}
-                overtimeFrequencyCount={overtimeFrequencyCount}
-              />
-              <OvertimeSection statistics={salaryWorkTimeStatistics} />
+              <SummarySection {...statisticsData} />
+              <OvertimeSection statistics={overtimeStatisticsData} />
             </Wrapper>
           );
         }}
       />
-      <Wrapper ref={handleSectionRef} size="l" className={styles.searchbar}>
+      <Wrapper
+        ref={handleSectionRef as React.Ref<HTMLElement>}
+        size="l"
+        className={styles.searchbar}
+      >
         <SearchBar pageType={pageType} tabType={tabType} />
-        <SalaryFilter y={sectionY} />
+        <SalaryFilter y={sectionY as number | null} />
       </Wrapper>
       <Wrapper size="l">
         <PageBoxRenderer
@@ -107,7 +130,10 @@ const SalaryWorkTime = ({
           pageName={pageName}
           tabType={tabType}
           boxSelector={boxSelector}
-          render={({ salaryWorkTimes, salaryWorkTimesCount: totalCount }) => {
+          render={({
+            salaryWorkTimes,
+            salaryWorkTimesCount: totalCount,
+          }): React.ReactNode => {
             return (
               <>
                 <Helmet
@@ -135,24 +161,6 @@ const SalaryWorkTime = ({
       </Wrapper>
     </CompanyAndJobTitleWrapper>
   );
-};
-
-SalaryWorkTime.propTypes = {
-  boxSelector: PropTypes.func.isRequired,
-  esgSalaryDataBox: PropTypes.object.isRequired,
-  onCloseReport: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  pageName: PropTypes.string.isRequired,
-  pageSize: PropTypes.number.isRequired,
-  pageType: PropTypes.string.isRequired,
-  salaryWorkTimeStatistics: PropTypes.object.isRequired,
-  statisticsBox: fetchBoxPropType.isRequired,
-  tabType: PropTypes.string.isRequired,
-  topNJobTitles: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }),
-  ),
 };
 
 export default SalaryWorkTime;
