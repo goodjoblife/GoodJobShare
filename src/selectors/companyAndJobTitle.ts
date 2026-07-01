@@ -3,7 +3,7 @@ import { CompanyInIndex } from 'apis/queryCompanies';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
-import { SalaryWorkTimeStats } from 'apis/salaryWorkTime';
+import { OvertimeStats } from 'apis/salaryWorkTime';
 import { RootState } from 'reducers';
 import {
   CompanyAspectExperienceResult,
@@ -56,7 +56,7 @@ export const companySalaryWorkTimeBoxSelectorByName = (companyName: string) => (
 
 export const companySalaryWorkTimeStatisticsBoxSelectorByName = (
   companyName: string,
-) => (state: RootState): FetchBox<SalaryWorkTimeStats | null> =>
+) => (state: RootState): FetchBox<OvertimeStats | null> =>
   state.companyIndex.timeAndSalaryStatisticsByName[companyName] ||
   getUnfetched();
 
@@ -124,7 +124,7 @@ export const jobTitleSalaryWorktimeBoxSelectorByName = (jobTitle: string) => (
 
 export const jobTitleSalaryWorkTimeStatisticsBoxSelectorByName = (
   jobTitle: string,
-) => (state: RootState): FetchBox<SalaryWorkTimeStats | null> =>
+) => (state: RootState): FetchBox<OvertimeStats | null> =>
   state.jobTitleIndex.timeAndSalaryStatisticsByName[jobTitle] || getUnfetched();
 
 export const jobTitleInterviewExperiencesBoxSelectorByName = (

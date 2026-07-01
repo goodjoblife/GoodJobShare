@@ -1,4 +1,4 @@
-import { SalaryWorkTimeStats } from 'apis/salaryWorkTime';
+import { OvertimeStats } from 'apis/salaryWorkTime';
 import graphqlClient from 'utils/graphqlClient';
 
 const queryCompanySalaryWorkTimeStatisticsGql = /* GraphQL */ `
@@ -27,14 +27,14 @@ const queryCompanySalaryWorkTimeStatisticsGql = /* GraphQL */ `
 `;
 
 type QueryCompanySalaryWorkTimeStatisticsData = {
-  company: { salary_work_time_statistics: SalaryWorkTimeStats } | null;
+  company: { salary_work_time_statistics: OvertimeStats } | null;
 };
 
 const queryCompanySalaryWorkTimeStatistics = ({
   companyName,
 }: {
   companyName: string;
-}): Promise<SalaryWorkTimeStats | null> =>
+}): Promise<OvertimeStats | null> =>
   graphqlClient<QueryCompanySalaryWorkTimeStatisticsData>({
     query: queryCompanySalaryWorkTimeStatisticsGql,
     variables: { companyName },

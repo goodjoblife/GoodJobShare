@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SalaryWorkTimeStats, YesNoOrUnknownCount } from 'apis/salaryWorkTime';
+import { OvertimeStats, YesNoOrUnknownCount } from 'apis/salaryWorkTime';
 import { P } from 'common/base';
 import Clock from 'common/icons/Clock';
 import Coin2 from 'common/icons/Coin2';
@@ -10,7 +10,7 @@ import styles from './OvertimeBlock.module.css';
 type Props = {
   type: 'salary' | 'dayoff';
   heading: string;
-  statistics: SalaryWorkTimeStats;
+  statistics: OvertimeStats;
 };
 
 const formatNum = (num: number | undefined): number | string => {

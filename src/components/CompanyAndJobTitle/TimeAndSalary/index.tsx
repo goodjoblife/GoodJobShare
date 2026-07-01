@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
-import { SalaryWorkTimeStats } from 'apis/salaryWorkTime';
+import { OvertimeStats } from 'apis/salaryWorkTime';
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import BoxRenderer, { BoxesRenderer } from 'common/StatusRenderer';
@@ -37,7 +37,7 @@ type Props = {
   statisticsBox: FetchBox<
     CompanyOverviewStatistics | JobTitleOverviewStatistics | null
   >;
-  salaryWorkTimeStatisticsBox: FetchBox<SalaryWorkTimeStats | null>;
+  salaryWorkTimeStatisticsBox: FetchBox<OvertimeStats | null>;
   page: number;
   pageSize: number;
   topNJobTitles?: { name: string }[];
@@ -101,20 +101,17 @@ const SalaryWorkTime: React.FC<Props> = ({
       )}
       <BoxesRenderer
         boxes={[statisticsBox, salaryWorkTimeStatisticsBox]}
-        render={([
-          statisticsData,
-          salaryWorkTimeStatisticsData,
-        ]): React.ReactNode => {
+        render={([statisticsData, overtimeStatisticsData]): React.ReactNode => {
           if (
             !statisticsData ||
-            !salaryWorkTimeStatisticsData ||
-            salaryWorkTimeStatisticsData.count === 0
+            !overtimeStatisticsData ||
+            overtimeStatisticsData.count === 0
           )
             return null;
           return (
             <Wrapper size="l">
               <SummarySection {...statisticsData} />
-              <OvertimeSection statistics={salaryWorkTimeStatisticsData} />
+              <OvertimeSection statistics={overtimeStatisticsData} />
             </Wrapper>
           );
         }}

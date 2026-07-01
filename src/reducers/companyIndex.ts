@@ -27,8 +27,8 @@ import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import {
   JobAverageSalary,
   OvertimeFrequencyCount,
+  OvertimeStats,
   SalaryWorkTime,
-  SalaryWorkTimeStats,
 } from 'apis/salaryWorkTime';
 import { Aspect } from 'constants/companyJobTitle';
 import createReducer from 'utils/createReducer';
@@ -95,10 +95,7 @@ type State = {
     string,
     FetchBox<CompanySalaryWorkTimeResult | null>
   >;
-  timeAndSalaryStatisticsByName: Record<
-    string,
-    FetchBox<SalaryWorkTimeStats | null>
-  >;
+  timeAndSalaryStatisticsByName: Record<string, FetchBox<OvertimeStats | null>>;
   interviewExperiencesByName: Record<
     string,
     FetchBox<CompanyInterviewExperienceResult | null>
@@ -228,7 +225,7 @@ const reducer = createReducer(preloadedState, {
       box,
     }: {
       companyName: string;
-      box: FetchBox<SalaryWorkTimeStats | null>;
+      box: FetchBox<OvertimeStats | null>;
     },
   ) => {
     return {

@@ -1,13 +1,13 @@
 import cn from 'classnames';
 import React from 'react';
 
-import { SalaryWorkTimeStats } from 'apis/salaryWorkTime';
+import { OvertimeStats } from 'apis/salaryWorkTime';
 
 import OvertimeBlock from '../../TimeAndSalary/common/OvertimeBlock';
 import styles from '../../TimeAndSalary/common/WorkingHourBlock.module.css';
 
 type Props = {
-  statistics: SalaryWorkTimeStats;
+  statistics: OvertimeStats;
 };
 
 const OvertimeSection: React.FC<Props> = ({ statistics }) => {

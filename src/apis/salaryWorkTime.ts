@@ -135,7 +135,7 @@ export type SalaryWorkTimeStatistics = {
   job_average_salaries: JobAverageSalary[];
 };
 
-export type SalaryWorkTimeStats = Pick<
+export type OvertimeStats = Pick<
   SalaryWorkTimeStatistics,
   | 'count'
   | 'is_overtime_salary_legal_count'
