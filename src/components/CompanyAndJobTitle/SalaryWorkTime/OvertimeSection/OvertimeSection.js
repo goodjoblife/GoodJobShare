@@ -1,0 +1,42 @@
+import cn from 'classnames';
+import React from 'react';
+
+<<<<<<<< HEAD:src/components/CompanyAndJobTitle/SalaryWorkTime/OvertimeSection.tsx
+import { OvertimeStats } from 'apis/salaryWorkTime';
+
+import OvertimeBlock from '../../TimeAndSalary/common/OvertimeBlock';
+import styles from '../../TimeAndSalary/common/WorkingHourBlock.module.css';
+========
+import OvertimeBlock from './OvertimeBlock';
+import styles from '../WorkingHourBlock.module.css';
+>>>>>>>> upstream/master:src/components/CompanyAndJobTitle/SalaryWorkTime/OvertimeSection/OvertimeSection.js
+
+type Props = {
+  statistics: OvertimeStats;
+};
+
+const OvertimeSection: React.FC<Props> = ({ statistics }) => {
+  return (
+    <section className={styles.container}>
+      <div className={cn(styles.content, styles.expanded)}>
+        <div className={styles.overtimeBlock}>
+          <div className={styles.overtimeBlockInner}>
+            <OvertimeBlock
+              type="salary"
+              heading="加班有無加班費"
+              statistics={statistics}
+            />
+            <OvertimeBlock
+              type="dayoff"
+              heading="加班有無補休"
+              statistics={statistics}
+            />
+          </div>
+          <div className={styles.overtimeBlockUnit}>單位：資料筆數</div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default OvertimeSection;

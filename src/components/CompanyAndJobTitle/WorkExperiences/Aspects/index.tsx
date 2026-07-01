@@ -47,7 +47,7 @@ const AspectSection: React.FC<AspectProps> = ({
   pageSize,
 }) => {
   const parentPath = generateTabURL({ pageType, pageName, tabType });
-  const [createPageLinkTo] = useCreatePageLinkTo();
+  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
 
   return (
     <CompanyAndJobTitleWrapper
@@ -80,7 +80,7 @@ const AspectSection: React.FC<AspectProps> = ({
           }}
         />
       </Wrapper>
-      <Wrapper size="m">
+      <Wrapper ref={handleSectionRef} size="m">
         <RatingFilter />
         <PageBoxRenderer
           pageType={pageType}

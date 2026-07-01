@@ -7,8 +7,7 @@ import {
   queryJobTitleSalaryWorkTimeStatistics,
 } from 'actions/jobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
-import SalaryWorkTime from 'components/CompanyAndJobTitle/TimeAndSalary';
+import SalaryWorkTime from 'components/CompanyAndJobTitle/SalaryWorkTime';
 import {
   dataTimeFromQuerySelector,
   experienceFromQuerySelector,
@@ -20,7 +19,8 @@ import {
   useExperienceFromQuery,
   useGenderFromQuery,
   useSortByFromQuery,
-} from 'components/CompanyAndJobTitle/TimeAndSalary/SalaryFilter';
+} from 'components/CompanyAndJobTitle/SalaryWorkTime/SalaryFilter';
+import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
 import usePermission from 'hooks/usePermission';
