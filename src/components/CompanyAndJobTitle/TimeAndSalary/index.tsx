@@ -136,28 +136,30 @@ const SalaryWorkTime: React.FC<Props> = ({
           render={({
             salaryWorkTimes,
             salaryWorkTimesCount: totalCount,
-          }): React.ReactNode => (
-            <>
-              <Helmet
-                pageType={pageType}
-                pageName={pageName}
-                totalCount={totalCount}
-                page={page}
-                topNJobTitles={topNJobTitles}
-              />
-              <SalaryWorkTimeSection
-                pageType={pageType}
-                pageName={pageName}
-                tabType={tabType}
-                salaryWorkTimes={salaryWorkTimes}
-                page={page}
-                pageSize={pageSize}
-                totalCount={totalCount}
-                onCloseReport={onCloseReport}
-                createPageLinkTo={createPageLinkTo}
-              />
-            </>
-          )}
+          }): React.ReactNode => {
+            return (
+              <>
+                <Helmet
+                  pageType={pageType}
+                  pageName={pageName}
+                  totalCount={totalCount}
+                  page={page}
+                  topNJobTitles={topNJobTitles}
+                />
+                <SalaryWorkTimeSection
+                  pageType={pageType}
+                  pageName={pageName}
+                  tabType={tabType}
+                  salaryWorkTimes={salaryWorkTimes}
+                  page={page}
+                  pageSize={pageSize}
+                  totalCount={totalCount}
+                  onCloseReport={onCloseReport}
+                  createPageLinkTo={createPageLinkTo}
+                />
+              </>
+            );
+          }}
         />
       </Wrapper>
     </CompanyAndJobTitleWrapper>

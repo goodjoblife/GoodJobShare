@@ -4,7 +4,6 @@ import graphqlClient from 'utils/graphqlClient';
 const queryCompanySalaryWorkTimeStatisticsGql = /* GraphQL */ `
   query($companyName: String!) {
     company(name: $companyName) {
-      name
       salary_work_time_statistics {
         count
         is_overtime_salary_legal_count {
@@ -27,23 +26,20 @@ const queryCompanySalaryWorkTimeStatisticsGql = /* GraphQL */ `
   }
 `;
 
-export type CompanySalaryWorkTimeStatistics = {
-  name: string;
-  salary_work_time_statistics: SalaryWorkTimeStats;
-};
-
 type QueryCompanySalaryWorkTimeStatisticsData = {
-  company: CompanySalaryWorkTimeStatistics | null;
+  company: { salary_work_time_statistics: SalaryWorkTimeStats } | null;
 };
 
 const queryCompanySalaryWorkTimeStatistics = ({
   companyName,
 }: {
   companyName: string;
-}): Promise<QueryCompanySalaryWorkTimeStatisticsData['company']> =>
+}): Promise<SalaryWorkTimeStats | null> =>
   graphqlClient<QueryCompanySalaryWorkTimeStatisticsData>({
     query: queryCompanySalaryWorkTimeStatisticsGql,
     variables: { companyName },
-  }).then(data => data.company);
+  }).then(data =>
+    data.company ? data.company.salary_work_time_statistics : null,
+  );
 
 export default queryCompanySalaryWorkTimeStatistics;

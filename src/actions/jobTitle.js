@@ -311,12 +311,7 @@ export const queryJobTitleSalaryWorkTimeStatistics = ({ jobTitle }) => async (
       jobTitle,
     });
 
-    dispatch(
-      setSalaryWorkTimeStatistics(
-        jobTitle,
-        getFetched(data ? data.salary_work_time_statistics : null),
-      ),
-    );
+    dispatch(setSalaryWorkTimeStatistics(jobTitle, getFetched(data)));
   } catch (error) {
     dispatch(setSalaryWorkTimeStatistics(jobTitle, getError(error)));
   }

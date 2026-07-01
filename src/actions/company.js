@@ -385,12 +385,7 @@ export const queryCompanySalaryWorkTimeStatistics = ({ companyName }) => async (
       companyName,
     });
 
-    dispatch(
-      setSalaryWorkTimeStatistics(
-        companyName,
-        getFetched(data ? data.salary_work_time_statistics : null),
-      ),
-    );
+    dispatch(setSalaryWorkTimeStatistics(companyName, getFetched(data)));
   } catch (error) {
     dispatch(setSalaryWorkTimeStatistics(companyName, getError(error)));
   }
