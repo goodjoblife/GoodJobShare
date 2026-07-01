@@ -4,7 +4,6 @@ import {
   getCompanyInterviewExperiencesQuery,
   getCompanyTimeAndSalaryQuery,
   getCompanyTimeAndSalaryStatisticsQuery,
-  queryCompaniesHavingDataGql,
 } from 'graphql/company';
 import graphqlClient from 'utils/graphqlClient';
 
@@ -49,9 +48,3 @@ export const getCompanyInterviewExperiences = ({
     query: getCompanyInterviewExperiencesQuery,
     variables: { companyName, jobTitle, start, limit, sortBy },
   }).then(R.prop('company'));
-
-export const queryCompaniesApi = ({ start, limit }) =>
-  graphqlClient({
-    query: queryCompaniesHavingDataGql,
-    variables: { start, limit },
-  });
