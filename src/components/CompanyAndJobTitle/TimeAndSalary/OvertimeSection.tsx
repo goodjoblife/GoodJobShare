@@ -7,13 +7,10 @@ import OvertimeBlock from '../../TimeAndSalary/common/OvertimeBlock';
 import styles from '../../TimeAndSalary/common/WorkingHourBlock.module.css';
 
 type Props = {
-  statistics: SalaryWorkTimeStats | null;
+  statistics: SalaryWorkTimeStats;
 };
 
 const OvertimeSection: React.FC<Props> = ({ statistics }) => {
-  if (statistics === null) {
-    return null;
-  }
   return (
     <section className={styles.container}>
       <div className={cn(styles.content, styles.expanded)}>
