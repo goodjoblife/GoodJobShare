@@ -1,3 +1,4 @@
+import loadable from '@loadable/component';
 import React from 'react';
 
 import { RatingBin } from 'apis/aspectRatingStatistics';
@@ -5,8 +6,11 @@ import Card from 'common/Card';
 import Pen from 'common/icons/Pen';
 import OverallRating from 'common/OverallRating';
 
-import ScoreDistributionChart from './ScoreDistributionChart';
 import styles from './styles.module.css';
+
+const ScoreDistributionChart = loadable(() =>
+  import('./ScoreDistributionChart'),
+);
 
 type SummaryProps = {
   averageRating: number;
