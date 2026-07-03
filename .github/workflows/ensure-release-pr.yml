@@ -1,3 +1,6 @@
+# dev/dev2 更新時，自動確保有一個對應的 -> master release PR：
+# 沒有開啟中的 PR 就新開一個；PR 已存在則檢查標題是否有 "project: " 前綴、
+# 是否有 project-pr label，缺的話自動補上。
 name: Ensure release PR
 
 on:
