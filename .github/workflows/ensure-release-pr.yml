@@ -29,6 +29,9 @@ jobs:
           BRANCH="${GITHUB_REF#refs/heads/}"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
 
+          AHEAD_BY=$(gh api "repos/$GITHUB_REPOSITORY/compare/master...$BRANCH" --jq '.ahead_by')
+          echo "ahead_by=$AHEAD_BY" >> "$GITHUB_OUTPUT"
+
           PR_JSON=$(gh pr list --repo "$GITHUB_REPOSITORY" --base master --head "$BRANCH" --state open --json number,title,labels --limit 1)
           if [ "$(echo "$PR_JSON" | jq length)" -gt 0 ]; then
             echo "found=true" >> "$GITHUB_OUTPUT"
@@ -39,8 +42,11 @@ jobs:
             echo "found=false" >> "$GITHUB_OUTPUT"
           fi
 
+      # Skip when the branch has no commits ahead of master (e.g. right after
+      # sync-master-to-dev(2).yml just fast-forwarded it) — gh pr create would
+      # otherwise fail with "No commits between master and <branch>".
       - name: Create PR if missing
-        if: steps.find_pr.outputs.found == 'false'
+        if: steps.find_pr.outputs.found == 'false' && steps.find_pr.outputs.ahead_by != '0'
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
