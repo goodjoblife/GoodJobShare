@@ -8,6 +8,9 @@ on:
     branches:
       - dev
       - dev2
+  # Manual run: pick dev/dev2 via the "Use workflow from" branch selector,
+  # GITHUB_REF will reflect that choice the same way it does for push.
+  workflow_dispatch:
 
 jobs:
   ensure-pr:
