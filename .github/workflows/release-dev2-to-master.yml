@@ -2,6 +2,11 @@ name: Release dev2 to master
 
 on:
   workflow_dispatch:
+    inputs:
+      dryrun:
+        description: "Dry run (do not push to master)"
+        type: boolean
+        default: false
 
 jobs:
   release:
@@ -52,4 +57,5 @@ jobs:
           fi
 
       - name: Push
+        if: ${{ !inputs.dryrun }}
         run: git push origin master
