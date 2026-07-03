@@ -1,0 +1,61 @@
+name: Release dev to master
+
+on:
+  workflow_dispatch:
+    inputs:
+      dryrun:
+        description: "Dry run (do not push to master)"
+        type: boolean
+        default: false
+
+jobs:
+  release:
+    if: github.repository == 'goodjoblife/GoodJobShare'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v6
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0
+          ref: master
+
+      - name: Find related PR
+        id: find_pr
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          PR_JSON=$(gh pr list --repo "$GITHUB_REPOSITORY" --base master --head dev --state open --json number,title,url --limit 1)
+          if [ "$(echo "$PR_JSON" | jq length)" -gt 0 ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+            echo "number=$(echo "$PR_JSON" | jq -r '.[0].number')" >> "$GITHUB_OUTPUT"
+            echo "title=$(echo "$PR_JSON" | jq -r '.[0].title')" >> "$GITHUB_OUTPUT"
+            echo "url=$(echo "$PR_JSON" | jq -r '.[0].url')" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Release dev to master
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin dev
+
+          if [ "${{ steps.find_pr.outputs.found }}" = "true" ]; then
+            git merge origin/dev --no-ff \
+              -m "Merge branch 'dev' into master (#${{ steps.find_pr.outputs.number }})" \
+              -m "${{ steps.find_pr.outputs.title }}" \
+              -m "${{ steps.find_pr.outputs.url }}"
+          else
+            git merge origin/dev --no-ff -m "Merge branch 'dev' into master"
+          fi
+
+      - name: Push
+        if: ${{ !inputs.dryrun }}
+        run: git push origin master
