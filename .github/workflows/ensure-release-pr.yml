@@ -35,12 +35,19 @@ jobs:
           AHEAD_BY=$(gh api "repos/$GITHUB_REPOSITORY/compare/master...$BRANCH" --jq '.ahead_by')
           echo "ahead_by=$AHEAD_BY" >> "$GITHUB_OUTPUT"
 
-          PR_JSON=$(gh pr list --repo "$GITHUB_REPOSITORY" --base master --head "$BRANCH" --state open --json number,title,labels --limit 1)
+          PR_JSON=$(gh pr list --repo "$GITHUB_REPOSITORY" --base master --head "$BRANCH" --state open --json number,title,labels,body --limit 1)
           if [ "$(echo "$PR_JSON" | jq length)" -gt 0 ]; then
             echo "found=true" >> "$GITHUB_OUTPUT"
             echo "number=$(echo "$PR_JSON" | jq -r '.[0].number')" >> "$GITHUB_OUTPUT"
             echo "title=$(echo "$PR_JSON" | jq -r '.[0].title')" >> "$GITHUB_OUTPUT"
             echo "has_label=$(echo "$PR_JSON" | jq -r '[.[0].labels[].name] | index("project-pr") != null')" >> "$GITHUB_OUTPUT"
+            echo "has_release_instructions=$(echo "$PR_JSON" | jq -r '(.[0].body // "") | contains("如何 release 這個 PR 到 master")')" >> "$GITHUB_OUTPUT"
+
+            {
+              echo "body<<ENSURE_RELEASE_PR_BODY_EOF"
+              echo "$PR_JSON" | jq -r '.[0].body // ""'
+              echo "ENSURE_RELEASE_PR_BODY_EOF"
+            } >> "$GITHUB_OUTPUT"
           else
             echo "found=false" >> "$GITHUB_OUTPUT"
           fi
@@ -71,9 +78,10 @@ jobs:
         if: steps.find_pr.outputs.found == 'true' && !startsWith(steps.find_pr.outputs.title, 'project:')
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          CURRENT_TITLE: ${{ steps.find_pr.outputs.title }}
         run: |
           gh pr edit "${{ steps.find_pr.outputs.number }}" --repo "$GITHUB_REPOSITORY" \
-            --title "project: ${{ steps.find_pr.outputs.title }}"
+            --title "project: $CURRENT_TITLE"
 
       - name: Add project-pr label if missing
         if: steps.find_pr.outputs.found == 'true' && steps.find_pr.outputs.has_label == 'false'
@@ -81,3 +89,20 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           gh pr edit "${{ steps.find_pr.outputs.number }}" --repo "$GITHUB_REPOSITORY" --add-label "project-pr"
+
+      # Backfill the release instructions onto PRs that were already open
+      # before this workflow started adding them (or created manually).
+      - name: Add release instructions if missing
+        if: steps.find_pr.outputs.found == 'true' && steps.find_pr.outputs.has_release_instructions == 'false'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          BRANCH: ${{ steps.find_pr.outputs.branch }}
+          RELEASE_URL: ${{ steps.find_pr.outputs.release_workflow_url }}
+          CURRENT_BODY: ${{ steps.find_pr.outputs.body }}
+        run: |
+          NEW_BODY="$CURRENT_BODY"
+          NEW_BODY+=$'\n\n'"## 如何 release 這個 PR 到 master"
+          NEW_BODY+=$'\n\n'"1. 前往 [Release $BRANCH to master]($RELEASE_URL)"
+          NEW_BODY+=$'\n'"2. 點擊右上角的 **Run workflow** 按鈕觸發合併"
+
+          gh pr edit "${{ steps.find_pr.outputs.number }}" --repo "$GITHUB_REPOSITORY" --body "$NEW_BODY"
