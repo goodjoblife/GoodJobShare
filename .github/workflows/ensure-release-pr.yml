@@ -29,6 +29,9 @@ jobs:
           BRANCH="${GITHUB_REF#refs/heads/}"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
 
+          # dev -> release-dev-to-master.yml, dev2 -> release-dev2-to-master.yml
+          echo "release_workflow_url=https://github.com/$GITHUB_REPOSITORY/actions/workflows/release-$BRANCH-to-master.yml" >> "$GITHUB_OUTPUT"
+
           AHEAD_BY=$(gh api "repos/$GITHUB_REPOSITORY/compare/master...$BRANCH" --jq '.ahead_by')
           echo "ahead_by=$AHEAD_BY" >> "$GITHUB_OUTPUT"
 
@@ -50,10 +53,18 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
+          BRANCH="${{ steps.find_pr.outputs.branch }}"
+          RELEASE_URL="${{ steps.find_pr.outputs.release_workflow_url }}"
+
+          BODY="Auto-created release PR for \`$BRANCH\` → \`master\`."
+          BODY+=$'\n\n'"## 如何 release 這個 PR 到 master"
+          BODY+=$'\n\n'"1. 前往 [Release $BRANCH to master]($RELEASE_URL)"
+          BODY+=$'\n'"2. 點擊右上角的 **Run workflow** 按鈕觸發合併"
+
           gh pr create --repo "$GITHUB_REPOSITORY" \
-            --base master --head "${{ steps.find_pr.outputs.branch }}" \
+            --base master --head "$BRANCH" \
             --title "project: 請修改此標題" \
-            --body "Auto-created release PR for \`${{ steps.find_pr.outputs.branch }}\` → \`master\`." \
+            --body "$BODY" \
             --label "project-pr"
 
       - name: Fix title prefix if missing
