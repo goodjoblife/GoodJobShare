@@ -1,0 +1,72 @@
+# dev/dev2 更新時，自動確保有一個對應的 -> master release PR：
+# 沒有開啟中的 PR 就新開一個；PR 已存在則檢查標題是否有 "project: " 前綴、
+# 是否有 project-pr label，缺的話自動補上。
+name: Ensure release PR
+
+on:
+  push:
+    branches:
+      - dev
+      - dev2
+
+jobs:
+  ensure-pr:
+    if: github.repository == 'goodjoblife/GoodJobShare'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Find related PR
+        id: find_pr
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+
+          AHEAD_BY=$(gh api "repos/$GITHUB_REPOSITORY/compare/master...$BRANCH" --jq '.ahead_by')
+          echo "ahead_by=$AHEAD_BY" >> "$GITHUB_OUTPUT"
+
+          PR_JSON=$(gh pr list --repo "$GITHUB_REPOSITORY" --base master --head "$BRANCH" --state open --json number,title,labels --limit 1)
+          if [ "$(echo "$PR_JSON" | jq length)" -gt 0 ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+            echo "number=$(echo "$PR_JSON" | jq -r '.[0].number')" >> "$GITHUB_OUTPUT"
+            echo "title=$(echo "$PR_JSON" | jq -r '.[0].title')" >> "$GITHUB_OUTPUT"
+            echo "has_label=$(echo "$PR_JSON" | jq -r '[.[0].labels[].name] | index("project-pr") != null')" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Skip when the branch has no commits ahead of master (e.g. right after
+      # sync-master-to-dev(2).yml just fast-forwarded it) — gh pr create would
+      # otherwise fail with "No commits between master and <branch>".
+      - name: Create PR if missing
+        if: steps.find_pr.outputs.found == 'false' && steps.find_pr.outputs.ahead_by != '0'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh pr create --repo "$GITHUB_REPOSITORY" \
+            --base master --head "${{ steps.find_pr.outputs.branch }}" \
+            --title "project: 請修改此標題" \
+            --body "Auto-created release PR for \`${{ steps.find_pr.outputs.branch }}\` → \`master\`." \
+            --label "project-pr"
+
+      - name: Fix title prefix if missing
+        if: steps.find_pr.outputs.found == 'true' && !startsWith(steps.find_pr.outputs.title, 'project:')
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh pr edit "${{ steps.find_pr.outputs.number }}" --repo "$GITHUB_REPOSITORY" \
+            --title "project: ${{ steps.find_pr.outputs.title }}"
+
+      - name: Add project-pr label if missing
+        if: steps.find_pr.outputs.found == 'true' && steps.find_pr.outputs.has_label == 'false'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh pr edit "${{ steps.find_pr.outputs.number }}" --repo "$GITHUB_REPOSITORY" --add-label "project-pr"
