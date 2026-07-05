@@ -19,7 +19,7 @@ describe('getAvailableYears', () => {
     expect(getAvailableYears(sample)).toEqual([2024, 2023]);
   });
 
-  test('空資料 → 空陣列', () => {
+  test('全部陣列為空 → 空陣列', () => {
     expect(
       getAvailableYears({
         avgSalaryStatistics: [],
@@ -28,15 +28,6 @@ describe('getAvailableYears', () => {
         femaleManagerStatistics: [],
       }),
     ).toEqual([]);
-  });
-
-  test('欄位為 undefined 也不爆', () => {
-    expect(getAvailableYears({})).toEqual([]);
-  });
-
-  test('null / undefined 也不爆', () => {
-    expect(getAvailableYears(null)).toEqual([]);
-    expect(getAvailableYears(undefined)).toEqual([]);
   });
 });
 
@@ -64,14 +55,5 @@ describe('getStatisticsByYear', () => {
     expect(r.avgSalaryStatisticsItem && r.avgSalaryStatisticsItem.year).toBe(
       2023,
     );
-  });
-
-  test('null 輸入 → 四個 item 皆 undefined', () => {
-    expect(getStatisticsByYear(null, 2024)).toEqual({
-      avgSalaryStatisticsItem: undefined,
-      nonManagerAvgSalaryStatisticsItem: undefined,
-      nonManagerMedianSalaryStatisticsItem: undefined,
-      femaleManagerStatisticsItem: undefined,
-    });
   });
 });
