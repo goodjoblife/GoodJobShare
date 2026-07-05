@@ -1,16 +1,16 @@
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 
-type TAvgSalaryStatisticsItem = ESGSalaryData['avgSalaryStatistics'][number];
-type TNonManagerMedianSalaryStatisticsItem = ESGSalaryData['nonManagerMedianSalaryStatistics'][number];
-type TFemaleManagerStatisticsItem = ESGSalaryData['femaleManagerStatistics'][number];
+type AvgSalaryStatisticsItem = ESGSalaryData['avgSalaryStatistics'][number];
+type NonManagerMedianSalaryStatisticsItem = ESGSalaryData['nonManagerMedianSalaryStatistics'][number];
+type FemaleManagerStatisticsItem = ESGSalaryData['femaleManagerStatistics'][number];
 
-type TStatisticsByYear = {
-  avgSalaryStatisticsItem: TAvgSalaryStatisticsItem | undefined;
-  nonManagerAvgSalaryStatisticsItem: TAvgSalaryStatisticsItem | undefined;
+type StatisticsByYear = {
+  avgSalaryStatisticsItem: AvgSalaryStatisticsItem | undefined;
+  nonManagerAvgSalaryStatisticsItem: AvgSalaryStatisticsItem | undefined;
   nonManagerMedianSalaryStatisticsItem:
-    | TNonManagerMedianSalaryStatisticsItem
+    | NonManagerMedianSalaryStatisticsItem
     | undefined;
-  femaleManagerStatisticsItem: TFemaleManagerStatisticsItem | undefined;
+  femaleManagerStatisticsItem: FemaleManagerStatisticsItem | undefined;
 };
 
 export const getAvailableYears = (esgSalaryData: ESGSalaryData): number[] => {
@@ -24,7 +24,7 @@ export const getAvailableYears = (esgSalaryData: ESGSalaryData): number[] => {
 export const getStatisticsByYear = (
   esgSalaryData: ESGSalaryData,
   year: number,
-): TStatisticsByYear => ({
+): StatisticsByYear => ({
   avgSalaryStatisticsItem: esgSalaryData.avgSalaryStatistics.find(
     item => item.year === year,
   ),

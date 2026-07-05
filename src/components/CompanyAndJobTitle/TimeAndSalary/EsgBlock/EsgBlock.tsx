@@ -13,7 +13,7 @@ import styles from './EsgBlock.module.css';
 import { getAvailableYears, getStatisticsByYear } from './esgYearUtils';
 import overviewStyles from '../../Overview/Overview.module.css';
 
-type TEsgItemBlockProps = {
+type EsgItemBlockProps = {
   className?: string;
   title: string;
   year: number;
@@ -30,7 +30,7 @@ type EsgBlockProps = {
   yearSelectInContent?: boolean;
 };
 
-const EsgItemBlock: React.FC<TEsgItemBlockProps> = ({
+const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
   className,
   title,
   year,
