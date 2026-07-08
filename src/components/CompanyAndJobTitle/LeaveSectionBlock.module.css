@@ -1,0 +1,54 @@
+@value below-tablet from "../common/variables.module.css";
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 21px;
+  margin-bottom: 22px;
+
+  @media (max-width: below-tablet) {
+    flex-direction: column;
+  }
+}
+
+.summaryCard {
+  width: 265px;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: below-tablet) {
+    width: 100%;
+  }
+}
+
+.summaryTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.bullets li::before {
+  content: '–';
+  margin-right: 6px;
+}
+
+.bullets li {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.8;
+}
+
+.link {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 12px;
+}

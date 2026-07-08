@@ -1,0 +1,28 @@
+@value below-tablet from "../common/variables.module.css";
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 265px;
+  min-height: 200px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.chart {
+  flex: 1;
+  min-height: 120px;
+}
+
+.footer {
+  font-size: 12px;
+  color: #969696;
+  text-align: right;
+  margin-top: 8px;
+}

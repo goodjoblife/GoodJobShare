@@ -22,6 +22,8 @@ enum TabType {
   TIME_AND_SALARY = 'TIME_AND_SALARY',
   WORK_EXPERIENCE = 'WORK_EXPERIENCE',
   INTERVIEW_EXPERIENCE = 'INTERVIEW_EXPERIENCE',
+  FAMILY_CHILDCARE = 'FAMILY_CHILDCARE',
+  GENDER_FRIENDLY = 'GENDER_FRIENDLY',
 }
 
 export { TabType };
@@ -31,6 +33,8 @@ export const tabTypeTranslation: Record<TabType, string> = {
   [TabType.TIME_AND_SALARY]: '薪水&加班',
   [TabType.WORK_EXPERIENCE]: '評價',
   [TabType.INTERVIEW_EXPERIENCE]: '面試',
+  [TabType.FAMILY_CHILDCARE]: '家庭/育兒',
+  [TabType.GENDER_FRIENDLY]: '性別友善',
 };
 
 export const tabTypeDetailTranslation: Record<TabType, string> = {
@@ -38,6 +42,8 @@ export const tabTypeDetailTranslation: Record<TabType, string> = {
   [TabType.TIME_AND_SALARY]: '薪水&加班狀況',
   [TabType.WORK_EXPERIENCE]: '評價',
   [TabType.INTERVIEW_EXPERIENCE]: '面試經驗',
+  [TabType.FAMILY_CHILDCARE]: '家庭/育兒',
+  [TabType.GENDER_FRIENDLY]: '性別友善',
 };
 
 const tabTypeURLMap: Record<TabType, string> = {
@@ -45,6 +51,8 @@ const tabTypeURLMap: Record<TabType, string> = {
   [TabType.TIME_AND_SALARY]: 'salary-work-times',
   [TabType.WORK_EXPERIENCE]: 'work-experiences',
   [TabType.INTERVIEW_EXPERIENCE]: 'interview-experiences',
+  [TabType.FAMILY_CHILDCARE]: 'family-childcare',
+  [TabType.GENDER_FRIENDLY]: 'gender-friendly',
 };
 
 export enum Aspect {
