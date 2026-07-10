@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,13 +7,24 @@ import {
   queryCompanyIsSubscribed,
   toggleSubscribeCompany,
 } from 'actions/company';
+import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
 import BellBlackImage from 'common/icons/bellBlack.svg';
 import BellWhiteImage from 'common/icons/bellWhite.svg';
 import useLoginFlow from 'components/ExperienceDetail/hooks/useLoginFlow';
 import { companyIsSubscribedBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import { isFetched } from 'utils/fetchBox';
+import FetchBox, { isFetched } from 'utils/fetchBox';
 
 import styles from './SubscribeNotificationButton.module.css';
+
+const useCompanyIsSubscribedBox = (
+  companyName: string,
+): FetchBox<CompanyIsSubscribed> => {
+  const selector = useMemo(
+    () => companyIsSubscribedBoxSelectorByName(companyName),
+    [companyName],
+  );
+  return useSelector(selector);
+};
 
 type SubscribeNotificationButtonProps = {
   companyName: string;
@@ -23,9 +34,7 @@ const SubscribeNotificationButton: React.FC<
   SubscribeNotificationButtonProps
 > = ({ companyName }) => {
   const dispatch = useDispatch();
-  const box = useSelector(companyIsSubscribedBoxSelectorByName(companyName));
-  const fetched = isFetched(box);
-  const { isSubscribed } = box.data || {};
+  const box = useCompanyIsSubscribedBox(companyName);
 
   const handleToggleSubscribeCompany = useCallback(async () => {
     await dispatch(toggleSubscribeCompany({ companyName }));
@@ -39,9 +48,11 @@ const SubscribeNotificationButton: React.FC<
     dispatch(queryCompanyIsSubscribed({ companyName }));
   }, [dispatch, companyName]);
 
-  if (!fetched) {
+  if (!isFetched(box)) {
     return <Skeleton width={144} height={30} borderRadius={5} />;
   }
+
+  const { isSubscribed } = box.data;
 
   return (
     <button
