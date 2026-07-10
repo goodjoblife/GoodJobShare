@@ -22,6 +22,7 @@ import {
 } from 'apis/overview';
 import { CompanyInIndex } from 'apis/queryCompanies';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
+import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import {
@@ -81,9 +82,6 @@ export type CompanyAspectExperienceResult = {
   workExperiencesCount: number;
 };
 
-// TODO: replace with proper CompanyIsSubscribed type
-export type CompanyIsSubscribed = unknown;
-
 type State = {
   indexesByPage: Record<number, FetchBox<CompanyInIndex[]>>;
   indexCountBox: FetchBox<number>;
@@ -117,7 +115,7 @@ type State = {
     string,
     FetchBox<CompanyAspectExperienceResult | null>
   >;
-  isSubscribedByName: Record<string, FetchBox<CompanyIsSubscribed | null>>;
+  isSubscribedByName: Record<string, FetchBox<CompanyIsSubscribed>>;
   topNJobTitlesByName: Record<string, FetchBox<TopNJobTitles | null>>;
   esgSalaryData: Record<string, FetchBox<ESGSalaryData | null>>;
 };
@@ -348,7 +346,7 @@ const reducer = createReducer(preloadedState, {
     {
       companyName,
       box,
-    }: { companyName: string; box: FetchBox<CompanyIsSubscribed | null> },
+    }: { companyName: string; box: FetchBox<CompanyIsSubscribed> },
   ) => {
     return {
       ...state,
