@@ -128,7 +128,12 @@ const ActiveItem = ({
         <div
           className={cn(formStyles.navigationBar, styles.activeCtaButtonGroup)}
         >
-          <NavigatorButton onClick={onClear}>清除</NavigatorButton>
+          <NavigatorButton
+            style={{ visibility: defaultValue ? 'visible' : 'hidden' }}
+            onClick={onClear}
+          >
+            清除
+          </NavigatorButton>
           <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
           <NavigatorButton onClick={onConfirm}>儲存</NavigatorButton>
         </div>

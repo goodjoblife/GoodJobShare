@@ -15,7 +15,7 @@ import configureStore from './store/configureStore';
 function shouldUpdateScroll(prevProps, props) {
   const mapSearch = ({ search, ...rest }) => {
     let s = qs.parse(search, { ignoreQueryPrefix: true });
-    s = R.omit(['q'], s); // We don't reset scroll on search query change
+    s = R.omit(['q', 'rating'], s); // We don't reset scroll on search query change
     return { search: s, ...rest };
   };
   const getSignature = R.compose(
@@ -39,7 +39,7 @@ function shouldUpdateScroll(prevProps, props) {
     props && props.location && props.location.state && props.location.state.y;
 
   if (shouldScroll && shouldScrollToY && scrollY) {
-    return [0, scrollY];
+    return [0, Math.min(scrollY, window.scrollY)];
   }
 
   return shouldScroll;

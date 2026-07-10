@@ -1,13 +1,15 @@
 import R from 'ramda';
 
+import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
+import { CompanyInIndex } from 'apis/queryCompanies';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
+import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import { RootState } from 'reducers';
 import {
-  CompanyInIndex,
+  CompanyAspectExperienceResult,
   CompanyInterviewExperienceResult,
-  CompanyIsSubscribed,
   CompanyOverview,
   CompanyOverviewStatistics,
   CompanySalaryWorkTimeResult,
@@ -89,9 +91,21 @@ export const companyWorkExperiencesBoxSelectorByName = (
 ) => (state: RootState): FetchBox<CompanyWorkExperienceResult | null> =>
   state.companyIndex.workExperiencesByName[companyName] || getUnfetched();
 
+export const companyWorkExperiencesAspectStatisticsBoxSelectorByName = (
+  companyName: string,
+) => (state: RootState): FetchBox<AspectStatisticsData | null> =>
+  state.companyIndex.workExperiencesAspectStatisticsByName[companyName] ||
+  getUnfetched();
+
+export const companyWorkExperiencesAspectExperiencesBoxSelectorByName = (
+  companyName: string,
+) => (state: RootState): FetchBox<CompanyAspectExperienceResult | null> =>
+  state.companyIndex.workExperiencesAspectExperiencesByName[companyName] ||
+  getUnfetched();
+
 export const companyIsSubscribedBoxSelectorByName = (companyName: string) => (
   state: RootState,
-): FetchBox<CompanyIsSubscribed | null> =>
+): FetchBox<CompanyIsSubscribed> =>
   state.companyIndex.isSubscribedByName[companyName] || getUnfetched();
 
 export const jobTitleIndexesBoxSelectorAtPage = (page: number) => (

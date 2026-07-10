@@ -50,6 +50,20 @@
   }
 }
 
+.scoreCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 21px;
+  margin-bottom: 50px;
+
+  @media (max-width: below-mobile) {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+
 .experience + .experience {
   margin-top: 75px;
 }

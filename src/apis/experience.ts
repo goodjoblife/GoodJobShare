@@ -50,4 +50,7 @@ export type WorkExperience = {
   averageSectionRating: number | null;
   reply_count: number;
   like_count: number;
+  sector: string | null;
+  gender: string | null;
+  jobLevel: string | null;
 };

@@ -20,7 +20,6 @@ type OverviewProps = {
     state: RootState,
   ) => FetchBox<CompanyOverview | JobTitleOverview | null>;
   statisticsBox: FetchBox<unknown>;
-  onCloseReport: () => void;
 };
 
 const Overview: React.FC<OverviewProps> = ({
@@ -29,7 +28,6 @@ const Overview: React.FC<OverviewProps> = ({
   tabType,
   boxSelector,
   statisticsBox,
-  onCloseReport,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -66,10 +64,8 @@ const Overview: React.FC<OverviewProps> = ({
               interviewExperiencesCount={data.interviewExperiencesCount}
               workExperiences={data.workExperiences}
               workExperiencesCount={data.workExperiencesCount}
-              salaryWorkTimes={data.salaryWorkTimes}
               salaryWorkTimesCount={data.salaryWorkTimesCount}
               statisticsBox={statisticsBox}
-              onCloseReport={onCloseReport}
             />
           </>
         )}

@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Card from 'common/Card';
+import { Aspect } from 'constants/companyJobTitle';
 import useMobile from 'hooks/useMobile';
 
+import AspectScoreCard from './AspectScoreCard';
 import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
 import emptySalaryImage from './empty_data_salary.png';
 import emptyWorkTimeImage from './empty_data_working_time.png';
@@ -50,7 +52,7 @@ const WorkTimeCard = ({ data, children }) => {
   const isEmptyData = !data;
   return (
     <Card
-      className={cn(styles.card, styles.averageWeekWorkTime, {
+      className={cn(styles.card, styles.scoreCard, {
         [styles.emptyData]: isEmptyData,
       })}
     >
@@ -93,6 +95,7 @@ const SummaryBlock = ({
         overtimeFrequencyCount={overtimeFrequencyCount}
       />
     </WorkTimeCard>
+    <AspectScoreCard aspect={Aspect.WORK_LIFE_BALANCE} />
   </div>
 );
 

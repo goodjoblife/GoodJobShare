@@ -5,7 +5,7 @@ import ReactGA from 'react-ga4';
 import { useDispatch } from 'react-redux';
 
 import { createInterviewExperience } from 'actions/experiences';
-import { TabType } from 'constants/companyJobTitle';
+import { TabType, tabTypeTranslation } from 'constants/companyJobTitle';
 import { ER0008, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import { GA_ACTION, GA_CATEGORY } from 'constants/gaConstants';
 import { getUserPseudoId } from 'utils/GAUtils';
@@ -63,7 +63,9 @@ const questions = [
   createJobTenureQuestion(),
   createInterviewSectionsQuestion(),
   createSensitiveQuestionsQuestion(),
-  createSubmitQuestion({ type: TabType.INTERVIEW_EXPERIENCE }),
+  createSubmitQuestion({
+    label: tabTypeTranslation[TabType.INTERVIEW_EXPERIENCE],
+  }),
 ];
 
 const bodyFromDraft = evolve({

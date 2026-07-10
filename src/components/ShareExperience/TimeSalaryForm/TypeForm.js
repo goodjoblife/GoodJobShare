@@ -4,7 +4,12 @@ import ReactGA from 'react-ga4';
 import { useDispatch } from 'react-redux';
 
 import { createSalaryWorkTime } from 'actions/salaryWorkTime';
-import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
+import {
+  generateTabURL,
+  PageType,
+  TabType,
+  tabTypeTranslation,
+} from 'constants/companyJobTitle';
 import { ER0007, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import { GA_ACTION, GA_CATEGORY } from 'constants/gaConstants';
 import { getUserPseudoId } from 'utils/GAUtils';
@@ -75,7 +80,7 @@ const questions = [
   createOvertimeFrequencyQuestion(),
   createOvertimeSalaryQuestion(),
   createCompensatoryDayOffQuestion(),
-  createSubmitQuestion({ type: TabType.TIME_AND_SALARY }),
+  createSubmitQuestion({ label: tabTypeTranslation[TabType.TIME_AND_SALARY] }),
 ];
 
 const bodyFromDraft = evolve({

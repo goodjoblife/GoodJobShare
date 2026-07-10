@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import {
   queryCompanyWorkExperiences,
+  queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
@@ -61,6 +62,10 @@ const CompanyWorkExperiencesProvider = () => {
   }, [dispatch, companyName]);
 
   useEffect(() => {
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName }));
+  }, [dispatch, companyName]);
+
+  useEffect(() => {
     dispatch(
       queryCompanyWorkExperiences({
         companyName,
@@ -114,6 +119,7 @@ CompanyWorkExperiencesProvider.fetchData = ({
       }),
     ),
     dispatch(queryRatingStatistics(companyName)),
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName })),
   ]);
 };
 

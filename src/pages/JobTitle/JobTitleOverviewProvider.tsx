@@ -75,7 +75,6 @@ const JobTitleOverviewProvider: React.FC & ServerSideRender<Params> = () => {
       tabType={TabType.OVERVIEW}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onCloseReport={(): void => handleQueryJobTitleOverview({ force: true })}
     />
   );
 };

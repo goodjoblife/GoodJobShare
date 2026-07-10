@@ -4,18 +4,34 @@ import React from 'react';
 import { Section } from 'common/base';
 import BoxRenderer from 'common/StatusRenderer';
 import {
+  Aspect,
   generateTabURL,
   TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
 } from 'constants/companyJobTitle';
 import usePermission from 'hooks/usePermission';
+import useCompanyName from 'pages/Company/useCompanyName';
 import { fetchBoxPropType } from 'utils/fetchBox';
 
+import AspectScoreCard, { useAspectsData } from './AspectScoreCard';
 import SnippetBlock from './SnippetBlock';
 import SummaryBlock from './SummaryBlock';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
-import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
+
+const GenderAspectSnippetBlock = () => {
+  const companyName = useCompanyName();
+  const aspectModels = useAspectsData(companyName, [Aspect.GENDER]);
+  if (aspectModels.length === 0) return null;
+
+  return (
+    <SnippetBlock title="性別友善">
+      {aspectModels.map(aspectModel => (
+        <AspectScoreCard key={aspectModel.aspect} aspect={aspectModel.aspect} />
+      ))}
+    </SnippetBlock>
+  );
+};
 
 const OverviewSection = ({
   pageType,
@@ -24,10 +40,8 @@ const OverviewSection = ({
   interviewExperiencesCount,
   workExperiences,
   workExperiencesCount,
-  salaryWorkTimes,
   salaryWorkTimesCount,
   statisticsBox,
-  onCloseReport,
 }) => {
   const [, , canViewPublishId] = usePermission();
 
@@ -62,12 +76,8 @@ const OverviewSection = ({
             />
           )}
         />
-        <WorkingHourTable
-          data={salaryWorkTimes}
-          pageType={pageType}
-          onCloseReport={onCloseReport}
-        />
       </SnippetBlock>
+      <GenderAspectSnippetBlock />
       <SnippetBlock
         title={TAB_TYPE_DETAIL_TRANSLATION[TabType.WORK_EXPERIENCE]}
         linkText={`查看 ${workExperiencesCount} 篇完整的 ${
@@ -123,10 +133,8 @@ const OverviewSection = ({
 OverviewSection.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   interviewExperiencesCount: PropTypes.number.isRequired,
-  onCloseReport: PropTypes.func.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
-  salaryWorkTimes: PropTypes.arrayOf(PropTypes.object).isRequired,
   salaryWorkTimesCount: PropTypes.number.isRequired,
   statisticsBox: fetchBoxPropType.isRequired,
   workExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,

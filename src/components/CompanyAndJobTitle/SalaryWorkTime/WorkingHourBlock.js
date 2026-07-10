@@ -2,8 +2,8 @@ import cn from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import styles from './WorkingHourBlock.module.css';
 import WorkingHourTable from './WorkingHourTable';
-import styles from '../../TimeAndSalary/common/WorkingHourBlock.module.css';
 
 const WorkingHourBlock = ({ data, pageType, onCloseReport }) => {
   return (

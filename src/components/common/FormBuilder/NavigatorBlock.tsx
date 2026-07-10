@@ -1,15 +1,29 @@
 import cn from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import styles from './NavigatorBlock.module.css';
 
-export const NavigatorButton = ({ className, ...restProps }) => (
+export type NavigatorButtonProps = {
+  children?: React.ReactNode;
+  className?: string;
+  disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  style?: React.CSSProperties;
+};
+
+export const NavigatorButton = ({
+  className,
+  ...restProps
+}: NavigatorButtonProps): React.ReactElement => (
   <button {...restProps} className={cn(className, styles.btn)} />
 );
 
-NavigatorButton.propTypes = {
-  className: PropTypes.string,
+type NavigatorBlockProps = {
+  hasPrevious: boolean;
+  hasNext: boolean;
+  onPrevious: () => void;
+  onNext: () => void;
+  skippable: boolean;
 };
 
 const NavigatorBlock = ({
@@ -18,7 +32,7 @@ const NavigatorBlock = ({
   onNext,
   hasPrevious,
   hasNext,
-}) => (
+}: NavigatorBlockProps): React.ReactElement => (
   <div className={styles.container}>
     <NavigatorButton onClick={onPrevious} disabled={!hasPrevious}>
       上一題
@@ -28,13 +42,5 @@ const NavigatorBlock = ({
     </NavigatorButton>
   </div>
 );
-
-NavigatorBlock.propTypes = {
-  hasNext: PropTypes.bool.isRequired,
-  hasPrevious: PropTypes.bool.isRequired,
-  onNext: PropTypes.func.isRequired,
-  onPrevious: PropTypes.func.isRequired,
-  skippable: PropTypes.bool.isRequired,
-};
 
 export default NavigatorBlock;

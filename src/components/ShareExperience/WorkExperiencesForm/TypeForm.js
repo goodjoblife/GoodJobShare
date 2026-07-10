@@ -5,11 +5,10 @@ import ReactGA from 'react-ga4';
 import { useDispatch } from 'react-redux';
 
 import { createWorkExperienceWithRating } from 'actions/experiences';
-import { TabType } from 'constants/companyJobTitle';
+import { TabType, tabTypeTranslation } from 'constants/companyJobTitle';
 import { ER0020, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import { GA_ACTION, GA_CATEGORY } from 'constants/gaConstants';
 import { sendEvent } from 'utils/hotjarUtil';
-import { transferKeyToSnakecase } from 'utils/objectUtil';
 import rollbar from 'utils/rollbar';
 
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
@@ -18,10 +17,13 @@ import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_CURRENTLY_EMPLOYED,
   DATA_KEY_EXPERIENCE_IN_YEAR,
+  DATA_KEY_GENDER,
+  DATA_KEY_JOB_LEVEL,
   DATA_KEY_JOB_TITLE,
   DATA_KEY_REGION,
   DATA_KEY_SALARY,
   DATA_KEY_SECTIONS,
+  DATA_KEY_SECTOR,
   DATA_KEY_WEEK_WORK_TIME,
   JOB_TENURE_OPTIONS,
 } from '../constants';
@@ -30,9 +32,12 @@ import {
   createCurrentlyEmployedQuestion,
   createEmployTypeQuestion,
   createExperienceInYearQuestion,
+  createGenderQuestion,
+  createJobLevel,
   createJobTitleQuestion,
   createRequiredSalaryQuestion,
   createSectionsQuestion,
+  createSectorQuestion,
   createSubmitQuestion,
   createWeekWorkTimeQuestion,
   createWorkRegionQuestion,
@@ -55,17 +60,23 @@ const questions = [
   createCurrentlyEmployedQuestion(),
   createExperienceInYearQuestion(),
   createWorkRegionQuestion(),
+  createSectorQuestion(),
   createEmployTypeQuestion(),
+  createGenderQuestion(),
   createRequiredSalaryQuestion({ type: TabType.WORK_EXPERIENCE }),
+  createJobLevel(),
   createWeekWorkTimeQuestion(),
   createSectionsQuestion(),
-  createSubmitQuestion({ type: TabType.WORK_EXPERIENCE }),
+  createSubmitQuestion({ label: tabTypeTranslation[TabType.WORK_EXPERIENCE] }),
 ];
 
 const bodyFromDraft = evolve({
   company: draft => ({ id: '', query: draft[DATA_KEY_COMPANY_NAME] }),
   region: draft => draft[DATA_KEY_REGION],
   job_title: draft => draft[DATA_KEY_JOB_TITLE],
+  sector: draft => draft[DATA_KEY_SECTOR],
+  gender: draft => draft[DATA_KEY_GENDER],
+  jobLevel: draft => draft[DATA_KEY_JOB_LEVEL],
   title: draft =>
     `${draft[DATA_KEY_COMPANY_NAME]} ${draft[DATA_KEY_JOB_TITLE]}`,
   sections: draft =>
@@ -116,7 +127,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
   const onSubmit = useCallback(
     async draft => {
       const body = {
-        ...transferKeyToSnakecase(bodyFromDraft(draft)),
+        ...bodyFromDraft(draft),
       };
       const res = await dispatch(
         createWorkExperienceWithRating({

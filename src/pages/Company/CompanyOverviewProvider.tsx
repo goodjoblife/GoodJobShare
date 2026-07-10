@@ -5,6 +5,7 @@ import {
   queryCompanyOverview,
   queryCompanyOverviewStatistics,
   queryCompanyTopNJobTitles,
+  queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
 import Overview from 'components/CompanyAndJobTitle/Overview';
@@ -59,6 +60,10 @@ const CompanyOverviewProvider: React.FC & ServerSideRender<Params> = () => {
   }, [dispatch, companyName]);
 
   useEffect(() => {
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName }));
+  }, [dispatch, companyName]);
+
+  useEffect(() => {
     dispatch(
       queryCompanyTopNJobTitles({
         companyName,
@@ -89,7 +94,6 @@ const CompanyOverviewProvider: React.FC & ServerSideRender<Params> = () => {
       tabType={TabType.OVERVIEW}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onCloseReport={(): void => handleQueryCompanyOverview({ force: true })}
     />
   );
 };
@@ -103,6 +107,7 @@ CompanyOverviewProvider.fetchData = ({
     dispatch(queryCompanyOverview(companyName)),
     dispatch(queryCompanyOverviewStatistics(companyName)),
     dispatch(queryRatingStatistics(companyName)),
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName })),
     // helmet use
     dispatch(queryCompanyTopNJobTitles({ companyName })),
   ]);

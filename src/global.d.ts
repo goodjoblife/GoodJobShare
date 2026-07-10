@@ -8,6 +8,16 @@ declare module '*.svg' {
   export default content;
 }
 
+declare module '@fortawesome/react-fontawesome' {
+  const FontAwesomeIcon: React.ComponentType<{ icon: unknown }>;
+  export default FontAwesomeIcon;
+}
+
+declare module '@fortawesome/fontawesome-free-solid/*' {
+  const icon: unknown;
+  export default icon;
+}
+
 declare module '@loadable/component' {
   import { ComponentType } from 'react';
 

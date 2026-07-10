@@ -120,14 +120,3 @@ export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
     }
   }
 `;
-
-export const queryCompaniesHavingDataGql = /* GraphQL */ `
-  query($start: Int!, $limit: Int!) {
-    companiesHavingData(start: $start, limit: $limit) {
-      name
-      businessNumber
-      dataCount
-    }
-    companiesHavingDataCount
-  }
-`;

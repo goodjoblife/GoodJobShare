@@ -1,13 +1,11 @@
-import PropTypes from 'prop-types';
 import qs from 'qs';
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router';
 
-import Caret from 'common/icons/Caret';
 import Sort from 'common/icons/Sort';
+import RoundedSelect from 'common/RoundedSelect';
 import { useQuery } from 'hooks/routing';
-
-import styles from './Sorter.module.css';
+import useSectionY from 'hooks/useSectionY';
 
 export const SORT_BY = {
   LATEST_FIRST: 'LATEST_FIRST',
@@ -25,54 +23,30 @@ export const useSortByFromQuery = () => {
   const history = useHistory();
   const query = useQuery();
   const sortBy = sortByFromQuerySelector(query);
+  const [y, sectionRef] = useSectionY();
   const setSortBy = useCallback(
     nextSortBy => {
       if (sortBy === nextSortBy) return;
       const { p, sort_by, ...restQuery } = query; // remove page when sort_by changes
       const nextQuery = { ...restQuery, sort_by: nextSortBy };
-      const nextUrl = qs.stringify(nextQuery, { addQueryPrefix: true });
-      history.push(nextUrl);
+      const search = qs.stringify(nextQuery, { addQueryPrefix: true });
+      history.push({ search, state: { y } });
     },
-    [sortBy, query, history],
+    [sortBy, query, history, y],
   );
-  return [sortBy, setSortBy];
-};
-
-const options = [
-  { label: '近期精選貼文', value: SORT_BY.FEATURED_FIRST },
-  { label: '按照時間排序(新->舊)', value: SORT_BY.LATEST_FIRST },
-];
-
-const Select = ({ value, onChange }) => {
-  const handleChange = useCallback(
-    e => {
-      onChange(e.target.value);
-    },
-    [onChange],
-  );
-  return (
-    <div className={styles.sorter}>
-      <Sort className={styles.leadingIcon} />
-      <select onChange={handleChange} value={value}>
-        {options.map(({ value, label }) => (
-          <option key={value} value={value}>
-            {label}
-          </option>
-        ))}
-      </select>
-      <Caret className={styles.caret} />
-    </div>
-  );
-};
-
-Select.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  return [sortBy, setSortBy, sectionRef];
 };
 
 const Sorter = () => {
-  const [sortBy, setSortBy] = useSortByFromQuery();
-  return <Select value={sortBy} onChange={setSortBy} />;
+  const [sortBy, setSortBy, sectionRef] = useSortByFromQuery();
+  return (
+    <div ref={sectionRef}>
+      <RoundedSelect Icon={Sort} value={sortBy} onChange={setSortBy}>
+        <option value={SORT_BY.FEATURED_FIRST}>近期精選貼文</option>
+        <option value={SORT_BY.LATEST_FIRST}>按照時間排序(新-&gt;舊)</option>
+      </RoundedSelect>
+    </div>
+  );
 };
 
 export default Sorter;

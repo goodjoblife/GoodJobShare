@@ -40,6 +40,7 @@ const CompanyAndJobTitleWrapper: React.FC<CompanyAndJobTitleWrapperProps> = ({
             pageName,
             tabType: type,
           }),
+          exact: type === TabType.OVERVIEW,
         }),
       ),
     [pageType, pageName],

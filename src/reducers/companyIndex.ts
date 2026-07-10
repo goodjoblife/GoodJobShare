@@ -11,13 +11,18 @@ import {
   SET_SALARY_WORK_TIME,
   SET_SALARY_WORK_TIME_STATISTICS,
   SET_WORK_EXPERIENCES,
+  SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES,
+  SET_WORK_EXPERIENCES_ASPECT_STATISTICS,
 } from 'actions/company';
+import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { WorkExperience } from 'apis/experience';
 import {
   InterviewExperienceInOverview,
   WorkExperienceInOverview,
 } from 'apis/overview';
+import { CompanyInIndex } from 'apis/queryCompanies';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
+import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import {
@@ -25,11 +30,9 @@ import {
   OvertimeFrequencyCount,
   SalaryWorkTime,
 } from 'apis/salaryWorkTime';
+import { Aspect } from 'constants/companyJobTitle';
 import createReducer from 'utils/createReducer';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
-
-// TODO: replace with proper CompanyInIndex type
-export type CompanyInIndex = unknown;
 
 // Flattened from QueryCompanyOverviewData, so a type is defined here
 export type CompanyOverview = {
@@ -68,8 +71,16 @@ export type CompanyWorkExperienceResult = {
   workExperiencesCount: number;
 };
 
-// TODO: replace with proper CompanyIsSubscribed type
-export type CompanyIsSubscribed = unknown;
+// Flattened from QueryCompanyWorkExperiencesData, so a type is defined here
+export type CompanyAspectExperienceResult = {
+  name: string;
+  aspect: Aspect;
+  rating: number | null;
+  start: number;
+  limit: number;
+  workExperiences: WorkExperience[];
+  workExperiencesCount: number;
+};
 
 type State = {
   indexesByPage: Record<number, FetchBox<CompanyInIndex[]>>;
@@ -96,7 +107,15 @@ type State = {
     string,
     FetchBox<CompanyWorkExperienceResult | null>
   >;
-  isSubscribedByName: Record<string, FetchBox<CompanyIsSubscribed | null>>;
+  workExperiencesAspectStatisticsByName: Record<
+    string,
+    FetchBox<AspectStatisticsData | null>
+  >;
+  workExperiencesAspectExperiencesByName: Record<
+    string,
+    FetchBox<CompanyAspectExperienceResult | null>
+  >;
+  isSubscribedByName: Record<string, FetchBox<CompanyIsSubscribed>>;
   topNJobTitlesByName: Record<string, FetchBox<TopNJobTitles | null>>;
   esgSalaryData: Record<string, FetchBox<ESGSalaryData | null>>;
 };
@@ -113,6 +132,8 @@ const preloadedState: State = {
   timeAndSalaryStatisticsByName: {},
   interviewExperiencesByName: {},
   workExperiencesByName: {},
+  workExperiencesAspectStatisticsByName: {},
+  workExperiencesAspectExperiencesByName: {},
   isSubscribedByName: {},
   // companyName --> box
   // box.data: null | {all, interview, work, salary}
@@ -254,6 +275,42 @@ const reducer = createReducer(preloadedState, {
       },
     };
   },
+  [SET_WORK_EXPERIENCES_ASPECT_STATISTICS]: (
+    state,
+    {
+      companyName,
+      box,
+    }: {
+      companyName: string;
+      box: FetchBox<AspectStatisticsData | null>;
+    },
+  ) => {
+    return {
+      ...state,
+      workExperiencesAspectStatisticsByName: {
+        ...state.workExperiencesAspectStatisticsByName,
+        [companyName]: box,
+      },
+    };
+  },
+  [SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES]: (
+    state,
+    {
+      companyName,
+      box,
+    }: {
+      companyName: string;
+      box: FetchBox<CompanyAspectExperienceResult | null>;
+    },
+  ) => {
+    return {
+      ...state,
+      workExperiencesAspectExperiencesByName: {
+        ...state.workExperiencesAspectExperiencesByName,
+        [companyName]: box,
+      },
+    };
+  },
   [SET_COMPANY_TOP_N_JOB_TITLES]: (
     state,
     {
@@ -289,7 +346,7 @@ const reducer = createReducer(preloadedState, {
     {
       companyName,
       box,
-    }: { companyName: string; box: FetchBox<CompanyIsSubscribed | null> },
+    }: { companyName: string; box: FetchBox<CompanyIsSubscribed> },
   ) => {
     return {
       ...state,

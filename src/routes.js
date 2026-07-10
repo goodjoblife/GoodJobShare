@@ -7,6 +7,7 @@ import {
   companyOverviewLegacyPath,
   companyOverviewPath,
   companySalaryWorkTimesPath,
+  companyWorkExperiencesAspectPath,
   companyWorkExperiencesPath,
   jobTitleInterviewExperiencesPath,
   jobTitleOverviewLegacyPath,
@@ -18,6 +19,7 @@ import CompanyIndexProvider from 'pages/Company/CompanyIndexProvider';
 import CompanyInterviewExperiencesProvider from 'pages/Company/CompanyInterviewExperiencesProvider';
 import CompanyOverviewProvider from 'pages/Company/CompanyOverviewProvider';
 import CompanySalaryWorkTimeProvider from 'pages/Company/CompanySalaryWorkTimeProvider';
+import CompanyWorkExperiencesAspectProvider from 'pages/Company/CompanyWorkExperiencesAspectProvider';
 import CompanyWorkExperiencesProvider from 'pages/Company/CompanyWorkExperiencesProvider';
 import { companyNameSelector } from 'pages/Company/useCompanyName';
 import JobTitleIndexProvider from 'pages/JobTitle/JobTitleIndexProvider';
@@ -144,6 +146,11 @@ const routes = [
       {
         path: companyWorkExperiencesPath,
         component: CompanyWorkExperiencesProvider,
+        exact: true,
+      },
+      {
+        path: companyWorkExperiencesAspectPath,
+        component: CompanyWorkExperiencesAspectProvider,
         exact: true,
       },
       {

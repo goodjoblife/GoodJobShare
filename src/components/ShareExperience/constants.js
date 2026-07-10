@@ -10,6 +10,7 @@ export const DATA_KEY_DATE = 'interviewTime';
 export const DATA_KEY_REGION = 'region';
 export const DATA_KEY_RESULT = 'interviewResult';
 export const DATA_KEY_JOB_TENURE = 'experienceInYear';
+export const DATA_KEY_JOB_LEVEL = 'jobLevel';
 export const DATA_KEY_SALARY = 'salary';
 export const DATA_KEY_EXPERIENCE_IN_YEAR = 'experienceInYear';
 export const DATA_KEY_DAY_PROMISED_WORK_TIME = 'dayPromisedWorkTime';
@@ -20,6 +21,7 @@ export const DATA_KEY_HAS_OVERTIME_SALARY = 'hasOvertimeSalary';
 export const DATA_KEY_HAS_COMPENSATORY_DAYOFF = 'hasCompensatoryDayoff';
 export const DATA_KEY_SENSITIVE_QUESTIONS = 'sensitiveQuestions';
 export const DATA_KEY_SECTIONS = 'sections';
+export const DATA_KEY_POLICIES = 'policies';
 
 export const REGION_OPTIONS = [
   '基隆市',
@@ -79,3 +81,9 @@ export const SENSITIVE_QUESTIONS_OPTIONS = [
   '曾要求繳交身分證、保證金',
   '其他',
 ];
+
+export const GENDER_TRANSLATION = {
+  male: '男',
+  female: '女',
+  other: '其他',
+};

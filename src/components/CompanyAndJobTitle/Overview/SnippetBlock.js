@@ -1,9 +1,8 @@
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-import { Heading } from 'common/base';
+import { Heading, Link } from 'common/base';
 
 import EmptyView from '../EmptyView';
 import styles from './Overview.module.css';
@@ -28,7 +27,7 @@ const SnippetBlock = ({
       <React.Fragment>
         {children}
         {linkText && (
-          <Link className={styles.link} to={linkTo}>
+          <Link to={linkTo} className={styles.link}>
             {linkText}
           </Link>
         )}

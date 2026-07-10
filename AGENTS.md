@@ -38,6 +38,10 @@ For component naming, file naming, and `index.ts` usage conventions, see [docs/c
 
 For type definition conventions (`type` vs `interface`, where types live, nullable fields, enums, `unknown` placeholders), see [docs/typescript-types.md](docs/typescript-types.md).
 
+### TypeForm 與 Question
+
+體驗分享彈窗表單（薪資、評價、面試、制度…）的架構、question creator 寫法、QUESTION_TYPE 對照，以及兩種複合清單題型的 data shape 與 option config，見 [docs/typeform-questions.md](docs/typeform-questions.md)。
+
 ### Server-Side Rendering (SSR) with `fetchData`
 
 Pages that need SSR data fetching attach a static `fetchData` method to the component. See [docs/ssr-fetch-data.md](docs/ssr-fetch-data.md).
