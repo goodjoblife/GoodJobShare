@@ -14,6 +14,8 @@ import {
   WorkExperienceInOverview,
 } from 'apis/overview';
 import {
+  DataTimeRange,
+  ExperienceInYearRange,
   OvertimeFrequencyCount,
   OvertimeStats,
   SalaryDistributionBin,
@@ -43,8 +45,19 @@ export type JobTitleOverviewStatistics = {
   overtimeFrequencyCount: OvertimeFrequencyCount | null;
 };
 
-// TODO: replace with proper JobTitleSalaryWorkTimeResult type
-export type JobTitleSalaryWorkTimeResult = unknown;
+export type JobTitleSalaryWorkTimeResult = {
+  name: string;
+  companyName: string | undefined;
+  start: number;
+  limit: number;
+  dataTimeRange: DataTimeRange | undefined;
+  experienceInYearRange: ExperienceInYearRange | undefined;
+  gender: string | undefined;
+  sortBy: string | undefined;
+  // TODO: replace with SalaryWorkTime[] once getJobTitleTimeAndSalary is typed
+  salaryWorkTimes: unknown[];
+  salaryWorkTimesCount: number;
+};
 
 // TODO: replace with proper JobTitleInterviewExperienceResult type
 export type JobTitleInterviewExperienceResult = unknown;

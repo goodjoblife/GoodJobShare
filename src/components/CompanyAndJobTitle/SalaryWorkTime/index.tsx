@@ -7,8 +7,14 @@ import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import BoxRenderer, { BoxesRenderer } from 'common/StatusRenderer';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { RootState } from 'reducers';
-import { CompanyOverviewStatistics } from 'reducers/companyIndex';
-import { JobTitleOverviewStatistics } from 'reducers/jobTitleIndex';
+import {
+  CompanyOverviewStatistics,
+  CompanySalaryWorkTimeResult,
+} from 'reducers/companyIndex';
+import {
+  JobTitleOverviewStatistics,
+  JobTitleSalaryWorkTimeResult,
+} from 'reducers/jobTitleIndex';
 import FetchBox from 'utils/fetchBox';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
@@ -22,12 +28,10 @@ import SearchBar from '../SearchBar';
 import styles from './SalaryWorkTime.module.css';
 import SummarySection from './SummarySection';
 
-type SalaryWorkTimePageData = {
-  name: string;
-  salaryWorkTimes: unknown[];
-  salaryWorkTimesCount: number;
-  [key: string]: unknown;
-};
+type SalaryWorkTimePageData = Pick<
+  CompanySalaryWorkTimeResult | JobTitleSalaryWorkTimeResult,
+  'name' | 'salaryWorkTimes' | 'salaryWorkTimesCount'
+>;
 
 type Props = {
   pageType: PageType;

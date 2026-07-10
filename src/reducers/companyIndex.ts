@@ -26,6 +26,8 @@ import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import {
+  DataTimeRange,
+  ExperienceInYearRange,
   JobAverageSalary,
   OvertimeFrequencyCount,
   OvertimeStats,
@@ -53,8 +55,19 @@ export type CompanyOverviewStatistics = {
   overtimeFrequencyCount: OvertimeFrequencyCount | null;
 };
 
-// TODO: replace with proper CompanySalaryWorkTimeResult type
-export type CompanySalaryWorkTimeResult = unknown;
+export type CompanySalaryWorkTimeResult = {
+  name: string;
+  jobTitle: string | undefined;
+  start: number;
+  limit: number;
+  dataTimeRange: DataTimeRange | undefined;
+  experienceInYearRange: ExperienceInYearRange | undefined;
+  gender: string | undefined;
+  sortBy: string | undefined;
+  // TODO: replace with SalaryWorkTime[] once getCompanyTimeAndSalary is typed
+  salaryWorkTimes: unknown[];
+  salaryWorkTimesCount: number;
+};
 
 // TODO: replace with proper CompanyInterviewExperienceResult type
 export type CompanyInterviewExperienceResult = unknown;
