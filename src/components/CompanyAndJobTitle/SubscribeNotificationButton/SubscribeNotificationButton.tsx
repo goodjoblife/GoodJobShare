@@ -1,5 +1,4 @@
 import cn from 'classnames';
-import PropTypes from 'prop-types';
 import React, { useCallback, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,16 +15,21 @@ import { isFetched } from 'utils/fetchBox';
 
 import styles from './SubscribeNotificationButton.module.css';
 
-const SubscribeNotificationButton = ({ companyName }) => {
+type SubscribeNotificationButtonProps = {
+  companyName: string;
+};
+
+const SubscribeNotificationButton: React.FC<
+  SubscribeNotificationButtonProps
+> = ({ companyName }) => {
   const dispatch = useDispatch();
   const box = useSelector(companyIsSubscribedBoxSelectorByName(companyName));
   const fetched = isFetched(box);
   const { isSubscribed } = box.data || {};
 
-  const handleToggleSubscribeCompany = useCallback(
-    async () => dispatch(toggleSubscribeCompany({ companyName })),
-    [dispatch, companyName],
-  );
+  const handleToggleSubscribeCompany = useCallback(async () => {
+    await dispatch(toggleSubscribeCompany({ companyName }));
+  }, [dispatch, companyName]);
 
   const [handleSubscribeWithLoginCheck] = useLoginFlow(
     handleToggleSubscribeCompany,
@@ -61,10 +65,6 @@ const SubscribeNotificationButton = ({ companyName }) => {
       <div>{isSubscribed ? '已訂閱新資料通知' : '有新資料時通知我'}</div>
     </button>
   );
-};
-
-SubscribeNotificationButton.propTypes = {
-  companyName: PropTypes.string.isRequired,
 };
 
 export default SubscribeNotificationButton;

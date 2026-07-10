@@ -708,6 +708,16 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
   }
 };
 
+/**
+ * @type {(
+ *   companyName: string,
+ *   box: import('utils/fetchBox').default<import('apis/queryCompanyIsSubscribed').CompanyIsSubscribed>
+ * ) => {
+ *   type: string;
+ *   companyName: string;
+ *   box: import('utils/fetchBox').default<import('apis/queryCompanyIsSubscribed').CompanyIsSubscribed>
+ * }}
+ */
 const setIsSubscribed = (companyName, box) => ({
   type: SET_IS_SUBSCRIBED,
   companyName,
@@ -851,10 +861,6 @@ export const queryCompanyIsSubscribed = ({ companyName }) => async (
     const state = getState();
     const token = tokenSelector(state);
     const data = await queryCompanyIsSubscribedApi({ companyName, token });
-
-    if (data == null) {
-      return dispatch(setIsSubscribed(companyName, getFetched(data)));
-    }
 
     dispatch(setIsSubscribed(companyName, getFetched(data)));
   } catch (error) {
