@@ -1,6 +1,7 @@
 import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { CompanyInIndex } from 'apis/queryCompanies';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
+import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import { OvertimeStats } from 'apis/salaryWorkTime';
@@ -8,7 +9,6 @@ import { RootState } from 'reducers';
 import {
   CompanyAspectExperienceResult,
   CompanyInterviewExperienceResult,
-  CompanyIsSubscribed,
   CompanyOverview,
   CompanyOverviewStatistics,
   CompanySalaryWorkTimeResult,
@@ -94,7 +94,7 @@ export const companyWorkExperiencesAspectExperiencesBoxSelectorByName = (
 
 export const companyIsSubscribedBoxSelectorByName = (companyName: string) => (
   state: RootState,
-): FetchBox<CompanyIsSubscribed | null> =>
+): FetchBox<CompanyIsSubscribed> =>
   state.companyIndex.isSubscribedByName[companyName] || getUnfetched();
 
 export const jobTitleIndexesBoxSelectorAtPage = (page: number) => (
