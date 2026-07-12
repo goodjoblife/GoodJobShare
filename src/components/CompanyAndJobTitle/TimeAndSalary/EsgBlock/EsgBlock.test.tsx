@@ -82,6 +82,34 @@ test('只有單一年份時不顯示年份下拉，但仍顯示卡片', () => {
   expect(screen.getAllByText('2024 年')).toHaveLength(4);
 });
 
+test('toggle 按鈕以 aria-expanded 反映收合狀態', () => {
+  render(<EsgBlock data={esgSalaryData} hasPreviewed />);
+  const toggle = screen.getByRole('button');
+  expect(toggle).toHaveAttribute('aria-expanded', 'false'); // hasPreviewed 初始為收合
+  fireEvent.click(toggle);
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
+});
+
+test('收合狀態下切換年份會自動展開區塊', () => {
+  render(<EsgBlock data={esgSalaryData} hasPreviewed />);
+  const toggle = screen.getByRole('button');
+  expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  fireEvent.change(screen.getByRole('combobox'), {
+    target: { value: '2023' },
+  });
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
+});
+
+test('展開狀態下切換年份維持展開', () => {
+  render(<EsgBlock data={esgSalaryData} />);
+  const toggle = screen.getByRole('button');
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  fireEvent.change(screen.getByRole('combobox'), {
+    target: { value: '2023' },
+  });
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
+});
+
 test('空資料不會 crash，仍顯示標題', () => {
   const empty = {
     avgSalaryStatistics: [],

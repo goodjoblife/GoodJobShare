@@ -108,6 +108,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
   const handleYearChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       setSelectedYear(Number(e.target.value));
+      setCollapsed(false);
     },
     [],
   );
@@ -135,6 +136,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {showsToggle && (
             <button
               className={cn(styles.toggle, { [styles.collapsed]: isCollapsed })}
+              aria-expanded={!isCollapsed}
               onClick={toggleCollapsed}
             >
               <Caret />
