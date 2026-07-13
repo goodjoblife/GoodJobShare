@@ -6,7 +6,7 @@ import {
   postAuthGoogle as postAuthGoogleApi,
 } from 'apis/auth';
 import queryMeApi from 'apis/queryMe';
-import AuthStatus from 'constants/authStatus';
+import { AuthStatus } from 'constants/authStatus';
 import {
   ER0001,
   ER0002,

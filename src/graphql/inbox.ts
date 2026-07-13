@@ -2,8 +2,8 @@
 
 // Enum for Experience __typename
 export enum ExperienceType {
-  InterviewExperience = 'InterviewExperience',
-  WorkExperience = 'WorkExperience',
+  INTERVIEW_EXPERIENCE = 'InterviewExperience',
+  WORK_EXPERIENCE = 'WorkExperience',
 }
 
 export const queryInboxGql = /* GraphQL */ `
