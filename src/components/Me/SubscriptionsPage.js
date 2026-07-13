@@ -2,7 +2,7 @@ import cn from 'classnames';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 
-import { queryMySubscriptionsApi } from 'apis/payment';
+import queryMySubscriptions from 'apis/queryMySubscriptions';
 import Loader from 'common/Loader';
 import Table from 'common/table/Table';
 import { PaymentRecordStatus } from 'constants/payment';
@@ -57,7 +57,7 @@ const Subscriptions = () => {
   useEffect(() => {
     setMySubscriptions(toFetching(mySubscriptions));
 
-    const fetcher = queryMySubscriptionsApi(token);
+    const fetcher = queryMySubscriptions(token);
 
     fetcher()
       .then(subscriptions => {
