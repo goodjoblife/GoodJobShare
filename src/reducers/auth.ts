@@ -1,5 +1,5 @@
 import { SET_LOGIN, SET_USER } from 'actions/auth';
-import AuthStatus from 'constants/authStatus';
+import { AuthStatus } from 'constants/authStatus';
 import createReducer from 'utils/createReducer';
 
 export type User = {

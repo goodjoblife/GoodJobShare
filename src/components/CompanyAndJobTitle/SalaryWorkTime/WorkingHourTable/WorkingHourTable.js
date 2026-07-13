@@ -8,7 +8,7 @@ import Table from 'common/table/Table';
 import ReportZone from 'components/ExperienceDetail/ReportZone';
 import { REPORT_TYPE } from 'components/ExperienceDetail/ReportZone/ReportForm/constants';
 import { PageType } from 'constants/companyJobTitle';
-import { GENDER_TRANSLATION } from 'constants/gender';
+import { genderTranslation } from 'constants/gender';
 import usePermission from 'hooks/usePermission';
 
 import {
@@ -27,7 +27,7 @@ import { InfoSalaryModal, InfoTimeModal } from './InfoModal';
 import injectHideContentBlock from './injectHideContentBlock';
 import styles from './WorkingHourTable.module.css';
 
-const formatGender = gender => GENDER_TRANSLATION[gender] ?? '-';
+const formatGender = gender => genderTranslation[gender] ?? '-';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
