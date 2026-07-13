@@ -3,21 +3,22 @@ import { useSelector } from 'react-redux';
 import { PaymentRecord } from 'apis/getPaymentRecord';
 import { SubscriptionPlan } from 'apis/getSubscriptionPlans';
 import { CurrentSubscription } from 'apis/queryMyCurrentSubscription';
-import { useSubscriptionPlans } from 'hooks/payment/useSubscriptionPlans';
 import {
   myCurrentSubscriptionSelector,
   paymentRecordSelector,
   redirectUrlSelector,
+  subscriptionPlansSelector,
 } from 'selectors/payment';
 import FetchBox from 'utils/fetchBox';
-
-export { useSubscriptionPlans };
 
 export const usePaymentRecord = (): FetchBox<PaymentRecord | null> =>
   useSelector(paymentRecordSelector);
 
 export const useRedirectUrl = (): string | null =>
   useSelector(redirectUrlSelector);
+
+export const useSubscriptionPlans = (): FetchBox<SubscriptionPlan[]> =>
+  useSelector(subscriptionPlansSelector);
 
 export const useMyCurrentSubscription = (): FetchBox<CurrentSubscription | null> =>
   useSelector(myCurrentSubscriptionSelector);

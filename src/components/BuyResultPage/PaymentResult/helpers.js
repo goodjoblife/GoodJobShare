@@ -1,32 +1,32 @@
 import { isNil } from 'ramda';
 
 import fetchingStatusMap from 'constants/fetchStatus';
-import { buyStatus, recordStatusToBuyStatus } from 'constants/payment';
+import { BuyStatus, recordStatusToBuyStatus } from 'constants/payment';
 
 export const paymentRecordToBuyStatus = paymentRecord => {
   const paymentRecordData = paymentRecord.data;
   const fetchingStatus = paymentRecord.status;
 
   if (fetchingStatus === fetchingStatusMap.FETCHING) {
-    return buyStatus.inProgress;
+    return BuyStatus.IN_PROGRESS;
   }
 
   if (fetchingStatus === fetchingStatusMap.UNFETCHED) {
-    return buyStatus.inProgress;
+    return BuyStatus.IN_PROGRESS;
   }
 
   if (isNil(paymentRecordData)) {
-    return buyStatus.inProgress;
+    return BuyStatus.IN_PROGRESS;
   }
 
   if (fetchingStatus === fetchingStatusMap.ERROR) {
-    return buyStatus.failed;
+    return BuyStatus.FAILED;
   }
 
   const { status } = paymentRecordData;
 
   if (isNil(status)) {
-    return buyStatus.failed;
+    return BuyStatus.FAILED;
   }
 
   return recordStatusToBuyStatus[status];
