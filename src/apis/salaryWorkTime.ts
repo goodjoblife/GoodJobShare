@@ -1,3 +1,5 @@
+import { EmploymentType } from 'constants/employmentType';
+
 export const fragmentSalaryWorkTimeFields = /* GraphQL */ `
   fragment salaryWorkTimeFields on SalaryWorkTime {
     id
@@ -64,7 +66,7 @@ export type SalaryWorkTime = {
   experience_in_year: number | null;
   estimated_hourly_wage: number | null;
   overtime_frequency: number | null;
-  employment_type: string | null;
+  employment_type: EmploymentType | null;
   gender: string | null;
   job_title: {
     name: string;
