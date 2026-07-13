@@ -1,34 +1,7 @@
 import R from 'ramda';
 
-import {
-  getCompanyInterviewExperiencesQuery,
-  getCompanyTimeAndSalaryQuery,
-} from 'graphql/company';
+import { getCompanyInterviewExperiencesQuery } from 'graphql/company';
 import graphqlClient from 'utils/graphqlClient';
-
-export const getCompanyTimeAndSalary = ({
-  companyName,
-  jobTitle,
-  start,
-  limit,
-  dataTimeRange,
-  experienceInYearRange,
-  gender,
-  sortBy,
-}) =>
-  graphqlClient({
-    query: getCompanyTimeAndSalaryQuery,
-    variables: {
-      companyName,
-      jobTitle,
-      start,
-      limit,
-      dataTimeRange,
-      experienceInYearRange,
-      gender,
-      sortBy,
-    },
-  }).then(R.prop('company'));
 
 export const getCompanyInterviewExperiences = ({
   companyName,

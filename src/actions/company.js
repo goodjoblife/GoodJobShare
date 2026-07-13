@@ -1,9 +1,6 @@
 import R from 'ramda';
 
-import {
-  getCompanyInterviewExperiences,
-  getCompanyTimeAndSalary,
-} from 'apis/company';
+import { getCompanyInterviewExperiences } from 'apis/company';
 import queryCompaniesApi from 'apis/queryCompanies';
 import queryCompanyAspectRatingStatisticsApi from 'apis/queryCompanyAspectRatingStatistics';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
@@ -11,6 +8,7 @@ import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
 import queryCompanyOverviewStatisticsApi from 'apis/queryCompanyOverviewStatistics';
 import queryCompanyRatingStatisticsApi from 'apis/queryCompanyRatingStatistics';
+import queryCompanySalaryWorkTimeApi from 'apis/queryCompanySalaryWorkTime';
 import queryCompanySalaryWorkTimeStatisticsApi from 'apis/queryCompanySalaryWorkTimeStatistics';
 import queryCompanyTopNJobTitlesApi from 'apis/queryCompanyTopNJobTitles';
 import queryCompanyWorkExperiencesApi from 'apis/queryCompanyWorkExperiences';
@@ -320,7 +318,7 @@ export const queryCompanySalaryWorkTime = (
   dispatch(setSalaryWorkTime(companyName, toFetching(box)));
 
   try {
-    const data = await getCompanyTimeAndSalary({
+    const data = await queryCompanySalaryWorkTimeApi({
       companyName,
       jobTitle,
       start,

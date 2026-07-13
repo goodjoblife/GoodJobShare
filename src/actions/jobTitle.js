@@ -2,11 +2,11 @@ import R from 'ramda';
 
 import {
   getJobTitleInterviewExperiences,
-  getJobTitleTimeAndSalary,
   queryJobTitlesApi,
 } from 'apis/jobTitle';
 import queryJobTitleOverviewApi from 'apis/queryJobTitleOverview';
 import queryJobTitleOverviewStatisticsApi from 'apis/queryJobTitleOverviewStatistics';
+import queryJobTitleSalaryWorkTimeApi from 'apis/queryJobTitleSalaryWorkTime';
 import queryJobTitleSalaryWorkTimeStatisticsApi from 'apis/queryJobTitleSalaryWorkTimeStatistics';
 import queryJobTitleWorkExperiencesApi from 'apis/queryJobTitleWorkExperiences';
 import {
@@ -252,7 +252,7 @@ export const queryJobTitleSalaryWorkTime = (
   dispatch(setSalaryWorkTime(jobTitle, toFetching(box)));
 
   try {
-    const data = await getJobTitleTimeAndSalary({
+    const data = await queryJobTitleSalaryWorkTimeApi({
       jobTitle,
       companyName,
       start,

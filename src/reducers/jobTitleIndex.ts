@@ -54,8 +54,7 @@ export type JobTitleSalaryWorkTimeResult = {
   experienceInYearRange: ExperienceInYearRange | undefined;
   gender: string | undefined;
   sortBy: string | undefined;
-  // TODO: replace with SalaryWorkTime[] once getJobTitleTimeAndSalary is typed
-  salaryWorkTimes: unknown[];
+  salaryWorkTimes: SalaryWorkTime[];
   salaryWorkTimesCount: number;
 };
 
