@@ -1,11 +1,10 @@
-import R from 'ramda';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { fetchSubscriptionPlans } from 'actions/payment';
 import Heading from 'common/base/Heading';
 import Loading from 'common/Loader';
-import { subscriptionType } from 'constants/subscription';
+import { subscriptionTypes } from 'constants/subscription';
 import { useSubscriptionPlans } from 'hooks/payment/usePayment';
 import { isFetched, isUnfetched } from 'utils/fetchBox';
 
@@ -31,8 +30,7 @@ const PlanPage = () => {
 
   let plans = subscriptionPlansBox.data;
   if (Array.isArray(plans)) {
-    const planTypes = R.values(subscriptionType);
-    plans = plans.filter(plan => planTypes.includes(plan.type));
+    plans = plans.filter(plan => subscriptionTypes.includes(plan.type));
   }
 
   return (

@@ -1,3 +1,4 @@
+import { History } from 'history';
 import { Action, AnyAction, combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -50,8 +51,16 @@ export default persistReducer(persistConfig, rootReducer);
 
 export type RootState = ReturnType<typeof rootReducer>;
 
+export interface ThunkExtraArgument {
+  history: History;
+}
+
 export interface Thunk<A extends Action = AnyAction> {
-  (dispatch: Dispatch<A>, getState: GetState): unknown;
+  (
+    dispatch: Dispatch<A>,
+    getState: GetState,
+    extraArgument: ThunkExtraArgument,
+  ): unknown;
 }
 
 export interface Dispatch<A extends Action = AnyAction> {

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { fetchPaymentRecord } from 'actions/payment';
 
-const useFetchPaymentRecord = paymentRecordId => {
+const useFetchPaymentRecord = (paymentRecordId: string): (() => void) => {
   const dispatch = useDispatch();
 
   const fetch = useCallback(() => {

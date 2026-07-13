@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { fetchSubscriptionPlans } from 'actions/payment';
 import { Section, Wrapper } from 'common/base';
 import Loading from 'common/Loader';
-import { subscriptionType } from 'constants/subscription';
+import { SubscriptionPlanType } from 'constants/subscription';
 import { useSubscriptionPlans } from 'hooks/payment/usePayment';
 import { useQuery } from 'hooks/routing';
 import { isFetched } from 'utils/fetchBox';
@@ -32,7 +32,7 @@ const Buy = () => {
       return [];
     }
     return plansBox.data.filter(
-      d => d.type === subscriptionType.buySubscription,
+      d => d.type === SubscriptionPlanType.BUY_SUBSCRIPTION,
     );
   }, [plansBox.data, ready]);
   const [selectedId, setSelectedId] = useState(null);

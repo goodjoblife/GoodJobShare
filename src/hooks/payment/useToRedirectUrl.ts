@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { navigateToRedirectUrl } from 'actions/payment';
 
-const useToRedirectUrl = () => {
+const useToRedirectUrl = (): (() => void) => {
   const dispatch = useDispatch();
 
   const toRedirectUrl = useCallback(() => {

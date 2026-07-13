@@ -4,7 +4,10 @@ import { useDispatch } from 'react-redux';
 
 import { navigateToBuy } from 'actions/payment';
 
-const useToBuy = (redirectUrl = '/', skuId = null) => {
+const useToBuy = (
+  redirectUrl = '/',
+  skuId: string | null = null,
+): { toBuy: () => void; actionUrl: string } => {
   const actionUrl = isNil(skuId) ? '/buy' : `/buy?skuId=${skuId}`;
   const dispatch = useDispatch();
 

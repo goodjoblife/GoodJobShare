@@ -7,14 +7,14 @@ import Heading from 'common/base/Heading';
 import P from 'common/base/P';
 import Button from 'common/button/Button';
 import RoundCard from 'common/RoundCard';
-import { subscriptionType } from 'constants/subscription';
+import { SubscriptionPlanType } from 'constants/subscription';
 import useToBuy from 'hooks/payment/useToBuy';
 
 import { getActionTitle } from './helpers';
 import styles from './PlanCard.module.css';
 
 const getButtonType = type => {
-  if (type === subscriptionType.submitData) {
+  if (type === SubscriptionPlanType.SUBMIT_DATA) {
     return 'yellow';
   }
   return 'hollowRed';
@@ -40,7 +40,7 @@ const PlanCard = ({
     [toBuy],
   );
 
-  const isSubmitData = type === subscriptionType.submitData;
+  const isSubmitData = type === SubscriptionPlanType.SUBMIT_DATA;
 
   const linkUrl = isSubmitData ? '/share' : actionUrl;
 

@@ -1,9 +1,14 @@
-import {
-  getPaymentRecord as getPaymentRecordApi,
-  getSubscriptionPlans as getSubscriptionPlansApi,
-  queryMyCurrentSubscriptionApi,
-} from 'apis/payment';
+import { AnyAction } from 'redux';
+
+import getPaymentRecordApi, { PaymentRecord } from 'apis/getPaymentRecord';
+import getSubscriptionPlansApi, {
+  SubscriptionPlan,
+} from 'apis/getSubscriptionPlans';
+import queryMyCurrentSubscriptionApi, {
+  CurrentSubscription,
+} from 'apis/queryMyCurrentSubscription';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
+import { Thunk } from 'reducers';
 import { tokenSelector } from 'selectors/authSelector';
 import {
   myCurrentSubscriptionSelector,
@@ -11,7 +16,7 @@ import {
   redirectUrlSelector,
   subscriptionPlansSelector,
 } from 'selectors/payment';
-import {
+import FetchBox, {
   getError,
   getFetched,
   getUnfetched,
@@ -26,40 +31,45 @@ export const SET_SUBSCRIPTION_PLANS = '@@PAYMENT/SET_PLANS';
 export const SET_MY_CURRENT_SUBSCRIPTION =
   '@@PAYMENT/SET_MY_CURRENT_SUBSCRIPTION';
 
-const setRedirectUrl = redirectUrl => ({
+const setRedirectUrl = (redirectUrl: string | null): AnyAction => ({
   type: SET_REDIRECT_URL,
   redirectUrl,
 });
 
-const setPaymentRecord = paymentRecord => ({
+const setPaymentRecord = (
+  paymentRecord: FetchBox<PaymentRecord | null>,
+): AnyAction => ({
   type: SET_PAYMENT_RECORD,
   paymentRecord,
 });
 
-const setSubscriptionPlans = subscriptionPlans => ({
+const setSubscriptionPlans = (
+  subscriptionPlans: FetchBox<SubscriptionPlan[]>,
+): AnyAction => ({
   type: SET_SUBSCRIPTION_PLANS,
   subscriptionPlans,
 });
 
-const setMyCurrentSubscription = currentSubscription => ({
+const setMyCurrentSubscription = (
+  currentSubscription: FetchBox<CurrentSubscription | null>,
+): AnyAction => ({
   type: SET_MY_CURRENT_SUBSCRIPTION,
   currentSubscription,
 });
 
-export const navigateToBuy = (redirectUrl, actionUrl) => (
-  dispatch,
-  getState,
-  { history },
-) => {
+export const navigateToBuy = (
+  redirectUrl: string,
+  actionUrl: string,
+): Thunk => (dispatch, getState, { history }): void => {
   history.push(actionUrl);
   dispatch(setRedirectUrl(redirectUrl));
 };
 
-export const navigateToRedirectUrl = () => (
+export const navigateToRedirectUrl = (): Thunk => (
   dispatch,
   getState,
   { history },
-) => {
+): void => {
   const state = getState();
   const redirectUrl = redirectUrlSelector(state) || '/';
 
@@ -75,7 +85,10 @@ export const navigateToRedirectUrl = () => (
   });
 };
 
-export const fetchPaymentRecord = paymentRecordId => (dispatch, getState) => {
+export const fetchPaymentRecord = (paymentRecordId: string): Thunk => (
+  dispatch,
+  getState,
+): Promise<void> => {
   const state = getState();
   const paymentRecord = paymentRecordSelector(state);
   const token = tokenSelector(state);
@@ -94,9 +107,11 @@ export const fetchPaymentRecord = paymentRecordId => (dispatch, getState) => {
     });
 };
 
-export const fetchSubscriptionPlans = () => async (dispatch, getState) => {
-  const state = getState();
-  const plansBox = subscriptionPlansSelector(state);
+export const fetchSubscriptionPlans = (): Thunk => async (
+  dispatch,
+  getState,
+): Promise<unknown> => {
+  const plansBox = subscriptionPlansSelector(getState());
 
   if (isFetching(plansBox)) {
     return;
@@ -106,14 +121,17 @@ export const fetchSubscriptionPlans = () => async (dispatch, getState) => {
 
   try {
     const plans = await getSubscriptionPlansApi();
-    dispatch(setSubscriptionPlans(getFetched(plans)));
+    return dispatch(setSubscriptionPlans(getFetched(plans)));
   } catch (error) {
     console.error(error);
     dispatch(setSubscriptionPlans(getError(error)));
   }
 };
 
-export const fetchMyCurrentSubscription = () => (dispatch, getState) => {
+export const fetchMyCurrentSubscription = (): Thunk => (
+  dispatch,
+  getState,
+): Promise<void> => {
   const state = getState();
   const myCurrentSubscription = myCurrentSubscriptionSelector(state);
   const token = tokenSelector(state);

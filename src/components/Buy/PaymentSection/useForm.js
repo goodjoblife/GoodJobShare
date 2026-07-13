@@ -2,7 +2,7 @@ import { isEmpty } from 'ramda';
 import { useCallback, useMemo, useState } from 'react';
 import { useHistory } from 'react-router';
 
-import { checkoutSubscriptionWithPrime } from 'apis/payment';
+import checkoutSubscriptionWithPrime from 'apis/checkoutSubscriptionWithPrime';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 import { useToken } from 'hooks/auth';
 import usePushToast from 'hooks/toastNotification/usePushToast';
