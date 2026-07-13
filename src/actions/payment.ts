@@ -1,6 +1,9 @@
 import { AnyAction } from 'redux';
 
 import getPaymentRecordApi, { PaymentRecord } from 'apis/getPaymentRecord';
+import getSubscriptionPlansApi, {
+  SubscriptionPlan,
+} from 'apis/getSubscriptionPlans';
 import queryMyCurrentSubscriptionApi, {
   CurrentSubscription,
 } from 'apis/queryMyCurrentSubscription';
@@ -11,19 +14,20 @@ import {
   myCurrentSubscriptionSelector,
   paymentRecordSelector,
   redirectUrlSelector,
+  subscriptionPlansSelector,
 } from 'selectors/payment';
 import FetchBox, {
   getError,
   getFetched,
   getUnfetched,
+  isFetching,
   toFetching,
 } from 'utils/fetchBox';
 import { createToastLocationState } from 'utils/toastNotification';
 
-export { fetchSubscriptionPlans } from 'actions/fetchSubscriptionPlans';
-
 export const SET_REDIRECT_URL = '@@PAYMENT_PERSIST/SET_REDIRECT_URL';
 export const SET_PAYMENT_RECORD = '@@PAYMENT/SET_PAYMENT_RECORD';
+export const SET_SUBSCRIPTION_PLANS = '@@PAYMENT/SET_PLANS';
 export const SET_MY_CURRENT_SUBSCRIPTION =
   '@@PAYMENT/SET_MY_CURRENT_SUBSCRIPTION';
 
@@ -37,6 +41,13 @@ const setPaymentRecord = (
 ): AnyAction => ({
   type: SET_PAYMENT_RECORD,
   paymentRecord,
+});
+
+const setSubscriptionPlans = (
+  subscriptionPlans: FetchBox<SubscriptionPlan[]>,
+): AnyAction => ({
+  type: SET_SUBSCRIPTION_PLANS,
+  subscriptionPlans,
 });
 
 const setMyCurrentSubscription = (
@@ -94,6 +105,27 @@ export const fetchPaymentRecord = (paymentRecordId: string): Thunk => (
       console.error(error);
       dispatch(setPaymentRecord(getError(error)));
     });
+};
+
+export const fetchSubscriptionPlans = (): Thunk => async (
+  dispatch,
+  getState,
+): Promise<unknown> => {
+  const plansBox = subscriptionPlansSelector(getState());
+
+  if (isFetching(plansBox)) {
+    return;
+  }
+
+  dispatch(setSubscriptionPlans(toFetching(plansBox)));
+
+  try {
+    const plans = await getSubscriptionPlansApi();
+    return dispatch(setSubscriptionPlans(getFetched(plans)));
+  } catch (error) {
+    console.error(error);
+    dispatch(setSubscriptionPlans(getError(error)));
+  }
 };
 
 export const fetchMyCurrentSubscription = (): Thunk => (

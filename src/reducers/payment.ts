@@ -1,7 +1,7 @@
-import { SET_SUBSCRIPTION_PLANS } from 'actions/fetchSubscriptionPlans';
 import {
   SET_MY_CURRENT_SUBSCRIPTION,
   SET_PAYMENT_RECORD,
+  SET_SUBSCRIPTION_PLANS,
 } from 'actions/payment';
 import { PaymentRecord } from 'apis/getPaymentRecord';
 import { SubscriptionPlan } from 'apis/getSubscriptionPlans';
