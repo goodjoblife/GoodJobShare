@@ -1,3 +1,5 @@
+import { EmploymentType } from 'constants/employmentType';
+
 export const fragmentSalaryWorkTimeFields = /* GraphQL */ `
   fragment salaryWorkTimeFields on SalaryWorkTime {
     id
@@ -64,7 +66,7 @@ export type SalaryWorkTime = {
   experience_in_year: number | null;
   estimated_hourly_wage: number | null;
   overtime_frequency: number | null;
-  employment_type: string | null;
+  employment_type: EmploymentType | null;
   gender: string | null;
   job_title: {
     name: string;
@@ -134,3 +136,11 @@ export type SalaryWorkTimeStatistics = {
   overtime_frequency_count: OvertimeFrequencyCount | null;
   job_average_salaries: JobAverageSalary[];
 };
+
+export type OvertimeStats = Pick<
+  SalaryWorkTimeStatistics,
+  | 'count'
+  | 'is_overtime_salary_legal_count'
+  | 'has_compensatory_dayoff_count'
+  | 'has_overtime_salary_count'
+>;

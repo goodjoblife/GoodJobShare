@@ -1,10 +1,6 @@
 import R from 'ramda';
 
-import {
-  getCompanyInterviewExperiences,
-  getCompanyTimeAndSalary,
-  getCompanyTimeAndSalaryStatistics,
-} from 'apis/company';
+import { getCompanyInterviewExperiences } from 'apis/company';
 import queryCompaniesApi from 'apis/queryCompanies';
 import queryCompanyAspectRatingStatisticsApi from 'apis/queryCompanyAspectRatingStatistics';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
@@ -12,6 +8,8 @@ import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
 import queryCompanyOverviewStatisticsApi from 'apis/queryCompanyOverviewStatistics';
 import queryCompanyRatingStatisticsApi from 'apis/queryCompanyRatingStatistics';
+import queryCompanySalaryWorkTimeApi from 'apis/queryCompanySalaryWorkTime';
+import queryCompanySalaryWorkTimeStatisticsApi from 'apis/queryCompanySalaryWorkTimeStatistics';
 import queryCompanyTopNJobTitlesApi from 'apis/queryCompanyTopNJobTitles';
 import queryCompanyWorkExperiencesApi from 'apis/queryCompanyWorkExperiences';
 import subscribeCompanyApi from 'apis/subscribeCompany';
@@ -320,7 +318,7 @@ export const queryCompanySalaryWorkTime = (
   dispatch(setSalaryWorkTime(companyName, toFetching(box)));
 
   try {
-    const data = await getCompanyTimeAndSalary({
+    const data = await queryCompanySalaryWorkTimeApi({
       companyName,
       jobTitle,
       start,
@@ -374,38 +372,18 @@ export const queryCompanySalaryWorkTimeStatistics = ({ companyName }) => async (
   const box = companySalaryWorkTimeStatisticsBoxSelectorByName(companyName)(
     getState(),
   );
-  if (
-    isFetching(box) ||
-    (isFetched(box) && box.data && box.data.name === companyName)
-  ) {
+  if (isFetching(box) || isFetched(box)) {
     return;
   }
 
   dispatch(setSalaryWorkTimeStatistics(companyName, toFetching(box)));
 
   try {
-    const data = await getCompanyTimeAndSalaryStatistics({
+    const data = await queryCompanySalaryWorkTimeStatisticsApi({
       companyName,
     });
 
-    // Not found case
-    if (data == null) {
-      return dispatch(
-        setSalaryWorkTimeStatistics(companyName, getFetched(data)),
-      );
-    }
-
-    const salaryWorkTimeStatisticsData = {
-      name: data.name,
-      salary_work_time_statistics: data.salary_work_time_statistics,
-    };
-
-    dispatch(
-      setSalaryWorkTimeStatistics(
-        companyName,
-        getFetched(salaryWorkTimeStatisticsData),
-      ),
-    );
+    dispatch(setSalaryWorkTimeStatistics(companyName, getFetched(data)));
   } catch (error) {
     dispatch(setSalaryWorkTimeStatistics(companyName, getError(error)));
   }
@@ -708,6 +686,16 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
   }
 };
 
+/**
+ * @type {(
+ *   companyName: string,
+ *   box: import('utils/fetchBox').default<import('apis/queryCompanyIsSubscribed').CompanyIsSubscribed>
+ * ) => {
+ *   type: string;
+ *   companyName: string;
+ *   box: import('utils/fetchBox').default<import('apis/queryCompanyIsSubscribed').CompanyIsSubscribed>
+ * }}
+ */
 const setIsSubscribed = (companyName, box) => ({
   type: SET_IS_SUBSCRIBED,
   companyName,
@@ -851,10 +839,6 @@ export const queryCompanyIsSubscribed = ({ companyName }) => async (
     const state = getState();
     const token = tokenSelector(state);
     const data = await queryCompanyIsSubscribedApi({ companyName, token });
-
-    if (data == null) {
-      return dispatch(setIsSubscribed(companyName, getFetched(data)));
-    }
 
     dispatch(setIsSubscribed(companyName, getFetched(data)));
   } catch (error) {
