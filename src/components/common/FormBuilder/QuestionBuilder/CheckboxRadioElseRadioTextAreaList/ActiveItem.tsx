@@ -7,8 +7,8 @@ import RadioSubPage from './RadioSubPage';
 import TextSubPage from './TextSubPage';
 
 enum SubPage {
-  Radio = 'radio',
-  Text = 'text',
+  RADIO = 'radio',
+  TEXT = 'text',
 }
 
 type Props = {
@@ -50,7 +50,7 @@ const ActiveItem = ({
     defaultTextValue,
   ] = defaultValue || [optionValue, null, null, ''];
 
-  const [subPage, setSubPage] = useState(SubPage.Radio);
+  const [subPage, setSubPage] = useState(SubPage.RADIO);
   const [radioValue, setOptionValue] = useState<OptionValue>(
     defaultOptionValue as OptionValue,
   );
@@ -72,13 +72,13 @@ const ActiveItem = ({
 
   const handleConfirmRadio = useCallback(() => {
     if (hasNext) {
-      setSubPage(SubPage.Text);
+      setSubPage(SubPage.TEXT);
     } else {
       onChange(currentItem);
     }
   }, [onChange, hasNext, currentItem]);
 
-  const onBackToRadio = useCallback(() => setSubPage(SubPage.Radio), []);
+  const onBackToRadio = useCallback(() => setSubPage(SubPage.RADIO), []);
   const onClear = useCallback(() => onChange(null), [onChange]);
   const onSave = useCallback(
     () => onChange([optionValue, radioValue, elseOptionValue, textValue]),
@@ -86,7 +86,7 @@ const ActiveItem = ({
   );
 
   switch (subPage) {
-    case SubPage.Radio:
+    case SubPage.RADIO:
       return (
         <RadioSubPage
           dataKey={dataKey}
@@ -106,7 +106,7 @@ const ActiveItem = ({
           onCancel={onCancel}
         />
       );
-    case SubPage.Text:
+    case SubPage.TEXT:
       return (
         <TextSubPage
           title={textTitle}
