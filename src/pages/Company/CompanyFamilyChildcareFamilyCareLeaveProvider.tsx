@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { queryRatingStatistics } from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
+import familyCareLeaveIcon from 'components/CompanyAndJobTitle/familyCareLeaveIcon.svg';
 import LeavePolicySection, {
   LeavePolicyRecord,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
@@ -15,6 +16,7 @@ import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 const SECTION: LeaveSection = {
   title: '家庭照顧假',
+  icon: familyCareLeaveIcon,
   summaryBullets: [
     '請不到家庭照顧假 (50筆)',
     '家庭照顧假不清楚是否符合勞基法 (40筆)',

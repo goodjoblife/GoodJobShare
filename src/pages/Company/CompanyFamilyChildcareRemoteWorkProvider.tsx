@@ -7,6 +7,7 @@ import LeavePolicySection, {
   LeavePolicyRecord,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
 import { LeaveSection } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
+import remoteWorkIcon from 'components/CompanyAndJobTitle/remoteWorkIcon.svg';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
 import { ServerSideRender } from 'types/serverSideRender';
@@ -15,6 +16,7 @@ import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 const SECTION: LeaveSection = {
   title: '遠端工作制度',
+  icon: remoteWorkIcon,
   summaryBullets: ['有遠端工作制度 (100筆)', '每週遠端工作 1 天 (80筆)'],
   dataCount: 150,
   availability: {
