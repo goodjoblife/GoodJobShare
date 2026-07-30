@@ -8,6 +8,7 @@ import {
   companyFamilyChildcareParentalLeavePath,
   companyFamilyChildcarePath,
   companyFamilyChildcareRemoteWorkPath,
+  companyGenderFriendlyMenstrualLeavePath,
   companyGenderFriendlyPath,
   companyInterviewExperiencesPath,
   companyOverviewLegacyPath,
@@ -26,6 +27,7 @@ import CompanyFamilyChildcareFlexibleHoursProvider from 'pages/Company/CompanyFa
 import CompanyFamilyChildcareParentalLeaveProvider from 'pages/Company/CompanyFamilyChildcareParentalLeaveProvider';
 import CompanyFamilyChildcareProvider from 'pages/Company/CompanyFamilyChildcareProvider';
 import CompanyFamilyChildcareRemoteWorkProvider from 'pages/Company/CompanyFamilyChildcareRemoteWorkProvider';
+import CompanyGenderFriendlyMenstrualLeaveProvider from 'pages/Company/CompanyGenderFriendlyMenstrualLeaveProvider';
 import CompanyGenderFriendlyProvider from 'pages/Company/CompanyGenderFriendlyProvider';
 import CompanyIndexProvider from 'pages/Company/CompanyIndexProvider';
 import CompanyInterviewExperiencesProvider from 'pages/Company/CompanyInterviewExperiencesProvider';
@@ -193,6 +195,11 @@ const routes = [
       {
         path: companyGenderFriendlyPath,
         component: CompanyGenderFriendlyProvider,
+        exact: true,
+      },
+      {
+        path: companyGenderFriendlyMenstrualLeavePath,
+        component: CompanyGenderFriendlyMenstrualLeaveProvider,
         exact: true,
       },
       {

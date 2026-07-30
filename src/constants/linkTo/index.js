@@ -32,6 +32,9 @@ export const companyFamilyChildcareRemoteWorkPath =
 export const companyGenderFriendlyPath =
   '/companies/:companyName/gender-friendly';
 
+export const companyGenderFriendlyMenstrualLeavePath =
+  '/companies/:companyName/gender-friendly/menstrual-leave';
+
 export const jobTitleOverviewPath = '/job-titles/:jobTitle';
 
 export const jobTitleOverviewLegacyPath = '/job-titles/:jobTitle/overview';
