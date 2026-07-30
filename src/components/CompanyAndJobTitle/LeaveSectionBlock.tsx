@@ -8,11 +8,11 @@ import PolicyBarChart, { PolicyDistribution } from './PolicyBarChart';
 
 type SummaryBulletIcon = React.ReactElement<{ className?: string }> | null;
 
-export type LeaveBullet = string | { text: string; icon: SummaryBulletIcon };
+type SummaryBullet = { text: string; icon: SummaryBulletIcon };
+
+export type LeaveBullet = string | SummaryBullet;
 
 export type BulletByLabel = Record<string, LeaveBullet>;
-
-type SummaryBullet = { text: string; icon: SummaryBulletIcon };
 
 export type LeaveSection = {
   dataCount: number;
