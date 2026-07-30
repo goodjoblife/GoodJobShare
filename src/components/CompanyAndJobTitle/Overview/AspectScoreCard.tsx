@@ -21,6 +21,13 @@ const useAllAspectRatingStatistics = (
   return box.data.companyAspectRatingStatistics;
 };
 
+const useIsAspectStatisticsFetched = (companyName: string): boolean => {
+  const box = useSelector(
+    companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
+  );
+  return isFetched(box);
+};
+
 const useAspectData = ({
   companyName,
   aspect,
@@ -44,19 +51,28 @@ export const useAspectsData = (
 
 interface AspectScoreCardProps {
   aspect: Aspect;
+  hasEmptyState?: boolean;
 }
 
-const AspectScoreCard: React.FC<AspectScoreCardProps> = ({ aspect }) => {
+const AspectScoreCard: React.FC<AspectScoreCardProps> = ({
+  aspect,
+  hasEmptyState,
+}) => {
   const companyName = useCompanyName();
   const path = generatePath(companyWorkExperiencesAspectPath, {
     companyName,
     aspect,
   });
 
+  const isFetched = useIsAspectStatisticsFetched(companyName);
   const data = useAspectData({ companyName, aspect });
-  if (!data) return null;
+  if (!isFetched) return null;
+  if (!data && !hasEmptyState) return null;
 
-  const { averageRating, ratingCount } = data;
+  const { averageRating, ratingCount } = data || {
+    averageRating: 0,
+    ratingCount: 0,
+  };
   return (
     <ScoreCard
       title={aspect}
@@ -64,6 +80,7 @@ const AspectScoreCard: React.FC<AspectScoreCardProps> = ({ aspect }) => {
       maxValue={5}
       linkTo={path}
       dataCount={ratingCount}
+      hasEmptyState={hasEmptyState}
     />
   );
 };

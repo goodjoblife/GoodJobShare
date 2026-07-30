@@ -1,10 +1,20 @@
 import cn from 'classnames';
 import React from 'react';
 
+import ButtonImpl from 'common/button/Button';
 import Card from 'common/Card';
 
 import AbstractView from './AbstractView';
+import emptyDataAspectImage from './empty_data_aspect.svg';
 import styles from './SummaryBlock.module.css';
+
+type ButtonProps = {
+  circleSize?: string;
+  btnStyle?: string;
+  to?: string;
+  children?: React.ReactNode;
+};
+const Button = ButtonImpl as React.FC<ButtonProps>;
 
 export interface ScoreCardProps {
   title: string;
@@ -12,7 +22,23 @@ export interface ScoreCardProps {
   maxValue: number;
   linkTo: string;
   dataCount: number;
+  hasEmptyState?: boolean;
 }
+
+const EmptyScoreCard: React.FC<{ title: string }> = ({ title }) => (
+  <Card className={cn(styles.card, styles.scoreCard, styles.emptyScoreCard)}>
+    <span className={styles.emptyScoreCardTitle}>{title}</span>
+    <img
+      className={styles.emptyScoreCardImage}
+      src={emptyDataAspectImage}
+      alt="資料不足"
+    />
+    <span className={styles.emptyScoreCardText}>資料不足</span>
+    <Button circleSize="lg" btnStyle="yellow" to="/share">
+      立即分享
+    </Button>
+  </Card>
+);
 
 const ScoreCard: React.FC<ScoreCardProps> = ({
   title,
@@ -20,8 +46,11 @@ const ScoreCard: React.FC<ScoreCardProps> = ({
   maxValue,
   linkTo,
   dataCount,
+  hasEmptyState,
 }) => {
-  if (dataCount === 0) return null;
+  if (dataCount === 0) {
+    return hasEmptyState ? <EmptyScoreCard title={title} /> : null;
+  }
   return (
     <Card className={cn(styles.card, styles.scoreCard)}>
       <AbstractView
