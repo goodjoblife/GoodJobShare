@@ -10,6 +10,7 @@ import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { paramsSelector } from 'common/routing/selectors';
 import GenderFriendly from 'components/CompanyAndJobTitle/GenderFriendly';
 import { GenderFriendlyData } from 'components/CompanyAndJobTitle/GenderFriendly/GenderFriendly';
+import menstrualLeaveIcon from 'components/CompanyAndJobTitle/menstrualLeaveIcon.png';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { companyEsgSalaryDataBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
@@ -20,6 +21,7 @@ import useCompanyName, { companyNameSelector } from './useCompanyName';
 const HARDCODED_DATA: GenderFriendlyData = {
   menstrualLeave: {
     title: '生理假',
+    icon: menstrualLeaveIcon,
     summaryBullets: ['請不到生理假 (80筆)', '生理假不符合勞基法 (60筆)'],
     dataCount: 100,
     availability: {
