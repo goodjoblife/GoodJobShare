@@ -63,7 +63,6 @@ const FamilyChildcare: React.FC<Props> = ({
         <PolicyBarChart
           distribution={data.flexibleHours}
           linkTo={flexibleHoursLinkTo}
-          titleAlign="left"
         />
       </div>
     </div>

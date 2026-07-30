@@ -13,6 +13,7 @@
 
 .summaryCard {
   width: 265px;
+  height: 265px;
   display: flex;
   flex-direction: column;
 

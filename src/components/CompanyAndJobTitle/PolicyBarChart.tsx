@@ -28,22 +28,14 @@ export type PolicyDistribution = {
 type PolicyBarChartProps = {
   distribution: PolicyDistribution;
   linkTo?: string;
-  titleAlign?: 'center' | 'left';
 };
 
 const PolicyBarChart: React.FC<PolicyBarChartProps> = ({
   distribution,
   linkTo,
-  titleAlign = 'center',
 }) => (
   <Card className={styles.card}>
-    <div
-      className={cn(styles.title, {
-        [styles.titleLeft]: titleAlign === 'left',
-      })}
-    >
-      {distribution.title}
-    </div>
+    <div className={styles.title}>{distribution.title}</div>
     <div className={styles.chart}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
