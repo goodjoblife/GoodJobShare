@@ -1,3 +1,4 @@
+import { LocationDescriptor } from 'history';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { generatePath } from 'react-router';
@@ -51,12 +52,12 @@ export const useAspectsData = (
 
 interface AspectScoreCardProps {
   aspect: Aspect;
-  hasEmptyState?: boolean;
+  emptyShareLinkTo?: LocationDescriptor;
 }
 
 const AspectScoreCard: React.FC<AspectScoreCardProps> = ({
   aspect,
-  hasEmptyState,
+  emptyShareLinkTo,
 }) => {
   const companyName = useCompanyName();
   const path = generatePath(companyWorkExperiencesAspectPath, {
@@ -67,7 +68,7 @@ const AspectScoreCard: React.FC<AspectScoreCardProps> = ({
   const isFetched = useIsAspectStatisticsFetched(companyName);
   const data = useAspectData({ companyName, aspect });
   if (!isFetched) return null;
-  if (!data && !hasEmptyState) return null;
+  if (!data && !emptyShareLinkTo) return null;
 
   const { averageRating, ratingCount } = data || {
     averageRating: 0,
@@ -80,7 +81,7 @@ const AspectScoreCard: React.FC<AspectScoreCardProps> = ({
       maxValue={5}
       linkTo={path}
       dataCount={ratingCount}
-      hasEmptyState={hasEmptyState}
+      emptyShareLinkTo={emptyShareLinkTo}
     />
   );
 };

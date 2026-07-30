@@ -4,6 +4,9 @@ import { useMountedState } from 'react-use';
 import LoginModalContext from 'contexts/LoginModalContext';
 import { useLogin } from 'hooks/login';
 
+/**
+ * @type {(callback: () => Promise<void>) => [() => void, boolean]}
+ */
 const useLoginFlow = callback => {
   const getIsMounted = useMountedState();
   const [state, setState] = useState('init');

@@ -8,10 +8,6 @@ on:
       - dev2
   pull_request:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
-
 env:
   REGISTRY: ghcr.io
 
@@ -76,6 +72,9 @@ jobs:
     if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     needs: [lint, test, build]
+    concurrency:
+      group: docker-production
+      cancel-in-progress: false
     permissions:
       contents: read
       packages: write
@@ -98,6 +97,9 @@ jobs:
     if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     needs: [lint, test, build]
+    concurrency:
+      group: docker-stage
+      cancel-in-progress: false
     permissions:
       contents: read
       packages: write
@@ -120,6 +122,9 @@ jobs:
     if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     needs: [lint, test, build]
+    concurrency:
+      group: docker-dev
+      cancel-in-progress: false
     permissions:
       contents: read
       packages: write
@@ -142,6 +147,9 @@ jobs:
     if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/dev2'
     runs-on: ubuntu-latest
     needs: [lint, test, build]
+    concurrency:
+      group: docker-dev2
+      cancel-in-progress: false
     permissions:
       contents: read
       packages: write
