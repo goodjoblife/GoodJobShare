@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Button = ({
   circleSize,
@@ -10,6 +11,7 @@ const Button = ({
   onClick,
   style,
   className,
+  to,
 }) => {
   let cnCircleSize = '';
   let cnBtnStyle;
@@ -73,6 +75,19 @@ const Button = ({
       cnBtnStyle = '';
   }
 
+  if (to) {
+    return (
+      <Link
+        className={cn(cnCircleSize, cnBtnStyle, className)}
+        to={to}
+        onClick={onClick}
+        style={style}
+      >
+        {children}
+      </Link>
+    );
+  }
+
   return (
     <button
       className={cn(cnCircleSize, cnBtnStyle, className)}
@@ -93,6 +108,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
   style: PropTypes.object,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default Button;
