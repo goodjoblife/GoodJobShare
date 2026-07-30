@@ -8,7 +8,7 @@ import {
 import { paramsSelector } from 'common/routing/selectors';
 import familyCareLeaveIcon from 'components/CompanyAndJobTitle/familyCareLeaveIcon.svg';
 import FamilyChildcare from 'components/CompanyAndJobTitle/FamilyChildcare';
-import { FamilyChildcareData } from 'components/CompanyAndJobTitle/FamilyChildcare/FamilyChildcare';
+import { FamilyChildcareData } from 'components/CompanyAndJobTitle/FamilyChildcare/FamilyChildcareSection';
 import parentalLeaveIcon from 'components/CompanyAndJobTitle/parentalLeaveIcon.svg';
 import remoteWorkIcon from 'components/CompanyAndJobTitle/remoteWorkIcon.svg';
 import { PageType, TabType } from 'constants/companyJobTitle';

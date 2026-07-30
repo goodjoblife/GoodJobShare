@@ -4,7 +4,9 @@ import { Wrapper } from 'common/base';
 import { PageType, TabType } from 'constants/companyJobTitle';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import FamilyChildcareSection, { FamilyChildcareData } from './FamilyChildcare';
+import FamilyChildcareSection, {
+  FamilyChildcareData,
+} from './FamilyChildcareSection';
 
 type Props = {
   pageType: PageType;

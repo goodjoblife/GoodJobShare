@@ -6,7 +6,7 @@ import { Aspect } from 'constants/companyJobTitle';
 import LeaveSectionBlock, { LeaveSection } from '../LeaveSectionBlock';
 import AspectScoreCard from '../Overview/AspectScoreCard';
 import PolicyBarChart, { PolicyDistribution } from '../PolicyBarChart';
-import styles from './FamilyChildcare.module.css';
+import styles from './FamilyChildcareSection.module.css';
 
 export type FamilyChildcareData = {
   parentalLeave: LeaveSection;
@@ -19,7 +19,7 @@ type Props = {
   data: FamilyChildcareData;
 };
 
-const FamilyChildcare: React.FC<Props> = ({ data }) => (
+const FamilyChildcareSection: React.FC<Props> = ({ data }) => (
   <Section Tag="main" paddingBottom>
     <div className={styles.section}>
       <div className={styles.scoreRow}>
@@ -59,4 +59,4 @@ const FamilyChildcare: React.FC<Props> = ({ data }) => (
   </Section>
 );
 
-export default FamilyChildcare;
+export default FamilyChildcareSection;
