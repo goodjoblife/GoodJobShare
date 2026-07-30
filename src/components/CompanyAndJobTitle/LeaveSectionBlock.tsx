@@ -7,11 +7,9 @@ import styles from './LeaveSectionBlock.module.css';
 import PolicyBarChart, { PolicyDistribution } from './PolicyBarChart';
 
 type SummaryBulletIcon = React.ReactElement<{ className?: string }> | null;
-
 type SummaryBullet = { text: string; icon: SummaryBulletIcon };
 
 export type LeaveBullet = string | SummaryBullet;
-
 export type LeaveBulletByLabel = Record<string, LeaveBullet>;
 
 export type LeaveSection = {
@@ -59,10 +57,13 @@ const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
 }) => {
   const summaryBullets = [
     majorityBullet(section.availability, availabilityBulletByLabel),
-    ...(section.compliance && complianceBulletByLabel
-      ? [majorityBullet(section.compliance, complianceBulletByLabel)]
-      : []),
   ];
+
+  if (section.compliance && complianceBulletByLabel) {
+    summaryBullets.push(
+      majorityBullet(section.compliance, complianceBulletByLabel),
+    );
+  }
 
   return (
     <div className={styles.row}>
