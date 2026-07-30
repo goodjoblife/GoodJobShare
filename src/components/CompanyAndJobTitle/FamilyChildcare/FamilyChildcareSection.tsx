@@ -26,13 +26,16 @@ type Props = {
 };
 
 const parentalLeaveAvailabilityBulletByLabel: BulletByLabel = {
-  是: count => `請得到育嬰假 (${count}筆)`,
+  是: count => ({ text: `請得到育嬰假 (${count}筆)`, icon: 'like' }),
   否: count => `請不到育嬰假 (${count}筆)`,
   不知道: count => `不確定是否請得到育嬰假 (${count}筆)`,
 };
 
 const parentalLeaveComplianceBulletByLabel: BulletByLabel = {
-  符合勞基法: count => `育嬰假符合勞基法 (${count}筆)`,
+  符合勞基法: count => ({
+    text: `育嬰假符合勞基法 (${count}筆)`,
+    icon: 'like',
+  }),
   優於勞基法: count => ({
     text: `育嬰假優於勞基法 (${count}筆)`,
     icon: 'like',
@@ -42,13 +45,16 @@ const parentalLeaveComplianceBulletByLabel: BulletByLabel = {
 };
 
 const familyCareLeaveAvailabilityBulletByLabel: BulletByLabel = {
-  是: count => `請得到家庭照顧假 (${count}筆)`,
+  是: count => ({ text: `請得到家庭照顧假 (${count}筆)`, icon: 'like' }),
   否: count => `請不到家庭照顧假 (${count}筆)`,
   不知道: count => `不確定是否請得到家庭照顧假 (${count}筆)`,
 };
 
 const familyCareLeaveComplianceBulletByLabel: BulletByLabel = {
-  符合勞基法: count => `家庭照顧假符合勞基法 (${count}筆)`,
+  符合勞基法: count => ({
+    text: `家庭照顧假符合勞基法 (${count}筆)`,
+    icon: 'like',
+  }),
   優於勞基法: count => ({
     text: `家庭照顧假優於勞基法 (${count}筆)`,
     icon: 'like',
