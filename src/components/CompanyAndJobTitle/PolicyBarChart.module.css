@@ -1,4 +1,4 @@
-@value below-tablet from "../common/variables.module.css";
+@value below-tablet, link-blue from "../common/variables.module.css";
 
 .card {
   display: flex;
@@ -21,8 +21,15 @@
 }
 
 .footer {
-  font-size: 12px;
-  color: #969696;
+  font-size: 14px;
   text-align: right;
   margin-top: 8px;
+}
+
+.footerLink {
+  color: link-blue;
+}
+
+.footerPlain {
+  color: #969696;
 }
