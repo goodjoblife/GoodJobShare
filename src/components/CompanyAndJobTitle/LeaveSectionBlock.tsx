@@ -19,12 +19,16 @@ export type LeaveSection = {
 
 type LeaveSectionBlockProps = {
   title: string;
+  availabilityTitle: string;
+  complianceTitle?: string;
   section: LeaveSection;
   linkTo?: string;
 };
 
 const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
   title,
+  availabilityTitle,
+  complianceTitle,
   section,
   linkTo,
 }) => (
@@ -57,9 +61,17 @@ const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
         </Link>
       )}
     </Card>
-    <PolicyBarChart distribution={section.availability} linkTo={linkTo} />
-    {section.compliance && (
-      <PolicyBarChart distribution={section.compliance} linkTo={linkTo} />
+    <PolicyBarChart
+      title={availabilityTitle}
+      distribution={section.availability}
+      linkTo={linkTo}
+    />
+    {section.compliance && complianceTitle && (
+      <PolicyBarChart
+        title={complianceTitle}
+        distribution={section.compliance}
+        linkTo={linkTo}
+      />
     )}
   </div>
 );

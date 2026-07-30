@@ -20,7 +20,6 @@ export type PolicyItem = {
 };
 
 export type PolicyDistribution = {
-  title: string;
   dataCount: number;
   items: PolicyItem[];
 };
@@ -29,11 +28,13 @@ const BAR_SIZE = 20;
 const BAR_CATEGORY_GAP = 6;
 
 type PolicyBarChartProps = {
+  title: string;
   distribution: PolicyDistribution;
   linkTo?: string;
 };
 
 const PolicyBarChart: React.FC<PolicyBarChartProps> = ({
+  title,
   distribution,
   linkTo,
 }) => {
@@ -43,7 +44,7 @@ const PolicyBarChart: React.FC<PolicyBarChartProps> = ({
 
   return (
     <Card className={styles.card}>
-      <div className={styles.title}>{distribution.title}</div>
+      <div className={styles.title}>{title}</div>
       <div className={styles.chart}>
         <div className={styles.chartContent}>
           <ResponsiveContainer width="100%" height={chartHeight}>
