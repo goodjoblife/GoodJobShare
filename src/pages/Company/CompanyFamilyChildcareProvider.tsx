@@ -19,10 +19,6 @@ import useCompanyName, { companyNameSelector } from './useCompanyName';
 const HARDCODED_DATA: FamilyChildcareData = {
   parentalLeave: {
     icon: parentalLeaveIcon,
-    summaryBullets: [
-      '請得到育嬰假 (60筆)',
-      { text: '育嬰假優於勞基法 (50筆)', icon: 'like' },
-    ],
     dataCount: 200,
     availability: {
       dataCount: 100,
@@ -44,10 +40,6 @@ const HARDCODED_DATA: FamilyChildcareData = {
   },
   familyCareLeave: {
     icon: familyCareLeaveIcon,
-    summaryBullets: [
-      '請不到家庭照顧假 (50筆)',
-      '家庭照顧假不清楚是否符合勞基法 (40筆)',
-    ],
     dataCount: 100,
     availability: {
       dataCount: 100,
@@ -77,7 +69,6 @@ const HARDCODED_DATA: FamilyChildcareData = {
   },
   remoteWork: {
     icon: remoteWorkIcon,
-    summaryBullets: ['有遠端工作制度 (100筆)', '每週遠端工作 1 天 (80筆)'],
     dataCount: 150,
     availability: {
       dataCount: 100,
