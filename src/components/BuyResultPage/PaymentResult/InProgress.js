@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import P from 'common/base/P';
-import fetchingStatusMap from 'constants/fetchStatus';
+import { FetchStatus } from 'constants/fetchStatus';
 import useFetchPaymentRecord from 'hooks/payment/useFetchPaymentRecord';
 import useTimer, { countingStatusMap } from 'hooks/useTimer';
 
@@ -25,7 +25,7 @@ const InProgress = ({ paymentRecordId, fetchingStatus }) => {
   const fetch = useFetchPaymentRecord(paymentRecordId);
 
   useEffect(() => {
-    if (isTimerEnabled && fetchingStatus === fetchingStatusMap.FETCHED) {
+    if (isTimerEnabled && fetchingStatus === FetchStatus.FETCHED) {
       setLoopFetchCounting(countingStatusMap.counting);
     }
   }, [fetchingStatus, isTimerEnabled]);
@@ -66,7 +66,7 @@ const InProgress = ({ paymentRecordId, fetchingStatus }) => {
 };
 
 InProgress.propTypes = {
-  fetchingStatus: PropTypes.oneOf(Object.values(fetchingStatusMap)),
+  fetchingStatus: PropTypes.oneOf(Object.values(FetchStatus)),
   paymentRecordId: PropTypes.string,
 };
 

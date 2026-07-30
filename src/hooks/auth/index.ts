@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import AuthStatus from 'constants/authStatus';
+import { AuthStatus } from 'constants/authStatus';
 import { User } from 'reducers/auth';
 import {
   statusSelector,

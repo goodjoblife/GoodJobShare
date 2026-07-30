@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { formatSalaryAmount, formatSalaryType } from 'common/formatter';
 import { generatePageURL, PageType } from 'constants/companyJobTitle';
-import employmentType from 'constants/employmentType';
+import { employmentTypeTranslation } from 'constants/employmentType';
 
 import styles from './formatter.module.css';
 
@@ -30,7 +30,8 @@ export const getNameAsJobTitle = (o, row) => (
   </Link>
 );
 
-export const getEmploymentType = type => (type ? employmentType[type] : '');
+export const getEmploymentType = type =>
+  type ? employmentTypeTranslation[type] : '';
 
 export const getWorkingHour = (val, row) => (
   <div>{`${val === undefined || val === null ? '-' : val} / ${
