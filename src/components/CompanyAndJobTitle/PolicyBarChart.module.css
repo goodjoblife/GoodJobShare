@@ -18,6 +18,12 @@
 .chart {
   flex: 1;
   min-height: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.chartContent {
+  width: 100%;
 }
 
 .footer {
