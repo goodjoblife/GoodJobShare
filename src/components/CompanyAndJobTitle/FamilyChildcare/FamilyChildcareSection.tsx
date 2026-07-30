@@ -3,12 +3,15 @@ import React from 'react';
 import { Heading, Section } from 'common/base';
 import { Aspect } from 'constants/companyJobTitle';
 
+import familyCareLeaveIcon from '../familyCareLeaveIcon.svg';
 import LeaveSectionBlock, {
   BulletByLabel,
   LeaveSection,
 } from '../LeaveSectionBlock';
 import AspectScoreCard from '../Overview/AspectScoreCard';
+import parentalLeaveIcon from '../parentalLeaveIcon.svg';
 import PolicyBarChart, { PolicyDistribution } from '../PolicyBarChart';
+import remoteWorkIcon from '../remoteWorkIcon.svg';
 import styles from './FamilyChildcareSection.module.css';
 
 export type FamilyChildcareData = {
@@ -81,6 +84,7 @@ const FamilyChildcareSection: React.FC<Props> = ({ data }) => (
       </Heading>
       <LeaveSectionBlock
         title="育嬰假(育嬰留職停薪)"
+        icon={parentalLeaveIcon}
         availabilityTitle="是否請得到育嬰假?"
         availabilityBulletByLabel={parentalLeaveAvailabilityBulletByLabel}
         complianceTitle="育嬰假法規符合度"
@@ -94,6 +98,7 @@ const FamilyChildcareSection: React.FC<Props> = ({ data }) => (
       </Heading>
       <LeaveSectionBlock
         title="家庭照顧假"
+        icon={familyCareLeaveIcon}
         availabilityTitle="是否請得到家庭照顧假？"
         availabilityBulletByLabel={familyCareLeaveAvailabilityBulletByLabel}
         complianceTitle="家庭照顧假法規符合度"
@@ -118,6 +123,7 @@ const FamilyChildcareSection: React.FC<Props> = ({ data }) => (
       </Heading>
       <LeaveSectionBlock
         title="遠端工作制度"
+        icon={remoteWorkIcon}
         availabilityTitle="是否可以遠端工作？"
         availabilityBulletByLabel={remoteWorkAvailabilityBulletByLabel}
         complianceTitle="遠端工作每週天數？"

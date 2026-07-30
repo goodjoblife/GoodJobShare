@@ -6,11 +6,8 @@ import {
   queryRatingStatistics,
 } from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
-import familyCareLeaveIcon from 'components/CompanyAndJobTitle/familyCareLeaveIcon.svg';
 import FamilyChildcare from 'components/CompanyAndJobTitle/FamilyChildcare';
 import { FamilyChildcareData } from 'components/CompanyAndJobTitle/FamilyChildcare/FamilyChildcareSection';
-import parentalLeaveIcon from 'components/CompanyAndJobTitle/parentalLeaveIcon.svg';
-import remoteWorkIcon from 'components/CompanyAndJobTitle/remoteWorkIcon.svg';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
 
@@ -18,7 +15,6 @@ import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 const HARDCODED_DATA: FamilyChildcareData = {
   parentalLeave: {
-    icon: parentalLeaveIcon,
     dataCount: 200,
     availability: {
       dataCount: 100,
@@ -39,7 +35,6 @@ const HARDCODED_DATA: FamilyChildcareData = {
     },
   },
   familyCareLeave: {
-    icon: familyCareLeaveIcon,
     dataCount: 100,
     availability: {
       dataCount: 100,
@@ -68,7 +63,6 @@ const HARDCODED_DATA: FamilyChildcareData = {
     ],
   },
   remoteWork: {
-    icon: remoteWorkIcon,
     dataCount: 150,
     availability: {
       dataCount: 100,

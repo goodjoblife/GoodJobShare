@@ -12,7 +12,6 @@ export type LeaveBullet = string | { text: string; icon: 'like' };
 export type BulletByLabel = Record<string, (count: number) => LeaveBullet>;
 
 export type LeaveSection = {
-  icon?: string;
   dataCount: number;
   availability: PolicyDistribution;
   compliance?: PolicyDistribution;
@@ -20,6 +19,7 @@ export type LeaveSection = {
 
 type LeaveSectionBlockProps = {
   title: string;
+  icon?: string;
   availabilityTitle: string;
   availabilityBulletByLabel: BulletByLabel;
   complianceTitle?: string;
@@ -43,6 +43,7 @@ const majorityBullet = (
 
 const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
   title,
+  icon,
   availabilityTitle,
   availabilityBulletByLabel,
   complianceTitle,
@@ -60,9 +61,7 @@ const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
   return (
     <div className={styles.row}>
       <Card className={styles.summaryCard}>
-        {section.icon && (
-          <img className={styles.icon} src={section.icon} alt="" />
-        )}
+        {icon && <img className={styles.icon} src={icon} alt="" />}
         <div className={styles.summaryTitle}>{title}</div>
         <ul className={styles.bullets}>
           {summaryBullets.map(bullet => {
