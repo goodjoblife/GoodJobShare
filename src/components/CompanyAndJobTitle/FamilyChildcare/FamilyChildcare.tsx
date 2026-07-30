@@ -59,11 +59,13 @@ const FamilyChildcare: React.FC<Props> = ({
       <Heading className={styles.sectionTitle} Tag="h2">
         彈性上下班時間制度
       </Heading>
-      <PolicyBarChart
-        distribution={data.flexibleHours}
-        linkTo={flexibleHoursLinkTo}
-        size="large"
-      />
+      <div className={styles.scoreRow}>
+        <PolicyBarChart
+          distribution={data.flexibleHours}
+          linkTo={flexibleHoursLinkTo}
+          titleAlign="left"
+        />
+      </div>
     </div>
     <div className={styles.section}>
       <Heading className={styles.sectionTitle} Tag="h2">

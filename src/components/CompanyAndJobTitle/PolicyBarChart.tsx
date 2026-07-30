@@ -28,17 +28,19 @@ export type PolicyDistribution = {
 type PolicyBarChartProps = {
   distribution: PolicyDistribution;
   linkTo?: string;
-  size?: 'small' | 'large';
+  titleAlign?: 'center' | 'left';
 };
 
 const PolicyBarChart: React.FC<PolicyBarChartProps> = ({
   distribution,
   linkTo,
-  size = 'small',
+  titleAlign = 'center',
 }) => (
-  <Card className={cn(styles.card, { [styles.cardLarge]: size === 'large' })}>
+  <Card className={styles.card}>
     <div
-      className={cn(styles.title, { [styles.titleLarge]: size === 'large' })}
+      className={cn(styles.title, {
+        [styles.titleLeft]: titleAlign === 'left',
+      })}
     >
       {distribution.title}
     </div>
