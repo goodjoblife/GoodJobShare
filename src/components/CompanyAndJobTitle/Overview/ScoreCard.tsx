@@ -1,8 +1,10 @@
 import cn from 'classnames';
+import { LocationDescriptor } from 'history';
 import React from 'react';
 
 import ButtonImpl from 'common/button/Button';
 import Card from 'common/Card';
+import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
 
 import AbstractView from './AbstractView';
 import emptyDataAspectImage from './empty_data_aspect.svg';
@@ -11,7 +13,7 @@ import styles from './SummaryBlock.module.css';
 type ButtonProps = {
   circleSize?: string;
   btnStyle?: string;
-  to?: string;
+  to?: LocationDescriptor;
   children?: React.ReactNode;
 };
 const Button = ButtonImpl as React.FC<ButtonProps>;
@@ -34,7 +36,7 @@ const EmptyScoreCard: React.FC<{ title: string }> = ({ title }) => (
       alt="資料不足"
     />
     <span className={styles.emptyScoreCardText}>資料不足</span>
-    <Button circleSize="lg" btnStyle="yellow" to="/share">
+    <Button circleSize="lg" btnStyle="yellow" to={generateSharePolicyForm()}>
       立即分享
     </Button>
   </Card>
