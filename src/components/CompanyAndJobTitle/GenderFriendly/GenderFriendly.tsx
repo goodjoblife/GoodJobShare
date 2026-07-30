@@ -38,7 +38,7 @@ const GenderFriendly: React.FC<GenderFriendlyProps> = ({
         性別友善
       </Heading>
       <div className={styles.scoreRow}>
-        <AspectScoreCard aspect={Aspect.GENDER} />
+        <AspectScoreCard aspect={Aspect.GENDER} hasEmptyState />
         {femaleManagerStatisticsItem && (
           <FemaleManagerCard item={femaleManagerStatisticsItem} />
         )}

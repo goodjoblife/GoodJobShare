@@ -32,12 +32,9 @@ const FamilyChildcare: React.FC<Props> = ({
 }) => (
   <Section Tag="main" paddingBottom>
     <div className={styles.section}>
-      <Heading className={styles.sectionTitle} Tag="h2">
-        家庭/育兒
-      </Heading>
       <div className={styles.scoreRow}>
-        <AspectScoreCard aspect={Aspect.WORK_LIFE_BALANCE} />
-        <AspectScoreCard aspect={Aspect.GENDER} />
+        <AspectScoreCard aspect={Aspect.WORK_LIFE_BALANCE} hasEmptyState />
+        <AspectScoreCard aspect={Aspect.GENDER} hasEmptyState />
       </div>
     </div>
     <div className={styles.section}>
