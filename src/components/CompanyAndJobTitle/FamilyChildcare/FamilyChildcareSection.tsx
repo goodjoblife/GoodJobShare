@@ -26,54 +26,42 @@ type Props = {
 };
 
 const parentalLeaveAvailabilityBulletByLabel: BulletByLabel = {
-  是: count => ({ text: `請得到育嬰假 (${count}筆)`, icon: 'like' }),
-  否: count => `請不到育嬰假 (${count}筆)`,
-  不知道: count => `不確定是否請得到育嬰假 (${count}筆)`,
+  是: { text: '請得到育嬰假', icon: 'like' },
+  否: '請不到育嬰假',
+  不知道: '不確定是否請得到育嬰假',
 };
 
 const parentalLeaveComplianceBulletByLabel: BulletByLabel = {
-  符合勞基法: count => ({
-    text: `育嬰假符合勞基法 (${count}筆)`,
-    icon: 'like',
-  }),
-  優於勞基法: count => ({
-    text: `育嬰假優於勞基法 (${count}筆)`,
-    icon: 'like',
-  }),
-  不符合勞基法: count => `育嬰假不符合勞基法 (${count}筆)`,
-  不知道: count => `不確定育嬰假是否符合勞基法 (${count}筆)`,
+  符合勞基法: { text: '育嬰假符合勞基法', icon: 'like' },
+  優於勞基法: { text: '育嬰假優於勞基法', icon: 'like' },
+  不符合勞基法: '育嬰假不符合勞基法',
+  不知道: '不確定育嬰假是否符合勞基法',
 };
 
 const familyCareLeaveAvailabilityBulletByLabel: BulletByLabel = {
-  是: count => ({ text: `請得到家庭照顧假 (${count}筆)`, icon: 'like' }),
-  否: count => `請不到家庭照顧假 (${count}筆)`,
-  不知道: count => `不確定是否請得到家庭照顧假 (${count}筆)`,
+  是: { text: '請得到家庭照顧假', icon: 'like' },
+  否: '請不到家庭照顧假',
+  不知道: '不確定是否請得到家庭照顧假',
 };
 
 const familyCareLeaveComplianceBulletByLabel: BulletByLabel = {
-  符合勞基法: count => ({
-    text: `家庭照顧假符合勞基法 (${count}筆)`,
-    icon: 'like',
-  }),
-  優於勞基法: count => ({
-    text: `家庭照顧假優於勞基法 (${count}筆)`,
-    icon: 'like',
-  }),
-  不符合勞基法: count => `家庭照顧假不符合勞基法 (${count}筆)`,
-  不知道: count => `不確定家庭照顧假是否符合勞基法 (${count}筆)`,
+  符合勞基法: { text: '家庭照顧假符合勞基法', icon: 'like' },
+  優於勞基法: { text: '家庭照顧假優於勞基法', icon: 'like' },
+  不符合勞基法: '家庭照顧假不符合勞基法',
+  不知道: '不確定家庭照顧假是否符合勞基法',
 };
 
 const remoteWorkAvailabilityBulletByLabel: BulletByLabel = {
-  是: count => `有遠端工作制度 (${count}筆)`,
-  否: count => `無遠端工作制度 (${count}筆)`,
-  不知道: count => `不確定是否有遠端工作制度 (${count}筆)`,
+  是: '有遠端工作制度',
+  否: '無遠端工作制度',
+  不知道: '不確定是否有遠端工作制度',
 };
 
 const remoteWorkFrequencyBulletByLabel: BulletByLabel = {
-  '1天': count => `每週遠端工作 1 天 (${count}筆)`,
-  '2天': count => `每週遠端工作 2 天 (${count}筆)`,
-  '3天': count => `每週遠端工作 3 天 (${count}筆)`,
-  大於3天: count => `每週遠端工作超過 3 天 (${count}筆)`,
+  '1天': '每週遠端工作 1 天',
+  '2天': '每週遠端工作 2 天',
+  '3天': '每週遠端工作 3 天',
+  大於3天: '每週遠端工作超過 3 天',
 };
 
 const FamilyChildcareSection: React.FC<Props> = ({ data }) => (

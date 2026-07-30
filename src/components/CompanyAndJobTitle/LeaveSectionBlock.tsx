@@ -9,7 +9,7 @@ import PolicyBarChart, { PolicyDistribution } from './PolicyBarChart';
 
 export type LeaveBullet = string | { text: string; icon: 'like' };
 
-export type BulletByLabel = Record<string, (count: number) => LeaveBullet>;
+export type BulletByLabel = Record<string, LeaveBullet>;
 
 export type LeaveSection = {
   dataCount: number;
@@ -38,7 +38,12 @@ const majorityBullet = (
   const count = Math.round(
     (distribution.dataCount * majority.percentage) / 100,
   );
-  return bulletByLabel[majority.label](count);
+  const bullet = bulletByLabel[majority.label];
+  const text = typeof bullet === 'string' ? bullet : bullet.text;
+  const suffixedText = `${text} (${count}筆)`;
+  return typeof bullet === 'string'
+    ? suffixedText
+    : { ...bullet, text: suffixedText };
 };
 
 const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
