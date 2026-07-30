@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from 'common/base';
 import Card from 'common/Card';
-import Like from 'common/icons/Like';
+import Glike from 'common/icons/Glike';
 
 import styles from './LeaveSectionBlock.module.css';
 import PolicyBarChart, { PolicyDistribution } from './PolicyBarChart';
@@ -41,7 +41,7 @@ const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
           return (
             <li key={text}>
               {hasLikeIcon ? (
-                <Like className={styles.likeIcon} />
+                <Glike className={styles.likeIcon} />
               ) : (
                 <span className={styles.dash}>–</span>
               )}
