@@ -29,15 +29,18 @@ const FamilyChildcare: React.FC<Props> = ({ data }) => (
     </div>
     <div className={styles.section}>
       <Heading className={styles.sectionTitle} Tag="h2">
-        {data.parentalLeave.title}
+        育嬰假(育嬰留職停薪)
       </Heading>
-      <LeaveSectionBlock section={data.parentalLeave} />
+      <LeaveSectionBlock
+        title="育嬰假(育嬰留職停薪)"
+        section={data.parentalLeave}
+      />
     </div>
     <div className={styles.section}>
       <Heading className={styles.sectionTitle} Tag="h2">
-        {data.familyCareLeave.title}
+        家庭照顧假
       </Heading>
-      <LeaveSectionBlock section={data.familyCareLeave} />
+      <LeaveSectionBlock title="家庭照顧假" section={data.familyCareLeave} />
     </div>
     <div className={styles.section}>
       <Heading className={styles.sectionTitle} Tag="h2">
@@ -49,9 +52,9 @@ const FamilyChildcare: React.FC<Props> = ({ data }) => (
     </div>
     <div className={styles.section}>
       <Heading className={styles.sectionTitle} Tag="h2">
-        {data.remoteWork.title}
+        遠端工作制度
       </Heading>
-      <LeaveSectionBlock section={data.remoteWork} />
+      <LeaveSectionBlock title="遠端工作制度" section={data.remoteWork} />
     </div>
   </Section>
 );

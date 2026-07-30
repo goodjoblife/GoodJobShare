@@ -10,7 +10,6 @@ import PolicyBarChart, { PolicyDistribution } from './PolicyBarChart';
 export type LeaveBullet = string | { text: string; icon: 'like' };
 
 export type LeaveSection = {
-  title: string;
   icon?: string;
   summaryBullets: LeaveBullet[];
   dataCount: number;
@@ -19,11 +18,13 @@ export type LeaveSection = {
 };
 
 type LeaveSectionBlockProps = {
+  title: string;
   section: LeaveSection;
   linkTo?: string;
 };
 
 const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
+  title,
   section,
   linkTo,
 }) => (
@@ -32,7 +33,7 @@ const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
       {section.icon && (
         <img className={styles.icon} src={section.icon} alt="" />
       )}
-      <div className={styles.summaryTitle}>{section.title}</div>
+      <div className={styles.summaryTitle}>{title}</div>
       <ul className={styles.bullets}>
         {section.summaryBullets.map(bullet => {
           const text = typeof bullet === 'string' ? bullet : bullet.text;
