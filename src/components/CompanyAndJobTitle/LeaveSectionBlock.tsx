@@ -4,7 +4,8 @@ import { Link } from 'common/base';
 import Card from 'common/Card';
 
 import styles from './LeaveSectionBlock.module.css';
-import PolicyBarChart, { PolicyDistribution } from './PolicyBarChart';
+import { PolicyDistribution } from './PolicyBarChart';
+import PolicyChartCard from './PolicyChartCard';
 
 type SummaryBulletIcon = React.ReactElement<{ className?: string }> | null;
 type SummaryBullet = { text: string; icon: SummaryBulletIcon };
@@ -94,13 +95,13 @@ const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
           )}
         </Card>
       )}
-      <PolicyBarChart
+      <PolicyChartCard
         title={availabilityTitle}
         distribution={section.availability}
         linkTo={linkTo}
       />
       {section.compliance && complianceTitle && (
-        <PolicyBarChart
+        <PolicyChartCard
           title={complianceTitle}
           distribution={section.compliance}
           linkTo={linkTo}
