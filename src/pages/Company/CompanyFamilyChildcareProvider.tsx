@@ -8,6 +8,7 @@ import {
 import { paramsSelector } from 'common/routing/selectors';
 import FamilyChildcare from 'components/CompanyAndJobTitle/FamilyChildcare';
 import { FamilyChildcareData } from 'components/CompanyAndJobTitle/FamilyChildcare/FamilyChildcare';
+import parentalLeaveIcon from 'components/CompanyAndJobTitle/parentalLeaveIcon.svg';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
 
@@ -16,7 +17,11 @@ import useCompanyName, { companyNameSelector } from './useCompanyName';
 const HARDCODED_DATA: FamilyChildcareData = {
   parentalLeave: {
     title: '育嬰假(育嬰留職停薪)',
-    summaryBullets: ['請得到育嬰假 (60筆)', '育嬰假優於勞基法 (50筆)'],
+    icon: parentalLeaveIcon,
+    summaryBullets: [
+      '請得到育嬰假 (60筆)',
+      { text: '育嬰假優於勞基法 (50筆)', icon: 'like' },
+    ],
     dataCount: 200,
     availability: {
       title: '是否請得到育嬰假?',

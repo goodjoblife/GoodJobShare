@@ -7,6 +7,7 @@ import LeavePolicySection, {
   LeavePolicyRecord,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
 import { LeaveSection } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
+import parentalLeaveIcon from 'components/CompanyAndJobTitle/parentalLeaveIcon.svg';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
 import { ServerSideRender } from 'types/serverSideRender';
@@ -15,7 +16,11 @@ import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 const SECTION: LeaveSection = {
   title: '育嬰假(育嬰留職停薪)',
-  summaryBullets: ['請得到育嬰假 (60筆)', '育嬰假優於勞基法 (50筆)'],
+  icon: parentalLeaveIcon,
+  summaryBullets: [
+    '請得到育嬰假 (60筆)',
+    { text: '育嬰假優於勞基法 (50筆)', icon: 'like' },
+  ],
   dataCount: 200,
   availability: {
     title: '是否請得到育嬰假?',
