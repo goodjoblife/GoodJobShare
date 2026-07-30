@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Wrapper } from 'common/base';
-import { PageType, TabType } from 'constants/companyJobTitle';
+import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import GenderFriendlySection, { GenderFriendlyData } from './GenderFriendly';
@@ -25,19 +25,23 @@ const GenderFriendly: React.FC<Props> = ({
   tabType,
   data,
   femaleManagerStatisticsItem,
-}) => (
-  <CompanyAndJobTitleWrapper
-    pageType={pageType}
-    pageName={pageName}
-    tabType={tabType}
-  >
-    <Wrapper size="l">
-      <GenderFriendlySection
-        data={data}
-        femaleManagerStatisticsItem={femaleManagerStatisticsItem}
-      />
-    </Wrapper>
-  </CompanyAndJobTitleWrapper>
-);
+}) => {
+  const tabBase = generateTabURL({ pageType, pageName, tabType });
+  return (
+    <CompanyAndJobTitleWrapper
+      pageType={pageType}
+      pageName={pageName}
+      tabType={tabType}
+    >
+      <Wrapper size="l">
+        <GenderFriendlySection
+          data={data}
+          femaleManagerStatisticsItem={femaleManagerStatisticsItem}
+          menstrualLeaveLinkTo={`${tabBase}/menstrual-leave`}
+        />
+      </Wrapper>
+    </CompanyAndJobTitleWrapper>
+  );
+};
 
 export default GenderFriendly;
