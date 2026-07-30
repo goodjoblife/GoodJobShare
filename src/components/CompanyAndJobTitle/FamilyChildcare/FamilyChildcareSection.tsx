@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Heading, Section } from 'common/base';
+import Glike from 'common/icons/Glike';
 import { Aspect } from 'constants/companyJobTitle';
 
 import familyCareLeaveIcon from '../familyCareLeaveIcon.svg';
@@ -26,27 +27,27 @@ type Props = {
 };
 
 const parentalLeaveAvailabilityBulletByLabel: BulletByLabel = {
-  是: { text: '請得到育嬰假', icon: 'like' },
+  是: { text: '請得到育嬰假', icon: <Glike /> },
   否: '請不到育嬰假',
   不知道: '不確定是否請得到育嬰假',
 };
 
 const parentalLeaveComplianceBulletByLabel: BulletByLabel = {
-  符合勞基法: { text: '育嬰假符合勞基法', icon: 'like' },
-  優於勞基法: { text: '育嬰假優於勞基法', icon: 'like' },
+  符合勞基法: { text: '育嬰假符合勞基法', icon: <Glike /> },
+  優於勞基法: { text: '育嬰假優於勞基法', icon: <Glike /> },
   不符合勞基法: '育嬰假不符合勞基法',
   不知道: '不確定育嬰假是否符合勞基法',
 };
 
 const familyCareLeaveAvailabilityBulletByLabel: BulletByLabel = {
-  是: { text: '請得到家庭照顧假', icon: 'like' },
+  是: { text: '請得到家庭照顧假', icon: <Glike /> },
   否: '請不到家庭照顧假',
   不知道: '不確定是否請得到家庭照顧假',
 };
 
 const familyCareLeaveComplianceBulletByLabel: BulletByLabel = {
-  符合勞基法: { text: '家庭照顧假符合勞基法', icon: 'like' },
-  優於勞基法: { text: '家庭照顧假優於勞基法', icon: 'like' },
+  符合勞基法: { text: '家庭照顧假符合勞基法', icon: <Glike /> },
+  優於勞基法: { text: '家庭照顧假優於勞基法', icon: <Glike /> },
   不符合勞基法: '家庭照顧假不符合勞基法',
   不知道: '不確定家庭照顧假是否符合勞基法',
 };

@@ -2,12 +2,13 @@ import React from 'react';
 
 import { Link } from 'common/base';
 import Card from 'common/Card';
-import Glike from 'common/icons/Glike';
 
 import styles from './LeaveSectionBlock.module.css';
 import PolicyBarChart, { PolicyDistribution } from './PolicyBarChart';
 
-export type LeaveBullet = string | { text: string; icon: 'like' };
+export type LeaveBullet =
+  | string
+  | { text: string; icon: React.ReactElement<{ className?: string }> | null };
 
 export type BulletByLabel = Record<string, LeaveBullet>;
 
@@ -71,12 +72,11 @@ const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
         <ul className={styles.bullets}>
           {summaryBullets.map(bullet => {
             const text = typeof bullet === 'string' ? bullet : bullet.text;
-            const hasLikeIcon =
-              typeof bullet !== 'string' && bullet.icon === 'like';
+            const icon = typeof bullet === 'string' ? null : bullet.icon;
             return (
               <li key={text}>
-                {hasLikeIcon ? (
-                  <Glike className={styles.likeIcon} />
+                {icon ? (
+                  React.cloneElement(icon, { className: styles.likeIcon })
                 ) : (
                   <span className={styles.dash}>–</span>
                 )}
