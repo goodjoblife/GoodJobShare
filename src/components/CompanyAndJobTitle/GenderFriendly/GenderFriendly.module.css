@@ -1,0 +1,24 @@
+@value below-tablet from "../../common/variables.module.css";
+
+.section {
+  & + & {
+    margin-top: 60px;
+  }
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 15px;
+}
+
+.scoreRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 21px;
+
+  @media (max-width: below-tablet) {
+    flex-direction: column;
+  }
+}
