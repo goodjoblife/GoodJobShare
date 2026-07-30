@@ -6,11 +6,13 @@ import Card from 'common/Card';
 import styles from './LeaveSectionBlock.module.css';
 import PolicyBarChart, { PolicyDistribution } from './PolicyBarChart';
 
-export type LeaveBullet =
-  | string
-  | { text: string; icon: React.ReactElement<{ className?: string }> | null };
+type SummaryBulletIcon = React.ReactElement<{ className?: string }> | null;
+
+export type LeaveBullet = string | { text: string; icon: SummaryBulletIcon };
 
 export type BulletByLabel = Record<string, LeaveBullet>;
+
+type SummaryBullet = { text: string; icon: SummaryBulletIcon };
 
 export type LeaveSection = {
   dataCount: number;
@@ -32,7 +34,7 @@ type LeaveSectionBlockProps = {
 const majorityBullet = (
   distribution: PolicyDistribution,
   bulletByLabel: BulletByLabel,
-): LeaveBullet => {
+): SummaryBullet => {
   const majority = distribution.items.reduce((max, item) =>
     item.percentage > max.percentage ? item : max,
   );
@@ -41,10 +43,8 @@ const majorityBullet = (
   );
   const bullet = bulletByLabel[majority.label];
   const text = typeof bullet === 'string' ? bullet : bullet.text;
-  const suffixedText = `${text} (${count}筆)`;
-  return typeof bullet === 'string'
-    ? suffixedText
-    : { ...bullet, text: suffixedText };
+  const icon = typeof bullet === 'string' ? null : bullet.icon;
+  return { text: `${text} (${count}筆)`, icon };
 };
 
 const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
@@ -70,20 +70,16 @@ const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
         {icon && <img className={styles.icon} src={icon} alt="" />}
         <div className={styles.summaryTitle}>{title}</div>
         <ul className={styles.bullets}>
-          {summaryBullets.map(bullet => {
-            const text = typeof bullet === 'string' ? bullet : bullet.text;
-            const icon = typeof bullet === 'string' ? null : bullet.icon;
-            return (
-              <li key={text}>
-                {icon ? (
-                  React.cloneElement(icon, { className: styles.likeIcon })
-                ) : (
-                  <span className={styles.dash}>–</span>
-                )}
-                {text}
-              </li>
-            );
-          })}
+          {summaryBullets.map(({ text, icon }) => (
+            <li key={text}>
+              {icon ? (
+                React.cloneElement(icon, { className: styles.likeIcon })
+              ) : (
+                <span className={styles.dash}>–</span>
+              )}
+              {text}
+            </li>
+          ))}
         </ul>
         {linkTo && (
           <Link to={linkTo} className={styles.link}>
