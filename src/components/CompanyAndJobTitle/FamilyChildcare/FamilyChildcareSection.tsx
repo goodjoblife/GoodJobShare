@@ -6,7 +6,7 @@ import { Aspect } from 'constants/companyJobTitle';
 
 import familyCareLeaveIcon from '../familyCareLeaveIcon.svg';
 import LeaveSectionBlock, {
-  BulletByLabel,
+  LeaveBulletByLabel,
   LeaveSection,
 } from '../LeaveSectionBlock';
 import AspectScoreCard from '../Overview/AspectScoreCard';
@@ -26,39 +26,39 @@ type Props = {
   data: FamilyChildcareData;
 };
 
-const parentalLeaveAvailabilityBulletByLabel: BulletByLabel = {
+const parentalLeaveAvailabilityBulletByLabel: LeaveBulletByLabel = {
   是: { text: '請得到育嬰假', icon: <Glike /> },
   否: '請不到育嬰假',
   不知道: '不確定是否請得到育嬰假',
 };
 
-const parentalLeaveComplianceBulletByLabel: BulletByLabel = {
+const parentalLeaveComplianceBulletByLabel: LeaveBulletByLabel = {
   符合勞基法: { text: '育嬰假符合勞基法', icon: <Glike /> },
   優於勞基法: { text: '育嬰假優於勞基法', icon: <Glike /> },
   不符合勞基法: '育嬰假不符合勞基法',
   不知道: '不確定育嬰假是否符合勞基法',
 };
 
-const familyCareLeaveAvailabilityBulletByLabel: BulletByLabel = {
+const familyCareLeaveAvailabilityBulletByLabel: LeaveBulletByLabel = {
   是: { text: '請得到家庭照顧假', icon: <Glike /> },
   否: '請不到家庭照顧假',
   不知道: '不確定是否請得到家庭照顧假',
 };
 
-const familyCareLeaveComplianceBulletByLabel: BulletByLabel = {
+const familyCareLeaveComplianceBulletByLabel: LeaveBulletByLabel = {
   符合勞基法: { text: '家庭照顧假符合勞基法', icon: <Glike /> },
   優於勞基法: { text: '家庭照顧假優於勞基法', icon: <Glike /> },
   不符合勞基法: '家庭照顧假不符合勞基法',
   不知道: '不確定家庭照顧假是否符合勞基法',
 };
 
-const remoteWorkAvailabilityBulletByLabel: BulletByLabel = {
+const remoteWorkAvailabilityBulletByLabel: LeaveBulletByLabel = {
   是: '有遠端工作制度',
   否: '無遠端工作制度',
   不知道: '不確定是否有遠端工作制度',
 };
 
-const remoteWorkFrequencyBulletByLabel: BulletByLabel = {
+const remoteWorkFrequencyBulletByLabel: LeaveBulletByLabel = {
   '1天': '每週遠端工作 1 天',
   '2天': '每週遠端工作 2 天',
   '3天': '每週遠端工作 3 天',

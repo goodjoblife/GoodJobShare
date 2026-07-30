@@ -12,7 +12,7 @@ type SummaryBullet = { text: string; icon: SummaryBulletIcon };
 
 export type LeaveBullet = string | SummaryBullet;
 
-export type BulletByLabel = Record<string, LeaveBullet>;
+export type LeaveBulletByLabel = Record<string, LeaveBullet>;
 
 export type LeaveSection = {
   dataCount: number;
@@ -24,16 +24,16 @@ type LeaveSectionBlockProps = {
   title: string;
   icon?: string;
   availabilityTitle: string;
-  availabilityBulletByLabel: BulletByLabel;
+  availabilityBulletByLabel: LeaveBulletByLabel;
   complianceTitle?: string;
-  complianceBulletByLabel?: BulletByLabel;
+  complianceBulletByLabel?: LeaveBulletByLabel;
   section: LeaveSection;
   linkTo?: string;
 };
 
 const majorityBullet = (
   distribution: PolicyDistribution,
-  bulletByLabel: BulletByLabel,
+  bulletByLabel: LeaveBulletByLabel,
 ): SummaryBullet => {
   const majority = distribution.items.reduce((max, item) =>
     item.percentage > max.percentage ? item : max,
