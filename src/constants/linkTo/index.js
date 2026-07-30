@@ -17,6 +17,18 @@ export const companyWorkExperiencesAspectPath =
 export const companyFamilyChildcarePath =
   '/companies/:companyName/family-childcare';
 
+export const companyFamilyChildcareParentalLeavePath =
+  '/companies/:companyName/family-childcare/parental-leave';
+
+export const companyFamilyChildcareFamilyCareLeave =
+  '/companies/:companyName/family-childcare/family-care-leave';
+
+export const companyFamilyChildcareFlexibleHoursPath =
+  '/companies/:companyName/family-childcare/flexible-hours';
+
+export const companyFamilyChildcareRemoteWorkPath =
+  '/companies/:companyName/family-childcare/remote-work';
+
 export const companyGenderFriendlyPath =
   '/companies/:companyName/gender-friendly';
 

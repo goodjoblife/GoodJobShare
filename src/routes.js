@@ -3,7 +3,11 @@ import { generatePath } from 'react-router';
 
 import Redirect from 'common/routing/Redirect';
 import {
+  companyFamilyChildcareFamilyCareLeave,
+  companyFamilyChildcareFlexibleHoursPath,
+  companyFamilyChildcareParentalLeavePath,
   companyFamilyChildcarePath,
+  companyFamilyChildcareRemoteWorkPath,
   companyGenderFriendlyPath,
   companyInterviewExperiencesPath,
   companyOverviewLegacyPath,
@@ -17,7 +21,11 @@ import {
   jobTitleSalaryWorkTimesPath,
   jobTitleWorkExperiencesPath,
 } from 'constants/linkTo';
+import CompanyFamilyChildcareFamilyCareLeaveProvider from 'pages/Company/CompanyFamilyChildcareFamilyCareLeaveProvider';
+import CompanyFamilyChildcareFlexibleHoursProvider from 'pages/Company/CompanyFamilyChildcareFlexibleHoursProvider';
+import CompanyFamilyChildcareParentalLeaveProvider from 'pages/Company/CompanyFamilyChildcareParentalLeaveProvider';
 import CompanyFamilyChildcareProvider from 'pages/Company/CompanyFamilyChildcareProvider';
+import CompanyFamilyChildcareRemoteWorkProvider from 'pages/Company/CompanyFamilyChildcareRemoteWorkProvider';
 import CompanyGenderFriendlyProvider from 'pages/Company/CompanyGenderFriendlyProvider';
 import CompanyIndexProvider from 'pages/Company/CompanyIndexProvider';
 import CompanyInterviewExperiencesProvider from 'pages/Company/CompanyInterviewExperiencesProvider';
@@ -160,6 +168,26 @@ const routes = [
       {
         path: companyFamilyChildcarePath,
         component: CompanyFamilyChildcareProvider,
+        exact: true,
+      },
+      {
+        path: companyFamilyChildcareParentalLeavePath,
+        component: CompanyFamilyChildcareParentalLeaveProvider,
+        exact: true,
+      },
+      {
+        path: companyFamilyChildcareFamilyCareLeave,
+        component: CompanyFamilyChildcareFamilyCareLeaveProvider,
+        exact: true,
+      },
+      {
+        path: companyFamilyChildcareFlexibleHoursPath,
+        component: CompanyFamilyChildcareFlexibleHoursProvider,
+        exact: true,
+      },
+      {
+        path: companyFamilyChildcareRemoteWorkPath,
+        component: CompanyFamilyChildcareRemoteWorkProvider,
         exact: true,
       },
       {
