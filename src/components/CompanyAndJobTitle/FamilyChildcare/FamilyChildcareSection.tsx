@@ -1,17 +1,15 @@
 import React from 'react';
 
-import { Heading, Section } from 'common/base';
+import { Section } from 'common/base';
 import Glike from 'common/icons/Glike';
 import { Aspect } from 'constants/companyJobTitle';
 
 import familyCareLeaveIcon from '../familyCareLeaveIcon.svg';
-import LeaveSectionBlock, {
-  LeaveBulletByLabel,
-  LeaveSection,
-} from '../LeaveSectionBlock';
+import { LeaveBulletByLabel, LeaveSection } from '../LeaveSectionBlock';
 import AspectScoreCard from '../Overview/AspectScoreCard';
 import parentalLeaveIcon from '../parentalLeaveIcon.svg';
-import PolicyBarChart, { PolicyDistribution } from '../PolicyBarChart';
+import { PolicyDistribution } from '../PolicyBarChart';
+import PolicySection from '../PolicySection';
 import remoteWorkIcon from '../remoteWorkIcon.svg';
 import styles from './FamilyChildcareSection.module.css';
 
@@ -73,59 +71,45 @@ const FamilyChildcareSection: React.FC<Props> = ({ data }) => (
         <AspectScoreCard aspect={Aspect.GENDER} hasEmptyState />
       </div>
     </div>
-    <div className={styles.section}>
-      <Heading className={styles.sectionTitle} Tag="h2">
-        育嬰假(育嬰留職停薪)
-      </Heading>
-      <LeaveSectionBlock
-        title="育嬰假(育嬰留職停薪)"
-        icon={parentalLeaveIcon}
-        availabilityTitle="是否請得到育嬰假?"
-        availabilityBulletByLabel={parentalLeaveAvailabilityBulletByLabel}
-        complianceTitle="育嬰假法規符合度"
-        complianceBulletByLabel={parentalLeaveComplianceBulletByLabel}
-        section={data.parentalLeave}
-      />
-    </div>
-    <div className={styles.section}>
-      <Heading className={styles.sectionTitle} Tag="h2">
-        家庭照顧假
-      </Heading>
-      <LeaveSectionBlock
-        title="家庭照顧假"
-        icon={familyCareLeaveIcon}
-        availabilityTitle="是否請得到家庭照顧假？"
-        availabilityBulletByLabel={familyCareLeaveAvailabilityBulletByLabel}
-        complianceTitle="家庭照顧假法規符合度"
-        complianceBulletByLabel={familyCareLeaveComplianceBulletByLabel}
-        section={data.familyCareLeave}
-      />
-    </div>
-    <div className={styles.section}>
-      <Heading className={styles.sectionTitle} Tag="h2">
-        彈性上下班時間制度
-      </Heading>
-      <div className={styles.scoreRow}>
-        <PolicyBarChart
-          title="是否有彈性上下班時間制度？"
-          distribution={data.flexibleHours}
-        />
-      </div>
-    </div>
-    <div className={styles.section}>
-      <Heading className={styles.sectionTitle} Tag="h2">
-        遠端工作制度
-      </Heading>
-      <LeaveSectionBlock
-        title="遠端工作制度"
-        icon={remoteWorkIcon}
-        availabilityTitle="是否可以遠端工作？"
-        availabilityBulletByLabel={remoteWorkAvailabilityBulletByLabel}
-        complianceTitle="遠端工作每週天數？"
-        complianceBulletByLabel={remoteWorkFrequencyBulletByLabel}
-        section={data.remoteWork}
-      />
-    </div>
+    <PolicySection
+      className={styles.section}
+      title="育嬰假(育嬰留職停薪)"
+      icon={parentalLeaveIcon}
+      availabilityTitle="是否請得到育嬰假?"
+      availabilityBulletByLabel={parentalLeaveAvailabilityBulletByLabel}
+      complianceTitle="育嬰假法規符合度"
+      complianceBulletByLabel={parentalLeaveComplianceBulletByLabel}
+      section={data.parentalLeave}
+    />
+    <PolicySection
+      className={styles.section}
+      title="家庭照顧假"
+      icon={familyCareLeaveIcon}
+      availabilityTitle="是否請得到家庭照顧假？"
+      availabilityBulletByLabel={familyCareLeaveAvailabilityBulletByLabel}
+      complianceTitle="家庭照顧假法規符合度"
+      complianceBulletByLabel={familyCareLeaveComplianceBulletByLabel}
+      section={data.familyCareLeave}
+    />
+    <PolicySection
+      className={styles.section}
+      title="彈性上下班時間制度"
+      availabilityTitle="是否有彈性上下班時間制度？"
+      section={{
+        dataCount: data.flexibleHours.dataCount,
+        availability: data.flexibleHours,
+      }}
+    />
+    <PolicySection
+      className={styles.section}
+      title="遠端工作制度"
+      icon={remoteWorkIcon}
+      availabilityTitle="是否可以遠端工作？"
+      availabilityBulletByLabel={remoteWorkAvailabilityBulletByLabel}
+      complianceTitle="遠端工作每週天數？"
+      complianceBulletByLabel={remoteWorkFrequencyBulletByLabel}
+      section={data.remoteWork}
+    />
   </Section>
 );
 

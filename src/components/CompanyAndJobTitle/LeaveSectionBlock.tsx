@@ -22,7 +22,7 @@ type LeaveSectionBlockProps = {
   title: string;
   icon?: string;
   availabilityTitle: string;
-  availabilityBulletByLabel: LeaveBulletByLabel;
+  availabilityBulletByLabel?: LeaveBulletByLabel;
   complianceTitle?: string;
   complianceBulletByLabel?: LeaveBulletByLabel;
   section: LeaveSection;
@@ -55,9 +55,13 @@ const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
   section,
   linkTo,
 }) => {
-  const summaryBullets = [
-    majorityBullet(section.availability, availabilityBulletByLabel),
-  ];
+  const summaryBullets: SummaryBullet[] = [];
+
+  if (availabilityBulletByLabel) {
+    summaryBullets.push(
+      majorityBullet(section.availability, availabilityBulletByLabel),
+    );
+  }
 
   if (section.compliance && complianceBulletByLabel) {
     summaryBullets.push(
@@ -67,27 +71,29 @@ const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
 
   return (
     <div className={styles.row}>
-      <Card className={styles.summaryCard}>
-        {icon && <img className={styles.icon} src={icon} alt="" />}
-        <div className={styles.summaryTitle}>{title}</div>
-        <ul className={styles.bullets}>
-          {summaryBullets.map(({ text, icon }) => (
-            <li key={text}>
-              {icon ? (
-                React.cloneElement(icon, { className: styles.likeIcon })
-              ) : (
-                <span className={styles.dash}>–</span>
-              )}
-              {text}
-            </li>
-          ))}
-        </ul>
-        {linkTo && (
-          <Link to={linkTo} className={styles.link}>
-            查看 {section.dataCount} 筆資料 &gt;&gt;
-          </Link>
-        )}
-      </Card>
+      {availabilityBulletByLabel && (
+        <Card className={styles.summaryCard}>
+          {icon && <img className={styles.icon} src={icon} alt="" />}
+          <div className={styles.summaryTitle}>{title}</div>
+          <ul className={styles.bullets}>
+            {summaryBullets.map(({ text, icon }) => (
+              <li key={text}>
+                {icon ? (
+                  React.cloneElement(icon, { className: styles.likeIcon })
+                ) : (
+                  <span className={styles.dash}>–</span>
+                )}
+                {text}
+              </li>
+            ))}
+          </ul>
+          {linkTo && (
+            <Link to={linkTo} className={styles.link}>
+              查看 {section.dataCount} 筆資料 &gt;&gt;
+            </Link>
+          )}
+        </Card>
+      )}
       <PolicyBarChart
         title={availabilityTitle}
         distribution={section.availability}
