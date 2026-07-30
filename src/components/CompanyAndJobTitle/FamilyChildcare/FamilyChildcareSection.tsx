@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Section } from 'common/base';
 import Glike from 'common/icons/Glike';
+import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
 import { Aspect } from 'constants/companyJobTitle';
 
 import familyCareLeaveIcon from '../familyCareLeaveIcon.svg';
@@ -67,8 +68,14 @@ const FamilyChildcareSection: React.FC<Props> = ({ data }) => (
   <Section Tag="main" paddingBottom>
     <div className={styles.section}>
       <div className={styles.scoreRow}>
-        <AspectScoreCard aspect={Aspect.WORK_LIFE_BALANCE} hasEmptyState />
-        <AspectScoreCard aspect={Aspect.GENDER} hasEmptyState />
+        <AspectScoreCard
+          aspect={Aspect.WORK_LIFE_BALANCE}
+          emptyShareLinkTo={generateSharePolicyForm()}
+        />
+        <AspectScoreCard
+          aspect={Aspect.GENDER}
+          emptyShareLinkTo={generateSharePolicyForm()}
+        />
       </div>
     </div>
     <PolicySection

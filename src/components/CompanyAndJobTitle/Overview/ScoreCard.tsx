@@ -4,7 +4,6 @@ import React from 'react';
 
 import ButtonImpl from 'common/button/Button';
 import Card from 'common/Card';
-import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
 
 import AbstractView from './AbstractView';
 import emptyDataAspectImage from './empty_data_aspect.svg';
@@ -24,10 +23,13 @@ export interface ScoreCardProps {
   maxValue: number;
   linkTo: string;
   dataCount: number;
-  hasEmptyState?: boolean;
+  emptyShareLinkTo?: LocationDescriptor;
 }
 
-const EmptyScoreCard: React.FC<{ title: string }> = ({ title }) => (
+const EmptyScoreCard: React.FC<{
+  title: string;
+  shareLinkTo: LocationDescriptor;
+}> = ({ title, shareLinkTo }) => (
   <Card className={cn(styles.card, styles.scoreCard, styles.emptyScoreCard)}>
     <span className={styles.emptyScoreCardTitle}>{title}</span>
     <img
@@ -36,7 +38,7 @@ const EmptyScoreCard: React.FC<{ title: string }> = ({ title }) => (
       alt="資料不足"
     />
     <span className={styles.emptyScoreCardText}>資料不足</span>
-    <Button circleSize="lg" btnStyle="yellow" to={generateSharePolicyForm()}>
+    <Button circleSize="lg" btnStyle="yellow" to={shareLinkTo}>
       立即分享
     </Button>
   </Card>
@@ -48,10 +50,12 @@ const ScoreCard: React.FC<ScoreCardProps> = ({
   maxValue,
   linkTo,
   dataCount,
-  hasEmptyState,
+  emptyShareLinkTo,
 }) => {
   if (dataCount === 0) {
-    return hasEmptyState ? <EmptyScoreCard title={title} /> : null;
+    return emptyShareLinkTo ? (
+      <EmptyScoreCard title={title} shareLinkTo={emptyShareLinkTo} />
+    ) : null;
   }
   return (
     <Card className={cn(styles.card, styles.scoreCard)}>
