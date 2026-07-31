@@ -1,15 +1,19 @@
 import React from 'react';
 
 import { Heading, Section } from 'common/base';
+import Glike from 'common/icons/Glike';
+import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
 import { Aspect } from 'constants/companyJobTitle';
 
-import LeaveSectionBlock, { LeaveSection } from '../LeaveSectionBlock';
+import { LeaveBulletByLabel, LeaveSection } from '../LeaveSectionBlock';
+import menstrualLeaveIcon from '../menstrualLeaveIcon.png';
+import AspectScoreCard from '../Overview/AspectScoreCard';
+import PolicySection from '../PolicySection';
 import FemaleManagerCard from './FemaleManagerCard';
 import styles from './GenderFriendly.module.css';
 import GenderPayComparisonBlock, {
   GenderPayComparisonData,
 } from './GenderPayComparisonBlock';
-import AspectScoreCard from '../Overview/AspectScoreCard';
 
 export type GenderFriendlyData = {
   menstrualLeave: LeaveSection;
@@ -26,6 +30,19 @@ type GenderFriendlyProps = {
   femaleManagerStatisticsItem: FemaleManagerItem | null;
 };
 
+const menstrualLeaveAvailabilityBulletByLabel: LeaveBulletByLabel = {
+  是: { text: '請得到生理假', icon: <Glike /> },
+  否: '請不到生理假',
+  不知道: '不確定是否請得到生理假',
+};
+
+const menstrualLeaveComplianceBulletByLabel: LeaveBulletByLabel = {
+  符合勞基法: { text: '生理假符合勞基法', icon: <Glike /> },
+  優於勞基法: { text: '生理假優於勞基法', icon: <Glike /> },
+  不符合勞基法: '生理假不符合勞基法',
+  不知道: '不確定生理假是否符合勞基法',
+};
+
 const GenderFriendly: React.FC<GenderFriendlyProps> = ({
   data,
   femaleManagerStatisticsItem,
@@ -36,18 +53,25 @@ const GenderFriendly: React.FC<GenderFriendlyProps> = ({
         性別友善
       </Heading>
       <div className={styles.scoreRow}>
-        <AspectScoreCard aspect={Aspect.GENDER} hasEmptyState />
+        <AspectScoreCard
+          aspect={Aspect.GENDER}
+          emptyShareLinkTo={generateSharePolicyForm()}
+        />
         {femaleManagerStatisticsItem && (
           <FemaleManagerCard item={femaleManagerStatisticsItem} />
         )}
       </div>
     </div>
-    <div className={styles.section}>
-      <Heading className={styles.sectionTitle} Tag="h2">
-        {data.menstrualLeave.title}
-      </Heading>
-      <LeaveSectionBlock section={data.menstrualLeave} />
-    </div>
+    <PolicySection
+      className={styles.section}
+      title="生理假"
+      icon={menstrualLeaveIcon}
+      availabilityTitle="是否請得到生理假"
+      availabilityBulletByLabel={menstrualLeaveAvailabilityBulletByLabel}
+      complianceTitle="生理假法規符合度"
+      complianceBulletByLabel={menstrualLeaveComplianceBulletByLabel}
+      section={data.menstrualLeave}
+    />
     <div className={styles.section}>
       <Heading className={styles.sectionTitle} Tag="h2">
         同職位男女薪資比較
