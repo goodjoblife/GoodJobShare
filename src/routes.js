@@ -3,6 +3,7 @@ import { generatePath } from 'react-router';
 
 import Redirect from 'common/routing/Redirect';
 import {
+  companyFamilyChildcarePath,
   companyInterviewExperiencesPath,
   companyOverviewLegacyPath,
   companyOverviewPath,
@@ -15,6 +16,7 @@ import {
   jobTitleSalaryWorkTimesPath,
   jobTitleWorkExperiencesPath,
 } from 'constants/linkTo';
+import CompanyFamilyChildcareProvider from 'pages/Company/CompanyFamilyChildcareProvider';
 import CompanyIndexProvider from 'pages/Company/CompanyIndexProvider';
 import CompanyInterviewExperiencesProvider from 'pages/Company/CompanyInterviewExperiencesProvider';
 import CompanyOverviewProvider from 'pages/Company/CompanyOverviewProvider';
@@ -151,6 +153,11 @@ const routes = [
       {
         path: companyWorkExperiencesAspectPath,
         component: CompanyWorkExperiencesAspectProvider,
+        exact: true,
+      },
+      {
+        path: companyFamilyChildcarePath,
+        component: CompanyFamilyChildcareProvider,
         exact: true,
       },
       {

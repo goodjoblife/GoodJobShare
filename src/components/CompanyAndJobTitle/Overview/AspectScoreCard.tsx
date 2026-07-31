@@ -1,3 +1,4 @@
+import { LocationDescriptor } from 'history';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { generatePath } from 'react-router';
@@ -19,6 +20,13 @@ const useAllAspectRatingStatistics = (
   );
   if (!isFetched(box) || !box.data) return [];
   return box.data.companyAspectRatingStatistics;
+};
+
+const useIsAspectStatisticsFetched = (companyName: string): boolean => {
+  const box = useSelector(
+    companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
+  );
+  return isFetched(box);
 };
 
 const useAspectData = ({
@@ -44,19 +52,28 @@ export const useAspectsData = (
 
 interface AspectScoreCardProps {
   aspect: Aspect;
+  emptyShareLinkTo?: LocationDescriptor;
 }
 
-const AspectScoreCard: React.FC<AspectScoreCardProps> = ({ aspect }) => {
+const AspectScoreCard: React.FC<AspectScoreCardProps> = ({
+  aspect,
+  emptyShareLinkTo,
+}) => {
   const companyName = useCompanyName();
   const path = generatePath(companyWorkExperiencesAspectPath, {
     companyName,
     aspect,
   });
 
+  const isFetched = useIsAspectStatisticsFetched(companyName);
   const data = useAspectData({ companyName, aspect });
-  if (!data) return null;
+  if (!isFetched) return null;
+  if (!data && !emptyShareLinkTo) return null;
 
-  const { averageRating, ratingCount } = data;
+  const { averageRating, ratingCount } = data || {
+    averageRating: 0,
+    ratingCount: 0,
+  };
   return (
     <ScoreCard
       title={aspect}
@@ -64,6 +81,7 @@ const AspectScoreCard: React.FC<AspectScoreCardProps> = ({ aspect }) => {
       maxValue={5}
       linkTo={path}
       dataCount={ratingCount}
+      emptyShareLinkTo={emptyShareLinkTo}
     />
   );
 };

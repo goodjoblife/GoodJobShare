@@ -14,6 +14,9 @@ export const companySalaryWorkTimesPath =
 export const companyWorkExperiencesAspectPath =
   '/companies/:companyName/work-experiences/:aspect';
 
+export const companyFamilyChildcarePath =
+  '/companies/:companyName/family-childcare';
+
 export const jobTitleOverviewPath = '/job-titles/:jobTitle';
 
 export const jobTitleOverviewLegacyPath = '/job-titles/:jobTitle/overview';

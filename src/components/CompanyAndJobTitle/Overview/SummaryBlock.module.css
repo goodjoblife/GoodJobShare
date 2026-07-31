@@ -60,6 +60,37 @@
   }
 }
 
+.emptyScoreCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.emptyScoreCardTitle {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.61;
+  color: #333;
+}
+
+.emptyScoreCardImage {
+  width: 48px;
+  height: 48px;
+  margin-top: 20px;
+}
+
+.emptyScoreCardText {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #969696;
+}
+
+.emptyScoreCardText + a {
+  margin-top: 20px;
+}
+
 .abstractView {
   position: relative;
   display: flex;
