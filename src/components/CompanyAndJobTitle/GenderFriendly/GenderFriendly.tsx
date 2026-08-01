@@ -59,6 +59,7 @@ const GenderFriendly: React.FC<GenderFriendlyProps> = ({
         />
         {femaleManagerStatisticsItem && (
           <EsgItemBlock
+            className={styles.femaleManagerCard}
             title="管理職女性主管佔比"
             year={femaleManagerStatisticsItem.year}
             value={femaleManagerStatisticsItem.percentage * 100}

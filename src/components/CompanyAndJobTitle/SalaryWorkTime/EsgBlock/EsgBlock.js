@@ -19,7 +19,7 @@ export const EsgItemBlock = ({
   valueCompared,
   unit,
 }) => (
-  <Card className={className}>
+  <Card className={cn(styles.itemCard, className)}>
     <div className={styles.badge}>{year} 年</div>
     <div className={styles.titleContainer}>
       <div className={styles.title}>{title}</div>
