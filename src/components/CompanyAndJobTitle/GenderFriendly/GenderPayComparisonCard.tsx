@@ -26,7 +26,7 @@ const GenderPayComparisonCard: React.FC<Props> = ({ data }) => {
   );
 
   return (
-    <Card className={styles.card}>
+    <React.Fragment>
       <form
         className={styles.searchbar}
         onSubmit={(e: React.FormEvent): void => e.preventDefault()}
@@ -44,9 +44,11 @@ const GenderPayComparisonCard: React.FC<Props> = ({ data }) => {
           <Magnifiner />
         </button>
       </form>
-      <GenderPayBarChart items={filteredItems} />
-      <div className={styles.footer}>平均月薪</div>
-    </Card>
+      <Card className={styles.card}>
+        <GenderPayBarChart items={filteredItems} />
+        <div className={styles.footer}>平均月薪</div>
+      </Card>
+    </React.Fragment>
   );
 };
 

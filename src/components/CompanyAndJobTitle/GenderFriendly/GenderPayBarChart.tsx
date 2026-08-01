@@ -23,15 +23,24 @@ const formatWage = (v: number): string => v.toLocaleString();
 type BarLabelProps = {
   x?: number;
   y?: number;
+  width?: number;
   height?: number;
 };
 
-const renderInsideLabel = (text: string) => ({
+const renderCenteredLabel = (text: string) => ({
   x = 0,
   y = 0,
+  width = 0,
   height = 0,
 }: BarLabelProps): React.ReactElement<SVGElement> => (
-  <text x={x + 8} y={y + height / 2} dy={4} fill="#333" fontSize={13}>
+  <text
+    x={x + width / 2}
+    y={y + height / 2}
+    dy={4}
+    textAnchor="middle"
+    fill="#333"
+    fontSize={13}
+  >
     {text}
   </text>
 );
@@ -75,14 +84,13 @@ const GenderPayBarChart: React.FC<Props> = ({ items }) => {
           dataKey="femaleAvg"
           fill="#fcd406"
           barSize={BAR_SIZE}
-          label={renderInsideLabel('女')}
+          label={renderCenteredLabel('女')}
         />
         <Bar
           dataKey="maleAvg"
-          fill="#ffffff"
-          stroke="#e0e0e0"
+          fill="#fcd406"
           barSize={BAR_SIZE}
-          label={renderInsideLabel('男')}
+          label={renderCenteredLabel('男')}
         />
       </BarChart>
     </ResponsiveContainer>
