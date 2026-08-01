@@ -2,28 +2,38 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { queryRatingStatistics } from 'actions/company';
+import Glike from 'common/icons/Glike';
 import { paramsSelector } from 'common/routing/selectors';
 import familyCareLeaveIcon from 'components/CompanyAndJobTitle/familyCareLeaveIcon.svg';
 import LeavePolicySection, {
   LeavePolicyRecord,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
-import { LeaveSection } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
+import {
+  LeaveBulletByLabel,
+  LeaveSection,
+} from 'components/CompanyAndJobTitle/LeaveSectionBlock';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
 import { ServerSideRender } from 'types/serverSideRender';
 
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 
+const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
+  是: { text: '請得到家庭照顧假', icon: <Glike /> },
+  否: '請不到家庭照顧假',
+  不知道: '不確定是否請得到家庭照顧假',
+};
+
+const COMPLIANCE_BULLET_BY_LABEL: LeaveBulletByLabel = {
+  符合勞基法: { text: '家庭照顧假符合勞基法', icon: <Glike /> },
+  優於勞基法: { text: '家庭照顧假優於勞基法', icon: <Glike /> },
+  不符合勞基法: '家庭照顧假不符合勞基法',
+  不知道: '不確定家庭照顧假是否符合勞基法',
+};
+
 const SECTION: LeaveSection = {
-  title: '家庭照顧假',
-  icon: familyCareLeaveIcon,
-  summaryBullets: [
-    '請不到家庭照顧假 (50筆)',
-    '家庭照顧假不清楚是否符合勞基法 (40筆)',
-  ],
   dataCount: 100,
   availability: {
-    title: '是否請得到家庭照顧假？',
     dataCount: 100,
     items: [
       { label: '是', percentage: 15 },
@@ -32,7 +42,6 @@ const SECTION: LeaveSection = {
     ],
   },
   compliance: {
-    title: '家庭照顧假法規符合度',
     dataCount: 100,
     items: [
       { label: '符合勞基法', percentage: 5 },
@@ -87,6 +96,12 @@ const CompanyFamilyChildcareFamilyCareLeaveProvider: React.FC &
       pageType={PageType.COMPANY}
       pageName={companyName}
       tabType={TabType.FAMILY_CHILDCARE}
+      title="家庭照顧假"
+      icon={familyCareLeaveIcon}
+      availabilityTitle="是否請得到家庭照顧假？"
+      availabilityBulletByLabel={AVAILABILITY_BULLET_BY_LABEL}
+      complianceTitle="家庭照顧假法規符合度"
+      complianceBulletByLabel={COMPLIANCE_BULLET_BY_LABEL}
       section={SECTION}
       availabilityColumnTitle="是否請得到家庭照顧假"
       complianceColumnTitle="勞基法符合度"

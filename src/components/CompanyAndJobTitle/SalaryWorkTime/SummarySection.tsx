@@ -1,13 +1,24 @@
 import cn from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 
+import {
+  JobAverageSalary,
+  OvertimeFrequencyCount,
+  SalaryDistributionBin,
+} from 'apis/salaryWorkTime';
 import { Heading } from 'common/base';
 
 import styles from '../Overview/Overview.module.css';
 import SummaryBlock from '../Overview/SummaryBlock';
 
-const SummarySection = ({
+type Props = {
+  salaryDistribution?: SalaryDistributionBin[];
+  jobAverageSalaries?: JobAverageSalary[];
+  averageWeekWorkTime: number;
+  overtimeFrequencyCount: OvertimeFrequencyCount | null;
+};
+
+const SummarySection: React.FC<Props> = ({
   salaryDistribution,
   jobAverageSalaries,
   averageWeekWorkTime,
@@ -26,13 +37,6 @@ const SummarySection = ({
       />
     </div>
   );
-};
-
-SummarySection.propTypes = {
-  averageWeekWorkTime: PropTypes.number.isRequired,
-  jobAverageSalaries: PropTypes.array,
-  overtimeFrequencyCount: PropTypes.object.isRequired,
-  salaryDistribution: PropTypes.array,
 };
 
 export default SummarySection;

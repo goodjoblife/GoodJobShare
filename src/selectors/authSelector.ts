@@ -1,4 +1,4 @@
-import AuthStatus from 'constants/authStatus';
+import { AuthStatus } from 'constants/authStatus';
 import { RootState } from 'reducers';
 import { User } from 'reducers/auth';
 

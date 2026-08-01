@@ -27,7 +27,7 @@ For API-specific rules see [apis.md](apis.md).
 
 ## Enums
 
-Use for discrete string-valued constant groups that need to be used as both values and types:
+Use for discrete string-valued constant groups that need to be used as both values and types. Always a named export (never `export default`); keys are `SCREAMING_SNAKE_CASE` regardless of the source's original casing, values are left as-is:
 
 ```ts
 export enum Aspect {
@@ -35,6 +35,19 @@ export enum Aspect {
   WORK_LIFE_BALANCE = '工作與生活平衡',
   ...
 }
+```
+
+When an enum's values must match a GraphQL enum, mirror it exactly and mark the sync point with a comment referencing the schema type name, e.g. `// Must be the same as graphql schema (EmploymentType)`.
+
+### Translation / lookup maps
+
+Pair an enum with a `camelCase` `Record<Enum, string>` named `<enumName>Translation` (not the enum's own name):
+
+```ts
+export const employmentTypeTranslation: Record<EmploymentType, string> = {
+  [EmploymentType.FULL_TIME]: '全職',
+  ...
+};
 ```
 
 ## Nullable fields

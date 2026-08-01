@@ -6,11 +6,8 @@ import {
   queryRatingStatistics,
 } from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
-import familyCareLeaveIcon from 'components/CompanyAndJobTitle/familyCareLeaveIcon.svg';
 import FamilyChildcare from 'components/CompanyAndJobTitle/FamilyChildcare';
-import { FamilyChildcareData } from 'components/CompanyAndJobTitle/FamilyChildcare/FamilyChildcare';
-import parentalLeaveIcon from 'components/CompanyAndJobTitle/parentalLeaveIcon.svg';
-import remoteWorkIcon from 'components/CompanyAndJobTitle/remoteWorkIcon.svg';
+import { FamilyChildcareData } from 'components/CompanyAndJobTitle/FamilyChildcare/FamilyChildcareSection';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
 
@@ -18,15 +15,8 @@ import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 const HARDCODED_DATA: FamilyChildcareData = {
   parentalLeave: {
-    title: '育嬰假(育嬰留職停薪)',
-    icon: parentalLeaveIcon,
-    summaryBullets: [
-      '請得到育嬰假 (60筆)',
-      { text: '育嬰假優於勞基法 (50筆)', icon: 'like' },
-    ],
     dataCount: 200,
     availability: {
-      title: '是否請得到育嬰假?',
       dataCount: 100,
       items: [
         { label: '是', percentage: 15 },
@@ -35,7 +25,6 @@ const HARDCODED_DATA: FamilyChildcareData = {
       ],
     },
     compliance: {
-      title: '育嬰假法規符合度',
       dataCount: 100,
       items: [
         { label: '符合勞基法', percentage: 5 },
@@ -46,15 +35,8 @@ const HARDCODED_DATA: FamilyChildcareData = {
     },
   },
   familyCareLeave: {
-    title: '家庭照顧假',
-    icon: familyCareLeaveIcon,
-    summaryBullets: [
-      '請不到家庭照顧假 (50筆)',
-      '家庭照顧假不清楚是否符合勞基法 (40筆)',
-    ],
     dataCount: 100,
     availability: {
-      title: '是否請得到家庭照顧假？',
       dataCount: 100,
       items: [
         { label: '是', percentage: 15 },
@@ -63,7 +45,6 @@ const HARDCODED_DATA: FamilyChildcareData = {
       ],
     },
     compliance: {
-      title: '家庭照顧假法規符合度',
       dataCount: 100,
       items: [
         { label: '符合勞基法', percentage: 5 },
@@ -74,7 +55,6 @@ const HARDCODED_DATA: FamilyChildcareData = {
     },
   },
   flexibleHours: {
-    title: '是否有彈性上下班時間制度？',
     dataCount: 100,
     items: [
       { label: '是', percentage: 15 },
@@ -83,12 +63,8 @@ const HARDCODED_DATA: FamilyChildcareData = {
     ],
   },
   remoteWork: {
-    title: '遠端工作制度',
-    icon: remoteWorkIcon,
-    summaryBullets: ['有遠端工作制度 (100筆)', '每週遠端工作 1 天 (80筆)'],
     dataCount: 150,
     availability: {
-      title: '是否可以遠端工作？',
       dataCount: 100,
       items: [
         { label: '是', percentage: 15 },
@@ -97,7 +73,6 @@ const HARDCODED_DATA: FamilyChildcareData = {
       ],
     },
     compliance: {
-      title: '遠端工作每週天數？',
       dataCount: 100,
       items: [
         { label: '1天', percentage: 5 },

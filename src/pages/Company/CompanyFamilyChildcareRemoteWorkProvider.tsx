@@ -6,7 +6,10 @@ import { paramsSelector } from 'common/routing/selectors';
 import LeavePolicySection, {
   LeavePolicyRecord,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
-import { LeaveSection } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
+import {
+  LeaveBulletByLabel,
+  LeaveSection,
+} from 'components/CompanyAndJobTitle/LeaveSectionBlock';
 import remoteWorkIcon from 'components/CompanyAndJobTitle/remoteWorkIcon.svg';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
@@ -14,13 +17,22 @@ import { ServerSideRender } from 'types/serverSideRender';
 
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 
+const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
+  是: '有遠端工作制度',
+  否: '無遠端工作制度',
+  不知道: '不確定是否有遠端工作制度',
+};
+
+const COMPLIANCE_BULLET_BY_LABEL: LeaveBulletByLabel = {
+  '1天': '每週遠端工作 1 天',
+  '2天': '每週遠端工作 2 天',
+  '3天': '每週遠端工作 3 天',
+  大於3天: '每週遠端工作超過 3 天',
+};
+
 const SECTION: LeaveSection = {
-  title: '遠端工作制度',
-  icon: remoteWorkIcon,
-  summaryBullets: ['有遠端工作制度 (100筆)', '每週遠端工作 1 天 (80筆)'],
   dataCount: 150,
   availability: {
-    title: '是否可以遠端工作？',
     dataCount: 100,
     items: [
       { label: '是', percentage: 15 },
@@ -29,7 +41,6 @@ const SECTION: LeaveSection = {
     ],
   },
   compliance: {
-    title: '遠端工作每週天數？',
     dataCount: 100,
     items: [
       { label: '1天', percentage: 5 },
@@ -84,6 +95,12 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
       pageType={PageType.COMPANY}
       pageName={companyName}
       tabType={TabType.FAMILY_CHILDCARE}
+      title="遠端工作制度"
+      icon={remoteWorkIcon}
+      availabilityTitle="是否可以遠端工作？"
+      availabilityBulletByLabel={AVAILABILITY_BULLET_BY_LABEL}
+      complianceTitle="遠端工作每週天數？"
+      complianceBulletByLabel={COMPLIANCE_BULLET_BY_LABEL}
       section={SECTION}
       availabilityColumnTitle="是否可以遠端工作"
       complianceColumnTitle="每週遠端工作天數"

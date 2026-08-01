@@ -2,25 +2,38 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { queryRatingStatistics } from 'actions/company';
+import Glike from 'common/icons/Glike';
 import { paramsSelector } from 'common/routing/selectors';
 import LeavePolicySection, {
   LeavePolicyRecord,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
-import { LeaveSection } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
-import menstrualLeaveIcon from 'components/CompanyAndJobTitle/menstrualLeaveIcon.png';
+import {
+  LeaveBulletByLabel,
+  LeaveSection,
+} from 'components/CompanyAndJobTitle/LeaveSectionBlock';
+import menstrualLeaveIcon from 'components/CompanyAndJobTitle/menstrualLeaveIcon.svg';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
 import { ServerSideRender } from 'types/serverSideRender';
 
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 
+const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
+  是: { text: '請得到生理假', icon: <Glike /> },
+  否: '請不到生理假',
+  不知道: '不確定是否請得到生理假',
+};
+
+const COMPLIANCE_BULLET_BY_LABEL: LeaveBulletByLabel = {
+  符合勞基法: { text: '生理假符合勞基法', icon: <Glike /> },
+  優於勞基法: { text: '生理假優於勞基法', icon: <Glike /> },
+  不符合勞基法: '生理假不符合勞基法',
+  不知道: '不確定生理假是否符合勞基法',
+};
+
 const SECTION: LeaveSection = {
-  title: '生理假',
-  icon: menstrualLeaveIcon,
-  summaryBullets: ['請不到生理假 (80筆)', '生理假不符合勞基法 (60筆)'],
   dataCount: 100,
   availability: {
-    title: '是否請得到生理假',
     dataCount: 100,
     items: [
       { label: '是', percentage: 15 },
@@ -29,7 +42,6 @@ const SECTION: LeaveSection = {
     ],
   },
   compliance: {
-    title: '生理假法規符合度',
     dataCount: 100,
     items: [
       { label: '符合勞基法', percentage: 5 },
@@ -84,6 +96,12 @@ const CompanyGenderFriendlyMenstrualLeaveProvider: React.FC &
       pageType={PageType.COMPANY}
       pageName={companyName}
       tabType={TabType.GENDER_FRIENDLY}
+      title="生理假"
+      icon={menstrualLeaveIcon}
+      availabilityTitle="是否請得到生理假"
+      availabilityBulletByLabel={AVAILABILITY_BULLET_BY_LABEL}
+      complianceTitle="生理假法規符合度"
+      complianceBulletByLabel={COMPLIANCE_BULLET_BY_LABEL}
       section={SECTION}
       availabilityColumnTitle="是否請得到生理假"
       complianceColumnTitle="勞基法符合度"

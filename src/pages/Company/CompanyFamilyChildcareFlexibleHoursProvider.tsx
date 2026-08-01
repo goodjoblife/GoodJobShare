@@ -14,11 +14,8 @@ import { ServerSideRender } from 'types/serverSideRender';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 const SECTION: LeaveSection = {
-  title: '彈性上下班時間制度',
-  summaryBullets: [],
   dataCount: 100,
   availability: {
-    title: '是否有彈性上下班時間制度？',
     dataCount: 100,
     items: [
       { label: '是', percentage: 15 },
@@ -70,6 +67,8 @@ const CompanyFamilyChildcareFlexibleHoursProvider: React.FC &
       pageType={PageType.COMPANY}
       pageName={companyName}
       tabType={TabType.FAMILY_CHILDCARE}
+      title="彈性上下班時間制度"
+      availabilityTitle="是否有彈性上下班時間制度？"
       section={SECTION}
       availabilityColumnTitle="是否有彈性上下班時間制度"
       filterOptions={FILTER_OPTIONS}

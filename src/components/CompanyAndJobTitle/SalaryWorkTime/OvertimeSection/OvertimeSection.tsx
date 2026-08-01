@@ -1,11 +1,16 @@
 import cn from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
+
+import { OvertimeStats } from 'apis/salaryWorkTime';
 
 import OvertimeBlock from './OvertimeBlock';
 import styles from '../WorkingHourBlock.module.css';
 
-const OvertimeSection = ({ statistics }) => {
+type Props = {
+  statistics: OvertimeStats;
+};
+
+const OvertimeSection: React.FC<Props> = ({ statistics }) => {
   return (
     <section className={styles.container}>
       <div className={cn(styles.content, styles.expanded)}>
@@ -27,10 +32,6 @@ const OvertimeSection = ({ statistics }) => {
       </div>
     </section>
   );
-};
-
-OvertimeSection.propTypes = {
-  statistics: PropTypes.object.isRequired,
 };
 
 export default OvertimeSection;

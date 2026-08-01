@@ -22,11 +22,15 @@ import {
 } from 'apis/overview';
 import { CompanyInIndex } from 'apis/queryCompanies';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
+import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import {
+  DataTimeRange,
+  ExperienceInYearRange,
   JobAverageSalary,
   OvertimeFrequencyCount,
+  OvertimeStats,
   SalaryWorkTime,
 } from 'apis/salaryWorkTime';
 import { Aspect } from 'constants/companyJobTitle';
@@ -51,11 +55,18 @@ export type CompanyOverviewStatistics = {
   overtimeFrequencyCount: OvertimeFrequencyCount | null;
 };
 
-// TODO: replace with proper CompanySalaryWorkTimeResult type
-export type CompanySalaryWorkTimeResult = unknown;
-
-// TODO: replace with proper CompanySalaryWorkTimeStatistics type
-export type CompanySalaryWorkTimeStatistics = unknown;
+export type CompanySalaryWorkTimeResult = {
+  name: string;
+  jobTitle: string | undefined;
+  start: number;
+  limit: number;
+  dataTimeRange: DataTimeRange | undefined;
+  experienceInYearRange: ExperienceInYearRange | undefined;
+  gender: string | undefined;
+  sortBy: string | undefined;
+  salaryWorkTimes: SalaryWorkTime[];
+  salaryWorkTimesCount: number;
+};
 
 // TODO: replace with proper CompanyInterviewExperienceResult type
 export type CompanyInterviewExperienceResult = unknown;
@@ -81,9 +92,6 @@ export type CompanyAspectExperienceResult = {
   workExperiencesCount: number;
 };
 
-// TODO: replace with proper CompanyIsSubscribed type
-export type CompanyIsSubscribed = unknown;
-
 type State = {
   indexesByPage: Record<number, FetchBox<CompanyInIndex[]>>;
   indexCountBox: FetchBox<number>;
@@ -97,10 +105,7 @@ type State = {
     string,
     FetchBox<CompanySalaryWorkTimeResult | null>
   >;
-  timeAndSalaryStatisticsByName: Record<
-    string,
-    FetchBox<CompanySalaryWorkTimeStatistics | null>
-  >;
+  timeAndSalaryStatisticsByName: Record<string, FetchBox<OvertimeStats | null>>;
   interviewExperiencesByName: Record<
     string,
     FetchBox<CompanyInterviewExperienceResult | null>
@@ -117,7 +122,7 @@ type State = {
     string,
     FetchBox<CompanyAspectExperienceResult | null>
   >;
-  isSubscribedByName: Record<string, FetchBox<CompanyIsSubscribed | null>>;
+  isSubscribedByName: Record<string, FetchBox<CompanyIsSubscribed>>;
   topNJobTitlesByName: Record<string, FetchBox<TopNJobTitles | null>>;
   esgSalaryData: Record<string, FetchBox<ESGSalaryData | null>>;
 };
@@ -230,7 +235,7 @@ const reducer = createReducer(preloadedState, {
       box,
     }: {
       companyName: string;
-      box: FetchBox<CompanySalaryWorkTimeStatistics | null>;
+      box: FetchBox<OvertimeStats | null>;
     },
   ) => {
     return {
@@ -348,7 +353,7 @@ const reducer = createReducer(preloadedState, {
     {
       companyName,
       box,
-    }: { companyName: string; box: FetchBox<CompanyIsSubscribed | null> },
+    }: { companyName: string; box: FetchBox<CompanyIsSubscribed> },
   ) => {
     return {
       ...state,

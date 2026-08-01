@@ -13,7 +13,10 @@ import {
 } from 'constants/companyJobTitle';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import LeaveSectionBlock, { LeaveSection } from '../LeaveSectionBlock';
+import LeaveSectionBlock, {
+  LeaveBulletByLabel,
+  LeaveSection,
+} from '../LeaveSectionBlock';
 import styles from './styles.module.css';
 
 export type LeavePolicyRecord = {
@@ -45,6 +48,12 @@ type Props = {
   pageType: PageType;
   pageName: string;
   tabType: TabType;
+  title: string;
+  icon?: string;
+  availabilityTitle: string;
+  availabilityBulletByLabel?: LeaveBulletByLabel;
+  complianceTitle?: string;
+  complianceBulletByLabel?: LeaveBulletByLabel;
   section: LeaveSection;
   availabilityColumnTitle: string;
   complianceColumnTitle?: string;
@@ -58,6 +67,12 @@ const LeavePolicySection: React.FC<Props> = ({
   pageType,
   pageName,
   tabType,
+  title,
+  icon,
+  availabilityTitle,
+  availabilityBulletByLabel,
+  complianceTitle,
+  complianceBulletByLabel,
   section,
   availabilityColumnTitle,
   complianceColumnTitle,
@@ -115,8 +130,16 @@ const LeavePolicySection: React.FC<Props> = ({
     >
       <Wrapper size="l">
         <Link to={parentPath}>&lt;&lt;回到{tabName}分頁</Link>
-        <Heading className={styles.title}>{section.title}</Heading>
-        <LeaveSectionBlock section={section} />
+        <Heading className={styles.title}>{title}</Heading>
+        <LeaveSectionBlock
+          title={title}
+          icon={icon}
+          availabilityTitle={availabilityTitle}
+          availabilityBulletByLabel={availabilityBulletByLabel}
+          complianceTitle={complianceTitle}
+          complianceBulletByLabel={complianceBulletByLabel}
+          section={section}
+        />
       </Wrapper>
       <Wrapper size="m">
         <div className={styles.filter}>
