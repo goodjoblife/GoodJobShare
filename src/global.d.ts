@@ -8,11 +8,6 @@ declare module '*.svg' {
   export default content;
 }
 
-declare module '*.png' {
-  const content: string;
-  export default content;
-}
-
 declare module '@fortawesome/react-fontawesome' {
   const FontAwesomeIcon: React.ComponentType<{ icon: unknown }>;
   export default FontAwesomeIcon;

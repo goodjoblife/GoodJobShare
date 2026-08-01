@@ -6,7 +6,7 @@ import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
 import { Aspect } from 'constants/companyJobTitle';
 
 import { LeaveBulletByLabel, LeaveSection } from '../LeaveSectionBlock';
-import menstrualLeaveIcon from '../menstrualLeaveIcon.png';
+import menstrualLeaveIcon from '../menstrualLeaveIcon.svg';
 import AspectScoreCard from '../Overview/AspectScoreCard';
 import PolicySection from '../PolicySection';
 import FemaleManagerCard from './FemaleManagerCard';
