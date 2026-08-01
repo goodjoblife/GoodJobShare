@@ -11,9 +11,9 @@ import AspectScoreCard from '../Overview/AspectScoreCard';
 import PolicySection from '../PolicySection';
 import FemaleManagerCard from './FemaleManagerCard';
 import styles from './GenderFriendly.module.css';
-import GenderPayComparisonBlock, {
+import GenderPayComparisonCard, {
   GenderPayComparisonData,
-} from './GenderPayComparisonBlock';
+} from './GenderPayComparisonCard';
 
 export type GenderFriendlyData = {
   menstrualLeave: LeaveSection;
@@ -76,7 +76,7 @@ const GenderFriendly: React.FC<GenderFriendlyProps> = ({
       <Heading className={styles.sectionTitle} Tag="h2">
         同職位男女薪資比較
       </Heading>
-      <GenderPayComparisonBlock data={data.genderPayComparison} />
+      <GenderPayComparisonCard data={data.genderPayComparison} />
     </div>
   </Section>
 );

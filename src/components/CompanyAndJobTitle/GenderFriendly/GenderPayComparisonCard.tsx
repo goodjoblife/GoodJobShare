@@ -10,7 +10,7 @@ import {
 
 import Card from 'common/Card';
 
-import styles from './GenderPayComparisonBlock.module.css';
+import styles from './GenderPayComparisonCard.module.css';
 
 export type GenderPayItem = {
   jobTitle: string;
@@ -26,7 +26,7 @@ type Props = {
   data: GenderPayComparisonData;
 };
 
-const GenderPayComparisonBlock: React.FC<Props> = ({ data }) => (
+const GenderPayComparisonCard: React.FC<Props> = ({ data }) => (
   <Card className={styles.card}>
     <ResponsiveContainer
       width="100%"
@@ -62,4 +62,4 @@ const GenderPayComparisonBlock: React.FC<Props> = ({ data }) => (
   </Card>
 );
 
-export default GenderPayComparisonBlock;
+export default GenderPayComparisonCard;
