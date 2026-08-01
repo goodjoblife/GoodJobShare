@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
 export type GenderPayItem = {
   jobTitle: string;
@@ -64,7 +57,6 @@ const GenderPayBarChart: React.FC<Props> = ({ items }) => {
         barGap={BAR_GAP}
         barCategoryGap={CATEGORY_GAP}
       >
-        <CartesianGrid horizontal={false} stroke="#eee" />
         <XAxis
           type="number"
           tickFormatter={formatWage}
@@ -76,7 +68,7 @@ const GenderPayBarChart: React.FC<Props> = ({ items }) => {
           type="category"
           dataKey="jobTitle"
           width={100}
-          axisLine={false}
+          axisLine={{ stroke: '#e0e0e0' }}
           tickLine={false}
           tick={{ fill: '#333', fontSize: '13px' }}
         />
