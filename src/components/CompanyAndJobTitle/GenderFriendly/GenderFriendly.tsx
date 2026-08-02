@@ -7,13 +7,13 @@ import { Aspect } from 'constants/companyJobTitle';
 
 import { LeaveBulletByLabel, LeaveSection } from '../LeaveSectionBlock';
 import menstrualLeaveIcon from '../menstrualLeaveIcon.svg';
-import AspectScoreCard from '../Overview/AspectScoreCard';
-import PolicySection from '../PolicySection';
-import FemaleManagerCard from './FemaleManagerCard';
 import styles from './GenderFriendly.module.css';
 import GenderPayComparisonCard, {
   GenderPayComparisonData,
 } from './GenderPayComparisonCard';
+import AspectScoreCard from '../Overview/AspectScoreCard';
+import PolicySection from '../PolicySection';
+import { EsgItemBlock } from '../SalaryWorkTime/EsgBlock/EsgBlock';
 
 export type GenderFriendlyData = {
   menstrualLeave: LeaveSection;
@@ -60,7 +60,13 @@ const GenderFriendly: React.FC<GenderFriendlyProps> = ({
           emptyShareLinkTo={generateSharePolicyForm()}
         />
         {femaleManagerStatisticsItem && (
-          <FemaleManagerCard item={femaleManagerStatisticsItem} />
+          <EsgItemBlock
+            className={styles.femaleManagerCard}
+            title="管理職女性主管佔比"
+            year={femaleManagerStatisticsItem.year}
+            value={femaleManagerStatisticsItem.percentage * 100}
+            unit="%"
+          />
         )}
       </div>
     </div>

@@ -11,7 +11,7 @@ import { formatNumberWithSign } from 'utils/stringUtil';
 import styles from './EsgBlock.module.css';
 import overviewStyles from '../../Overview/Overview.module.css';
 
-const EsgItemBlock = ({
+export const EsgItemBlock = ({
   className,
   title,
   year,
@@ -19,7 +19,7 @@ const EsgItemBlock = ({
   valueCompared,
   unit,
 }) => (
-  <Card className={className}>
+  <Card className={cn(styles.itemCard, className)}>
     <div className={styles.badge}>{year} 年</div>
     <div className={styles.titleContainer}>
       <div className={styles.title}>{title}</div>
@@ -56,6 +56,12 @@ EsgItemBlock.propTypes = {
   value: PropTypes.number.isRequired,
   valueCompared: PropTypes.number,
   year: PropTypes.number.isRequired,
+};
+
+EsgItemBlock.defaultProps = {
+  className: undefined,
+  unit: undefined,
+  valueCompared: undefined,
 };
 
 const EsgBlock = ({
