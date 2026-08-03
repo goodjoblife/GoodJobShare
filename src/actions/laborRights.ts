@@ -63,8 +63,7 @@ const queryEntry = (entryId: string): Thunk => async (
     const entry = await queryEntryApi({ entryId });
     return dispatch(setEntry(entryId, getFetched(entry)));
   } catch (error) {
-    // @ts-ignore
-    if (isGraphqlError('GraphqlError')) {
+    if (isGraphqlError(error)) {
       return dispatch(setEntry(entryId, getError(new UiNotFoundError())));
     }
 

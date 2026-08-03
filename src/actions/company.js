@@ -239,7 +239,6 @@ export const queryCompanyOverviewStatistics = companyName => async (
     }
 
     const model = {
-      name: data.name,
       jobAverageSalaries:
         data.salary_work_time_statistics.job_average_salaries || [],
       averageWeekWorkTime:
@@ -414,7 +413,7 @@ export const queryCompanyEsgSalaryData = ({ companyName }) => async (
 
     // Not found case
     if (!data) {
-      return dispatch(setEsgSalaryData(companyName, getFetched()));
+      return dispatch(setEsgSalaryData(companyName, getFetched(null)));
     }
 
     dispatch(setEsgSalaryData(companyName, getFetched(data)));
