@@ -8,11 +8,12 @@ import {
   SET_SALARY_WORK_TIME_STATISTICS,
   SET_WORK_EXPERIENCES,
 } from 'actions/jobTitle';
-import { WorkExperience } from 'apis/experience';
+import { InterviewExperience, WorkExperience } from 'apis/experience';
 import {
   InterviewExperienceInOverview,
   WorkExperienceInOverview,
 } from 'apis/overview';
+import { JobTitleInIndex } from 'apis/queryJobTitles';
 import {
   DataTimeRange,
   ExperienceInYearRange,
@@ -23,9 +24,6 @@ import {
 } from 'apis/salaryWorkTime';
 import createReducer from 'utils/createReducer';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
-
-// TODO: replace with proper JobTitleInIndex type
-export type JobTitleInIndex = unknown;
 
 // Flattened from QueryJobTitleOverviewData, so a type is defined here
 export type JobTitleOverview = {
@@ -58,8 +56,15 @@ export type JobTitleSalaryWorkTimeResult = {
   salaryWorkTimesCount: number;
 };
 
-// TODO: replace with proper JobTitleInterviewExperienceResult type
-export type JobTitleInterviewExperienceResult = unknown;
+export type JobTitleInterviewExperienceResult = {
+  name: string;
+  companyName?: string;
+  start: number;
+  limit: number;
+  sortBy?: string;
+  interviewExperiences: InterviewExperience[];
+  interviewExperiencesCount: number;
+};
 
 export type JobTitleWorkExperienceResult = {
   name: string;
