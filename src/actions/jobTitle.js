@@ -180,7 +180,6 @@ export const queryJobTitleOverviewStatistics = jobTitle => async (
     }
 
     const model = {
-      name: data.name,
       salaryDistribution: data.salary_distribution.bins || [],
       averageWeekWorkTime:
         data.salary_work_time_statistics.average_week_work_time || 0,
