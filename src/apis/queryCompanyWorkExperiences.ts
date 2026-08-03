@@ -36,6 +36,12 @@ const queryCompanyWorkExperiencesGql = /* GraphQL */ `
   }
 `;
 
+// Must be the same as graphql schema (AspectFilter)
+export type AspectFilter = {
+  aspect: string;
+  rating?: number;
+};
+
 type QueryCompanyWorkExperiencesData = {
   company:
     | (Company & {
@@ -60,7 +66,7 @@ const queryCompanyWorkExperiences = ({
   start: number;
   limit: number;
   sortBy?: string;
-  aspectFilter?: string;
+  aspectFilter?: AspectFilter;
 }): Promise<QueryCompanyWorkExperiencesData['company']> =>
   graphqlClient<QueryCompanyWorkExperiencesData>({
     query: queryCompanyWorkExperiencesGql,
