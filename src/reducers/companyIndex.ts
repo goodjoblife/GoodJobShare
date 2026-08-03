@@ -15,7 +15,7 @@ import {
   SET_WORK_EXPERIENCES_ASPECT_STATISTICS,
 } from 'actions/company';
 import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
-import { WorkExperience } from 'apis/experience';
+import { InterviewExperience, WorkExperience } from 'apis/experience';
 import {
   InterviewExperienceInOverview,
   WorkExperienceInOverview,
@@ -68,8 +68,15 @@ export type CompanySalaryWorkTimeResult = {
   salaryWorkTimesCount: number;
 };
 
-// TODO: replace with proper CompanyInterviewExperienceResult type
-export type CompanyInterviewExperienceResult = unknown;
+export type CompanyInterviewExperienceResult = {
+  name: string;
+  jobTitle: string | undefined;
+  start: number;
+  limit: number;
+  sortBy: string | undefined;
+  interviewExperiences: InterviewExperience[];
+  interviewExperiencesCount: number;
+};
 
 export type CompanyWorkExperienceResult = {
   name: string;
