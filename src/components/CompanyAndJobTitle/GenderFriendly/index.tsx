@@ -4,12 +4,10 @@ import { Wrapper } from 'common/base';
 import { PageType, TabType } from 'constants/companyJobTitle';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import GenderFriendlySection, { GenderFriendlyData } from './GenderFriendly';
-
-type FemaleManagerItem = {
-  year: number;
-  percentage: number;
-};
+import GenderFriendlySection, {
+  FemaleManagerItem,
+  GenderFriendlyData,
+} from './GenderFriendly';
 
 type Props = {
   pageType: PageType;

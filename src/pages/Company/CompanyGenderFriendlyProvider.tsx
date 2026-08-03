@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -10,6 +10,10 @@ import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { paramsSelector } from 'common/routing/selectors';
 import GenderFriendly from 'components/CompanyAndJobTitle/GenderFriendly';
 import { GenderFriendlyData } from 'components/CompanyAndJobTitle/GenderFriendly/GenderFriendly';
+import {
+  getAvailableYears,
+  getStatisticsByYear,
+} from 'components/CompanyAndJobTitle/SalaryWorkTime/EsgBlock/esgYearUtils';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { companyEsgSalaryDataBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
@@ -74,11 +78,14 @@ const CompanyGenderFriendlyProvider: React.FC &
   const esgSalaryData: ESGSalaryData | null = isFetched(esgSalaryDataBox)
     ? esgSalaryDataBox.data
     : null;
-  const femaleManagerStatistics =
-    esgSalaryData && esgSalaryData.femaleManagerStatistics;
+  const latestYear = useMemo(
+    () => (esgSalaryData ? getAvailableYears(esgSalaryData)[0] : null),
+    [esgSalaryData],
+  );
   const femaleManagerStatisticsItem =
-    femaleManagerStatistics && femaleManagerStatistics.length > 0
-      ? femaleManagerStatistics[femaleManagerStatistics.length - 1]
+    esgSalaryData && latestYear
+      ? getStatisticsByYear(esgSalaryData, latestYear)
+          .femaleManagerStatisticsItem || null
       : null;
 
   return (
