@@ -1,9 +1,9 @@
 import R from 'ramda';
 
-import { getCompanyInterviewExperiences } from 'apis/company';
 import queryCompaniesApi from 'apis/queryCompanies';
 import queryCompanyAspectRatingStatisticsApi from 'apis/queryCompanyAspectRatingStatistics';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
+import queryCompanyInterviewExperiencesApi from 'apis/queryCompanyInterviewExperiences';
 import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
 import queryCompanyOverviewStatisticsApi from 'apis/queryCompanyOverviewStatistics';
@@ -479,7 +479,7 @@ export const queryCompanyInterviewExperiences = ({
   dispatch(setInterviewExperiences(companyName, toFetching(box)));
 
   try {
-    const data = await getCompanyInterviewExperiences({
+    const data = await queryCompanyInterviewExperiencesApi({
       companyName,
       jobTitle,
       start,

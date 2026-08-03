@@ -1,9 +1,7 @@
 import R from 'ramda';
 
-import {
-  getJobTitleInterviewExperiences,
-  queryJobTitlesApi,
-} from 'apis/jobTitle';
+import { queryJobTitlesApi } from 'apis/jobTitle';
+import queryJobTitleInterviewExperiencesApi from 'apis/queryJobTitleInterviewExperiences';
 import queryJobTitleOverviewApi from 'apis/queryJobTitleOverview';
 import queryJobTitleOverviewStatisticsApi from 'apis/queryJobTitleOverviewStatistics';
 import queryJobTitleSalaryWorkTimeApi from 'apis/queryJobTitleSalaryWorkTime';
@@ -348,7 +346,7 @@ export const queryJobTitleInterviewExperiences = ({
   dispatch(setInterviewExperiences(jobTitle, toFetching(box)));
 
   try {
-    const data = await getJobTitleInterviewExperiences({
+    const data = await queryJobTitleInterviewExperiencesApi({
       jobTitle,
       companyName,
       start,
