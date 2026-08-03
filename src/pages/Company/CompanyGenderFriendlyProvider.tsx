@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -9,7 +9,10 @@ import {
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { paramsSelector } from 'common/routing/selectors';
 import GenderFriendly from 'components/CompanyAndJobTitle/GenderFriendly';
-import { GenderFriendlyData } from 'components/CompanyAndJobTitle/GenderFriendly/GenderFriendly';
+import {
+  FemaleManagerItem,
+  GenderFriendlyData,
+} from 'components/CompanyAndJobTitle/GenderFriendly/GenderFriendly';
 import {
   getAvailableYears,
   getStatisticsByYear,
@@ -53,6 +56,21 @@ const HARDCODED_DATA: GenderFriendlyData = {
   },
 };
 
+const getLatestFemaleManagerStatisticsItem = (
+  esgSalaryData: ESGSalaryData | null,
+): FemaleManagerItem | null => {
+  if (!esgSalaryData) return null;
+
+  const availableYears = getAvailableYears(esgSalaryData);
+  if (availableYears.length === 0) return null;
+
+  const [latestYear] = availableYears;
+  return (
+    getStatisticsByYear(esgSalaryData, latestYear)
+      .femaleManagerStatisticsItem || null
+  );
+};
+
 type Params = { companyName: string };
 
 const CompanyGenderFriendlyProvider: React.FC &
@@ -78,15 +96,9 @@ const CompanyGenderFriendlyProvider: React.FC &
   const esgSalaryData: ESGSalaryData | null = isFetched(esgSalaryDataBox)
     ? esgSalaryDataBox.data
     : null;
-  const latestYear = useMemo(
-    () => (esgSalaryData ? getAvailableYears(esgSalaryData)[0] : null),
-    [esgSalaryData],
+  const femaleManagerStatisticsItem = getLatestFemaleManagerStatisticsItem(
+    esgSalaryData,
   );
-  const femaleManagerStatisticsItem =
-    esgSalaryData && latestYear
-      ? getStatisticsByYear(esgSalaryData, latestYear)
-          .femaleManagerStatisticsItem || null
-      : null;
 
   return (
     <GenderFriendly
