@@ -75,29 +75,9 @@ const SalaryWorkTime: React.FC<Props> = ({
           box={esgSalaryDataBox}
           render={(data): React.ReactNode => {
             if (!data) return null;
-
-            const {
-              avgSalaryStatistics: [avgSalaryStatisticsItem],
-              nonManagerAvgSalaryStatistics: [
-                nonManagerAvgSalaryStatisticsItem,
-              ],
-              nonManagerMedianSalaryStatistics: [
-                nonManagerMedianSalaryStatisticsItem,
-              ],
-              femaleManagerStatistics: [femaleManagerStatisticsItem],
-            } = data;
             return (
               <Wrapper size="l">
-                <EsgBlock
-                  avgSalaryStatisticsItem={avgSalaryStatisticsItem}
-                  nonManagerAvgSalaryStatisticsItem={
-                    nonManagerAvgSalaryStatisticsItem
-                  }
-                  nonManagerMedianSalaryStatisticsItem={
-                    nonManagerMedianSalaryStatisticsItem
-                  }
-                  femaleManagerStatisticsItem={femaleManagerStatisticsItem}
-                />
+                <EsgBlock data={data} />
               </Wrapper>
             );
           }}
