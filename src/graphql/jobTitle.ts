@@ -10,12 +10,3 @@ export const queryJobTitles = /* GraphQL */ `
     }
   }
 `;
-
-export const queryJobTitlesHavingDataGql = /* GraphQL */ `
-  query($start: Int!, $limit: Int!) {
-    jobTitlesHavingData(start: $start, limit: $limit) {
-      name
-    }
-    jobTitlesHavingDataCount
-  }
-`;

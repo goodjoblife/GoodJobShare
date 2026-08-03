@@ -1,9 +1,9 @@
 import R from 'ramda';
 
-import { queryJobTitlesApi } from 'apis/jobTitle';
 import queryJobTitleInterviewExperiencesApi from 'apis/queryJobTitleInterviewExperiences';
 import queryJobTitleOverviewApi from 'apis/queryJobTitleOverview';
 import queryJobTitleOverviewStatisticsApi from 'apis/queryJobTitleOverviewStatistics';
+import queryJobTitlesApi from 'apis/queryJobTitles';
 import queryJobTitleSalaryWorkTimeApi from 'apis/queryJobTitleSalaryWorkTime';
 import queryJobTitleSalaryWorkTimeStatisticsApi from 'apis/queryJobTitleSalaryWorkTimeStatistics';
 import queryJobTitleWorkExperiencesApi from 'apis/queryJobTitleWorkExperiences';
