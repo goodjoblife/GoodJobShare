@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useLocalStorage } from 'react-use';
 
-import { useCompanyName } from '../../pageContext';
+import { useCompanyName } from '../../PageContextProvider';
 
 const useYear = () => useMemo(() => new Date().getFullYear(), []);
 

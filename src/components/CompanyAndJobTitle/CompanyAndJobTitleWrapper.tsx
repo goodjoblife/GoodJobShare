@@ -16,7 +16,7 @@ import {
 } from 'constants/companyJobTitle';
 
 import styles from './CompanyAndJobTitleWrapper.module.css';
-import { PageContextProvider } from './pageContext';
+import { PageContextProvider } from './PageContextProvider';
 import { generateBreadCrumbData } from './utils';
 
 type CompanyAndJobTitleWrapperProps = React.PropsWithChildren<{
