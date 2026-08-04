@@ -26,6 +26,7 @@ import {
 import { ServerSideRender } from 'types/serverSideRender';
 import FetchBox, { getFetched, isFetched } from 'utils/fetchBox';
 
+import CompanyPage from './CompanyPage';
 import useAspect, { aspectSelector } from './useAspect';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 
@@ -101,16 +102,15 @@ const CompanyWorkExperiencesAspectProvider: React.FC &
   );
 
   return (
-    <WorkExperiencesAspect
-      aspect={aspect}
-      pageType={pageType}
-      pageName={companyName}
-      page={page as number}
-      pageSize={PAGE_SIZE}
-      tabType={TabType.WORK_EXPERIENCE}
-      statisticsBoxSelector={statisticsBoxSelector}
-      experiencesBoxSelector={experiencesBoxSelector}
-    />
+    <CompanyPage tabType={TabType.WORK_EXPERIENCE}>
+      <WorkExperiencesAspect
+        aspect={aspect}
+        page={page as number}
+        pageSize={PAGE_SIZE}
+        statisticsBoxSelector={statisticsBoxSelector}
+        experiencesBoxSelector={experiencesBoxSelector}
+      />
+    </CompanyPage>
   );
 };
 
