@@ -40,6 +40,8 @@ Provider 的 render 因此讀得出整頁的組成：
 
 UI 層元件**一律不讀 route params**（`useParams`、`useCompanyNameParam`、`useJobTitleParam`）。
 
+這條規則由 eslint 強制：`.eslintrc.js` 的 `import/no-restricted-paths` 禁止 `src/components/` import `src/pages/`。文件擋不住 IDE 的自動 import，lint 可以。
+
 這條規則的理由具體：這些元件多半同時服務公司頁與職稱頁，讀 `companyName` 在職稱頁會拿到 `decodeURIComponent(undefined)` 的結果 —— 字串 `"undefined"` —— 而型別仍是 `string`，TypeScript 攔不到，接著被當成 redux key 與 `generatePath` 的參數靜靜往下傳。
 
 要公司名的元件改用 `PageContextProvider` 的 `useCompanyName()`，見下一節。
