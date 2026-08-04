@@ -20,13 +20,7 @@ const JobTitlePage: React.FC<JobTitlePageProps> = ({ tabType, children }) => {
       pageName={jobTitle}
       tabType={tabType}
     >
-      <CompanyAndJobTitleWrapper
-        pageType={PageType.JOB_TITLE}
-        pageName={jobTitle}
-        tabType={tabType}
-      >
-        {children}
-      </CompanyAndJobTitleWrapper>
+      <CompanyAndJobTitleWrapper>{children}</CompanyAndJobTitleWrapper>
     </PageContextProvider>
   );
 };

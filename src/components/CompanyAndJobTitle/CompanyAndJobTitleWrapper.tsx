@@ -16,21 +16,16 @@ import {
 } from 'constants/companyJobTitle';
 
 import styles from './CompanyAndJobTitleWrapper.module.css';
-import { PageContextProvider } from './PageContextProvider';
+import { usePageContext } from './PageContextProvider';
 import { generateBreadCrumbData } from './utils';
 
-type CompanyAndJobTitleWrapperProps = React.PropsWithChildren<{
-  pageName: string;
-  pageType: PageType;
-  tabType: TabType;
-}>;
-
-const CompanyAndJobTitleWrapper: React.FC<CompanyAndJobTitleWrapperProps> = ({
+// 由 CompanyPage / JobTitlePage 渲染，兩者已提供 PageContext，
+// 因此頁面身分直接從 context 取得，不再重複收 props
+const CompanyAndJobTitleWrapper: React.FC<React.PropsWithChildren> = ({
   children,
-  pageType,
-  pageName,
-  tabType,
 }) => {
+  const { pageType, pageName, tabType } = usePageContext();
+
   const tabLinkOptions = useMemo(
     () =>
       (Object.entries(tabTypeTranslation) as [TabType, string][]).map(
@@ -59,41 +54,35 @@ const CompanyAndJobTitleWrapper: React.FC<CompanyAndJobTitleWrapperProps> = ({
   }, [pageName, tabType]);
 
   return (
-    <PageContextProvider
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-    >
-      <div>
-        <Wrapper size="l">
-          <div style={{ marginBottom: '20px' }}>
-            <BreadCrumb
-              data={generateBreadCrumbData({ pageType, pageName, tabType })}
-            />
-          </div>
-          <div>
-            <div className={styles.titleContainer}>
-              <Heading className={styles.title}>{pageH1}</Heading>
-              {pageType === PageType.COMPANY && (
-                <SubscribeNotificationButton companyName={pageName} />
-              )}
-            </div>
-            <StatisticsCard pageType={pageType} pageName={pageName} />
-          </div>
-          <TabLinkGroup
-            className=""
-            options={tabLinkOptions}
-            style={{
-              marginBottom: '24px',
-            }}
+    <div>
+      <Wrapper size="l">
+        <div style={{ marginBottom: '20px' }}>
+          <BreadCrumb
+            data={generateBreadCrumbData({ pageType, pageName, tabType })}
           />
-        </Wrapper>
-        {children}
-        <Wrapper size="l">
-          <FanPageBlock className={styles.fanPageBlock} />
-        </Wrapper>
-      </div>
-    </PageContextProvider>
+        </div>
+        <div>
+          <div className={styles.titleContainer}>
+            <Heading className={styles.title}>{pageH1}</Heading>
+            {pageType === PageType.COMPANY && (
+              <SubscribeNotificationButton companyName={pageName} />
+            )}
+          </div>
+          <StatisticsCard pageType={pageType} pageName={pageName} />
+        </div>
+        <TabLinkGroup
+          className=""
+          options={tabLinkOptions}
+          style={{
+            marginBottom: '24px',
+          }}
+        />
+      </Wrapper>
+      {children}
+      <Wrapper size="l">
+        <FanPageBlock className={styles.fanPageBlock} />
+      </Wrapper>
+    </div>
   );
 };
 

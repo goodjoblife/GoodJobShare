@@ -22,13 +22,7 @@ const CompanyPage: React.FC<CompanyPageProps> = ({ tabType, children }) => {
       pageName={companyName}
       tabType={tabType}
     >
-      <CompanyAndJobTitleWrapper
-        pageType={PageType.COMPANY}
-        pageName={companyName}
-        tabType={tabType}
-      >
-        {children}
-      </CompanyAndJobTitleWrapper>
+      <CompanyAndJobTitleWrapper>{children}</CompanyAndJobTitleWrapper>
     </PageContextProvider>
   );
 };
