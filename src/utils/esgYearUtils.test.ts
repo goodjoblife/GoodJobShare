@@ -1,6 +1,10 @@
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 
-import { getAvailableYears, getStatisticsByYear } from './esgYearUtils';
+import {
+  getAvailableYears,
+  getLatestYear,
+  getStatisticsByYear,
+} from './esgYearUtils';
 
 const sample: ESGSalaryData = {
   avgSalaryStatistics: [
@@ -31,6 +35,23 @@ describe('getAvailableYears', () => {
   });
 });
 
+describe('getLatestYear', () => {
+  test('取出最新的年份', () => {
+    expect(getLatestYear(sample)).toBe(2024);
+  });
+
+  test('全部陣列為空 → undefined', () => {
+    expect(
+      getLatestYear({
+        avgSalaryStatistics: [],
+        nonManagerAvgSalaryStatistics: [],
+        nonManagerMedianSalaryStatistics: [],
+        femaleManagerStatistics: [],
+      }),
+    ).toBeUndefined();
+  });
+});
+
 describe('getStatisticsByYear', () => {
   test('取出指定年份的四個 item', () => {
     expect(getStatisticsByYear(sample, 2024)).toEqual({
@@ -55,5 +76,14 @@ describe('getStatisticsByYear', () => {
     expect(r.avgSalaryStatisticsItem && r.avgSalaryStatisticsItem.year).toBe(
       2023,
     );
+  });
+
+  test('year 為 undefined（無可用年份）→ 四個 item 都是 undefined', () => {
+    expect(getStatisticsByYear(sample, undefined)).toEqual({
+      avgSalaryStatisticsItem: undefined,
+      nonManagerAvgSalaryStatisticsItem: undefined,
+      nonManagerMedianSalaryStatisticsItem: undefined,
+      femaleManagerStatisticsItem: undefined,
+    });
   });
 });

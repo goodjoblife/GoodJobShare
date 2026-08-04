@@ -6,10 +6,10 @@ import linkStyles from 'common/base/Link.module.css';
 import Card from 'common/Card';
 import Caret from 'common/icons/Caret';
 import Info from 'common/icons/Info';
+import { getLatestYear, getStatisticsByYear } from 'utils/esgYearUtils';
 import { formatNumberWithSign } from 'utils/stringUtil';
 
 import styles from './EsgBlock.module.css';
-import { getAvailableYears, getStatisticsByYear } from './esgYearUtils';
 import overviewStyles from '../../Overview/Overview.module.css';
 
 type EsgItemBlockProps = {
@@ -77,7 +77,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
 }) => {
   const [isCollapsed, setCollapsed] = useState(hasPreviewed);
 
-  const latestYear = useMemo(() => getAvailableYears(data)[0], [data]);
+  const latestYear = useMemo(() => getLatestYear(data), [data]);
 
   const {
     avgSalaryStatisticsItem,

@@ -21,9 +21,13 @@ export const getAvailableYears = (esgSalaryData: ESGSalaryData): number[] => {
   return Array.from(years).sort((a, b) => b - a);
 };
 
+export const getLatestYear = (
+  esgSalaryData: ESGSalaryData,
+): number | undefined => getAvailableYears(esgSalaryData)[0];
+
 export const getStatisticsByYear = (
   esgSalaryData: ESGSalaryData,
-  year: number,
+  year: number | undefined,
 ): StatisticsByYear => ({
   avgSalaryStatisticsItem: esgSalaryData.avgSalaryStatistics.find(
     item => item.year === year,
