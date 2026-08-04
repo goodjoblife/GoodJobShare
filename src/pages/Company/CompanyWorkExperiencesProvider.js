@@ -25,7 +25,9 @@ import {
 } from 'selectors/routing';
 import { getFetched, isFetched } from 'utils/fetchBox';
 
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 
 const useWorkExperiencesBoxSelector = pageName => {
   return useCallback(
@@ -51,7 +53,7 @@ const useWorkExperiencesBoxSelector = pageName => {
 const CompanyWorkExperiencesProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
-  const companyName = useCompanyName();
+  const companyName = useCompanyNameParam();
   const [jobTitle] = useSearchTextFromQuery();
   const [sortBy] = useSortByFromQuery();
   const page = usePage();

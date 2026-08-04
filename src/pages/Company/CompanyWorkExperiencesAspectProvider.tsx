@@ -28,7 +28,9 @@ import { ServerSideRender } from 'types/serverSideRender';
 import FetchBox, { getFetched, isFetched } from 'utils/fetchBox';
 
 import useAspect, { aspectSelector } from './useAspect';
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 
 const useWorkExperiencesAspectExperiencesBoxSelector = (
   pageName: string,
@@ -65,7 +67,7 @@ const CompanyWorkExperiencesAspectProvider: React.FC &
   ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
-  const companyName = useCompanyName();
+  const companyName = useCompanyNameParam();
   const aspect = useAspect();
   const [rating] = useRating();
   const page = usePage();

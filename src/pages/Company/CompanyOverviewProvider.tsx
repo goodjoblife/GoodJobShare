@@ -24,7 +24,9 @@ import {
 import { ServerSideRender } from 'types/serverSideRender';
 import FetchBox from 'utils/fetchBox';
 
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 
 // Matches the React Router route params for Company pages
 type Params = { companyName: string };
@@ -47,7 +49,7 @@ const useOverviewStatisticsBox = (
 const CompanyOverviewProvider: React.FC & ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
-  const companyName = useCompanyName();
+  const companyName = useCompanyNameParam();
 
   const handleQueryCompanyOverview = useCallback(
     ({ force = false }: { force?: boolean } = {}) => {

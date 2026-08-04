@@ -10,7 +10,7 @@ type Params = { companyName?: string };
 const decodeCompanyName = (companyName: string | undefined): string => {
   if (companyName === undefined) {
     throw new Error(
-      'companyName 不存在：useCompanyName / companyNameSelector 只能用在 /companies/:companyName 之下',
+      'companyName 不存在：useCompanyNameParam / companyNameSelector 只能用在 /companies/:companyName 之下',
     );
   }
   return decodeURIComponent(companyName);
@@ -19,7 +19,9 @@ const decodeCompanyName = (companyName: string | undefined): string => {
 export const companyNameSelector = (params: Params): string =>
   decodeCompanyName(params.companyName);
 
-const useCompanyName = (): string =>
+// 名字帶 Param 是為了與 components/CompanyAndJobTitle/PageContextProvider 的
+// useCompanyName 區分：那支讀 PageContext，這支讀 route param，只給 Provider 層用
+const useCompanyNameParam = (): string =>
   decodeCompanyName(useParams<Params>().companyName);
 
-export default useCompanyName;
+export default useCompanyNameParam;

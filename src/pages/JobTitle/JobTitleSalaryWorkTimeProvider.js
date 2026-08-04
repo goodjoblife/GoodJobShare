@@ -35,7 +35,7 @@ import {
   queryFromQuerySelector,
 } from 'selectors/routing';
 
-import useJobTitle, { jobTitleSelector } from './useJobTitle';
+import useJobTitleParam, { jobTitleSelector } from './useJobTitleParam';
 
 const useOverviewStatisticsBox = pageName => {
   const selector = useMemo(
@@ -66,7 +66,7 @@ const useSalaryWorkTimeBoxSelector = pageName => {
 const JobTitleSalaryWorkTimeProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.JOB_TITLE;
-  const jobTitle = useJobTitle();
+  const jobTitle = useJobTitleParam();
   const [companyName] = useSearchTextFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;

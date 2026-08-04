@@ -21,7 +21,7 @@ import {
 import { ServerSideRender } from 'types/serverSideRender';
 import FetchBox from 'utils/fetchBox';
 
-import useJobTitle, { jobTitleSelector } from './useJobTitle';
+import useJobTitleParam, { jobTitleSelector } from './useJobTitleParam';
 
 // Matches the React Router route params for JobTitle pages
 type Params = { jobTitle: string };
@@ -44,7 +44,7 @@ const useOverviewStatisticsBox = (
 const JobTitleOverviewProvider: React.FC & ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
   const pageType = PageType.JOB_TITLE;
-  const jobTitle = useJobTitle();
+  const jobTitle = useJobTitleParam();
 
   const handleQueryJobTitleOverview = useCallback(
     ({ force = false }: { force?: boolean } = {}) => {

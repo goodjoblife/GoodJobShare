@@ -25,7 +25,9 @@ import {
 } from 'selectors/routing';
 import { getFetched, isFetched } from 'utils/fetchBox';
 
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 import { useTopNJobTitles } from './useTopNJobTitles';
 
 const useInterviewExperiencesBoxSelector = companyName => {
@@ -54,7 +56,7 @@ const useInterviewExperiencesBoxSelector = companyName => {
 const CompanyInterviewExperiencesProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
-  const companyName = useCompanyName();
+  const companyName = useCompanyNameParam();
   const [jobTitle] = useSearchTextFromQuery();
   const [sortBy] = useSortByFromQuery();
   const page = usePage();

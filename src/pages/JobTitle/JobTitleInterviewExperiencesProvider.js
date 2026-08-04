@@ -21,7 +21,7 @@ import {
 } from 'selectors/routing';
 import { getFetched, isFetched } from 'utils/fetchBox';
 
-import useJobTitle, { jobTitleSelector } from './useJobTitle';
+import useJobTitleParam, { jobTitleSelector } from './useJobTitleParam';
 
 const useInterviewExperiencesBoxSelector = jobTitle => {
   return useCallback(
@@ -49,7 +49,7 @@ const useInterviewExperiencesBoxSelector = jobTitle => {
 const JobTitleInterviewExperiencesProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.JOB_TITLE;
-  const jobTitle = useJobTitle();
+  const jobTitle = useJobTitleParam();
   const [companyName] = useSearchTextFromQuery();
   const [sortBy] = useSortByFromQuery();
   const page = usePage();
