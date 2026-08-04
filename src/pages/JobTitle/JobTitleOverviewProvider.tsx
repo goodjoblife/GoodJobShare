@@ -20,6 +20,7 @@ import {
 import { ServerSideRender } from 'types/serverSideRender';
 import FetchBox from 'utils/fetchBox';
 
+import JobTitlePage from './JobTitlePage';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
 // Matches the React Router route params for JobTitle pages
@@ -69,13 +70,9 @@ const JobTitleOverviewProvider: React.FC & ServerSideRender<Params> = () => {
   const statisticsBox = useOverviewStatisticsBox(jobTitle);
 
   return (
-    <Overview
-      pageType={pageType}
-      pageName={jobTitle}
-      tabType={TabType.OVERVIEW}
-      boxSelector={boxSelector}
-      statisticsBox={statisticsBox}
-    />
+    <JobTitlePage tabType={TabType.OVERVIEW}>
+      <Overview boxSelector={boxSelector} statisticsBox={statisticsBox} />
+    </JobTitlePage>
   );
 };
 

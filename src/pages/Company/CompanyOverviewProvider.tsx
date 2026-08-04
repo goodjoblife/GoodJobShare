@@ -23,6 +23,7 @@ import {
 import { ServerSideRender } from 'types/serverSideRender';
 import FetchBox from 'utils/fetchBox';
 
+import CompanyPage from './CompanyPage';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 // Matches the React Router route params for Company pages
@@ -88,13 +89,9 @@ const CompanyOverviewProvider: React.FC & ServerSideRender<Params> = () => {
   const statisticsBox = useOverviewStatisticsBox(companyName);
 
   return (
-    <Overview
-      pageType={pageType}
-      pageName={companyName}
-      tabType={TabType.OVERVIEW}
-      boxSelector={boxSelector}
-      statisticsBox={statisticsBox}
-    />
+    <CompanyPage tabType={TabType.OVERVIEW}>
+      <Overview boxSelector={boxSelector} statisticsBox={statisticsBox} />
+    </CompanyPage>
   );
 };
 
