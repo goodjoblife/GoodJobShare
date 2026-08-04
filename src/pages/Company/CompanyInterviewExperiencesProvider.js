@@ -24,6 +24,7 @@ import {
 } from 'selectors/routing';
 import { getFetched, isFetched } from 'utils/fetchBox';
 
+import CompanyPage from './CompanyPage';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 
@@ -90,15 +91,14 @@ const CompanyInterviewExperiencesProvider = () => {
   const topNJobTitles = useTopNJobTitles(companyName);
 
   return (
-    <InterviewExperiences
-      pageType={pageType}
-      pageName={companyName}
-      page={page}
-      pageSize={PAGE_SIZE}
-      tabType={TabType.INTERVIEW_EXPERIENCE}
-      topNJobTitles={topNJobTitles.interview}
-      boxSelector={boxSelector}
-    />
+    <CompanyPage tabType={TabType.INTERVIEW_EXPERIENCE}>
+      <InterviewExperiences
+        page={page}
+        pageSize={PAGE_SIZE}
+        topNJobTitles={topNJobTitles.interview}
+        boxSelector={boxSelector}
+      />
+    </CompanyPage>
   );
 };
 

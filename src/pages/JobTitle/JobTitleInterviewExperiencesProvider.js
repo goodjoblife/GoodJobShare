@@ -20,6 +20,7 @@ import {
 } from 'selectors/routing';
 import { getFetched, isFetched } from 'utils/fetchBox';
 
+import JobTitlePage from './JobTitlePage';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
 const useInterviewExperiencesBoxSelector = jobTitle => {
@@ -75,14 +76,13 @@ const JobTitleInterviewExperiencesProvider = () => {
   const boxSelector = useInterviewExperiencesBoxSelector(jobTitle);
 
   return (
-    <InterviewExperiences
-      pageType={pageType}
-      pageName={jobTitle}
-      page={page}
-      pageSize={PAGE_SIZE}
-      tabType={TabType.INTERVIEW_EXPERIENCE}
-      boxSelector={boxSelector}
-    />
+    <JobTitlePage tabType={TabType.INTERVIEW_EXPERIENCE}>
+      <InterviewExperiences
+        page={page}
+        pageSize={PAGE_SIZE}
+        boxSelector={boxSelector}
+      />
+    </JobTitlePage>
   );
 };
 
