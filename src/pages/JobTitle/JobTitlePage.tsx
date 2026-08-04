@@ -15,7 +15,11 @@ const JobTitlePage: React.FC<JobTitlePageProps> = ({ tabType, children }) => {
   const jobTitle = useJobTitle();
 
   return (
-    <PageContextProvider pageType={PageType.JOB_TITLE} pageName={jobTitle}>
+    <PageContextProvider
+      pageType={PageType.JOB_TITLE}
+      pageName={jobTitle}
+      tabType={tabType}
+    >
       <CompanyAndJobTitleWrapper
         pageType={PageType.JOB_TITLE}
         pageName={jobTitle}

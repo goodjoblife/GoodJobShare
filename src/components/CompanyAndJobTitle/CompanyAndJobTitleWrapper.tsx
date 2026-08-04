@@ -59,7 +59,11 @@ const CompanyAndJobTitleWrapper: React.FC<CompanyAndJobTitleWrapperProps> = ({
   }, [pageName, tabType]);
 
   return (
-    <PageContextProvider pageType={pageType} pageName={pageName}>
+    <PageContextProvider
+      pageType={pageType}
+      pageName={pageName}
+      tabType={tabType}
+    >
       <div>
         <Wrapper size="l">
           <div style={{ marginBottom: '20px' }}>

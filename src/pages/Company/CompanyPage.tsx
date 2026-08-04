@@ -17,7 +17,11 @@ const CompanyPage: React.FC<CompanyPageProps> = ({ tabType, children }) => {
   const companyName = useCompanyName();
 
   return (
-    <PageContextProvider pageType={PageType.COMPANY} pageName={companyName}>
+    <PageContextProvider
+      pageType={PageType.COMPANY}
+      pageName={companyName}
+      tabType={tabType}
+    >
       <CompanyAndJobTitleWrapper
         pageType={PageType.COMPANY}
         pageName={companyName}

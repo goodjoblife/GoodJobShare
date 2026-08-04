@@ -1,13 +1,16 @@
 import React, { createContext, useContext, useMemo } from 'react';
 
-import { PageType } from 'constants/companyJobTitle';
+import { PageType, TabType } from 'constants/companyJobTitle';
 
+// 「你在哪一頁」：頁面型別、頁面名稱、目前的 tab。三者都由 route 決定，
+// 在整個頁面的生命週期內固定，故一起放進 context
 type PageContextValue = {
   pageType: PageType;
   pageName: string;
+  tabType: TabType;
 };
 
-// undefined 代表不在 CompanyAndJobTitleWrapper 之下，由 usePageContext 擋下
+// undefined 代表不在 CompanyPage / JobTitlePage 之下，由 usePageContext 擋下
 const PageContext = createContext<PageContextValue | undefined>(undefined);
 
 type PageContextProviderProps = React.PropsWithChildren<PageContextValue>;
@@ -15,18 +18,21 @@ type PageContextProviderProps = React.PropsWithChildren<PageContextValue>;
 export const PageContextProvider: React.FC<PageContextProviderProps> = ({
   pageType,
   pageName,
+  tabType,
   children,
 }) => {
-  const value = useMemo(() => ({ pageType, pageName }), [pageType, pageName]);
+  const value = useMemo(() => ({ pageType, pageName, tabType }), [
+    pageType,
+    pageName,
+    tabType,
+  ]);
   return <PageContext.Provider value={value}>{children}</PageContext.Provider>;
 };
 
 export const usePageContext = (): PageContextValue => {
   const value = useContext(PageContext);
   if (value === undefined) {
-    throw new Error(
-      'usePageContext 只能用在 CompanyAndJobTitleWrapper 之下（直接渲染 Wrapper 的頁面元件請改用自己的 props）',
-    );
+    throw new Error('usePageContext 只能用在 CompanyPage / JobTitlePage 之下');
   }
   return value;
 };
