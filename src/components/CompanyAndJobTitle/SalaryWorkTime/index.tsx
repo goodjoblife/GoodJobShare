@@ -85,12 +85,7 @@ const SalaryWorkTime: React.FC<Props> = ({
             return null;
           return (
             <Wrapper size="l">
-              <SummarySection
-                {...statisticsData}
-                companyName={
-                  pageType === PageType.COMPANY ? pageName : undefined
-                }
-              />
+              <SummarySection {...statisticsData} />
               <OvertimeSection statistics={overtimeStatisticsData} />
             </Wrapper>
           );

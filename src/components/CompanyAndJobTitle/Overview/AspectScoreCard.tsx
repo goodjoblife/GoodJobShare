@@ -9,6 +9,7 @@ import { companyWorkExperiencesAspectStatisticsBoxSelectorByName } from 'selecto
 import { isFetched } from 'utils/fetchBox';
 
 import ScoreCard from './ScoreCard';
+import { useCompanyName } from '../PageContextProvider';
 
 const useAllAspectRatingStatistics = (
   companyName: string,
@@ -41,17 +42,14 @@ export const useAspectsData = (
   );
 };
 
-// 面向評分只存在於公司，companyName 一律由呼叫端提供：
-// 本元件不讀 route param，因此不假設自己掛在 /companies/:companyName 之下
+// 面向評分只存在於公司，因此本元件只在公司頁有意義：
+// companyName 取自 PageContext，掛到職稱頁時 useCompanyName 會當場擋下
 interface AspectScoreCardProps {
-  companyName: string;
   aspect: Aspect;
 }
 
-const AspectScoreCard: React.FC<AspectScoreCardProps> = ({
-  companyName,
-  aspect,
-}) => {
+const AspectScoreCard: React.FC<AspectScoreCardProps> = ({ aspect }) => {
+  const companyName = useCompanyName();
   const path = generatePath(companyWorkExperiencesAspectPath, {
     companyName,
     aspect,
