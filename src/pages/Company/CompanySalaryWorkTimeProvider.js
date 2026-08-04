@@ -38,6 +38,7 @@ import {
   queryFromQuerySelector,
 } from 'selectors/routing';
 
+import CompanyPage from './CompanyPage';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 
@@ -180,19 +181,18 @@ const CompanySalaryWorkTimeProvider = () => {
   const boxSelector = useSalaryWorkTimeBoxSelector(companyName);
 
   return (
-    <SalaryWorkTime
-      pageType={pageType}
-      pageName={companyName}
-      page={page}
-      pageSize={PAGE_SIZE}
-      topNJobTitles={topNJobTitles.salary}
-      esgSalaryDataBox={esgSalaryDataBox}
-      tabType={TabType.TIME_AND_SALARY}
-      salaryWorkTimeStatisticsBox={salaryWorkTimeStatisticsBox}
-      boxSelector={boxSelector}
-      statisticsBox={statisticsBox}
-      onCloseReport={() => handleQueryCompanySalaryWorkTime({ force: true })}
-    />
+    <CompanyPage tabType={TabType.TIME_AND_SALARY}>
+      <SalaryWorkTime
+        page={page}
+        pageSize={PAGE_SIZE}
+        topNJobTitles={topNJobTitles.salary}
+        esgSalaryDataBox={esgSalaryDataBox}
+        salaryWorkTimeStatisticsBox={salaryWorkTimeStatisticsBox}
+        boxSelector={boxSelector}
+        statisticsBox={statisticsBox}
+        onCloseReport={() => handleQueryCompanySalaryWorkTime({ force: true })}
+      />
+    </CompanyPage>
   );
 };
 

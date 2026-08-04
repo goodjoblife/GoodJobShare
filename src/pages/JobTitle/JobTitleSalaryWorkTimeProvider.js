@@ -34,6 +34,7 @@ import {
   queryFromQuerySelector,
 } from 'selectors/routing';
 
+import JobTitlePage from './JobTitlePage';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
 const useOverviewStatisticsBox = pageName => {
@@ -140,17 +141,16 @@ const JobTitleSalaryWorkTimeProvider = () => {
   const salaryWorkTimeStatisticsBox = useSalaryWorkTimeStatisticsBox(jobTitle);
 
   return (
-    <SalaryWorkTime
-      pageType={pageType}
-      pageName={jobTitle}
-      page={page}
-      pageSize={PAGE_SIZE}
-      tabType={TabType.TIME_AND_SALARY}
-      salaryWorkTimeStatisticsBox={salaryWorkTimeStatisticsBox}
-      boxSelector={boxSelector}
-      statisticsBox={statisticsBox}
-      onCloseReport={() => handleQueryJobTitleSalaryWorkTime({ force: true })}
-    />
+    <JobTitlePage tabType={TabType.TIME_AND_SALARY}>
+      <SalaryWorkTime
+        page={page}
+        pageSize={PAGE_SIZE}
+        salaryWorkTimeStatisticsBox={salaryWorkTimeStatisticsBox}
+        boxSelector={boxSelector}
+        statisticsBox={statisticsBox}
+        onCloseReport={() => handleQueryJobTitleSalaryWorkTime({ force: true })}
+      />
+    </JobTitlePage>
   );
 };
 
