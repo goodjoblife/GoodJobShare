@@ -16,6 +16,7 @@ import {
 } from 'constants/companyJobTitle';
 
 import styles from './CompanyAndJobTitleWrapper.module.css';
+import { PageContextProvider } from './pageContext';
 import { generateBreadCrumbData } from './utils';
 
 type CompanyAndJobTitleWrapperProps = React.PropsWithChildren<{
@@ -58,35 +59,37 @@ const CompanyAndJobTitleWrapper: React.FC<CompanyAndJobTitleWrapperProps> = ({
   }, [pageName, tabType]);
 
   return (
-    <div>
-      <Wrapper size="l">
-        <div style={{ marginBottom: '20px' }}>
-          <BreadCrumb
-            data={generateBreadCrumbData({ pageType, pageName, tabType })}
-          />
-        </div>
-        <div>
-          <div className={styles.titleContainer}>
-            <Heading className={styles.title}>{pageH1}</Heading>
-            {pageType === PageType.COMPANY && (
-              <SubscribeNotificationButton companyName={pageName} />
-            )}
+    <PageContextProvider pageType={pageType} pageName={pageName}>
+      <div>
+        <Wrapper size="l">
+          <div style={{ marginBottom: '20px' }}>
+            <BreadCrumb
+              data={generateBreadCrumbData({ pageType, pageName, tabType })}
+            />
           </div>
-          <StatisticsCard pageType={pageType} pageName={pageName} />
-        </div>
-        <TabLinkGroup
-          className=""
-          options={tabLinkOptions}
-          style={{
-            marginBottom: '24px',
-          }}
-        />
-      </Wrapper>
-      {children}
-      <Wrapper size="l">
-        <FanPageBlock className={styles.fanPageBlock} />
-      </Wrapper>
-    </div>
+          <div>
+            <div className={styles.titleContainer}>
+              <Heading className={styles.title}>{pageH1}</Heading>
+              {pageType === PageType.COMPANY && (
+                <SubscribeNotificationButton companyName={pageName} />
+              )}
+            </div>
+            <StatisticsCard pageType={pageType} pageName={pageName} />
+          </div>
+          <TabLinkGroup
+            className=""
+            options={tabLinkOptions}
+            style={{
+              marginBottom: '24px',
+            }}
+          />
+        </Wrapper>
+        {children}
+        <Wrapper size="l">
+          <FanPageBlock className={styles.fanPageBlock} />
+        </Wrapper>
+      </div>
+    </PageContextProvider>
   );
 };
 
