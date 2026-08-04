@@ -38,11 +38,11 @@ Provider 的 render 因此讀得出整頁的組成：
 
 ### 不讀取 route params
 
-UI 層元件**一律不讀 route params**（`useParams`、`useCompanyName`、`useJobTitle`）。
+UI 層元件**一律不讀 route params**（`useParams`、`useCompanyNameParam`、`useJobTitleParam`）。
 
 這條規則的理由具體：這些元件多半同時服務公司頁與職稱頁，讀 `companyName` 在職稱頁會拿到 `decodeURIComponent(undefined)` 的結果 —— 字串 `"undefined"` —— 而型別仍是 `string`，TypeScript 攔不到，接著被當成 redux key 與 `generatePath` 的參數靜靜往下傳。
 
-要公司名的元件有兩條路，選哪一條見下方 `PageContextProvider` 一節。
+要公司名的元件改用 `PageContextProvider` 的 `useCompanyName()`，見下一節。
 
 ### 可以讀 Redux，不要在這裡寫
 
@@ -55,8 +55,8 @@ UI 層元件**一律不讀 route params**（`useParams`、`useCompanyName`、`us
 `CompanyAndJobTitleWrapper` 提供 `PageContext`，內容是 `{ pageType, pageName, tabType }` —— 三者都由 route 決定、在頁面生命週期內固定。UI 層任何元件都可以 `usePageContext()` 取得。
 
 - **它不是資料通道**。除了頁面身分之外的資料，一律走 props。
-- `useCompanyName()`（`components/CompanyAndJobTitle/PageContextProvider`，與 `pages/Company/useCompanyName` 同名但不同來源）在非公司頁會 throw。這是刻意的：需要公司名的元件若被掛到職稱頁，應該當場失敗，而不是靠「redux 剛好查無資料」而看起來正常。
-- 反過來說，**同時服務兩種頁面、只在公司頁多顯示一塊**的元件不該用它，而該由呼叫端傳 `companyName` prop（見 `AspectScoreCard` 與 `SummaryBlock`）。這樣「職稱頁沒有這一塊」在呼叫端就看得出來。
+- `useCompanyName()`（`components/CompanyAndJobTitle/PageContextProvider`）在非公司頁會 throw。這是刻意的：需要公司名的元件若被掛到職稱頁，應該當場失敗，而不是靠「redux 剛好查無資料」而看起來正常。
+- **只有公司才有的區塊**（面向評分、ESG）直接用 `useCompanyName()`，不必逐層收 `companyName` prop。相對地，這些元件的呼叫端要負責只在公司頁渲染它們 —— 條件寫成 `pageType === PageType.COMPANY &&`（見 `SummaryBlock`、`OverviewSection`、`WorkExperiences`），而不是傳一個可有可無的 `companyName` 當旗標。
 
 ---
 
@@ -70,11 +70,11 @@ Provider 不寫 UI 邏輯，但**負責組合**：把內容元件包進 `Company
 
 ### route param 的雙匯出
 
-每個目錄各有一組：hook（給 component 用）與 selector（給 `fetchData` 的 SSR 環境用）。例如 `useCompanyName` / `companyNameSelector`、`useJobTitle` / `jobTitleSelector`。
+每個目錄各有一組：hook（給 component 用）與 selector（給 `fetchData` 的 SSR 環境用）。例如 `useCompanyNameParam` / `companyNameSelector`、`useJobTitleParam` / `jobTitleSelector`。
 
-這組雙匯出**只在 Provider 層使用**。`useCompanyName` 在 param 不存在時會 throw，而不是回傳字串 `"undefined"`；掛在 `/companies/:companyName` 之下的 Provider 必然滿足，掛錯地方則當場失敗。
+這組雙匯出**只在 Provider 層使用**。兩者在 param 不存在時都會 throw，而不是回傳字串 `"undefined"`；掛在 `/companies/:companyName`、`/job-titles/:jobTitle` 之下的 Provider 必然滿足，掛錯地方則當場失敗。
 
-UI 層若要公司名，用 `PageContextProvider` 的同名 hook，不要 import 這一個。
+hook 名字帶 `Param` 是為了與 `PageContextProvider` 的 `useCompanyName` 區分 —— 兩者都回傳公司名，但一支讀 URL、一支讀頁面身分，適用的層也不同。同名時 IDE 自動 import 挑錯一支不會有任何徵兆，而那正是這個 bug 原本的來源。
 
 ---
 
