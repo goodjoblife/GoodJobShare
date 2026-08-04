@@ -12,6 +12,7 @@ import styles from '../Overview/Overview.module.css';
 import SummaryBlock from '../Overview/SummaryBlock';
 
 type Props = {
+  companyName?: string;
   salaryDistribution?: SalaryDistributionBin[];
   jobAverageSalaries?: JobAverageSalary[];
   averageWeekWorkTime: number;
@@ -19,6 +20,7 @@ type Props = {
 };
 
 const SummarySection: React.FC<Props> = ({
+  companyName,
   salaryDistribution,
   jobAverageSalaries,
   averageWeekWorkTime,
@@ -30,6 +32,7 @@ const SummarySection: React.FC<Props> = ({
         本站使用者分享之薪資、加班資訊
       </Heading>
       <SummaryBlock
+        companyName={companyName}
         salaryDistribution={salaryDistribution}
         jobAverageSalaries={jobAverageSalaries}
         averageWeekWorkTime={averageWeekWorkTime}

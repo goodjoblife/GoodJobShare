@@ -3,8 +3,7 @@ import React, { Fragment } from 'react';
 
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
-import { Aspects } from 'constants/companyJobTitle';
-import useCompanyName from 'pages/Company/useCompanyName';
+import { Aspects, PageType } from 'constants/companyJobTitle';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import PageBoxRenderer from '../PageBoxRenderer';
@@ -15,6 +14,30 @@ import SearchBar from '../SearchBar';
 import Sorter from '../Sorter';
 import styles from '../styles.module.css';
 
+// 面向評分只有公司才有，抽成獨立元件讓 useAspectsData 只在公司頁執行
+const AspectScoreCards = ({ companyName }) => {
+  const aspectModels = useAspectsData(companyName, Aspects);
+  if (aspectModels.length === 0) return null;
+
+  return (
+    <Wrapper size="l">
+      <div className={styles.scoreCards}>
+        {aspectModels.map(aspectModel => (
+          <AspectScoreCard
+            key={aspectModel.aspect}
+            companyName={companyName}
+            aspect={aspectModel.aspect}
+          />
+        ))}
+      </div>
+    </Wrapper>
+  );
+};
+
+AspectScoreCards.propTypes = {
+  companyName: PropTypes.string.isRequired,
+};
+
 const WorkExperiences = ({
   pageType,
   pageName,
@@ -24,8 +47,6 @@ const WorkExperiences = ({
   pageSize,
 }) => {
   const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
-  const companyName = useCompanyName();
-  const aspectModels = useAspectsData(companyName, Aspects);
 
   return (
     <CompanyAndJobTitleWrapper
@@ -33,17 +54,8 @@ const WorkExperiences = ({
       pageName={pageName}
       tabType={tabType}
     >
-      {aspectModels.length > 0 && (
-        <Wrapper size="l">
-          <div className={styles.scoreCards}>
-            {aspectModels.map(aspectModel => (
-              <AspectScoreCard
-                key={aspectModel.aspect}
-                aspect={aspectModel.aspect}
-              />
-            ))}
-          </div>
-        </Wrapper>
+      {pageType === PageType.COMPANY && (
+        <AspectScoreCards companyName={pageName} />
       )}
       <Wrapper ref={handleSectionRef} size="m">
         <div className={styles.interactive}>

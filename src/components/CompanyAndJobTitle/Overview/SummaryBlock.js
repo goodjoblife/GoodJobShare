@@ -74,11 +74,13 @@ WorkTimeCard.propTypes = {
   data: PropTypes.object,
 };
 
+// companyName 只有公司頁會傳，職稱頁不傳，第三張卡即不出現
 const SummaryBlock = ({
   salaryDistribution,
   jobAverageSalaries,
   averageWeekWorkTime,
   overtimeFrequencyCount,
+  companyName,
 }) => (
   <div className={styles.summaryBlock}>
     <ChartCard data={salaryDistribution || jobAverageSalaries}>
@@ -95,12 +97,18 @@ const SummaryBlock = ({
         overtimeFrequencyCount={overtimeFrequencyCount}
       />
     </WorkTimeCard>
-    <AspectScoreCard aspect={Aspect.WORK_LIFE_BALANCE} />
+    {companyName && (
+      <AspectScoreCard
+        companyName={companyName}
+        aspect={Aspect.WORK_LIFE_BALANCE}
+      />
+    )}
   </div>
 );
 
 SummaryBlock.propTypes = {
   averageWeekWorkTime: PropTypes.number.isRequired,
+  companyName: PropTypes.string,
   jobAverageSalaries: PropTypes.arrayOf(PropTypes.object),
   overtimeFrequencyCount: PropTypes.object.isRequired,
   salaryDistribution: PropTypes.arrayOf(PropTypes.object),

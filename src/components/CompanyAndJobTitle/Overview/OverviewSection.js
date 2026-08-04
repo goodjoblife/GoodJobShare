@@ -6,11 +6,11 @@ import BoxRenderer from 'common/StatusRenderer';
 import {
   Aspect,
   generateTabURL,
+  PageType,
   TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
 } from 'constants/companyJobTitle';
 import usePermission from 'hooks/usePermission';
-import useCompanyName from 'pages/Company/useCompanyName';
 import { fetchBoxPropType } from 'utils/fetchBox';
 
 import AspectScoreCard, { useAspectsData } from './AspectScoreCard';
@@ -19,18 +19,25 @@ import SummaryBlock from './SummaryBlock';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 
-const GenderAspectSnippetBlock = () => {
-  const companyName = useCompanyName();
+const GenderAspectSnippetBlock = ({ companyName }) => {
   const aspectModels = useAspectsData(companyName, [Aspect.GENDER]);
   if (aspectModels.length === 0) return null;
 
   return (
     <SnippetBlock title="性別友善">
       {aspectModels.map(aspectModel => (
-        <AspectScoreCard key={aspectModel.aspect} aspect={aspectModel.aspect} />
+        <AspectScoreCard
+          key={aspectModel.aspect}
+          companyName={companyName}
+          aspect={aspectModel.aspect}
+        />
       ))}
     </SnippetBlock>
   );
+};
+
+GenderAspectSnippetBlock.propTypes = {
+  companyName: PropTypes.string.isRequired,
 };
 
 const OverviewSection = ({
@@ -69,6 +76,7 @@ const OverviewSection = ({
             overtimeFrequencyCount,
           }) => (
             <SummaryBlock
+              companyName={pageType === PageType.COMPANY ? pageName : undefined}
               salaryDistribution={salaryDistribution}
               jobAverageSalaries={jobAverageSalaries}
               averageWeekWorkTime={averageWeekWorkTime}
@@ -77,7 +85,9 @@ const OverviewSection = ({
           )}
         />
       </SnippetBlock>
-      <GenderAspectSnippetBlock />
+      {pageType === PageType.COMPANY && (
+        <GenderAspectSnippetBlock companyName={pageName} />
+      )}
       <SnippetBlock
         title={TAB_TYPE_DETAIL_TRANSLATION[TabType.WORK_EXPERIENCE]}
         linkText={`查看 ${workExperiencesCount} 篇完整的 ${
