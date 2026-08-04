@@ -6,12 +6,15 @@ import {
   queryRatingStatistics,
 } from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import FamilyChildcare from 'components/CompanyAndJobTitle/FamilyChildcare';
 import { FamilyChildcareData } from 'components/CompanyAndJobTitle/FamilyChildcare/FamilyChildcareSection';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
 
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 
 const HARDCODED_DATA: FamilyChildcareData = {
   parentalLeave: {
@@ -89,7 +92,7 @@ type Params = { companyName: string };
 const CompanyFamilyChildcareProvider: React.FC &
   ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
-  const companyName = useCompanyName();
+  const companyName = useCompanyNameParam();
 
   useEffect(() => {
     dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName }));
@@ -100,12 +103,13 @@ const CompanyFamilyChildcareProvider: React.FC &
   }, [dispatch, companyName]);
 
   return (
-    <FamilyChildcare
+    <CompanyAndJobTitleWrapper
       pageType={PageType.COMPANY}
       pageName={companyName}
       tabType={TabType.FAMILY_CHILDCARE}
-      data={HARDCODED_DATA}
-    />
+    >
+      <FamilyChildcare data={HARDCODED_DATA} />
+    </CompanyAndJobTitleWrapper>
   );
 };
 

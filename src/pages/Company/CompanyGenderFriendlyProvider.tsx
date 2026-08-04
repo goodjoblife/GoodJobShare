@@ -8,6 +8,7 @@ import {
 } from 'actions/company';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { paramsSelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import GenderFriendly from 'components/CompanyAndJobTitle/GenderFriendly';
 import { GenderFriendlyData } from 'components/CompanyAndJobTitle/GenderFriendly/GenderFriendly';
 import { PageType, TabType } from 'constants/companyJobTitle';
@@ -15,7 +16,9 @@ import { companyEsgSalaryDataBoxSelectorByName } from 'selectors/companyAndJobTi
 import { ServerSideRender } from 'types/serverSideRender';
 import { isFetched } from 'utils/fetchBox';
 
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 
 const HARDCODED_DATA: GenderFriendlyData = {
   menstrualLeave: {
@@ -54,7 +57,7 @@ type Params = { companyName: string };
 const CompanyGenderFriendlyProvider: React.FC &
   ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
-  const companyName = useCompanyName();
+  const companyName = useCompanyNameParam();
 
   useEffect(() => {
     dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName }));
@@ -82,13 +85,16 @@ const CompanyGenderFriendlyProvider: React.FC &
       : null;
 
   return (
-    <GenderFriendly
+    <CompanyAndJobTitleWrapper
       pageType={PageType.COMPANY}
       pageName={companyName}
       tabType={TabType.GENDER_FRIENDLY}
-      data={HARDCODED_DATA}
-      femaleManagerStatisticsItem={femaleManagerStatisticsItem}
-    />
+    >
+      <GenderFriendly
+        data={HARDCODED_DATA}
+        femaleManagerStatisticsItem={femaleManagerStatisticsItem}
+      />
+    </CompanyAndJobTitleWrapper>
   );
 };
 
