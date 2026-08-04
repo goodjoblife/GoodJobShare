@@ -24,6 +24,7 @@ import {
 } from 'selectors/routing';
 import { getFetched, isFetched } from 'utils/fetchBox';
 
+import CompanyPage from './CompanyPage';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 const useWorkExperiencesBoxSelector = pageName => {
@@ -85,14 +86,13 @@ const CompanyWorkExperiencesProvider = () => {
   const boxSelector = useWorkExperiencesBoxSelector(companyName);
 
   return (
-    <WorkExperiences
-      pageType={pageType}
-      pageName={companyName}
-      page={page}
-      pageSize={PAGE_SIZE}
-      tabType={TabType.WORK_EXPERIENCE}
-      boxSelector={boxSelector}
-    />
+    <CompanyPage tabType={TabType.WORK_EXPERIENCE}>
+      <WorkExperiences
+        page={page}
+        pageSize={PAGE_SIZE}
+        boxSelector={boxSelector}
+      />
+    </CompanyPage>
   );
 };
 

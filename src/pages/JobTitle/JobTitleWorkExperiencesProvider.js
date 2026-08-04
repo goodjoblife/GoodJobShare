@@ -20,6 +20,7 @@ import {
 } from 'selectors/routing';
 import { getFetched, isFetched } from 'utils/fetchBox';
 
+import JobTitlePage from './JobTitlePage';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
 const useWorkExperiencesBoxSelector = pageName => {
@@ -73,14 +74,13 @@ const JobTitleWorkExperiencesProvider = () => {
   const boxSelector = useWorkExperiencesBoxSelector(jobTitle);
 
   return (
-    <WorkExperiences
-      pageType={pageType}
-      pageName={jobTitle}
-      page={page}
-      pageSize={PAGE_SIZE}
-      tabType={TabType.WORK_EXPERIENCE}
-      boxSelector={boxSelector}
-    />
+    <JobTitlePage tabType={TabType.WORK_EXPERIENCE}>
+      <WorkExperiences
+        page={page}
+        pageSize={PAGE_SIZE}
+        boxSelector={boxSelector}
+      />
+    </JobTitlePage>
   );
 };
 

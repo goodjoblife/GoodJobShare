@@ -5,8 +5,8 @@ import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import { Aspects, PageType } from 'constants/companyJobTitle';
 
-import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import PageBoxRenderer from '../PageBoxRenderer';
+import { usePageContext } from '../PageContextProvider';
 import Helmet from './Helmet';
 import WorkExperiencesSection from './WorkExperiences';
 import AspectScoreCard, { useAspectsData } from '../Overview/AspectScoreCard';
@@ -38,22 +38,12 @@ AspectScoreCards.propTypes = {
   companyName: PropTypes.string.isRequired,
 };
 
-const WorkExperiences = ({
-  pageType,
-  pageName,
-  tabType,
-  boxSelector,
-  page,
-  pageSize,
-}) => {
+const WorkExperiences = ({ boxSelector, page, pageSize }) => {
   const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
+  const { pageType, pageName, tabType } = usePageContext();
 
   return (
-    <CompanyAndJobTitleWrapper
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-    >
+    <Fragment>
       {pageType === PageType.COMPANY && (
         <AspectScoreCards companyName={pageName} />
       )}
@@ -93,17 +83,14 @@ const WorkExperiences = ({
           }}
         />
       </Wrapper>
-    </CompanyAndJobTitleWrapper>
+    </Fragment>
   );
 };
 
 WorkExperiences.propTypes = {
   boxSelector: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
-  pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
-  pageType: PropTypes.string.isRequired,
-  tabType: PropTypes.string.isRequired,
 };
 
 export default WorkExperiences;
