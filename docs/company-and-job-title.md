@@ -12,17 +12,20 @@
 ```
 routes.js  /companies/:companyName
 └─ CompanyOverviewProvider          讀 route param、dispatch query、掛 fetchData
-   └─ CompanyPage                   提供 PageContext，並渲染共用外框
-      └─ CompanyAndJobTitleWrapper  麵包屑、標題、tab 列
-         └─ Overview                內容元件，只收自己要用的資料
+   └─ CompanyAndJobTitleWrapper     提供 PageContext；麵包屑、標題、tab 列
+      └─ Overview                   內容元件，只收自己要用的資料
 ```
 
 Provider 的 render 因此讀得出整頁的組成：
 
 ```tsx
-<CompanyPage tabType={TabType.OVERVIEW}>
+<CompanyAndJobTitleWrapper
+  pageType={pageType}
+  pageName={companyName}
+  tabType={TabType.OVERVIEW}
+>
   <Overview boxSelector={boxSelector} statisticsBox={statisticsBox} />
-</CompanyPage>
+</CompanyAndJobTitleWrapper>
 ```
 
 ---
@@ -31,7 +34,7 @@ Provider 的 render 因此讀得出整頁的組成：
 
 這裡的元件由 Provider 透過 props 取得**資料**（box、selector、分頁參數…），**頁面身分**（`pageType` / `pageName` / `tabType`）則來自 `PageContext`，不必逐層傳。
 
-內容元件不渲染 `CompanyAndJobTitleWrapper` —— 外框由 Provider 端的 `CompanyPage` / `JobTitlePage` 負責。內容元件回傳自己的片段即可。
+內容元件不渲染 `CompanyAndJobTitleWrapper` —— 外框由 Provider 渲染。內容元件回傳自己的片段即可。
 
 ### 不讀取 route params
 
@@ -49,7 +52,7 @@ UI 層元件**一律不讀 route params**（`useParams`、`useCompanyName`、`us
 
 ### `PageContextProvider` — 頁面身分
 
-`CompanyPage` / `JobTitlePage` 提供 `PageContext`，內容是 `{ pageType, pageName, tabType }` —— 三者都由 route 決定、在頁面生命週期內固定。UI 層任何元件都可以 `usePageContext()` 取得。
+`CompanyAndJobTitleWrapper` 提供 `PageContext`，內容是 `{ pageType, pageName, tabType }` —— 三者都由 route 決定、在頁面生命週期內固定。UI 層任何元件都可以 `usePageContext()` 取得。
 
 - **它不是資料通道**。除了頁面身分之外的資料，一律走 props。
 - `useCompanyName()`（`components/CompanyAndJobTitle/PageContextProvider`，與 `pages/Company/useCompanyName` 同名但不同來源）在非公司頁會 throw。這是刻意的：需要公司名的元件若被掛到職稱頁，應該當場失敗，而不是靠「redux 剛好查無資料」而看起來正常。
@@ -61,19 +64,9 @@ UI 層元件**一律不讀 route params**（`useParams`、`useCompanyName`、`us
 
 負責讀取 route params、dispatch Redux actions、掛 `fetchData`（SSR 用，見 [ssr-fetch-data.md](ssr-fetch-data.md)），再將資料傳給對應的 UI 元件。
 
-Provider 不寫 UI 邏輯，但**負責組合**：把內容元件包進 `CompanyPage` / `JobTitlePage`。
+Provider 不寫 UI 邏輯，但**負責組合**：把內容元件包進 `CompanyAndJobTitleWrapper`，並提供 `pageType` / `pageName` / `tabType`。
 
-### `CompanyPage` / `JobTitlePage`
-
-兩個對稱的薄元件，各自把「頁面身分 + 共用外框」收在一起：
-
-```tsx
-<PageContextProvider pageType={PageType.COMPANY} pageName={companyName} tabType={tabType}>
-  <CompanyAndJobTitleWrapper>{children}</CompanyAndJobTitleWrapper>
-</PageContextProvider>
-```
-
-`pageType` 由檔案本身決定，`pageName` 讀自 route param，`tabType` 由 Provider 指定。放在這一層有兩個理由：`tabType` 是 route 的性質，不該先傳給內容元件再轉手給外框；而內容元件因此位於 context 之內，不必逐層收 `pageType` / `pageName`。
+外框由 Provider 而非內容元件渲染，有兩個理由：`tabType` 是 route 的性質，不該先傳給內容元件再由它轉手給外框；而內容元件因此位於 `PageContext` 之內，不必逐層收頁面身分。
 
 ### route param 的雙匯出
 
@@ -95,5 +88,5 @@ UI 層若要公司名，用 `PageContextProvider` 的同名 hook，不要 import
 
 1. 在 `constants/companyJobTitle.ts` 加上新的 `TabType` 與對應的 URL 工具
 2. 在 `components/CompanyAndJobTitle/` 建立 UI 元件。不渲染外框，頁面身分用 `usePageContext()`
-3. 在 `pages/Company/` 與 `pages/JobTitle/` 各新增對應 Provider，掛上 `fetchData`，render 包成 `<CompanyPage tabType={…}><新元件 …/></CompanyPage>`
+3. 在 `pages/Company/` 與 `pages/JobTitle/` 各新增對應 Provider，掛上 `fetchData`，render 包成 `<CompanyAndJobTitleWrapper pageType pageName tabType><新元件 …/></CompanyAndJobTitleWrapper>`
 4. 在 `src/routes.js` 的 Company 與 JobTitle route 群組各加入新路由

@@ -16,16 +16,23 @@ import {
 } from 'constants/companyJobTitle';
 
 import styles from './CompanyAndJobTitleWrapper.module.css';
-import { usePageContext } from './PageContextProvider';
+import { PageContextProvider } from './PageContextProvider';
 import { generateBreadCrumbData } from './utils';
 
-// 由 CompanyPage / JobTitlePage 渲染，兩者已提供 PageContext，
-// 因此頁面身分直接從 context 取得，不再重複收 props
-const CompanyAndJobTitleWrapper: React.FC<React.PropsWithChildren> = ({
+type CompanyAndJobTitleWrapperProps = React.PropsWithChildren<{
+  pageType: PageType;
+  pageName: string;
+  tabType: TabType;
+}>;
+
+// 由 Provider 渲染。除了共用 chrome 之外，也把頁面身分放進 PageContext，
+// 讓 children（各 tab 的內容元件）不必逐層收 pageType / pageName / tabType
+const CompanyAndJobTitleWrapper: React.FC<CompanyAndJobTitleWrapperProps> = ({
+  pageType,
+  pageName,
+  tabType,
   children,
 }) => {
-  const { pageType, pageName, tabType } = usePageContext();
-
   const tabLinkOptions = useMemo(
     () =>
       (Object.entries(tabTypeTranslation) as [TabType, string][]).map(
@@ -54,35 +61,41 @@ const CompanyAndJobTitleWrapper: React.FC<React.PropsWithChildren> = ({
   }, [pageName, tabType]);
 
   return (
-    <div>
-      <Wrapper size="l">
-        <div style={{ marginBottom: '20px' }}>
-          <BreadCrumb
-            data={generateBreadCrumbData({ pageType, pageName, tabType })}
-          />
-        </div>
-        <div>
-          <div className={styles.titleContainer}>
-            <Heading className={styles.title}>{pageH1}</Heading>
-            {pageType === PageType.COMPANY && (
-              <SubscribeNotificationButton companyName={pageName} />
-            )}
+    <PageContextProvider
+      pageType={pageType}
+      pageName={pageName}
+      tabType={tabType}
+    >
+      <div>
+        <Wrapper size="l">
+          <div style={{ marginBottom: '20px' }}>
+            <BreadCrumb
+              data={generateBreadCrumbData({ pageType, pageName, tabType })}
+            />
           </div>
-          <StatisticsCard pageType={pageType} pageName={pageName} />
-        </div>
-        <TabLinkGroup
-          className=""
-          options={tabLinkOptions}
-          style={{
-            marginBottom: '24px',
-          }}
-        />
-      </Wrapper>
-      {children}
-      <Wrapper size="l">
-        <FanPageBlock className={styles.fanPageBlock} />
-      </Wrapper>
-    </div>
+          <div>
+            <div className={styles.titleContainer}>
+              <Heading className={styles.title}>{pageH1}</Heading>
+              {pageType === PageType.COMPANY && (
+                <SubscribeNotificationButton companyName={pageName} />
+              )}
+            </div>
+            <StatisticsCard pageType={pageType} pageName={pageName} />
+          </div>
+          <TabLinkGroup
+            className=""
+            options={tabLinkOptions}
+            style={{
+              marginBottom: '24px',
+            }}
+          />
+        </Wrapper>
+        {children}
+        <Wrapper size="l">
+          <FanPageBlock className={styles.fanPageBlock} />
+        </Wrapper>
+      </div>
+    </PageContextProvider>
   );
 };
 

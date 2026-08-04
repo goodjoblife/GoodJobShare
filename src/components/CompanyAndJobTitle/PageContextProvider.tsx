@@ -10,7 +10,7 @@ type PageContextValue = {
   tabType: TabType;
 };
 
-// undefined 代表不在 CompanyPage / JobTitlePage 之下，由 usePageContext 擋下
+// undefined 代表不在 CompanyAndJobTitleWrapper 之下，由 usePageContext 擋下
 const PageContext = createContext<PageContextValue | undefined>(undefined);
 
 type PageContextProviderProps = React.PropsWithChildren<PageContextValue>;
@@ -32,7 +32,7 @@ export const PageContextProvider: React.FC<PageContextProviderProps> = ({
 export const usePageContext = (): PageContextValue => {
   const value = useContext(PageContext);
   if (value === undefined) {
-    throw new Error('usePageContext 只能用在 CompanyPage / JobTitlePage 之下');
+    throw new Error('usePageContext 只能用在 CompanyAndJobTitleWrapper 之下');
   }
   return value;
 };

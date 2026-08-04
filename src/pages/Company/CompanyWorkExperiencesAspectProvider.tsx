@@ -7,6 +7,7 @@ import {
 } from 'actions/company';
 import { WorkExperience } from 'apis/experience';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import WorkExperiencesAspect from 'components/CompanyAndJobTitle/WorkExperiences/Aspects';
 import useRating from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/useRating';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
@@ -26,7 +27,6 @@ import {
 import { ServerSideRender } from 'types/serverSideRender';
 import FetchBox, { getFetched, isFetched } from 'utils/fetchBox';
 
-import CompanyPage from './CompanyPage';
 import useAspect, { aspectSelector } from './useAspect';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 
@@ -102,7 +102,11 @@ const CompanyWorkExperiencesAspectProvider: React.FC &
   );
 
   return (
-    <CompanyPage tabType={TabType.WORK_EXPERIENCE}>
+    <CompanyAndJobTitleWrapper
+      pageType={pageType}
+      pageName={companyName}
+      tabType={TabType.WORK_EXPERIENCE}
+    >
       <WorkExperiencesAspect
         aspect={aspect}
         page={page as number}
@@ -110,7 +114,7 @@ const CompanyWorkExperiencesAspectProvider: React.FC &
         statisticsBoxSelector={statisticsBoxSelector}
         experiencesBoxSelector={experiencesBoxSelector}
       />
-    </CompanyPage>
+    </CompanyAndJobTitleWrapper>
   );
 };
 

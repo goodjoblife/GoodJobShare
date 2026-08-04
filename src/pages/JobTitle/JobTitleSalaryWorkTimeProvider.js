@@ -7,6 +7,7 @@ import {
   queryJobTitleSalaryWorkTimeStatistics,
 } from 'actions/jobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import SalaryWorkTime from 'components/CompanyAndJobTitle/SalaryWorkTime';
 import {
   dataTimeFromQuerySelector,
@@ -34,7 +35,6 @@ import {
   queryFromQuerySelector,
 } from 'selectors/routing';
 
-import JobTitlePage from './JobTitlePage';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
 const useOverviewStatisticsBox = pageName => {
@@ -141,7 +141,11 @@ const JobTitleSalaryWorkTimeProvider = () => {
   const salaryWorkTimeStatisticsBox = useSalaryWorkTimeStatisticsBox(jobTitle);
 
   return (
-    <JobTitlePage tabType={TabType.TIME_AND_SALARY}>
+    <CompanyAndJobTitleWrapper
+      pageType={pageType}
+      pageName={jobTitle}
+      tabType={TabType.TIME_AND_SALARY}
+    >
       <SalaryWorkTime
         page={page}
         pageSize={PAGE_SIZE}
@@ -150,7 +154,7 @@ const JobTitleSalaryWorkTimeProvider = () => {
         statisticsBox={statisticsBox}
         onCloseReport={() => handleQueryJobTitleSalaryWorkTime({ force: true })}
       />
-    </JobTitlePage>
+    </CompanyAndJobTitleWrapper>
   );
 };
 

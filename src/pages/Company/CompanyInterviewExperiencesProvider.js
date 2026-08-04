@@ -7,6 +7,7 @@ import {
   queryRatingStatistics,
 } from 'actions/company';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 import {
@@ -24,7 +25,6 @@ import {
 } from 'selectors/routing';
 import { getFetched, isFetched } from 'utils/fetchBox';
 
-import CompanyPage from './CompanyPage';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 
@@ -91,14 +91,18 @@ const CompanyInterviewExperiencesProvider = () => {
   const topNJobTitles = useTopNJobTitles(companyName);
 
   return (
-    <CompanyPage tabType={TabType.INTERVIEW_EXPERIENCE}>
+    <CompanyAndJobTitleWrapper
+      pageType={pageType}
+      pageName={companyName}
+      tabType={TabType.INTERVIEW_EXPERIENCE}
+    >
       <InterviewExperiences
         page={page}
         pageSize={PAGE_SIZE}
         topNJobTitles={topNJobTitles.interview}
         boxSelector={boxSelector}
       />
-    </CompanyPage>
+    </CompanyAndJobTitleWrapper>
   );
 };
 

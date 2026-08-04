@@ -7,6 +7,7 @@ import {
   queryRatingStatistics,
 } from 'actions/company';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 import {
   sortByFromQuerySelector,
@@ -24,7 +25,6 @@ import {
 } from 'selectors/routing';
 import { getFetched, isFetched } from 'utils/fetchBox';
 
-import CompanyPage from './CompanyPage';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 const useWorkExperiencesBoxSelector = pageName => {
@@ -86,13 +86,17 @@ const CompanyWorkExperiencesProvider = () => {
   const boxSelector = useWorkExperiencesBoxSelector(companyName);
 
   return (
-    <CompanyPage tabType={TabType.WORK_EXPERIENCE}>
+    <CompanyAndJobTitleWrapper
+      pageType={pageType}
+      pageName={companyName}
+      tabType={TabType.WORK_EXPERIENCE}
+    >
       <WorkExperiences
         page={page}
         pageSize={PAGE_SIZE}
         boxSelector={boxSelector}
       />
-    </CompanyPage>
+    </CompanyAndJobTitleWrapper>
   );
 };
 

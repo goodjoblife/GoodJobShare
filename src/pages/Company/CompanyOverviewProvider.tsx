@@ -8,6 +8,7 @@ import {
   queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import Overview from 'components/CompanyAndJobTitle/Overview';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import usePermission from 'hooks/usePermission';
@@ -23,7 +24,6 @@ import {
 import { ServerSideRender } from 'types/serverSideRender';
 import FetchBox from 'utils/fetchBox';
 
-import CompanyPage from './CompanyPage';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 // Matches the React Router route params for Company pages
@@ -89,9 +89,13 @@ const CompanyOverviewProvider: React.FC & ServerSideRender<Params> = () => {
   const statisticsBox = useOverviewStatisticsBox(companyName);
 
   return (
-    <CompanyPage tabType={TabType.OVERVIEW}>
+    <CompanyAndJobTitleWrapper
+      pageType={pageType}
+      pageName={companyName}
+      tabType={TabType.OVERVIEW}
+    >
       <Overview boxSelector={boxSelector} statisticsBox={statisticsBox} />
-    </CompanyPage>
+    </CompanyAndJobTitleWrapper>
   );
 };
 

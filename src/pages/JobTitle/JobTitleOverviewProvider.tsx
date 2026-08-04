@@ -5,6 +5,7 @@ import {
   queryJobTitleOverview,
   queryJobTitleOverviewStatistics,
 } from 'actions/jobTitle';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import Overview from 'components/CompanyAndJobTitle/Overview';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import usePermission from 'hooks/usePermission';
@@ -20,7 +21,6 @@ import {
 import { ServerSideRender } from 'types/serverSideRender';
 import FetchBox from 'utils/fetchBox';
 
-import JobTitlePage from './JobTitlePage';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
 // Matches the React Router route params for JobTitle pages
@@ -70,9 +70,13 @@ const JobTitleOverviewProvider: React.FC & ServerSideRender<Params> = () => {
   const statisticsBox = useOverviewStatisticsBox(jobTitle);
 
   return (
-    <JobTitlePage tabType={TabType.OVERVIEW}>
+    <CompanyAndJobTitleWrapper
+      pageType={pageType}
+      pageName={jobTitle}
+      tabType={TabType.OVERVIEW}
+    >
       <Overview boxSelector={boxSelector} statisticsBox={statisticsBox} />
-    </JobTitlePage>
+    </CompanyAndJobTitleWrapper>
   );
 };
 

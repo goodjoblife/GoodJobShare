@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { queryJobTitleWorkExperiences } from 'actions/jobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 import {
   sortByFromQuerySelector,
@@ -20,7 +21,6 @@ import {
 } from 'selectors/routing';
 import { getFetched, isFetched } from 'utils/fetchBox';
 
-import JobTitlePage from './JobTitlePage';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
 const useWorkExperiencesBoxSelector = pageName => {
@@ -74,13 +74,17 @@ const JobTitleWorkExperiencesProvider = () => {
   const boxSelector = useWorkExperiencesBoxSelector(jobTitle);
 
   return (
-    <JobTitlePage tabType={TabType.WORK_EXPERIENCE}>
+    <CompanyAndJobTitleWrapper
+      pageType={pageType}
+      pageName={jobTitle}
+      tabType={TabType.WORK_EXPERIENCE}
+    >
       <WorkExperiences
         page={page}
         pageSize={PAGE_SIZE}
         boxSelector={boxSelector}
       />
-    </JobTitlePage>
+    </CompanyAndJobTitleWrapper>
   );
 };
 

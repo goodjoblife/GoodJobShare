@@ -10,6 +10,7 @@ import {
   queryRatingStatistics,
 } from 'actions/company';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import SalaryWorkTime from 'components/CompanyAndJobTitle/SalaryWorkTime';
 import {
   dataTimeFromQuerySelector,
@@ -38,7 +39,6 @@ import {
   queryFromQuerySelector,
 } from 'selectors/routing';
 
-import CompanyPage from './CompanyPage';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 
@@ -181,7 +181,11 @@ const CompanySalaryWorkTimeProvider = () => {
   const boxSelector = useSalaryWorkTimeBoxSelector(companyName);
 
   return (
-    <CompanyPage tabType={TabType.TIME_AND_SALARY}>
+    <CompanyAndJobTitleWrapper
+      pageType={pageType}
+      pageName={companyName}
+      tabType={TabType.TIME_AND_SALARY}
+    >
       <SalaryWorkTime
         page={page}
         pageSize={PAGE_SIZE}
@@ -192,7 +196,7 @@ const CompanySalaryWorkTimeProvider = () => {
         statisticsBox={statisticsBox}
         onCloseReport={() => handleQueryCompanySalaryWorkTime({ force: true })}
       />
-    </CompanyPage>
+    </CompanyAndJobTitleWrapper>
   );
 };
 
