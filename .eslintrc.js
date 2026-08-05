@@ -67,6 +67,21 @@ module.exports = {
         pathGroupsExcludedImportTypes: ['builtin'],
       },
     ],
+    // 分層：components 是共用 UI 層，不得反向依賴 pages（Provider 層）。
+    // 讀 route param 是 Provider 的事，UI 層要頁面身分請走 PageContext
+    'import/no-restricted-paths': [
+      'error',
+      {
+        zones: [
+          {
+            target: './src/components',
+            from: './src/pages',
+            message:
+              'components 不可 import pages：頁面身分請用 components/CompanyAndJobTitle/PageContextProvider 的 usePageContext / useCompanyName',
+          },
+        ],
+      },
+    ],
     'import/first': 'error',
     'import/newline-after-import': 'error',
     'import/no-duplicates': 'error',

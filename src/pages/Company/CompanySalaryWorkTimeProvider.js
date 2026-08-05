@@ -10,6 +10,7 @@ import {
   queryRatingStatistics,
 } from 'actions/company';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import SalaryWorkTime from 'components/CompanyAndJobTitle/SalaryWorkTime';
 import {
   dataTimeFromQuerySelector,
@@ -38,7 +39,9 @@ import {
   queryFromQuerySelector,
 } from 'selectors/routing';
 
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 import { useTopNJobTitles } from './useTopNJobTitles';
 
 const useOverviewStatisticsBox = pageName => {
@@ -81,7 +84,7 @@ const useEsgSalaryDataBox = companyName => {
 const CompanySalaryWorkTimeProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
-  const companyName = useCompanyName();
+  const companyName = useCompanyNameParam();
   const [jobTitle] = useSearchTextFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
@@ -180,19 +183,22 @@ const CompanySalaryWorkTimeProvider = () => {
   const boxSelector = useSalaryWorkTimeBoxSelector(companyName);
 
   return (
-    <SalaryWorkTime
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={companyName}
-      page={page}
-      pageSize={PAGE_SIZE}
-      topNJobTitles={topNJobTitles.salary}
-      esgSalaryDataBox={esgSalaryDataBox}
       tabType={TabType.TIME_AND_SALARY}
-      salaryWorkTimeStatisticsBox={salaryWorkTimeStatisticsBox}
-      boxSelector={boxSelector}
-      statisticsBox={statisticsBox}
-      onCloseReport={() => handleQueryCompanySalaryWorkTime({ force: true })}
-    />
+    >
+      <SalaryWorkTime
+        page={page}
+        pageSize={PAGE_SIZE}
+        topNJobTitles={topNJobTitles.salary}
+        esgSalaryDataBox={esgSalaryDataBox}
+        salaryWorkTimeStatisticsBox={salaryWorkTimeStatisticsBox}
+        boxSelector={boxSelector}
+        statisticsBox={statisticsBox}
+        onCloseReport={() => handleQueryCompanySalaryWorkTime({ force: true })}
+      />
+    </CompanyAndJobTitleWrapper>
   );
 };
 

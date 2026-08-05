@@ -7,6 +7,7 @@ import {
   queryJobTitleSalaryWorkTimeStatistics,
 } from 'actions/jobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import SalaryWorkTime from 'components/CompanyAndJobTitle/SalaryWorkTime';
 import {
   dataTimeFromQuerySelector,
@@ -34,7 +35,7 @@ import {
   queryFromQuerySelector,
 } from 'selectors/routing';
 
-import useJobTitle, { jobTitleSelector } from './useJobTitle';
+import useJobTitleParam, { jobTitleSelector } from './useJobTitleParam';
 
 const useOverviewStatisticsBox = pageName => {
   const selector = useMemo(
@@ -65,7 +66,7 @@ const useSalaryWorkTimeBoxSelector = pageName => {
 const JobTitleSalaryWorkTimeProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.JOB_TITLE;
-  const jobTitle = useJobTitle();
+  const jobTitle = useJobTitleParam();
   const [companyName] = useSearchTextFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
@@ -140,17 +141,20 @@ const JobTitleSalaryWorkTimeProvider = () => {
   const salaryWorkTimeStatisticsBox = useSalaryWorkTimeStatisticsBox(jobTitle);
 
   return (
-    <SalaryWorkTime
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={jobTitle}
-      page={page}
-      pageSize={PAGE_SIZE}
       tabType={TabType.TIME_AND_SALARY}
-      salaryWorkTimeStatisticsBox={salaryWorkTimeStatisticsBox}
-      boxSelector={boxSelector}
-      statisticsBox={statisticsBox}
-      onCloseReport={() => handleQueryJobTitleSalaryWorkTime({ force: true })}
-    />
+    >
+      <SalaryWorkTime
+        page={page}
+        pageSize={PAGE_SIZE}
+        salaryWorkTimeStatisticsBox={salaryWorkTimeStatisticsBox}
+        boxSelector={boxSelector}
+        statisticsBox={statisticsBox}
+        onCloseReport={() => handleQueryJobTitleSalaryWorkTime({ force: true })}
+      />
+    </CompanyAndJobTitleWrapper>
   );
 };
 

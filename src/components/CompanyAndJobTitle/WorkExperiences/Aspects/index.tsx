@@ -3,18 +3,13 @@ import React from 'react';
 import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { Heading, Link, Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
-import {
-  Aspect,
-  generateTabURL,
-  PageType,
-  TabType,
-} from 'constants/companyJobTitle';
+import { Aspect, generateTabURL } from 'constants/companyJobTitle';
 import { RootState } from 'reducers';
 import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
 import FetchBox from 'utils/fetchBox';
 
-import CompanyAndJobTitleWrapper from '../../CompanyAndJobTitleWrapper';
 import PageBoxRenderer from '../../PageBoxRenderer';
+import { usePageContext } from '../../PageContextProvider';
 import Helmet from '../Helmet';
 import WorkExperiencesSection from '../WorkExperiences';
 import RatingFilter from './RatingFilter';
@@ -23,9 +18,6 @@ import Summary from './Summary';
 
 export type AspectProps = {
   aspect: Aspect;
-  pageType: PageType;
-  pageName: string;
-  tabType: TabType;
   statisticsBoxSelector: (
     state: RootState,
   ) => FetchBox<AspectStatisticsData | null>;
@@ -38,23 +30,17 @@ export type AspectProps = {
 
 const AspectSection: React.FC<AspectProps> = ({
   aspect,
-  pageType,
-  pageName,
-  tabType,
   statisticsBoxSelector,
   experiencesBoxSelector,
   page,
   pageSize,
 }) => {
+  const { pageType, pageName, tabType } = usePageContext();
   const parentPath = generateTabURL({ pageType, pageName, tabType });
   const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
 
   return (
-    <CompanyAndJobTitleWrapper
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-    >
+    <>
       <Wrapper size="l">
         <Link to={parentPath}>&lt;&lt;回到評價分頁</Link>
         <Heading className={styles.title}>{aspect}</Heading>
@@ -112,7 +98,7 @@ const AspectSection: React.FC<AspectProps> = ({
           )}
         />
       </Wrapper>
-    </CompanyAndJobTitleWrapper>
+    </>
   );
 };
 

@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Card from 'common/Card';
-import { Aspect } from 'constants/companyJobTitle';
+import { Aspect, PageType } from 'constants/companyJobTitle';
 import useMobile from 'hooks/useMobile';
 
 import AspectScoreCard from './AspectScoreCard';
+import { usePageContext } from '../PageContextProvider';
 import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
 import emptySalaryImage from './empty_data_salary.png';
 import emptyWorkTimeImage from './empty_data_working_time.png';
@@ -74,30 +75,37 @@ WorkTimeCard.propTypes = {
   data: PropTypes.object,
 };
 
+// 第三張卡是面向評分，只有公司才有，職稱頁不顯示
 const SummaryBlock = ({
   salaryDistribution,
   jobAverageSalaries,
   averageWeekWorkTime,
   overtimeFrequencyCount,
-}) => (
-  <div className={styles.summaryBlock}>
-    <ChartCard data={salaryDistribution || jobAverageSalaries}>
-      {salaryDistribution && (
-        <SalaryDistributionChart data={salaryDistribution} />
+}) => {
+  const { pageType } = usePageContext();
+
+  return (
+    <div className={styles.summaryBlock}>
+      <ChartCard data={salaryDistribution || jobAverageSalaries}>
+        {salaryDistribution && (
+          <SalaryDistributionChart data={salaryDistribution} />
+        )}
+        {jobAverageSalaries && (
+          <JobTitleDistributionChart data={jobAverageSalaries} />
+        )}
+      </ChartCard>
+      <WorkTimeCard data={overtimeFrequencyCount}>
+        <AverageWeekWorkTimeView
+          averageWeekWorkTime={averageWeekWorkTime}
+          overtimeFrequencyCount={overtimeFrequencyCount}
+        />
+      </WorkTimeCard>
+      {pageType === PageType.COMPANY && (
+        <AspectScoreCard aspect={Aspect.WORK_LIFE_BALANCE} />
       )}
-      {jobAverageSalaries && (
-        <JobTitleDistributionChart data={jobAverageSalaries} />
-      )}
-    </ChartCard>
-    <WorkTimeCard data={overtimeFrequencyCount}>
-      <AverageWeekWorkTimeView
-        averageWeekWorkTime={averageWeekWorkTime}
-        overtimeFrequencyCount={overtimeFrequencyCount}
-      />
-    </WorkTimeCard>
-    <AspectScoreCard aspect={Aspect.WORK_LIFE_BALANCE} />
-  </div>
-);
+    </div>
+  );
+};
 
 SummaryBlock.propTypes = {
   averageWeekWorkTime: PropTypes.number.isRequired,
