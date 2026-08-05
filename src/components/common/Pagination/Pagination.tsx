@@ -1,3 +1,4 @@
+import { LocationDescriptor } from 'history';
 import qs from 'qs';
 import React, { useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -48,7 +49,7 @@ export const useCreatePageLinkTo = (): readonly [
 };
 
 type Props = {
-  createPageLinkTo: (p: number) => object;
+  createPageLinkTo: (p: number) => LocationDescriptor;
   currentPage?: number;
   totalCount?: number;
   unit?: number;

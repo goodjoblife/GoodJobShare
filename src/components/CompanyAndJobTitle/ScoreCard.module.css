@@ -1,0 +1,21 @@
+@value below-mobile, below-tablet from "../common/variables.module.css";
+
+/* 卡片尺寸與 SummaryBlock 的 .card / .scoreCard 相同：兩者會並排在同一列 */
+.card {
+  width: 265px;
+  height: 265px;
+
+  @media (max-width: below-mobile) {
+    height: auto;
+  }
+}
+
+.scoreCard {
+  display: flex;
+
+  @media (max-width: below-tablet) {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}

@@ -1,13 +1,17 @@
 import loadable from '@loadable/component';
 import cn from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 
+import {
+  JobAverageSalary,
+  OvertimeFrequencyCount,
+  SalaryDistributionBin,
+} from 'apis/salaryWorkTime';
 import Card from 'common/Card';
 import { Aspect, PageType } from 'constants/companyJobTitle';
 import useMobile from 'hooks/useMobile';
 
-import AspectScoreCard from './AspectScoreCard';
+import AspectScoreCard from '../AspectScoreCard';
 import { usePageContext } from '../PageContextProvider';
 import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
 import emptySalaryImage from './empty_data_salary.png';
@@ -21,10 +25,15 @@ const JobTitleDistributionChart = loadable(() =>
   import('common/Charts/JobTitleDistributionChart'),
 );
 
-const ChartCard = ({ data, children }) => {
+type ChartCardProps = {
+  data: SalaryDistributionBin[] | JobAverageSalary[] | undefined;
+  children: React.ReactNode;
+};
+
+const ChartCard: React.FC<ChartCardProps> = ({ data, children }) => {
   const isMobile = useMobile();
   const barCardStyle = isMobile ? styles.barChartSm : styles.barChart;
-  const isEmptyData = data.length === 0;
+  const isEmptyData = !data || data.length === 0;
   return (
     <Card
       className={cn(styles.card, barCardStyle, {
@@ -44,12 +53,12 @@ const ChartCard = ({ data, children }) => {
   );
 };
 
-ChartCard.propTypes = {
-  children: PropTypes.node,
-  data: PropTypes.arrayOf(PropTypes.object),
+type WorkTimeCardProps = {
+  data: OvertimeFrequencyCount | null;
+  children: React.ReactNode;
 };
 
-const WorkTimeCard = ({ data, children }) => {
+const WorkTimeCard: React.FC<WorkTimeCardProps> = ({ data, children }) => {
   const isEmptyData = !data;
   return (
     <Card
@@ -70,13 +79,18 @@ const WorkTimeCard = ({ data, children }) => {
   );
 };
 
-WorkTimeCard.propTypes = {
-  children: PropTypes.node,
-  data: PropTypes.object,
+// CompanyOverviewStatistics 與 JobTitleOverviewStatistics 的共同上界：
+// 職稱頁有 salaryDistribution，公司頁有 jobAverageSalaries，其餘欄位相同。
+// 兩者的 count 由呼叫端用來決定區塊的標題與空狀態，圖表本身用不到
+type SummaryBlockProps = {
+  salaryDistribution?: SalaryDistributionBin[];
+  jobAverageSalaries?: JobAverageSalary[];
+  averageWeekWorkTime: number;
+  overtimeFrequencyCount: OvertimeFrequencyCount | null;
 };
 
 // 第三張卡是面向評分，只有公司才有，職稱頁不顯示
-const SummaryBlock = ({
+const SummaryBlock: React.FC<SummaryBlockProps> = ({
   salaryDistribution,
   jobAverageSalaries,
   averageWeekWorkTime,
@@ -105,13 +119,6 @@ const SummaryBlock = ({
       )}
     </div>
   );
-};
-
-SummaryBlock.propTypes = {
-  averageWeekWorkTime: PropTypes.number.isRequired,
-  jobAverageSalaries: PropTypes.arrayOf(PropTypes.object),
-  overtimeFrequencyCount: PropTypes.object.isRequired,
-  salaryDistribution: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default SummaryBlock;
