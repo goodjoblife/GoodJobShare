@@ -3,8 +3,14 @@ import React from 'react';
 import { Wrapper } from 'common/base';
 import { PageType } from 'constants/companyJobTitle';
 import { RootState } from 'reducers';
-import { CompanyOverview } from 'reducers/companyIndex';
-import { JobTitleOverview } from 'reducers/jobTitleIndex';
+import {
+  CompanyOverview,
+  CompanyOverviewStatistics,
+} from 'reducers/companyIndex';
+import {
+  JobTitleOverview,
+  JobTitleOverviewStatistics,
+} from 'reducers/jobTitleIndex';
 import FetchBox from 'utils/fetchBox';
 
 import PageBoxRenderer from '../PageBoxRenderer';
@@ -16,7 +22,9 @@ type OverviewProps = {
   boxSelector: (
     state: RootState,
   ) => FetchBox<CompanyOverview | JobTitleOverview | null>;
-  statisticsBox: FetchBox<unknown>;
+  statisticsBox: FetchBox<
+    CompanyOverviewStatistics | JobTitleOverviewStatistics | null
+  >;
 };
 
 const Overview: React.FC<OverviewProps> = ({ boxSelector, statisticsBox }) => {

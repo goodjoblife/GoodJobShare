@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
 
-import AbstractView from './AbstractView';
+import AbstractView from '../AbstractView';
 
 const ratioSelectorOfType = type =>
   R.converge(R.divide, [
