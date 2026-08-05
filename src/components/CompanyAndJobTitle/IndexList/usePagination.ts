@@ -4,11 +4,11 @@ import { useCallback } from 'react';
 import { useQuery } from 'hooks/routing';
 import { usePage } from 'hooks/routing/page';
 
-const usePagination = () => {
+const usePagination = (): [number, (p: number) => string] => {
   const query = useQuery();
   const page = usePage();
   const getPageLink = useCallback(
-    p => qs.stringify({ ...query, p }, { addQueryPrefix: true }),
+    (p: number) => qs.stringify({ ...query, p }, { addQueryPrefix: true }),
     [query],
   );
   return [page, getPageLink];

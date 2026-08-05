@@ -1,10 +1,17 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import SeoStructure from 'common/Seo/SeoStructure';
 import { ORIGIN } from 'config';
 
-const EmployerAggregateRatingSeo = ({
+type EmployerAggregateRatingSeoProps = {
+  title: string;
+  description: string;
+  companyName: string;
+  averageRating: number;
+  ratingCount: number;
+};
+
+const EmployerAggregateRatingSeo: React.FC<EmployerAggregateRatingSeoProps> = ({
   title,
   description,
   companyName,
@@ -24,20 +31,12 @@ const EmployerAggregateRatingSeo = ({
           sameAs: ORIGIN,
         },
         ratingValue: parseFloat(averageRating.toFixed(1)),
-        ratingCount: ratingCount,
+        ratingCount,
         bestRating: 5,
         worstRating: 1,
       }}
     />
   );
-};
-
-EmployerAggregateRatingSeo.propTypes = {
-  averageRating: PropTypes.number.isRequired,
-  companyName: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  ratingCount: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
 };
 
 export default EmployerAggregateRatingSeo;
