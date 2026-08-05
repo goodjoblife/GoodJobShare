@@ -23,9 +23,9 @@ const LinkItem = ({ title, items }) => {
             </button>
           );
         }
-        if (anchor || to.startsWith('http')) {
+        if (anchor || /^https?:\/\//.test(to)) {
           return (
-            <a key={index} href={to} className={styles.link}>
+            <a key={index} href={to} className={styles.link} rel="noopener noreferrer">
               {text}
             </a>
           );
