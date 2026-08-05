@@ -49,7 +49,6 @@ export const useCreatePageLinkTo = (): readonly [
 };
 
 type Props = {
-  // matches Link's `to`: either a path string or a location object
   createPageLinkTo: (p: number) => LocationDescriptor;
   currentPage?: number;
   totalCount?: number;
