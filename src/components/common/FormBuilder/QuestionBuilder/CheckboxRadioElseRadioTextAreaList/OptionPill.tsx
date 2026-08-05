@@ -1,19 +1,10 @@
 import cn from 'classnames';
 import React from 'react';
 
-import ButtonImpl from 'common/button/Button';
+import Button from 'common/button/Button';
 import Checked2 from 'common/icons/Checked2';
 
 import styles from './styles.module.css';
-
-type ButtonProps = {
-  className?: string;
-  btnStyle?: string;
-  circleSize?: string;
-  onClick?: () => void;
-  children?: React.ReactNode;
-};
-const Button = ButtonImpl as React.FC<ButtonProps>;
 
 type Props = {
   children: React.ReactNode;

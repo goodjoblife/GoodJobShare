@@ -1,8 +1,17 @@
 import cn from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 
-const Button = ({
+type ButtonProps = {
+  circleSize?: 'lg' | 'md';
+  btnStyle?: string;
+  disabled?: boolean;
+  children?: React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  style?: React.CSSProperties;
+  className?: string;
+};
+
+const Button: React.FC<ButtonProps> = ({
   circleSize,
   btnStyle,
   disabled,
@@ -83,16 +92,6 @@ const Button = ({
       {children}
     </button>
   );
-};
-
-Button.propTypes = {
-  btnStyle: PropTypes.string,
-  children: PropTypes.node,
-  circleSize: PropTypes.string,
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-  onClick: PropTypes.func,
-  style: PropTypes.object,
 };
 
 export default Button;
