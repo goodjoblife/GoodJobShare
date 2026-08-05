@@ -21,8 +21,6 @@ export type TableProps = {
   postProcessRows?: (rows: TableRow[], data: any[]) => TableRow[];
 };
 
-// 取代原本的 R.path。@types/ramda 與專案安裝的 ramda 0.23 有簽名落差，
-// 這裡只需要「照點路徑取值，中途遇到 null/undefined 就放棄」
 const getByPath = (path: string[], obj: unknown): unknown =>
   path.reduce<unknown>((acc, key) => {
     if (acc === null || acc === undefined) return undefined;
