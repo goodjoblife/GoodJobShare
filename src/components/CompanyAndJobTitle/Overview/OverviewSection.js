@@ -6,19 +6,21 @@ import BoxRenderer from 'common/StatusRenderer';
 import {
   Aspect,
   generateTabURL,
+  PageType,
   TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
 } from 'constants/companyJobTitle';
 import usePermission from 'hooks/usePermission';
-import useCompanyName from 'pages/Company/useCompanyName';
 import { fetchBoxPropType } from 'utils/fetchBox';
 
 import AspectScoreCard, { useAspectsData } from './AspectScoreCard';
 import SnippetBlock from './SnippetBlock';
 import SummaryBlock from './SummaryBlock';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
+import { useCompanyName } from '../PageContextProvider';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 
+// 只在公司頁渲染，因此可以直接取 companyName
 const GenderAspectSnippetBlock = () => {
   const companyName = useCompanyName();
   const aspectModels = useAspectsData(companyName, [Aspect.GENDER]);
@@ -77,7 +79,7 @@ const OverviewSection = ({
           )}
         />
       </SnippetBlock>
-      <GenderAspectSnippetBlock />
+      {pageType === PageType.COMPANY && <GenderAspectSnippetBlock />}
       <SnippetBlock
         title={TAB_TYPE_DETAIL_TRANSLATION[TabType.WORK_EXPERIENCE]}
         linkText={`查看 ${workExperiencesCount} 篇完整的 ${

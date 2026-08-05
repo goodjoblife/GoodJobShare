@@ -5,7 +5,7 @@ import { OvertimeStats } from 'apis/salaryWorkTime';
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import BoxRenderer, { BoxesRenderer } from 'common/StatusRenderer';
-import { PageType, TabType } from 'constants/companyJobTitle';
+import { PageType } from 'constants/companyJobTitle';
 import { RootState } from 'reducers';
 import {
   CompanyOverviewStatistics,
@@ -17,8 +17,8 @@ import {
 } from 'reducers/jobTitleIndex';
 import FetchBox from 'utils/fetchBox';
 
-import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import PageBoxRenderer from '../PageBoxRenderer';
+import { usePageContext } from '../PageContextProvider';
 import EsgBlock from './EsgBlock';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
@@ -34,9 +34,6 @@ type SalaryWorkTimePageData = Pick<
 >;
 
 type Props = {
-  pageType: PageType;
-  pageName: string;
-  tabType: TabType;
   boxSelector: (state: RootState) => FetchBox<SalaryWorkTimePageData | null>;
   statisticsBox: FetchBox<
     CompanyOverviewStatistics | JobTitleOverviewStatistics | null
@@ -50,9 +47,6 @@ type Props = {
 };
 
 const SalaryWorkTime: React.FC<Props> = ({
-  pageType,
-  pageName,
-  tabType,
   boxSelector,
   statisticsBox,
   salaryWorkTimeStatisticsBox,
@@ -63,13 +57,10 @@ const SalaryWorkTime: React.FC<Props> = ({
   esgSalaryDataBox,
 }) => {
   const [createPageLinkTo, handleSectionRef, sectionY] = useCreatePageLinkTo();
+  const { pageType, pageName, tabType } = usePageContext();
 
   return (
-    <CompanyAndJobTitleWrapper
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-    >
+    <>
       {pageType === PageType.COMPANY && (
         <BoxRenderer
           box={esgSalaryDataBox}
@@ -143,7 +134,7 @@ const SalaryWorkTime: React.FC<Props> = ({
           }}
         />
       </Wrapper>
-    </CompanyAndJobTitleWrapper>
+    </>
   );
 };
 

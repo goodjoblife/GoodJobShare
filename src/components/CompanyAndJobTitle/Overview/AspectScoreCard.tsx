@@ -6,11 +6,11 @@ import { generatePath } from 'react-router';
 import { AspectRatingStatistics } from 'apis/aspectRatingStatistics';
 import { Aspect } from 'constants/companyJobTitle';
 import { companyWorkExperiencesAspectPath } from 'constants/linkTo';
-import useCompanyName from 'pages/Company/useCompanyName';
 import { companyWorkExperiencesAspectStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { isFetched } from 'utils/fetchBox';
 
 import ScoreCard from './ScoreCard';
+import { useCompanyName } from '../PageContextProvider';
 
 const useAllAspectRatingStatistics = (
   companyName: string,
@@ -50,6 +50,8 @@ export const useAspectsData = (
   );
 };
 
+// 面向評分只存在於公司，因此本元件只在公司頁有意義：
+// companyName 取自 PageContext，掛到職稱頁時 useCompanyName 會當場擋下
 interface AspectScoreCardProps {
   aspect: Aspect;
   emptyShareLinkTo?: LocationDescriptor;

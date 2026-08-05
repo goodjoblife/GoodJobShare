@@ -7,6 +7,7 @@ import {
 } from 'actions/company';
 import { WorkExperience } from 'apis/experience';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import WorkExperiencesAspect from 'components/CompanyAndJobTitle/WorkExperiences/Aspects';
 import useRating from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/useRating';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
@@ -27,7 +28,9 @@ import { ServerSideRender } from 'types/serverSideRender';
 import FetchBox, { getFetched, isFetched } from 'utils/fetchBox';
 
 import useAspect, { aspectSelector } from './useAspect';
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 
 const useWorkExperiencesAspectExperiencesBoxSelector = (
   pageName: string,
@@ -64,7 +67,7 @@ const CompanyWorkExperiencesAspectProvider: React.FC &
   ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
-  const companyName = useCompanyName();
+  const companyName = useCompanyNameParam();
   const aspect = useAspect();
   const [rating] = useRating();
   const page = usePage();
@@ -101,16 +104,19 @@ const CompanyWorkExperiencesAspectProvider: React.FC &
   );
 
   return (
-    <WorkExperiencesAspect
-      aspect={aspect}
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={companyName}
-      page={page as number}
-      pageSize={PAGE_SIZE}
       tabType={TabType.WORK_EXPERIENCE}
-      statisticsBoxSelector={statisticsBoxSelector}
-      experiencesBoxSelector={experiencesBoxSelector}
-    />
+    >
+      <WorkExperiencesAspect
+        aspect={aspect}
+        page={page as number}
+        pageSize={PAGE_SIZE}
+        statisticsBoxSelector={statisticsBoxSelector}
+        experiencesBoxSelector={experiencesBoxSelector}
+      />
+    </CompanyAndJobTitleWrapper>
   );
 };
 

@@ -4,8 +4,8 @@ import React, { Fragment } from 'react';
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 
-import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import PageBoxRenderer from '../PageBoxRenderer';
+import { usePageContext } from '../PageContextProvider';
 import InterviewExperienceHelmet from './Helmet';
 import InterviewExperiencesSection from './InterviewExperiences';
 import SearchBar from '../SearchBar';
@@ -13,22 +13,16 @@ import Sorter from '../Sorter';
 import styles from '../styles.module.css';
 
 const InterviewExperiences = ({
-  pageType,
-  pageName,
-  tabType,
   boxSelector,
   page,
   pageSize,
   topNJobTitles,
 }) => {
   const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
+  const { pageType, pageName, tabType } = usePageContext();
 
   return (
-    <CompanyAndJobTitleWrapper
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-    >
+    <Fragment>
       <Wrapper ref={handleSectionRef} size="m">
         <div className={styles.interactive}>
           <SearchBar pageType={pageType} tabType={tabType} />
@@ -69,17 +63,14 @@ const InterviewExperiences = ({
           }}
         />
       </Wrapper>
-    </CompanyAndJobTitleWrapper>
+    </Fragment>
   );
 };
 
 InterviewExperiences.propTypes = {
   boxSelector: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
-  pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
-  pageType: PropTypes.string.isRequired,
-  tabType: PropTypes.string.isRequired,
   topNJobTitles: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
