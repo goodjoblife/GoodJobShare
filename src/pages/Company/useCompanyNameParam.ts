@@ -22,6 +22,6 @@ export const companyNameSelector = (params: Params): string =>
 // 名字帶 Param 是為了與 components/CompanyAndJobTitle/PageContextProvider 的
 // useCompanyName 區分：那支讀 PageContext，這支讀 route param，只給 Provider 層用
 const useCompanyNameParam = (): string =>
-  decodeCompanyName(useParams<Params>().companyName);
+  companyNameSelector(useParams<Params>());
 
 export default useCompanyNameParam;

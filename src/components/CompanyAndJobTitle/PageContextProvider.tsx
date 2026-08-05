@@ -30,11 +30,11 @@ export const PageContextProvider: React.FC<PageContextProviderProps> = ({
 };
 
 export const usePageContext = (): PageContextValue => {
-  const value = useContext(PageContext);
-  if (value === undefined) {
+  const context = useContext(PageContext);
+  if (context === undefined) {
     throw new Error('usePageContext 只能用在 CompanyAndJobTitleWrapper 之下');
   }
-  return value;
+  return context;
 };
 
 // 公司名只有公司頁有。在職稱頁呼叫代表元件被掛在不該掛的地方，
