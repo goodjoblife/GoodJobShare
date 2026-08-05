@@ -4,16 +4,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCompanyNames } from 'actions/company';
 import { Wrapper } from 'common/base';
 import { querySelector } from 'common/routing/selectors';
-import CompanyAndJobTitleIndexPage from 'components/CompanyAndJobTitle/IndexPage';
-import usePagination from 'components/CompanyAndJobTitle/IndexPage/usePagination';
+import IndexList from 'components/CompanyAndJobTitle/IndexList';
+import usePagination from 'components/CompanyAndJobTitle/IndexList/usePagination';
 import { PAGE_SIZE, PageType } from 'constants/companyJobTitle';
 import {
   companiesCountSelector,
   companyIndexesBoxSelectorAtPage,
 } from 'selectors/companyAndJobTitle';
 import { pageFromQuerySelector } from 'selectors/routing';
+import { ServerSideRender } from 'types/serverSideRender';
 
-const CompanyIndexProvider = () => {
+const CompanyIndexProvider: React.FC & ServerSideRender = () => {
   const [page, getPageLink] = usePagination();
   const selector = useMemo(() => companyIndexesBoxSelectorAtPage(page), [page]);
   const companyIndexesBox = useSelector(selector);
@@ -26,7 +27,7 @@ const CompanyIndexProvider = () => {
 
   return (
     <Wrapper size="l">
-      <CompanyAndJobTitleIndexPage
+      <IndexList
         totalCount={totalCount}
         pageType={PageType.COMPANY}
         indexesBox={companyIndexesBox}
@@ -37,10 +38,13 @@ const CompanyIndexProvider = () => {
   );
 };
 
-CompanyIndexProvider.fetchData = async ({ store: { dispatch }, ...props }) => {
+CompanyIndexProvider.fetchData = async ({
+  store: { dispatch },
+  ...props
+}): Promise<unknown> => {
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
-  await dispatch(fetchCompanyNames({ page, pageSize: PAGE_SIZE }));
+  return dispatch(fetchCompanyNames({ page, pageSize: PAGE_SIZE }));
 };
 
 export default CompanyIndexProvider;

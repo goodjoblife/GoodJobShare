@@ -10,7 +10,7 @@ import useEsgYearStatistics from 'hooks/useEsgYearStatistics';
 import { formatNumberWithSign } from 'utils/stringUtil';
 
 import styles from './EsgBlock.module.css';
-import overviewStyles from '../../Overview/Overview.module.css';
+import snippetStyles from '../../SnippetBlock.module.css';
 
 type EsgItemBlockProps = {
   className?: string;
@@ -90,7 +90,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
 
   return (
     <Card className={cn(styles.card, className)}>
-      <div className={overviewStyles.title}>
+      <div className={snippetStyles.title}>
         企業ESG公開薪資揭露
         {showsToggle && (
           <button

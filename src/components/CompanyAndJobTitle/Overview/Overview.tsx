@@ -1,39 +1,36 @@
 import React from 'react';
 
 import { Wrapper } from 'common/base';
-import { PageType, TabType } from 'constants/companyJobTitle';
+import { PageType } from 'constants/companyJobTitle';
 import { RootState } from 'reducers';
-import { CompanyOverview } from 'reducers/companyIndex';
-import { JobTitleOverview } from 'reducers/jobTitleIndex';
+import {
+  CompanyOverview,
+  CompanyOverviewStatistics,
+} from 'reducers/companyIndex';
+import {
+  JobTitleOverview,
+  JobTitleOverviewStatistics,
+} from 'reducers/jobTitleIndex';
 import FetchBox from 'utils/fetchBox';
 
-import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import PageBoxRenderer from '../PageBoxRenderer';
+import { usePageContext } from '../PageContextProvider';
 import { CompanyOverviewHelmet, JobTitleOverviewHelmet } from './Helmet';
 import OverviewSection from './OverviewSection';
 
 type OverviewProps = {
-  pageType: PageType;
-  pageName: string;
-  tabType: TabType;
   boxSelector: (
     state: RootState,
   ) => FetchBox<CompanyOverview | JobTitleOverview | null>;
-  statisticsBox: FetchBox<unknown>;
+  statisticsBox: FetchBox<
+    CompanyOverviewStatistics | JobTitleOverviewStatistics | null
+  >;
 };
 
-const Overview: React.FC<OverviewProps> = ({
-  pageType,
-  pageName,
-  tabType,
-  boxSelector,
-  statisticsBox,
-}) => (
-  <CompanyAndJobTitleWrapper
-    pageType={pageType}
-    pageName={pageName}
-    tabType={tabType}
-  >
+const Overview: React.FC<OverviewProps> = ({ boxSelector, statisticsBox }) => {
+  const { pageType, pageName, tabType } = usePageContext();
+
+  return (
     <Wrapper size="l">
       <PageBoxRenderer
         pageType={pageType}
@@ -71,7 +68,7 @@ const Overview: React.FC<OverviewProps> = ({
         )}
       />
     </Wrapper>
-  </CompanyAndJobTitleWrapper>
-);
+  );
+};
 
 export default Overview;
