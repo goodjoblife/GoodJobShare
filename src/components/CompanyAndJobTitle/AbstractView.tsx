@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 
 import { Link } from 'common/base';
 
-import styles from './SummaryBlock.module.css';
+import styles from './AbstractView.module.css';
 
 type AbstractViewProps = {
   title: string;

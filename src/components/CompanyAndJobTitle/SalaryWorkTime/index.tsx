@@ -17,6 +17,7 @@ import {
 } from 'reducers/jobTitleIndex';
 import FetchBox from 'utils/fetchBox';
 
+import SummaryBlock from '../Overview/SummaryBlock';
 import PageBoxRenderer from '../PageBoxRenderer';
 import { usePageContext } from '../PageContextProvider';
 import EsgBlock from './EsgBlock';
@@ -26,7 +27,7 @@ import SalaryFilter from './SalaryFilter';
 import SalaryWorkTimeSection from './SalaryWorkTimeSection';
 import SearchBar from '../SearchBar';
 import styles from './SalaryWorkTime.module.css';
-import SummarySection from './SummarySection';
+import SnippetBlock from '../SnippetBlock';
 
 type SalaryWorkTimePageData = Pick<
   CompanySalaryWorkTimeResult | JobTitleSalaryWorkTimeResult,
@@ -85,7 +86,12 @@ const SalaryWorkTime: React.FC<Props> = ({
             return null;
           return (
             <Wrapper size="l">
-              <SummarySection {...statisticsData} />
+              <SnippetBlock
+                title="本站使用者分享之薪資、加班資訊"
+                pageName={pageName}
+              >
+                <SummaryBlock {...statisticsData} />
+              </SnippetBlock>
               <OvertimeSection statistics={overtimeStatisticsData} />
             </Wrapper>
           );

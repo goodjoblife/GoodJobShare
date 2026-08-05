@@ -1,13 +1,21 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { Heading } from 'common/base';
-import { pageTypeTranslation } from 'constants/companyJobTitle';
+import { PageType, pageTypeTranslation } from 'constants/companyJobTitle';
 
 import styles from './CompanyJobTitleBlock.module.css';
 
-const CompanyJobTitleBlock = ({
+type CompanyJobTitleBlockProps = {
+  pageType: PageType;
+  name: string;
+  to: string;
+  // 職稱沒有統編，職稱的搜尋結果也不含 dataCount 以外的欄位
+  businessNumber?: string | null;
+  dataCount?: number;
+};
+
+const CompanyJobTitleBlock: React.FC<CompanyJobTitleBlockProps> = ({
   pageType,
   name,
   businessNumber,
@@ -39,13 +47,5 @@ const CompanyJobTitleBlock = ({
     </Link>
   </section>
 );
-
-CompanyJobTitleBlock.propTypes = {
-  businessNumber: PropTypes.string,
-  dataCount: PropTypes.number,
-  name: PropTypes.string.isRequired,
-  pageType: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-};
 
 export default CompanyJobTitleBlock;

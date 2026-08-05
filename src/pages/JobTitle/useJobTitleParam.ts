@@ -20,7 +20,6 @@ export const jobTitleSelector = (params: Params): string =>
   decodeJobTitle(params.jobTitle);
 
 // 名字帶 Param 的理由見 pages/Company/useCompanyNameParam
-const useJobTitleParam = (): string =>
-  decodeJobTitle(useParams<Params>().jobTitle);
+const useJobTitleParam = (): string => jobTitleSelector(useParams<Params>());
 
 export default useJobTitleParam;

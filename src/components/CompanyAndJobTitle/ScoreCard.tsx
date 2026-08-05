@@ -2,20 +2,12 @@ import cn from 'classnames';
 import { LocationDescriptor } from 'history';
 import React from 'react';
 
-import ButtonImpl from 'common/button/Button';
+import Button from 'common/button/Button';
 import Card from 'common/Card';
 
 import AbstractView from './AbstractView';
 import emptyDataAspectImage from './empty_data_aspect.svg';
-import styles from './SummaryBlock.module.css';
-
-type ButtonProps = {
-  circleSize?: string;
-  btnStyle?: string;
-  to?: LocationDescriptor;
-  children?: React.ReactNode;
-};
-const Button = ButtonImpl as React.FC<ButtonProps>;
+import styles from './ScoreCard.module.css';
 
 export interface ScoreCardProps {
   title: string;

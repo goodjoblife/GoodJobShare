@@ -1,9 +1,21 @@
 import cn from 'classnames';
-import PropTypes from 'prop-types';
+import { LocationDescriptor } from 'history';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router-dom';
 
-const Button = ({
+type ButtonProps = {
+  circleSize?: 'lg' | 'md';
+  btnStyle?: string;
+  disabled?: boolean;
+  children?: React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  style?: React.CSSProperties;
+  className?: string;
+  /** 有 to 代表 href 用途，渲染成按鈕 */
+  to?: LocationDescriptor;
+};
+
+const Button: React.FC<ButtonProps> = ({
   circleSize,
   btnStyle,
   disabled,
@@ -83,7 +95,8 @@ const Button = ({
         onClick={onClick}
         style={style}
       >
-        {children}
+        {/* react-router-dom 的型別依賴另一份 @types/react，ReactNode 不互通，故轉型 */}
+        {children as LinkProps['children']}
       </Link>
     );
   }
@@ -98,17 +111,6 @@ const Button = ({
       {children}
     </button>
   );
-};
-
-Button.propTypes = {
-  btnStyle: PropTypes.string,
-  children: PropTypes.node,
-  circleSize: PropTypes.string,
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-  onClick: PropTypes.func,
-  style: PropTypes.object,
-  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default Button;

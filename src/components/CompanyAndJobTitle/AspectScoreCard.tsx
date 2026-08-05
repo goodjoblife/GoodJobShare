@@ -9,8 +9,8 @@ import { companyWorkExperiencesAspectPath } from 'constants/linkTo';
 import { companyWorkExperiencesAspectStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { isFetched } from 'utils/fetchBox';
 
+import { useCompanyName } from './PageContextProvider';
 import ScoreCard from './ScoreCard';
-import { useCompanyName } from '../PageContextProvider';
 
 const useAllAspectRatingStatistics = (
   companyName: string,
