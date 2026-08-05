@@ -1,12 +1,12 @@
 import cn from 'classnames';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import linkStyles from 'common/base/Link.module.css';
 import Card from 'common/Card';
 import Caret from 'common/icons/Caret';
 import Info from 'common/icons/Info';
-import { getLatestYear, getStatisticsByYear } from 'utils/esgYearUtils';
+import useEsgYearStatistics from 'hooks/useEsgYearStatistics';
 import { formatNumberWithSign } from 'utils/stringUtil';
 
 import styles from './EsgBlock.module.css';
@@ -77,14 +77,12 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
 }) => {
   const [isCollapsed, setCollapsed] = useState(hasPreviewed);
 
-  const latestYear = useMemo(() => getLatestYear(data), [data]);
-
   const {
     avgSalaryStatisticsItem,
     nonManagerAvgSalaryStatisticsItem,
     nonManagerMedianSalaryStatisticsItem,
     femaleManagerStatisticsItem,
-  } = useMemo(() => getStatisticsByYear(data, latestYear), [data, latestYear]);
+  } = useEsgYearStatistics(data);
 
   const toggleCollapsed = useCallback(() => {
     setCollapsed(isCollapsed => !isCollapsed);

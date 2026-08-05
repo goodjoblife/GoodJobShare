@@ -4,7 +4,7 @@ type AvgSalaryStatisticsItem = ESGSalaryData['avgSalaryStatistics'][number];
 type NonManagerMedianSalaryStatisticsItem = ESGSalaryData['nonManagerMedianSalaryStatistics'][number];
 type FemaleManagerStatisticsItem = ESGSalaryData['femaleManagerStatistics'][number];
 
-type StatisticsByYear = {
+export type StatisticsByYear = {
   avgSalaryStatisticsItem: AvgSalaryStatisticsItem | undefined;
   nonManagerAvgSalaryStatisticsItem: AvgSalaryStatisticsItem | undefined;
   nonManagerMedianSalaryStatisticsItem:
