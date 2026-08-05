@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import {
+  EMPTY_STATISTICS,
   getAvailableYears,
   getLatestYear,
   getStatisticsByYear,
@@ -10,48 +11,25 @@ import {
 
 export type EsgYearStatistics = StatisticsByYear & {
   availableYears: number[];
-  selectedYear: number | undefined;
-};
-
-const EMPTY_STATISTICS: StatisticsByYear = {
-  avgSalaryStatisticsItem: undefined,
-  nonManagerAvgSalaryStatisticsItem: undefined,
-  nonManagerMedianSalaryStatisticsItem: undefined,
-  femaleManagerStatisticsItem: undefined,
+  selectedYear: number | null;
 };
 
 const useEsgYearStatistics = (
   esgSalaryData: ESGSalaryData | null,
   year?: number,
-): EsgYearStatistics => {
-  const availableYears = useMemo(
-    () => (esgSalaryData ? getAvailableYears(esgSalaryData) : []),
-    [esgSalaryData],
-  );
+): EsgYearStatistics =>
+  useMemo(() => {
+    const availableYears = getAvailableYears(esgSalaryData);
+    const selectedYear =
+      year !== undefined ? year : getLatestYear(availableYears);
 
-  const latestYear = useMemo(
-    () => (esgSalaryData ? getLatestYear(esgSalaryData) : undefined),
-    [esgSalaryData],
-  );
-
-  const selectedYear = year !== undefined ? year : latestYear;
-
-  const statistics = useMemo(
-    () =>
-      esgSalaryData
-        ? getStatisticsByYear(esgSalaryData, selectedYear)
-        : EMPTY_STATISTICS,
-    [esgSalaryData, selectedYear],
-  );
-
-  return useMemo(
-    () => ({
+    return {
       availableYears,
       selectedYear,
-      ...statistics,
-    }),
-    [availableYears, selectedYear, statistics],
-  );
-};
+      ...(esgSalaryData && selectedYear !== null
+        ? getStatisticsByYear(esgSalaryData, selectedYear)
+        : EMPTY_STATISTICS),
+    };
+  }, [esgSalaryData, year]);
 
 export default useEsgYearStatistics;

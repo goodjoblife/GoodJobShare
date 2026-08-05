@@ -34,7 +34,7 @@ describe('useEsgYearStatistics', () => {
       average: 1010000,
       sameIndustryAverage: 1020000,
     });
-    expect(result.current.femaleManagerStatisticsItem).toBeUndefined();
+    expect(result.current.femaleManagerStatisticsItem).toBeNull();
   });
 
   test('指定 year → 取該年度的指標', () => {
@@ -45,26 +45,26 @@ describe('useEsgYearStatistics', () => {
       year: 2023,
       percentage: 0.189,
     });
-    expect(result.current.nonManagerAvgSalaryStatisticsItem).toBeUndefined();
+    expect(result.current.nonManagerAvgSalaryStatisticsItem).toBeNull();
   });
 
-  test('esgSalaryData 為 null → 年度清單為空、四個 item 都是 undefined', () => {
+  test('esgSalaryData 為 null → 年度清單為空、四個 item 都是 null', () => {
     const { result } = renderHook(() => useEsgYearStatistics(null));
 
     expect(result.current.availableYears).toEqual([]);
-    expect(result.current.selectedYear).toBeUndefined();
-    expect(result.current.avgSalaryStatisticsItem).toBeUndefined();
-    expect(result.current.nonManagerAvgSalaryStatisticsItem).toBeUndefined();
-    expect(result.current.nonManagerMedianSalaryStatisticsItem).toBeUndefined();
-    expect(result.current.femaleManagerStatisticsItem).toBeUndefined();
+    expect(result.current.selectedYear).toBeNull();
+    expect(result.current.avgSalaryStatisticsItem).toBeNull();
+    expect(result.current.nonManagerAvgSalaryStatisticsItem).toBeNull();
+    expect(result.current.nonManagerMedianSalaryStatisticsItem).toBeNull();
+    expect(result.current.femaleManagerStatisticsItem).toBeNull();
   });
 
-  test('資料為空 → selectedYear 為 undefined', () => {
+  test('資料為空 → selectedYear 為 null', () => {
     const { result } = renderHook(() => useEsgYearStatistics(empty));
 
     expect(result.current.availableYears).toEqual([]);
-    expect(result.current.selectedYear).toBeUndefined();
-    expect(result.current.avgSalaryStatisticsItem).toBeUndefined();
+    expect(result.current.selectedYear).toBeNull();
+    expect(result.current.avgSalaryStatisticsItem).toBeNull();
   });
 
   test('year 由 undefined 改為指定年度 → selectedYear 跟著切換', () => {

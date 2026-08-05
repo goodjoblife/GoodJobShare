@@ -1,6 +1,7 @@
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 
 import {
+  EMPTY_STATISTICS,
   getAvailableYears,
   getLatestYear,
   getStatisticsByYear,
@@ -33,22 +34,23 @@ describe('getAvailableYears', () => {
       }),
     ).toEqual([]);
   });
+
+  test('null → 空陣列', () => {
+    expect(getAvailableYears(null)).toEqual([]);
+  });
 });
 
 describe('getLatestYear', () => {
   test('取出最新的年份', () => {
-    expect(getLatestYear(sample)).toBe(2024);
+    expect(getLatestYear([2024, 2023])).toBe(2024);
   });
 
-  test('全部陣列為空 → undefined', () => {
-    expect(
-      getLatestYear({
-        avgSalaryStatistics: [],
-        nonManagerAvgSalaryStatistics: [],
-        nonManagerMedianSalaryStatistics: [],
-        femaleManagerStatistics: [],
-      }),
-    ).toBeUndefined();
+  test('不依賴輸入順序', () => {
+    expect(getLatestYear([2022, 2024, 2023])).toBe(2024);
+  });
+
+  test('空陣列 → null', () => {
+    expect(getLatestYear([])).toBeNull();
   });
 });
 
@@ -65,25 +67,20 @@ describe('getStatisticsByYear', () => {
         average: 1005000,
         sameIndustryAverage: 950000,
       },
-      nonManagerMedianSalaryStatisticsItem: undefined,
-      femaleManagerStatisticsItem: undefined,
+      nonManagerMedianSalaryStatisticsItem: null,
+      femaleManagerStatisticsItem: null,
     });
   });
 
-  test('該年缺資料的指標回 undefined', () => {
+  test('該年缺資料的指標回 null', () => {
     const r = getStatisticsByYear(sample, 2023);
-    expect(r.nonManagerAvgSalaryStatisticsItem).toBeUndefined();
+    expect(r.nonManagerAvgSalaryStatisticsItem).toBeNull();
     expect(r.avgSalaryStatisticsItem && r.avgSalaryStatisticsItem.year).toBe(
       2023,
     );
   });
 
-  test('year 為 undefined（無可用年份）→ 四個 item 都是 undefined', () => {
-    expect(getStatisticsByYear(sample, undefined)).toEqual({
-      avgSalaryStatisticsItem: undefined,
-      nonManagerAvgSalaryStatisticsItem: undefined,
-      nonManagerMedianSalaryStatisticsItem: undefined,
-      femaleManagerStatisticsItem: undefined,
-    });
+  test('查無該年份 → EMPTY_STATISTICS', () => {
+    expect(getStatisticsByYear(sample, 2020)).toEqual(EMPTY_STATISTICS);
   });
 });

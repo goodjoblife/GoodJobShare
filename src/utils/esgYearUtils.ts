@@ -5,15 +5,23 @@ type NonManagerMedianSalaryStatisticsItem = ESGSalaryData['nonManagerMedianSalar
 type FemaleManagerStatisticsItem = ESGSalaryData['femaleManagerStatistics'][number];
 
 export type StatisticsByYear = {
-  avgSalaryStatisticsItem: AvgSalaryStatisticsItem | undefined;
-  nonManagerAvgSalaryStatisticsItem: AvgSalaryStatisticsItem | undefined;
-  nonManagerMedianSalaryStatisticsItem:
-    | NonManagerMedianSalaryStatisticsItem
-    | undefined;
-  femaleManagerStatisticsItem: FemaleManagerStatisticsItem | undefined;
+  avgSalaryStatisticsItem: AvgSalaryStatisticsItem | null;
+  nonManagerAvgSalaryStatisticsItem: AvgSalaryStatisticsItem | null;
+  nonManagerMedianSalaryStatisticsItem: NonManagerMedianSalaryStatisticsItem | null;
+  femaleManagerStatisticsItem: FemaleManagerStatisticsItem | null;
 };
 
-export const getAvailableYears = (esgSalaryData: ESGSalaryData): number[] => {
+export const EMPTY_STATISTICS: StatisticsByYear = {
+  avgSalaryStatisticsItem: null,
+  nonManagerAvgSalaryStatisticsItem: null,
+  nonManagerMedianSalaryStatisticsItem: null,
+  femaleManagerStatisticsItem: null,
+};
+
+export const getAvailableYears = (
+  esgSalaryData: ESGSalaryData | null,
+): number[] => {
+  if (!esgSalaryData) return [];
   const years = new Set<number>();
   Object.values(esgSalaryData).forEach(items => {
     items.forEach(item => years.add(item.year));
@@ -21,24 +29,24 @@ export const getAvailableYears = (esgSalaryData: ESGSalaryData): number[] => {
   return Array.from(years).sort((a, b) => b - a);
 };
 
-export const getLatestYear = (
-  esgSalaryData: ESGSalaryData,
-): number | undefined => getAvailableYears(esgSalaryData)[0];
+export const getLatestYear = (years: number[]): number | null =>
+  years.length > 0 ? Math.max(...years) : null;
 
 export const getStatisticsByYear = (
   esgSalaryData: ESGSalaryData,
-  year: number | undefined,
+  year: number,
 ): StatisticsByYear => ({
-  avgSalaryStatisticsItem: esgSalaryData.avgSalaryStatistics.find(
-    item => item.year === year,
-  ),
-  nonManagerAvgSalaryStatisticsItem: esgSalaryData.nonManagerAvgSalaryStatistics.find(
-    item => item.year === year,
-  ),
-  nonManagerMedianSalaryStatisticsItem: esgSalaryData.nonManagerMedianSalaryStatistics.find(
-    item => item.year === year,
-  ),
-  femaleManagerStatisticsItem: esgSalaryData.femaleManagerStatistics.find(
-    item => item.year === year,
-  ),
+  avgSalaryStatisticsItem:
+    esgSalaryData.avgSalaryStatistics.find(item => item.year === year) || null,
+  nonManagerAvgSalaryStatisticsItem:
+    esgSalaryData.nonManagerAvgSalaryStatistics.find(
+      item => item.year === year,
+    ) || null,
+  nonManagerMedianSalaryStatisticsItem:
+    esgSalaryData.nonManagerMedianSalaryStatistics.find(
+      item => item.year === year,
+    ) || null,
+  femaleManagerStatisticsItem:
+    esgSalaryData.femaleManagerStatistics.find(item => item.year === year) ||
+    null,
 });
