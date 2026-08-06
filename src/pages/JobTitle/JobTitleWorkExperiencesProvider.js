@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { queryJobTitleWorkExperiences } from 'actions/jobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 import {
   sortByFromQuerySelector,
@@ -20,7 +21,7 @@ import {
 } from 'selectors/routing';
 import { getFetched, isFetched } from 'utils/fetchBox';
 
-import useJobTitle, { jobTitleSelector } from './useJobTitle';
+import useJobTitleParam, { jobTitleSelector } from './useJobTitleParam';
 
 const useWorkExperiencesBoxSelector = pageName => {
   return useCallback(
@@ -46,7 +47,7 @@ const useWorkExperiencesBoxSelector = pageName => {
 const JobTitleWorkExperiencesProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.JOB_TITLE;
-  const jobTitle = useJobTitle();
+  const jobTitle = useJobTitleParam();
   const [companyName] = useSearchTextFromQuery();
   const [sortBy] = useSortByFromQuery();
   const page = usePage();
@@ -73,14 +74,17 @@ const JobTitleWorkExperiencesProvider = () => {
   const boxSelector = useWorkExperiencesBoxSelector(jobTitle);
 
   return (
-    <WorkExperiences
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={jobTitle}
-      page={page}
-      pageSize={PAGE_SIZE}
       tabType={TabType.WORK_EXPERIENCE}
-      boxSelector={boxSelector}
-    />
+    >
+      <WorkExperiences
+        page={page}
+        pageSize={PAGE_SIZE}
+        boxSelector={boxSelector}
+      />
+    </CompanyAndJobTitleWrapper>
   );
 };
 

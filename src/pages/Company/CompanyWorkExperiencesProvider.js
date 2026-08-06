@@ -7,6 +7,7 @@ import {
   queryRatingStatistics,
 } from 'actions/company';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 import {
   sortByFromQuerySelector,
@@ -24,7 +25,9 @@ import {
 } from 'selectors/routing';
 import { getFetched, isFetched } from 'utils/fetchBox';
 
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 
 const useWorkExperiencesBoxSelector = pageName => {
   return useCallback(
@@ -50,7 +53,7 @@ const useWorkExperiencesBoxSelector = pageName => {
 const CompanyWorkExperiencesProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
-  const companyName = useCompanyName();
+  const companyName = useCompanyNameParam();
   const [jobTitle] = useSearchTextFromQuery();
   const [sortBy] = useSortByFromQuery();
   const page = usePage();
@@ -85,14 +88,17 @@ const CompanyWorkExperiencesProvider = () => {
   const boxSelector = useWorkExperiencesBoxSelector(companyName);
 
   return (
-    <WorkExperiences
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={companyName}
-      page={page}
-      pageSize={PAGE_SIZE}
       tabType={TabType.WORK_EXPERIENCE}
-      boxSelector={boxSelector}
-    />
+    >
+      <WorkExperiences
+        page={page}
+        pageSize={PAGE_SIZE}
+        boxSelector={boxSelector}
+      />
+    </CompanyAndJobTitleWrapper>
   );
 };
 

@@ -4,7 +4,7 @@ import React from 'react';
 import Card from 'common/Card';
 
 import AbstractView from './AbstractView';
-import styles from './SummaryBlock.module.css';
+import styles from './ScoreCard.module.css';
 
 export interface ScoreCardProps {
   title: string;
