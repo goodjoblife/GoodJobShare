@@ -29,23 +29,25 @@ describe('useEsgYearStatistics', () => {
 
     expect(result.current.availableYears).toEqual([2024, 2023]);
     expect(result.current.selectedYear).toBe(2024);
-    expect(result.current.avgSalaryStatisticsItem).toEqual({
+    expect(result.current.statistics.avgSalaryStatisticsItem).toEqual({
       year: 2024,
       average: 1010000,
       sameIndustryAverage: 1020000,
     });
-    expect(result.current.femaleManagerStatisticsItem).toBeNull();
+    expect(result.current.statistics.femaleManagerStatisticsItem).toBeNull();
   });
 
   test('指定 year → 取該年度的指標', () => {
     const { result } = renderHook(() => useEsgYearStatistics(sample, 2023));
 
     expect(result.current.selectedYear).toBe(2023);
-    expect(result.current.femaleManagerStatisticsItem).toEqual({
+    expect(result.current.statistics.femaleManagerStatisticsItem).toEqual({
       year: 2023,
       percentage: 0.189,
     });
-    expect(result.current.nonManagerAvgSalaryStatisticsItem).toBeNull();
+    expect(
+      result.current.statistics.nonManagerAvgSalaryStatisticsItem,
+    ).toBeNull();
   });
 
   test('esgSalaryData 為 null → 年度清單為空、四個 item 都是 null', () => {
@@ -53,10 +55,14 @@ describe('useEsgYearStatistics', () => {
 
     expect(result.current.availableYears).toEqual([]);
     expect(result.current.selectedYear).toBeNull();
-    expect(result.current.avgSalaryStatisticsItem).toBeNull();
-    expect(result.current.nonManagerAvgSalaryStatisticsItem).toBeNull();
-    expect(result.current.nonManagerMedianSalaryStatisticsItem).toBeNull();
-    expect(result.current.femaleManagerStatisticsItem).toBeNull();
+    expect(result.current.statistics.avgSalaryStatisticsItem).toBeNull();
+    expect(
+      result.current.statistics.nonManagerAvgSalaryStatisticsItem,
+    ).toBeNull();
+    expect(
+      result.current.statistics.nonManagerMedianSalaryStatisticsItem,
+    ).toBeNull();
+    expect(result.current.statistics.femaleManagerStatisticsItem).toBeNull();
   });
 
   test('資料為空 → selectedYear 為 null', () => {
@@ -64,7 +70,7 @@ describe('useEsgYearStatistics', () => {
 
     expect(result.current.availableYears).toEqual([]);
     expect(result.current.selectedYear).toBeNull();
-    expect(result.current.avgSalaryStatisticsItem).toBeNull();
+    expect(result.current.statistics.avgSalaryStatisticsItem).toBeNull();
   });
 
   test('year 由 undefined 改為指定年度 → selectedYear 跟著切換', () => {
@@ -78,7 +84,7 @@ describe('useEsgYearStatistics', () => {
     rerender({ year: 2023 });
 
     expect(result.current.selectedYear).toBe(2023);
-    expect(result.current.femaleManagerStatisticsItem).toEqual({
+    expect(result.current.statistics.femaleManagerStatisticsItem).toEqual({
       year: 2023,
       percentage: 0.189,
     });

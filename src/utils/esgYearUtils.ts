@@ -4,14 +4,14 @@ type AvgSalaryStatisticsItem = ESGSalaryData['avgSalaryStatistics'][number];
 type NonManagerMedianSalaryStatisticsItem = ESGSalaryData['nonManagerMedianSalaryStatistics'][number];
 type FemaleManagerStatisticsItem = ESGSalaryData['femaleManagerStatistics'][number];
 
-export type StatisticsByYear = {
+export type YearStatistics = {
   avgSalaryStatisticsItem: AvgSalaryStatisticsItem | null;
   nonManagerAvgSalaryStatisticsItem: AvgSalaryStatisticsItem | null;
   nonManagerMedianSalaryStatisticsItem: NonManagerMedianSalaryStatisticsItem | null;
   femaleManagerStatisticsItem: FemaleManagerStatisticsItem | null;
 };
 
-export const EMPTY_STATISTICS: StatisticsByYear = {
+export const EMPTY_STATISTICS: YearStatistics = {
   avgSalaryStatisticsItem: null,
   nonManagerAvgSalaryStatisticsItem: null,
   nonManagerMedianSalaryStatisticsItem: null,
@@ -35,7 +35,7 @@ export const getLatestYear = (years: number[]): number | null =>
 export const getStatisticsByYear = (
   esgSalaryData: ESGSalaryData,
   year: number,
-): StatisticsByYear => ({
+): YearStatistics => ({
   avgSalaryStatisticsItem:
     esgSalaryData.avgSalaryStatistics.find(item => item.year === year) || null,
   nonManagerAvgSalaryStatisticsItem:

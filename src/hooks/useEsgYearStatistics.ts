@@ -6,12 +6,13 @@ import {
   getAvailableYears,
   getLatestYear,
   getStatisticsByYear,
-  StatisticsByYear,
+  YearStatistics,
 } from 'utils/esgYearUtils';
 
-export type EsgYearStatistics = StatisticsByYear & {
+export type EsgYearStatistics = {
   availableYears: number[];
   selectedYear: number | null;
+  statistics: YearStatistics;
 };
 
 const useEsgYearStatistics = (
@@ -26,9 +27,10 @@ const useEsgYearStatistics = (
     return {
       availableYears,
       selectedYear,
-      ...(esgSalaryData && selectedYear !== null
-        ? getStatisticsByYear(esgSalaryData, selectedYear)
-        : EMPTY_STATISTICS),
+      statistics:
+        esgSalaryData && selectedYear !== null
+          ? getStatisticsByYear(esgSalaryData, selectedYear)
+          : EMPTY_STATISTICS,
     };
   }, [esgSalaryData, year]);
 

@@ -78,10 +78,12 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
   const [isCollapsed, setCollapsed] = useState(hasPreviewed);
 
   const {
-    avgSalaryStatisticsItem,
-    nonManagerAvgSalaryStatisticsItem,
-    nonManagerMedianSalaryStatisticsItem,
-    femaleManagerStatisticsItem,
+    statistics: {
+      avgSalaryStatisticsItem,
+      nonManagerAvgSalaryStatisticsItem,
+      nonManagerMedianSalaryStatisticsItem,
+      femaleManagerStatisticsItem,
+    },
   } = useEsgYearStatistics(data);
 
   const toggleCollapsed = useCallback(() => {
