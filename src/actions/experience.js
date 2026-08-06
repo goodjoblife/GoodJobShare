@@ -1,6 +1,6 @@
 import { concat } from 'ramda';
 
-import { getPopularExperiences as queryPopularExperiencesApi } from 'apis/experiencesApi';
+import queryPopularExperiencesApi from 'apis/getPopularExperiences';
 import queryExperienceApi from 'apis/queryExperience';
 import queryRelatedExperiencesApi from 'apis/queryRelatedExperiences';
 import { tokenSelector } from 'selectors/authSelector';

@@ -4,6 +4,7 @@ import {
   SET_RELATED_EXPERIENCES,
 } from 'actions/experience';
 import { InterviewExperience, WorkExperience } from 'apis/experience';
+import { PopularExperience } from 'apis/getPopularExperiences';
 import {
   InterviewExperienceInRelatedExperiences,
   WorkExperienceInRelatedExperiences,
@@ -14,9 +15,6 @@ import FetchBox, { getUnfetched } from 'utils/fetchBox';
 type RelatedExperience =
   | WorkExperienceInRelatedExperiences
   | InterviewExperienceInRelatedExperiences;
-
-// TODO: replace with proper type once apis/experiencesApi.js#getPopularExperiences is converted to TS
-type PopularExperience = unknown;
 
 type RelatedExperiencesState = {
   experienceId: string | null;
