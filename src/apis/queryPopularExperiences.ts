@@ -1,7 +1,7 @@
 import { ExperienceType } from 'apis/experience';
 import graphqlClient from 'utils/graphqlClient';
 
-const getPopularExperiencesGql = /* GraphQL */ `
+const queryPopularExperiencesGql = /* GraphQL */ `
   {
     popular_experiences(returnNumber: 3) {
       id
@@ -35,13 +35,13 @@ export type PopularExperience = {
   reply_count: number;
 };
 
-type GetPopularExperiencesData = {
+type QueryPopularExperiencesData = {
   popular_experiences: PopularExperience[];
 };
 
-const getPopularExperiences = (): Promise<PopularExperience[]> =>
-  graphqlClient<GetPopularExperiencesData>({
-    query: getPopularExperiencesGql,
+const queryPopularExperiences = (): Promise<PopularExperience[]> =>
+  graphqlClient<QueryPopularExperiencesData>({
+    query: queryPopularExperiencesGql,
   }).then(data => data.popular_experiences);
 
-export default getPopularExperiences;
+export default queryPopularExperiences;

@@ -4,7 +4,7 @@ import {
   SET_RELATED_EXPERIENCES,
 } from 'actions/experience';
 import { InterviewExperience, WorkExperience } from 'apis/experience';
-import { PopularExperience } from 'apis/getPopularExperiences';
+import { PopularExperience } from 'apis/queryPopularExperiences';
 import {
   InterviewExperienceInRelatedExperiences,
   WorkExperienceInRelatedExperiences,
