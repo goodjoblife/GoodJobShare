@@ -2,9 +2,9 @@ import { concat } from 'ramda';
 
 import {
   getPopularExperiences as queryPopularExperiencesApi,
-  queryExperience as queryExperienceApi,
   queryRelatedExperiences as queryRelatedExperiencesApi,
 } from 'apis/experiencesApi';
+import queryExperienceApi from 'apis/queryExperience';
 import { tokenSelector } from 'selectors/authSelector';
 import {
   experienceBoxSelectorAtId,

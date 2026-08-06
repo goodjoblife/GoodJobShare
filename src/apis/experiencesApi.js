@@ -1,10 +1,7 @@
-import { identity, ifElse, isNil } from 'ramda';
-
 import {
   changeExperienceStatusGql,
   createExperienceLikeGql,
   deleteExpereinceLikeGql,
-  queryExperienceGql,
   queryExperienceLikeGql,
   queryExperienceRepliesGql,
   queryRelatedExperiencesGql,
@@ -91,14 +88,6 @@ const resolveSubtitlesInExperience = ({ __typename, sections, ...rest }) => ({
     }),
   })),
 });
-
-export const queryExperience = ({ id }) =>
-  graphqlClient({
-    query: queryExperienceGql,
-    variables: { id },
-  })
-    .then(data => data.experience)
-    .then(ifElse(isNil, identity, resolveSubtitlesInExperience));
 
 export const queryExperienceLike = async ({ id, token }) => {
   const data = await graphqlClient({
