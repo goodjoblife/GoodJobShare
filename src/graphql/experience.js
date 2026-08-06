@@ -68,26 +68,6 @@ export const workExperiencesPartialGql = ({
   jobLevel
 `;
 
-export const queryExperienceGql = /* GraphQL */ `
-  query($id: ID!) {
-    experience(id: $id) {
-      ${experiencePartialGql}
-
-      __typename
-
-      ... on InterviewExperience {
-        ${interviewExperiencePartialGql({
-          sectionTitleKey: 'interview_subtitle',
-        })}
-      }
-
-      ... on WorkExperience {
-        ${workExperiencesPartialGql({ sectionTitleKey: 'work_subtitle' })}
-      }
-    }
-  }
-`;
-
 export const queryExperienceLikeGql = /* GraphQL */ `
   query($id: ID!) {
     experience(id: $id) {
