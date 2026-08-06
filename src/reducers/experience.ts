@@ -16,7 +16,7 @@ type RelatedExperience =
   | WorkExperienceInRelatedExperiences
   | InterviewExperienceInRelatedExperiences;
 
-type RelatedExperiencesState = {
+export type RelatedExperiencesState = {
   experienceId: string | null;
   page: number;
   state: FetchBox<{
