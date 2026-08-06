@@ -78,7 +78,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
   const [isCollapsed, setCollapsed] = useState(hasPreviewed);
 
   const {
-    statistics: {
+    yearStatistics: {
       avgSalaryStatisticsItem,
       nonManagerAvgSalaryStatisticsItem,
       nonManagerMedianSalaryStatisticsItem,

@@ -50,7 +50,7 @@ describe('useEsgYearStatisticsBox', () => {
     expect(result.current.data).toEqual({
       availableYears: [2024, 2023],
       selectedYear: 2024,
-      statistics: {
+      yearStatistics: {
         avgSalaryStatisticsItem: {
           year: 2024,
           average: 1010000,
@@ -85,7 +85,7 @@ describe('useEsgYearStatisticsBox', () => {
 
     expect(result.current.data).toMatchObject({
       selectedYear: 2023,
-      statistics: {
+      yearStatistics: {
         femaleManagerStatisticsItem: { year: 2023, percentage: 0.189 },
       },
     });

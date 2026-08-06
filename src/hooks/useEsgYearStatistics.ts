@@ -12,7 +12,7 @@ import {
 export type EsgYearStatistics = {
   availableYears: number[];
   selectedYear: number | null;
-  statistics: YearStatistics;
+  yearStatistics: YearStatistics;
 };
 
 const useEsgYearStatistics = (
@@ -27,7 +27,7 @@ const useEsgYearStatistics = (
     return {
       availableYears,
       selectedYear,
-      statistics:
+      yearStatistics:
         esgSalaryData && selectedYear !== null
           ? getStatisticsByYear(esgSalaryData, selectedYear)
           : EMPTY_STATISTICS,
