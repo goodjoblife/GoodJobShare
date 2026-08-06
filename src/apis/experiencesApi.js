@@ -4,7 +4,6 @@ import {
   deleteExpereinceLikeGql,
   queryExperienceLikeGql,
   queryExperienceRepliesGql,
-  queryRelatedExperiencesGql,
 } from 'graphql/experience';
 import { getPopularExperiencesQuery } from 'graphql/popularExperience';
 import { createReplyLike, deleteReplyLike } from 'graphql/reply';
@@ -62,33 +61,6 @@ export const patchReply = ({ id, status, token }) =>
     token,
   });
 
-const resolveSubtitleInSection = ({
-  __typename,
-  interview_subtitle,
-  work_subtitle,
-}) => {
-  switch (__typename) {
-    case 'InterviewExperience':
-      return interview_subtitle;
-    case 'WorkExperience':
-      return work_subtitle;
-    default:
-      return null;
-  }
-};
-
-const resolveSubtitlesInExperience = ({ __typename, sections, ...rest }) => ({
-  ...rest,
-  sections: sections.map(({ interview_subtitle, work_subtitle, ...rest }) => ({
-    ...rest,
-    subtitle: resolveSubtitleInSection({
-      __typename,
-      interview_subtitle,
-      work_subtitle,
-    }),
-  })),
-});
-
 export const queryExperienceLike = async ({ id, token }) => {
   const data = await graphqlClient({
     query: queryExperienceLikeGql,
@@ -110,12 +82,3 @@ export const changeExperienceStatus = ({ id, status, token }) =>
     variables: { input: { id, status } },
     token,
   });
-
-export const queryRelatedExperiences = async ({ id, start, limit }) => {
-  const data = await graphqlClient({
-    query: queryRelatedExperiencesGql,
-    variables: { id, start, limit },
-  });
-  const relatedExperiences = data.experience.relatedExperiences;
-  return relatedExperiences.map(resolveSubtitlesInExperience);
-};

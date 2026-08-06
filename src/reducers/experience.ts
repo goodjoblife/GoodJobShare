@@ -4,11 +4,16 @@ import {
   SET_RELATED_EXPERIENCES,
 } from 'actions/experience';
 import { InterviewExperience, WorkExperience } from 'apis/experience';
+import {
+  InterviewExperienceInRelatedExperiences,
+  WorkExperienceInRelatedExperiences,
+} from 'apis/queryRelatedExperiences';
 import createReducer from 'utils/createReducer';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
 
-// TODO: replace with proper type once apis/experiencesApi.js#queryRelatedExperiences is converted to TS
-type RelatedExperience = unknown;
+type RelatedExperience =
+  | WorkExperienceInRelatedExperiences
+  | InterviewExperienceInRelatedExperiences;
 
 // TODO: replace with proper type once apis/experiencesApi.js#getPopularExperiences is converted to TS
 type PopularExperience = unknown;
