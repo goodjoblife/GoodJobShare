@@ -6,7 +6,7 @@ import linkStyles from 'common/base/Link.module.css';
 import Card from 'common/Card';
 import Caret from 'common/icons/Caret';
 import Info from 'common/icons/Info';
-import useEsgYearStatistics from 'hooks/useEsgYearStatistics';
+import { getEsgYearStatistics } from 'utils/esgYearUtils';
 import { formatNumberWithSign } from 'utils/stringUtil';
 
 import styles from './EsgBlock.module.css';
@@ -84,7 +84,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
       nonManagerMedianSalaryStatisticsItem,
       femaleManagerStatisticsItem,
     },
-  } = useEsgYearStatistics(data);
+  } = getEsgYearStatistics(data);
 
   const toggleCollapsed = useCallback(() => {
     setCollapsed(isCollapsed => !isCollapsed);

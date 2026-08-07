@@ -1,10 +1,8 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-import useEsgYearStatistics, {
-  EsgYearStatistics,
-} from 'hooks/useEsgYearStatistics';
 import { companyEsgSalaryDataBoxSelectorByName } from 'selectors/companyAndJobTitle';
+import { EsgYearStatistics, getEsgYearStatistics } from 'utils/esgYearUtils';
 import FetchBox, {
   getError,
   getFetched,
@@ -24,7 +22,10 @@ export const useEsgYearStatisticsBox = (
     [companyName],
   );
   const box = useSelector(selector);
-  const esgYearStatistics = useEsgYearStatistics(box.data || null, year);
+  const esgYearStatistics = useMemo(
+    () => getEsgYearStatistics(box.data || null, year),
+    [box.data, year],
+  );
 
   return useMemo(() => {
     if (isFetched(box)) {

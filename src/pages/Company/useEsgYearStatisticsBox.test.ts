@@ -126,4 +126,17 @@ describe('useEsgYearStatisticsBox', () => {
 
     expect(isUnfetched(result.current)).toBe(true);
   });
+
+  test('輸入不變時回傳同一個 data 物件，避免呼叫端誤判為變更', () => {
+    mockState = stateWithBox(getFetched(sample));
+
+    const { result, rerender } = renderHook(() =>
+      useEsgYearStatisticsBox('台積電'),
+    );
+    const firstData = result.current.data;
+
+    rerender();
+
+    expect(result.current.data).toBe(firstData);
+  });
 });

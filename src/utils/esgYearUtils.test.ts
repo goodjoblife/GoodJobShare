@@ -3,6 +3,7 @@ import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import {
   EMPTY_STATISTICS,
   getAvailableYears,
+  getEsgYearStatistics,
   getLatestYear,
   getStatisticsByYear,
 } from './esgYearUtils';
@@ -17,6 +18,13 @@ const sample: ESGSalaryData = {
   ],
   nonManagerMedianSalaryStatistics: [{ year: 2023, median: 871000 }],
   femaleManagerStatistics: [{ year: 2023, percentage: 0.189 }],
+};
+
+const empty: ESGSalaryData = {
+  avgSalaryStatistics: [],
+  nonManagerAvgSalaryStatistics: [],
+  nonManagerMedianSalaryStatistics: [],
+  femaleManagerStatistics: [],
 };
 
 describe('getAvailableYears', () => {
@@ -82,5 +90,55 @@ describe('getStatisticsByYear', () => {
 
   test('查無該年份 → EMPTY_STATISTICS', () => {
     expect(getStatisticsByYear(sample, 2020)).toEqual(EMPTY_STATISTICS);
+  });
+
+  test('esgSalaryData 為 null → EMPTY_STATISTICS', () => {
+    expect(getStatisticsByYear(null, 2024)).toEqual(EMPTY_STATISTICS);
+  });
+
+  test('year 為 null → EMPTY_STATISTICS', () => {
+    expect(getStatisticsByYear(sample, null)).toEqual(EMPTY_STATISTICS);
+  });
+});
+
+describe('getEsgYearStatistics', () => {
+  test('未指定 year → 跟著最新年度', () => {
+    const result = getEsgYearStatistics(sample);
+
+    expect(result.availableYears).toEqual([2024, 2023]);
+    expect(result.selectedYear).toBe(2024);
+    expect(result.yearStatistics.avgSalaryStatisticsItem).toEqual({
+      year: 2024,
+      average: 1010000,
+      sameIndustryAverage: 1020000,
+    });
+    expect(result.yearStatistics.femaleManagerStatisticsItem).toBeNull();
+  });
+
+  test('指定 year → 取該年度的指標', () => {
+    const result = getEsgYearStatistics(sample, 2023);
+
+    expect(result.selectedYear).toBe(2023);
+    expect(result.yearStatistics.femaleManagerStatisticsItem).toEqual({
+      year: 2023,
+      percentage: 0.189,
+    });
+    expect(result.yearStatistics.nonManagerAvgSalaryStatisticsItem).toBeNull();
+  });
+
+  test('esgSalaryData 為 null → 年度清單為空、四個 item 都是 null', () => {
+    const result = getEsgYearStatistics(null);
+
+    expect(result.availableYears).toEqual([]);
+    expect(result.selectedYear).toBeNull();
+    expect(result.yearStatistics).toEqual(EMPTY_STATISTICS);
+  });
+
+  test('資料為空 → selectedYear 為 null', () => {
+    const result = getEsgYearStatistics(empty);
+
+    expect(result.availableYears).toEqual([]);
+    expect(result.selectedYear).toBeNull();
+    expect(result.yearStatistics).toEqual(EMPTY_STATISTICS);
   });
 });
