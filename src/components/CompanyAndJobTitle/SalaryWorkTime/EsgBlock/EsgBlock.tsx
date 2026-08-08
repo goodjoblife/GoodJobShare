@@ -7,10 +7,10 @@ import Card from 'common/Card';
 import Select from 'common/form/Select';
 import Caret from 'common/icons/Caret';
 import Info from 'common/icons/Info';
+import { getAvailableYears, getStatisticsByYear } from 'utils/esgYearUtils';
 import { formatNumberWithSign } from 'utils/stringUtil';
 
 import styles from './EsgBlock.module.css';
-import { getAvailableYears, getStatisticsByYear } from './esgYearUtils';
 import snippetStyles from '../../SnippetBlock.module.css';
 
 type EsgItemBlockProps = {
