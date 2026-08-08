@@ -66,11 +66,10 @@ const SalaryWorkTime: React.FC<Props> = ({
         <BoxRenderer
           box={esgSalaryDataBox}
           render={(data): React.ReactNode => {
-            const latestYearData = data && data[0];
-            if (!latestYearData) return null;
+            if (!data || data.length === 0) return null;
             return (
               <Wrapper size="l">
-                <EsgBlock data={latestYearData} />
+                <EsgBlock data={data} />
               </Wrapper>
             );
           }}

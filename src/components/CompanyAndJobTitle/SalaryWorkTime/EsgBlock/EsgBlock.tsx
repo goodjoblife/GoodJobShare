@@ -24,7 +24,7 @@ type EsgBlockProps = {
   className?: string;
   showsToggle?: boolean;
   hasPreviewed?: boolean;
-  data: EsgYearStatistics;
+  data: EsgYearStatistics[];
 };
 
 const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
@@ -72,14 +72,17 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
   className,
   showsToggle = true,
   hasPreviewed,
-  data: {
+  data,
+}) => {
+  const [isCollapsed, setCollapsed] = useState(hasPreviewed);
+
+  // data 依年份新到舊排序；沒有年度選單時固定顯示最新一年。
+  const {
     avgSalaryStatisticsItem,
     nonManagerAvgSalaryStatisticsItem,
     nonManagerMedianSalaryStatisticsItem,
     femaleManagerStatisticsItem,
-  },
-}) => {
-  const [isCollapsed, setCollapsed] = useState(hasPreviewed);
+  } = data[0];
 
   const toggleCollapsed = useCallback(() => {
     setCollapsed(isCollapsed => !isCollapsed);
