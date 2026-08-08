@@ -5,7 +5,7 @@ import {
   queryCompanyWorkExperiencesAspectExperiences,
   queryCompanyWorkExperiencesAspectStatistics,
 } from 'actions/company';
-import { WorkExperience } from 'apis/experience';
+import { ExperienceType, WorkExperience } from 'apis/experience';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import WorkExperiencesAspect from 'components/CompanyAndJobTitle/WorkExperiences/Aspects';
@@ -45,10 +45,12 @@ const useWorkExperiencesAspectExperiencesBoxSelector = (
         // as the source of truth of experiences.
         const data: CompanyAspectExperienceResult = {
           ...box.data,
-          workExperiences: box.data.workExperiences.map(
-            (e: WorkExperience) =>
-              experienceBoxSelectorAtId(e.id)(state).data || e,
-          ),
+          workExperiences: box.data.workExperiences.map((e: WorkExperience) => {
+            const cached = experienceBoxSelectorAtId(e.id)(state).data;
+            // experienceById is keyed across all experience types, so narrow
+            // back to WorkExperience before using the cached copy.
+            return cached && cached.type === ExperienceType.WORK ? cached : e;
+          }),
         };
         return getFetched(data);
       }
