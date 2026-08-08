@@ -1,12 +1,11 @@
 import cn from 'classnames';
 import React, { useCallback, useState } from 'react';
 
-import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import linkStyles from 'common/base/Link.module.css';
 import Card from 'common/Card';
 import Caret from 'common/icons/Caret';
 import Info from 'common/icons/Info';
-import { getEsgYearStatistics } from 'utils/esgYearUtils';
+import { EsgYearStatistics } from 'utils/esgYearUtils';
 import { formatNumberWithSign } from 'utils/stringUtil';
 
 import styles from './EsgBlock.module.css';
@@ -25,7 +24,7 @@ type EsgBlockProps = {
   className?: string;
   showsToggle?: boolean;
   hasPreviewed?: boolean;
-  data: ESGSalaryData;
+  data: EsgYearStatistics;
 };
 
 const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
@@ -73,18 +72,14 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
   className,
   showsToggle = true,
   hasPreviewed,
-  data,
+  data: {
+    avgSalaryStatisticsItem,
+    nonManagerAvgSalaryStatisticsItem,
+    nonManagerMedianSalaryStatisticsItem,
+    femaleManagerStatisticsItem,
+  },
 }) => {
   const [isCollapsed, setCollapsed] = useState(hasPreviewed);
-
-  const {
-    yearStatistics: {
-      avgSalaryStatisticsItem,
-      nonManagerAvgSalaryStatisticsItem,
-      nonManagerMedianSalaryStatisticsItem,
-      femaleManagerStatisticsItem,
-    },
-  } = getEsgYearStatistics(data);
 
   const toggleCollapsed = useCallback(() => {
     setCollapsed(isCollapsed => !isCollapsed);

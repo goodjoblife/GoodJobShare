@@ -60,3 +60,19 @@ export const toFetching = <T>(
 
   return { status: FetchStatus.FETCHING, data };
 };
+
+export const mapBox = <T, U>(
+  box: FetchBox<T>,
+  fn: (data: T) => U,
+): FetchBox<U> => {
+  if (isFetched(box)) {
+    return getFetched(fn(box.data));
+  }
+  if (isError(box)) {
+    return getError(box.error);
+  }
+  if (isFetching(box)) {
+    return toFetching();
+  }
+  return getUnfetched();
+};

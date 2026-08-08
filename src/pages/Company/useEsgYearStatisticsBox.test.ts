@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { RootState } from 'reducers';
+import { EsgYearStatistics } from 'utils/esgYearUtils';
 import FetchBox, {
   getError,
   getFetched,
@@ -19,21 +19,38 @@ jest.mock('react-redux', () => ({
   useSelector: <T>(selector: (state: RootState) => T): T => selector(mockState),
 }));
 
-const sample: ESGSalaryData = {
-  avgSalaryStatistics: [
-    { year: 2023, average: 973000, sameIndustryAverage: 1000000 },
-    { year: 2024, average: 1010000, sameIndustryAverage: 1020000 },
-  ],
-  nonManagerAvgSalaryStatistics: [
-    { year: 2024, average: 1005000, sameIndustryAverage: 950000 },
-  ],
-  nonManagerMedianSalaryStatistics: [{ year: 2023, median: 871000 }],
-  femaleManagerStatistics: [{ year: 2023, percentage: 0.189 }],
-};
+const sample: EsgYearStatistics[] = [
+  {
+    year: 2024,
+    avgSalaryStatisticsItem: {
+      year: 2024,
+      average: 1010000,
+      sameIndustryAverage: 1020000,
+    },
+    nonManagerAvgSalaryStatisticsItem: {
+      year: 2024,
+      average: 1005000,
+      sameIndustryAverage: 950000,
+    },
+    nonManagerMedianSalaryStatisticsItem: null,
+    femaleManagerStatisticsItem: null,
+  },
+  {
+    year: 2023,
+    avgSalaryStatisticsItem: {
+      year: 2023,
+      average: 973000,
+      sameIndustryAverage: 1000000,
+    },
+    nonManagerAvgSalaryStatisticsItem: null,
+    nonManagerMedianSalaryStatisticsItem: { year: 2023, median: 871000 },
+    femaleManagerStatisticsItem: { year: 2023, percentage: 0.189 },
+  },
+];
 
 let mockState: RootState;
 
-const stateWithBox = (box: FetchBox<ESGSalaryData | null>): RootState =>
+const stateWithBox = (box: FetchBox<EsgYearStatistics[] | null>): RootState =>
   (({
     companyIndex: {
       esgSalaryData: { 台積電: box },
@@ -41,30 +58,13 @@ const stateWithBox = (box: FetchBox<ESGSalaryData | null>): RootState =>
   } as unknown) as RootState);
 
 describe('useEsgYearStatisticsBox', () => {
-  test('FETCHED 且有資料 → 回傳算好統計的 fetched box', () => {
+  test('FETCHED 且有資料、未指定 year → 回傳最新年度', () => {
     mockState = stateWithBox(getFetched(sample));
 
     const { result } = renderHook(() => useEsgYearStatisticsBox('台積電'));
 
     expect(isFetched(result.current)).toBe(true);
-    expect(result.current.data).toEqual({
-      availableYears: [2024, 2023],
-      selectedYear: 2024,
-      yearStatistics: {
-        avgSalaryStatisticsItem: {
-          year: 2024,
-          average: 1010000,
-          sameIndustryAverage: 1020000,
-        },
-        nonManagerAvgSalaryStatisticsItem: {
-          year: 2024,
-          average: 1005000,
-          sameIndustryAverage: 950000,
-        },
-        nonManagerMedianSalaryStatisticsItem: null,
-        femaleManagerStatisticsItem: null,
-      },
-    });
+    expect(result.current.data).toEqual(sample[0]);
   });
 
   test('FETCHED 但該公司沒有 ESG 資料 → data 維持 null', () => {
@@ -76,19 +76,24 @@ describe('useEsgYearStatisticsBox', () => {
     expect(result.current.data).toBeNull();
   });
 
-  test('指定 year → 統計取該年度', () => {
+  test('指定 year → 取該年度的統計', () => {
     mockState = stateWithBox(getFetched(sample));
 
     const { result } = renderHook(() =>
       useEsgYearStatisticsBox('台積電', 2023),
     );
 
-    expect(result.current.data).toMatchObject({
-      selectedYear: 2023,
-      yearStatistics: {
-        femaleManagerStatisticsItem: { year: 2023, percentage: 0.189 },
-      },
-    });
+    expect(result.current.data).toEqual(sample[1]);
+  });
+
+  test('指定的 year 不存在 → 回退最新年度', () => {
+    mockState = stateWithBox(getFetched(sample));
+
+    const { result } = renderHook(() =>
+      useEsgYearStatisticsBox('台積電', 2020),
+    );
+
+    expect(result.current.data).toEqual(sample[0]);
   });
 
   test('UNFETCHED → 回傳 unfetched box', () => {
