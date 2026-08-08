@@ -1,10 +1,14 @@
 import { concat } from 'ramda';
+import { AnyAction } from 'redux';
 
-import {
-  getPopularExperiences as queryPopularExperiencesApi,
-  queryExperience as queryExperienceApi,
-  queryRelatedExperiences as queryRelatedExperiencesApi,
-} from 'apis/experiencesApi';
+import { InterviewExperience, WorkExperience } from 'apis/experience';
+import queryExperienceApi from 'apis/queryExperience';
+import queryPopularExperiencesApi, {
+  PopularExperience,
+} from 'apis/queryPopularExperiences';
+import queryRelatedExperiencesApi from 'apis/queryRelatedExperiences';
+import { Thunk } from 'reducers';
+import { RelatedExperiencesState } from 'reducers/experience';
 import { tokenSelector } from 'selectors/authSelector';
 import {
   experienceBoxSelectorAtId,
@@ -13,7 +17,7 @@ import {
   relatedExperiencesStateSelector,
 } from 'selectors/experienceSelector';
 import { isGraphqlError, UiNotFoundError } from 'utils/errors';
-import {
+import FetchBox, {
   getError,
   getFetched,
   isFetching,
@@ -26,13 +30,19 @@ export const SET_RELATED_EXPERIENCES = '@@EXPERIENCE/SET_RELATED_EXPERIENCES';
 export const SET_POPULAR_EXPERIENCES = '@@EXPERIENCE/SET_POPULAR_EXPERIENCES';
 
 // state is related to experienceId
-export const setExperience = (experienceId, box) => ({
+export const setExperience = (
+  experienceId: string,
+  box: FetchBox<WorkExperience | InterviewExperience | null>,
+): AnyAction => ({
   type: SET_EXPERIENCE,
   experienceId,
   box,
 });
 
-export const queryExperience = experienceId => async (dispatch, getState) => {
+export const queryExperience = (experienceId: string): Thunk => async (
+  dispatch,
+  getState,
+): Promise<unknown> => {
   const token = tokenSelector(getState());
   dispatch(setExperience(experienceId, toFetching()));
 
@@ -59,16 +69,19 @@ export const queryExperience = experienceId => async (dispatch, getState) => {
   }
 };
 
-export const queryExperienceIfUnfetched = experienceId => async (
-  dispatch,
-  getState,
-) => {
+export const queryExperienceIfUnfetched = (
+  experienceId: string,
+): Thunk => async (dispatch, getState): Promise<unknown> => {
   if (isUnfetched(experienceBoxSelectorAtId(experienceId)(getState()))) {
     return dispatch(queryExperience(experienceId));
   }
 };
 
-const setRelatedExperiences = (experienceId, page, state) => ({
+const setRelatedExperiences = (
+  experienceId: string | null,
+  page: number,
+  state: RelatedExperiencesState['state'],
+): AnyAction => ({
   type: SET_RELATED_EXPERIENCES,
   relatedExperiences: {
     experienceId,
@@ -77,10 +90,9 @@ const setRelatedExperiences = (experienceId, page, state) => ({
   },
 });
 
-export const queryRelatedExperiencesOnExperience = experienceId => async (
-  dispatch,
-  getState,
-) => {
+export const queryRelatedExperiencesOnExperience = (
+  experienceId: string,
+): Thunk => async (dispatch, getState): Promise<void> => {
   const page = 0;
   dispatch(setRelatedExperiences(experienceId, page, toFetching()));
 
@@ -107,9 +119,16 @@ export const queryRelatedExperiencesOnExperience = experienceId => async (
   }
 };
 
-export const loadMoreRelatedExperiences = () => async (dispatch, getState) => {
+export const loadMoreRelatedExperiences = (): Thunk => async (
+  dispatch,
+  getState,
+): Promise<unknown> => {
   const cabin = relatedExperiencesCabinSelector(getState());
   const state = relatedExperiencesStateSelector(getState()); // FetchBox
+
+  if (cabin.experienceId === null) {
+    return;
+  }
 
   // 判斷 isFetching
   if (isFetching(state)) {
@@ -131,7 +150,11 @@ export const loadMoreRelatedExperiences = () => async (dispatch, getState) => {
     const prev = relatedExperiencesCabinSelector(getState());
     const prevState = relatedExperiencesStateSelector(getState()); // FetchBox
 
-    if (experienceId === prev.experienceId && page === prev.page) {
+    if (
+      experienceId === prev.experienceId &&
+      page === prev.page &&
+      prevState.data
+    ) {
       const hasMore = relatedExperiences.length < 5 ? false : true;
       const data = {
         relatedExperiences: concat(
@@ -147,17 +170,19 @@ export const loadMoreRelatedExperiences = () => async (dispatch, getState) => {
     const prev = relatedExperiencesCabinSelector(getState());
 
     if (experienceId === prev.experienceId && page === prev.page) {
-      dispatch(setRelatedExperiences(getError(error)));
+      dispatch(setRelatedExperiences(experienceId, page, getError(error)));
     }
   }
 };
 
-const setPopularExperiences = box => ({
+const setPopularExperiences = (
+  box: FetchBox<PopularExperience[]>,
+): AnyAction => ({
   type: SET_POPULAR_EXPERIENCES,
   popularExperiences: box,
 });
 
-export const queryPopularExperiences = () => async dispatch => {
+export const queryPopularExperiences = (): Thunk => async dispatch => {
   dispatch(setPopularExperiences(toFetching()));
 
   try {
@@ -168,13 +193,13 @@ export const queryPopularExperiences = () => async dispatch => {
   }
 };
 
-export const queryPopularExperiencesIfUnfetched = experienceId => async (
+export const queryPopularExperiencesIfUnfetched = (): Thunk => async (
   dispatch,
   getState,
-) => {
+): Promise<unknown> => {
   const box = popularExperiencesBoxSelector(getState());
 
   if (isUnfetched(box)) {
-    return dispatch(queryPopularExperiences(experienceId));
+    return dispatch(queryPopularExperiences());
   }
 };
