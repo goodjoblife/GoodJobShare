@@ -12,7 +12,7 @@ export type EsgYearStatistics = {
   femaleManagerStatisticsItem: FemaleManagerStatisticsItem | null;
 };
 
-const getAvailableYears = (esgSalaryData: ESGSalaryData): number[] => {
+export const getAvailableYears = (esgSalaryData: ESGSalaryData): number[] => {
   const years = new Set<number>();
   Object.values(esgSalaryData).forEach(items => {
     items.forEach(item => years.add(item.year));
@@ -20,7 +20,7 @@ const getAvailableYears = (esgSalaryData: ESGSalaryData): number[] => {
   return Array.from(years).sort((a, b) => b - a);
 };
 
-const getStatisticsByYear = (
+export const getStatisticsByYear = (
   esgSalaryData: ESGSalaryData,
   year: number,
 ): Omit<EsgYearStatistics, 'year'> => ({
