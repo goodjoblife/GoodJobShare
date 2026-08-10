@@ -27,7 +27,7 @@ const httpRequestCounter = new promClient.Counter({
 
 register.registerMetric(httpRequestCounter);
 
-const assets = require(process.env.RAZZLE_ASSETS_MANIFEST); // eslint-disable-line import/no-dynamic-require
+const assets = require(process.env.RAZZLE_ASSETS_MANIFEST); // eslint-disable-line @typescript-eslint/no-var-requires
 
 const matchRoutes = (pathname, routes) => {
   // eslint-disable-next-line no-restricted-syntax
