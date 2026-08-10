@@ -1,10 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import Button from 'common/button/Button';
 import Checked2 from 'common/icons/Checked2';
-import { ValuePropType } from '../Checkbox/PropTypes';
+
 import styles from './styles.module.css';
+import { ValuePropType } from '../Checkbox/PropTypes';
 
 const Option = ({ children, onClick, selected, isElse }) => {
   return (

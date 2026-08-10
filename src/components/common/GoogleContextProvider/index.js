@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import GoogleContext from 'contexts/GoogleContext';
+
 import { loginWithGoogle } from 'actions/auth';
+import GoogleContext from 'contexts/GoogleContext';
+
 import { GOOGLE_APP_ID } from '../../../config';
 
 const GoogleContextProvider = ({ children }) => {

@@ -1,56 +1,56 @@
 import React from 'react';
 import { generatePath } from 'react-router';
-import LandingPage from './components/LandingPage';
-import LaborRightsMenu from './components/LaborRightsMenu';
-import LaborRightsSingle from './components/LaborRightsSingle';
-import SearchScreen from './components/TimeAndSalary/SearchScreen';
-import ExperienceDetail from './components/ExperienceDetail';
-import NotFound from './components/common/NotFound';
-import ShareExperience from './components/ShareExperience';
-import ShareExperienceEntry from './components/ShareExperience/Entry';
-import Me from './components/Me';
-import Buy from './components/Buy';
-import About from './components/About';
-import Faq from './components/Faq';
-import Guidelines from './components/Guidelines';
-import Privacy from './components/Privacy';
-import ProductAndRefundPolicy from './components/ProductAndRefundPolicy';
-import Terms from './components/Terms';
+
 import Redirect from 'common/routing/Redirect';
-import VerificationPage from './components/EmailVerification/VerificationPage';
-
-import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
-import CompanyIndexProvider from 'pages/Company/CompanyIndexProvider';
-import CompanyOverviewProvider from 'pages/Company/CompanyOverviewProvider';
-import CompanyTimeAndSalaryProvider from 'pages/Company/CompanyTimeAndSalaryProvider';
-import CompanyInterviewExperiencesProvider from 'pages/Company/CompanyInterviewExperiencesProvider';
-import CompanyWorkExperiencesProvider from 'pages/Company/CompanyWorkExperiencesProvider';
-import JobTitleIndexProvider from 'pages/JobTitle/JobTitleIndexProvider';
-import JobTitleOverviewProvider from 'pages/JobTitle/JobTitleOverviewProvider';
-import JobTitleTimeAndSalaryProvider from 'pages/JobTitle/JobTitleTimeAndSalaryProvider';
-import JobTitleInterviewExperiencesProvider from 'pages/JobTitle/JobTitleInterviewExperiencesProvider';
-import JobTitleWorkExperiencesProvider from 'pages/JobTitle/JobTitleWorkExperiencesProvider';
-
-import PlanPage from './components/PlanPage';
-import BuyResultPage from './components/BuyResultPage';
-import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
-import SubscriptionsPage from './components/Me/SubscriptionsPage';
-import InboxPage from './pages/InboxPage';
-
 import {
-  jobTitleOverviewPath,
-  jobTitleSalaryWorkTimesPath,
-  jobTitleInterviewExperiencesPath,
-  jobTitleWorkExperiencesPath,
+  companyInterviewExperiencesPath,
+  companyOverviewLegacyPath,
   companyOverviewPath,
   companySalaryWorkTimesPath,
-  companyInterviewExperiencesPath,
+  companyWorkExperiencesAspectPath,
   companyWorkExperiencesPath,
-  companyOverviewLegacyPath,
+  jobTitleInterviewExperiencesPath,
   jobTitleOverviewLegacyPath,
+  jobTitleOverviewPath,
+  jobTitleSalaryWorkTimesPath,
+  jobTitleWorkExperiencesPath,
 } from 'constants/linkTo';
-import { companyNameSelector } from 'pages/Company/useCompanyName';
-import { jobTitleSelector } from 'pages/JobTitle/useJobTitle';
+import CompanyIndexProvider from 'pages/Company/CompanyIndexProvider';
+import CompanyInterviewExperiencesProvider from 'pages/Company/CompanyInterviewExperiencesProvider';
+import CompanyOverviewProvider from 'pages/Company/CompanyOverviewProvider';
+import CompanySalaryWorkTimeProvider from 'pages/Company/CompanySalaryWorkTimeProvider';
+import CompanyWorkExperiencesAspectProvider from 'pages/Company/CompanyWorkExperiencesAspectProvider';
+import CompanyWorkExperiencesProvider from 'pages/Company/CompanyWorkExperiencesProvider';
+import { companyNameSelector } from 'pages/Company/useCompanyNameParam';
+import JobTitleIndexProvider from 'pages/JobTitle/JobTitleIndexProvider';
+import JobTitleInterviewExperiencesProvider from 'pages/JobTitle/JobTitleInterviewExperiencesProvider';
+import JobTitleOverviewProvider from 'pages/JobTitle/JobTitleOverviewProvider';
+import JobTitleSalaryWorkTimeProvider from 'pages/JobTitle/JobTitleSalaryWorkTimeProvider';
+import JobTitleWorkExperiencesProvider from 'pages/JobTitle/JobTitleWorkExperiencesProvider';
+import { jobTitleSelector } from 'pages/JobTitle/useJobTitleParam';
+import SearchPage from 'pages/SearchPage';
+
+import About from './components/About';
+import Buy from './components/Buy';
+import BuyResultPage from './components/BuyResultPage';
+import NotFound from './components/common/NotFound';
+import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
+import ExperienceDetail from './components/ExperienceDetail';
+import Faq from './components/Faq';
+import Guidelines from './components/Guidelines';
+import LaborRightsMenu from './components/LaborRightsMenu';
+import LaborRightsSingle from './components/LaborRightsSingle';
+import LandingPage from './components/LandingPage';
+import Me from './components/Me';
+import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
+import SubscriptionsPage from './components/Me/SubscriptionsPage';
+import PlanPage from './components/PlanPage';
+import Privacy from './components/Privacy';
+import ProductAndRefundPolicy from './components/ProductAndRefundPolicy';
+import ShareExperience from './components/ShareExperience';
+import ShareExperienceEntry from './components/ShareExperience/Entry';
+import Terms from './components/Terms';
+import InboxPage from './pages/InboxPage';
 
 const routes = [
   {
@@ -108,7 +108,7 @@ const routes = [
   {
     path: '/search',
     exact: true,
-    component: SearchScreen,
+    component: SearchPage,
   },
   {
     path: '/companies',
@@ -135,7 +135,7 @@ const routes = [
       },
       {
         path: companySalaryWorkTimesPath,
-        component: CompanyTimeAndSalaryProvider,
+        component: CompanySalaryWorkTimeProvider,
         exact: true,
       },
       {
@@ -146,6 +146,11 @@ const routes = [
       {
         path: companyWorkExperiencesPath,
         component: CompanyWorkExperiencesProvider,
+        exact: true,
+      },
+      {
+        path: companyWorkExperiencesAspectPath,
+        component: CompanyWorkExperiencesAspectProvider,
         exact: true,
       },
       {
@@ -178,7 +183,7 @@ const routes = [
       },
       {
         path: jobTitleSalaryWorkTimesPath,
-        component: JobTitleTimeAndSalaryProvider,
+        component: JobTitleSalaryWorkTimeProvider,
         exact: true,
       },
       {
@@ -245,13 +250,6 @@ const routes = [
     path: '/user-terms',
     exact: true,
     component: Terms,
-  },
-  {
-    path: '/verify',
-    exact: true,
-    component: VerificationPage,
-    hasHeader: false,
-    hasFooter: false,
   },
   {
     path: '/plans',

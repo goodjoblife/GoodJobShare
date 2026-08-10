@@ -1,4 +1,5 @@
 import R from 'ramda';
+
 import { experienceReportReasons, salaryReportReasons } from './constants';
 
 export const isOtherCategory = reasonCategory => reasonCategory === '其他';

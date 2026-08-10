@@ -1,32 +1,32 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import {
-  string,
-  bool,
-  func,
-  shape,
-  oneOfType,
-  element,
-  arrayOf,
-  any,
-  node,
-} from 'prop-types';
 import cn from 'classnames';
+import {
+  any,
+  arrayOf,
+  bool,
+  element,
+  func,
+  node,
+  oneOfType,
+  shape,
+  string,
+} from 'prop-types';
 import R from 'ramda';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
+import { pushErrorNotificationAndRollbar } from 'actions/toastNotification';
 import X from 'common/icons/X';
+import { ER0019, ER0021, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import rollbar from 'utils/rollbar';
 
-import QuestionBuilder, { QuestionTypePropType } from './QuestionBuilder';
-import useDraft from './useDraft';
-import ProgressBlock from './ProgressBlock';
-import NavigatorBlock from './NavigatorBlock';
-import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
+import NavigatorBlock from './NavigatorBlock';
+import ProgressBlock from './ProgressBlock';
+import QuestionBuilder, { QuestionTypePropType } from './QuestionBuilder';
 import { OptionPropType } from './QuestionBuilder/Checkbox/PropTypes';
-import rollbar from 'utils/rollbar';
-import { ER0019, ER0021, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
-import { useDispatch } from 'react-redux';
-import { pushErrorNotificationAndRollbar } from 'actions/toastNotification';
+import SubmissionBlock from './SubmissionBlock';
+import useDraft from './useDraft';
 
 const findIfQuestionsAcceptDraft = draft =>
   R.all(

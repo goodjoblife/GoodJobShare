@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom/server';
-import serialize from 'serialize-javascript';
 import Helmet from 'react-helmet';
+import serialize from 'serialize-javascript';
 
 import { GTM_ID } from '../config';
 

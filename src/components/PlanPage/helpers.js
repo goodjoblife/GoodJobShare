@@ -1,4 +1,5 @@
 import { compose, length, min } from 'ramda';
+
 import { subscriptionType } from 'constants/subscription';
 
 const MAX_COLUMN = 3;

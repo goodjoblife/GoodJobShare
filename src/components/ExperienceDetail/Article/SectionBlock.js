@@ -1,8 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import { Heading, P } from 'common/base';
-import styles from './SectionBlock.module.css';
 import OverallRating from 'common/OverallRating';
+
+import styles from './SectionBlock.module.css';
 
 const SectionBlock = ({ subtitle, content, rating, subTitleTag = 'h2' }) => (
   <section>

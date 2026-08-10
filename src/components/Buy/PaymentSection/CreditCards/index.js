@@ -1,13 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
 import { keys } from 'ramda';
+import React from 'react';
+
 import Amex from './amex.svg';
 import Jcb from './jcb.svg';
 import MasterCard from './mastercard.svg';
+import styles from './styles.module.css';
 import UnionPay from './union_pay.8271208.png';
 import Visa from './visa.svg';
-import styles from './styles.module.css';
 
 const cardTypeSrc = {
   visa: Visa,

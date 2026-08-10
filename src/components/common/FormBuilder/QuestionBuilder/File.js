@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import cn from 'classnames';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faFile from '@fortawesome/fontawesome-free-solid/faFile';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback, useState } from 'react';
 
 import styles from './File.module.css';
 
@@ -26,17 +26,7 @@ const getLabelText = (filename, error) => {
   }
 };
 
-const File = ({
-  page,
-  title,
-  description,
-  dataKey,
-  required,
-  defaultValue,
-  value,
-  onChange,
-  warning,
-}) => {
+const File = ({ value, onChange }) => {
   const [filename, setFilename] = useState(null);
   const [error, setError] = useState(null);
 
@@ -78,15 +68,8 @@ const File = ({
 };
 
 File.propTypes = {
-  dataKey: PropTypes.string.isRequired,
-  defaultValue: PropTypes.string.isRequired,
-  description: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  required: PropTypes.bool,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   value: PropTypes.string.isRequired,
-  warning: PropTypes.string,
 };
 
 export default File;

@@ -1,8 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import R from 'ramda';
+import React from 'react';
 import { useWindowSize } from 'react-use';
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+
 import breakpoints from 'constants/breakpoints';
 
 const maxNameLength = R.pipe(

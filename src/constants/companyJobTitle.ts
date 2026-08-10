@@ -5,9 +5,7 @@ enum PageType {
   COMPANY = 'COMPANY',
 }
 
-const pageType = PageType;
-
-export { pageType, PageType };
+export { PageType };
 
 export const pageTypeTranslation: Record<PageType, string> = {
   [PageType.JOB_TITLE]: '職稱',
@@ -26,9 +24,7 @@ enum TabType {
   INTERVIEW_EXPERIENCE = 'INTERVIEW_EXPERIENCE',
 }
 
-const tabType = TabType;
-
-export { tabType, TabType };
+export { TabType };
 
 export const tabTypeTranslation: Record<TabType, string> = {
   [TabType.OVERVIEW]: '總覽',
@@ -50,6 +46,30 @@ const tabTypeURLMap: Record<TabType, string> = {
   [TabType.WORK_EXPERIENCE]: 'work-experiences',
   [TabType.INTERVIEW_EXPERIENCE]: 'interview-experiences',
 };
+
+export enum Aspect {
+  GENDER = '性別友善度',
+  WORK_LIFE_BALANCE = '工作與生活平衡',
+  COMPENSATION = '薪資福利',
+  JOB_CONTENT = '工作內容',
+  WORK_TIME = '工時狀況',
+  CULTURE = '公司/團隊文化',
+  MANAGEMENT = '公司管理方式',
+  GROWTH = '獲得的成長',
+  PROMOTION = '升遷制度',
+}
+
+export const Aspects = [
+  Aspect.GENDER,
+  Aspect.WORK_LIFE_BALANCE,
+  Aspect.COMPENSATION,
+  Aspect.JOB_CONTENT,
+  Aspect.WORK_TIME,
+  Aspect.CULTURE,
+  Aspect.MANAGEMENT,
+  Aspect.GROWTH,
+  Aspect.PROMOTION,
+];
 
 export const generatePageURL = ({
   pageName,

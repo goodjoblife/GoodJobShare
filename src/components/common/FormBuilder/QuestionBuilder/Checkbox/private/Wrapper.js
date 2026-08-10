@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import Scrollable from '../../../Scrollable';
 import styles from './private.module.css';
+import Scrollable from '../../../Scrollable';
 import commonStyles from '../../styles.module.css';
 
 const Wrapper = ({ warning, children }) => (

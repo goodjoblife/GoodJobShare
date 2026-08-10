@@ -1,11 +1,10 @@
-import createReducer from 'utils/createReducer';
-import { getUnfetched } from 'utils/fetchBox';
-
 import {
+  SET_MY_CURRENT_SUBSCRIPTION,
   SET_PAYMENT_RECORD,
   SET_SUBSCRIPTION_PLANS,
-  SET_MY_CURRENT_SUBSCRIPTION,
 } from 'actions/payment';
+import createReducer from 'utils/createReducer';
+import { getUnfetched } from 'utils/fetchBox';
 
 const preloadedState = {
   paymentRecord: getUnfetched(),

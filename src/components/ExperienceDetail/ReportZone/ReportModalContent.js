@@ -1,9 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
-import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
+import React from 'react';
+
 import ReportForm from './ReportForm';
+import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
 import { MODAL_TYPE } from './ReportForm/constants';
+import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
 import ReportList from './ReportList';
 
 const ReportModalContent = ({

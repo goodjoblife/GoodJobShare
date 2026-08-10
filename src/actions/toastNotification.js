@@ -1,6 +1,6 @@
-import rollbar from 'utils/rollbar';
-import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import { NOTIFICATION_TYPE } from 'constants/toastNotification';
+import rollbar from 'utils/rollbar';
 import { generateNotification } from 'utils/toastNotification';
 
 export const PUSH = '@@TOAST_NOTIFICATION/PUSH';
@@ -31,10 +31,11 @@ const composeErrorMessage = (code, message, error) => {
 const pushErrorNotification = (code, message) =>
   pushNotification(NOTIFICATION_TYPE.ALERT, composeErrorMessage(code, message));
 
-export const pushErrorNotificationAndRollbar = (errorCode, error, extra) => (
-  dispatch,
-  getState,
-) => {
+export const pushErrorNotificationAndRollbar = (
+  errorCode,
+  error,
+  extra,
+) => dispatch => {
   dispatch(
     pushErrorNotification(errorCode, ERROR_CODE_MSG[errorCode].external),
   );
@@ -56,7 +57,7 @@ export const pushErrorNotificationAndRollbarAndThrowError = (
   errorCode,
   error,
   extra,
-) => (dispatch, getState) => {
+) => dispatch => {
   dispatch(pushErrorNotificationAndRollbar(errorCode, error, extra));
 
   const internalMessage = composeErrorMessage(

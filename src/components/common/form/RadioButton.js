@@ -1,7 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import Emoji from 'common/icons/Emoji';
+
 import styles from './RadioButton.module.css';
 
 const RadioButton = ({ id, label, name, value, checked, onChange, emoji }) => (

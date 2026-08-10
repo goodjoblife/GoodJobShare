@@ -1,8 +1,8 @@
-import { tokenSelector } from 'selectors/authSelector';
 import {
   createExperienceReportApi,
   createSalaryWorkTimeReportApi,
 } from 'apis/reports';
+import { tokenSelector } from 'selectors/authSelector';
 
 export const createExperienceReport = ({ id, reason, reasonCategory }) => (
   _,

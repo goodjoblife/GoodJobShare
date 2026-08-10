@@ -1,31 +1,33 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
-import usePermission from 'hooks/usePermission';
-import { usePage } from 'hooks/routing/page';
-import {
-  tabType as TAB_TYPE,
-  pageType as PAGE_TYPE,
-  PAGE_SIZE,
-} from 'constants/companyJobTitle';
+
 import {
   queryCompanyWorkExperiences,
+  queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
-import { companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import useCompanyName, { companyNameSelector } from './useCompanyName';
-import { pageFromQuerySelector } from 'selectors/routing/page';
-import {
-  searchTextFromQuerySelector,
-  useSearchTextFromQuery,
-} from 'components/CompanyAndJobTitle/Searchbar';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
+import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 import {
   sortByFromQuerySelector,
   useSortByFromQuery,
 } from 'components/CompanyAndJobTitle/Sorter';
-import { isFetched, getFetched } from 'utils/fetchBox';
+import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
+import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
+import { usePage } from 'hooks/routing/page';
+import usePermission from 'hooks/usePermission';
+import { companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
+import {
+  pageFromQuerySelector,
+  queryFromQuerySelector,
+} from 'selectors/routing';
+import { getFetched, isFetched } from 'utils/fetchBox';
+
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 
 const useWorkExperiencesBoxSelector = pageName => {
   return useCallback(
@@ -50,8 +52,8 @@ const useWorkExperiencesBoxSelector = pageName => {
 
 const CompanyWorkExperiencesProvider = () => {
   const dispatch = useDispatch();
-  const pageType = PAGE_TYPE.COMPANY;
-  const companyName = useCompanyName();
+  const pageType = PageType.COMPANY;
+  const companyName = useCompanyNameParam();
   const [jobTitle] = useSearchTextFromQuery();
   const [sortBy] = useSortByFromQuery();
   const page = usePage();
@@ -60,6 +62,10 @@ const CompanyWorkExperiencesProvider = () => {
 
   useEffect(() => {
     dispatch(queryRatingStatistics(companyName));
+  }, [dispatch, companyName]);
+
+  useEffect(() => {
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName }));
   }, [dispatch, companyName]);
 
   useEffect(() => {
@@ -82,14 +88,17 @@ const CompanyWorkExperiencesProvider = () => {
   const boxSelector = useWorkExperiencesBoxSelector(companyName);
 
   return (
-    <WorkExperiences
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={companyName}
-      page={page}
-      pageSize={PAGE_SIZE}
-      tabType={TAB_TYPE.WORK_EXPERIENCE}
-      boxSelector={boxSelector}
-    />
+      tabType={TabType.WORK_EXPERIENCE}
+    >
+      <WorkExperiences
+        page={page}
+        pageSize={PAGE_SIZE}
+        boxSelector={boxSelector}
+      />
+    </CompanyAndJobTitleWrapper>
   );
 };
 
@@ -101,7 +110,7 @@ CompanyWorkExperiencesProvider.fetchData = ({
   const companyName = companyNameSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
-  const jobTitle = searchTextFromQuerySelector(query) || undefined;
+  const jobTitle = queryFromQuerySelector(query) || undefined;
   const sortBy = sortByFromQuerySelector(query);
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
@@ -116,6 +125,7 @@ CompanyWorkExperiencesProvider.fetchData = ({
       }),
     ),
     dispatch(queryRatingStatistics(companyName)),
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName })),
   ]);
 };
 

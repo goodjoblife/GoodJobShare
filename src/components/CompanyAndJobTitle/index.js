@@ -1,6 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Switch } from 'react-router';
+
 import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
 

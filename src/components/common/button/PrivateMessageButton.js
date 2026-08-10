@@ -1,9 +1,10 @@
-import React from 'react';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faCommentDots from '@fortawesome/fontawesome-free-solid/faCommentDots';
-import { usePrivateMessageButtonText } from 'hooks/experiments';
-import Button from './Button';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import React from 'react';
 
+import { usePrivateMessageButtonText } from 'hooks/experiments';
+
+import Button from './Button';
 import styles from './PrivateMessageButton.module.css';
 
 const PrivateMessageButton = ({ className, onClick }) => {

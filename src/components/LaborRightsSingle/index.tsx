@@ -1,22 +1,24 @@
 import React, { Fragment, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Loader from 'common/Loader';
+
+import {
+  queryEntryIfUnfetched,
+  queryMenuIfUnfetched,
+} from 'actions/laborRights';
 import { Section } from 'common/base';
-import NotFound from 'common/NotFound';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import FanPageBlock from 'common/FanPageBlock';
-import { isFetching, isUnfetched, isFetched } from 'utils/fetchBox';
-import {
-  queryMenuIfUnfetched,
-  queryEntryIfUnfetched,
-} from 'actions/laborRights';
+import Loader from 'common/Loader';
+import NotFound from 'common/NotFound';
 import { ServerSideRender } from 'types/serverSideRender';
-import useEntry, { useNeighborEntry } from './useEntry';
+import { isFetched, isFetching, isUnfetched } from 'utils/fetchBox';
+
 import Body from './Body';
 import Footer from './Footer';
 import Helmet from './Helmet';
 import styles from './LaborRightsSingle.module.css';
+import useEntry, { useNeighborEntry } from './useEntry';
 
 type Params = { id: string };
 

@@ -1,9 +1,10 @@
+import { path } from 'ramda';
 import { useEffect } from 'react';
 import { useLocation } from 'react-use';
-import { path } from 'ramda';
+
 import {
-  generateShareTimeSalaryTypeForm,
   generateShareInterviewTypeForm,
+  generateShareTimeSalaryTypeForm,
   generateShareWork,
 } from 'common/ShareExpSection/shareLinkTo';
 
@@ -34,7 +35,7 @@ const randomAction = actions => {
   return actions[0];
 };
 
-export default companyName => {
+export default () => {
   const action = randomAction(ACTIONS);
   const { generateTo } = action;
   return generateTo();

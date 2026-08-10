@@ -1,10 +1,11 @@
 import { useCallback } from 'react';
-import { useToken } from 'hooks/auth';
+
 import {
   trackEventApi,
   viewExperiencesApi,
   viewSalaryWorkTimesApi,
 } from 'apis/viewLogApi';
+import { useToken } from 'hooks/auth';
 
 export const useViewExperiences = () => {
   const token = useToken();

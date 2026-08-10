@@ -1,13 +1,14 @@
-import React, { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
-import cn from 'classnames';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback, useState } from 'react';
 
 import Modal from 'common/Modal';
-import styles from './PermissionBlock.module.css';
-import LoginToUnlock from './LoginToUnlock';
 import { useShareLinkChange } from 'hooks/experiments/useShareLink';
+
+import LoginToUnlock from './LoginToUnlock';
+import styles from './PermissionBlock.module.css';
 
 const BasicPermissionSimpleBlock = ({ rootClassName, to }) => {
   const [isModalOpen, setModalOpen] = useState(false);

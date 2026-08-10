@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:20
 
 COPY . /app
 
@@ -26,7 +26,7 @@ ENV RAZZLE_API_HOST="${RAZZLE_API_HOST}" \
     RAZZLE_TAP_PAY_SERVER_TYPE="$RAZZLE_TAP_PAY_SERVER_TYPE" \
     RAZZLE_ORIGIN="$RAZZLE_ORIGIN"
 
-RUN yarn install && yarn run build && yarn cache clean
+RUN yarn install && NODE_OPTIONS=--openssl-legacy-provider yarn run build && yarn cache clean
 
 ENV NODE_ENV=production PORT=3000
 

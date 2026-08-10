@@ -1,10 +1,12 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Section, Wrapper, Heading, P } from 'common/base';
+
+import { Heading, P, Section, Wrapper } from 'common/base';
+
+import SalaryWorkTimeImg from './share-1.png';
 import InterviewImg from './share-2.png';
 import WorkExperienceImg from './share-3.png';
-import SalaryWorkTimeImg from './share-1.png';
 import styles from './ShareExpSection.module.css';
 import {
   generateShareInterviewTypeForm,

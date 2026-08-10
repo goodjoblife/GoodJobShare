@@ -1,8 +1,8 @@
-import React, { Children } from 'react';
-import PropTypes from 'prop-types';
 import { childrenOfType } from 'airbnb-prop-types';
-import { useMeasure } from 'react-use';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { Children } from 'react';
+import { useMeasure } from 'react-use';
 
 import styles from './AnimatedPager.module.css';
 

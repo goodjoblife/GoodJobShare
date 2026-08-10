@@ -1,25 +1,27 @@
-import React, { Fragment, useCallback, useRef } from 'react';
-import { Switch, useLocation, useHistory } from 'react-router-dom';
 import { omit } from 'ramda';
+import React, { Fragment, useCallback, useRef } from 'react';
+import { Switch, useHistory, useLocation } from 'react-router-dom';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-import StaticHelmet from 'common/StaticHelmet';
 import LoginModal from 'common/LoginModal';
-import useLocStateToastObserver from 'hooks/toastNotification/useLocStateToastObserver';
-import { STATE_SHARE } from 'common/ShareExpSection/shareLinkTo';
 import CollapsedDrawer from 'common/Questionnaire/CollapsedDrawer';
 import ExpandedModal from 'common/Questionnaire/ExpandedModal';
-import ToastNotification from '../ToastNotification/ToastNotification';
+import { STATE_SHARE } from 'common/ShareExpSection/shareLinkTo';
+import StaticHelmet from 'common/StaticHelmet';
+import useLocStateToastObserver from 'hooks/toastNotification/useLocStateToastObserver';
+
 import { AppRouteWithSubRoutes } from '../route';
 import styles from './App.module.css';
-import tabBarStyles from './TabBar/TabBar.module.css';
-import Header from './Header';
 import Footer from './Footer';
+import Header from './Header';
 import TabBar from './TabBar';
-import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
-import ShareWorkExperienceModal from '../ShareExperience/WorkExperiencesForm/TypeForm';
-import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
 import routes from '../../routes';
+import tabBarStyles from './TabBar/TabBar.module.css';
+import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
+import SharePolicyModal from '../ShareExperience/PolicyForm/TypeForm';
+import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
+import ShareWorkExperienceModal from '../ShareExperience/WorkExperiencesForm/TypeForm';
+import ToastNotification from '../ToastNotification/ToastNotification';
 
 const useShare = () => {
   const location = useLocation();
@@ -77,6 +79,10 @@ const App = () => {
         }
         onClose={exitShare}
         hideProgressBar={share === STATE_SHARE.SALARY_WORK_TIME_NO_PROGRESS_BAR}
+      />
+      <SharePolicyModal
+        open={share === STATE_SHARE.POLICY}
+        onClose={exitShare}
       />
       <LoginModal />
       <CollapsedDrawer

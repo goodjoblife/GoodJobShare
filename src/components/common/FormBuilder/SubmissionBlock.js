@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { useLogin } from 'hooks/login';
+
 import styles from './SubmissionBlock.module.css';
 
 const SubmissionBlock = ({ onSubmit }) => {

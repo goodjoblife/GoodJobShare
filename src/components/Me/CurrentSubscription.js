@@ -1,11 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import { P } from 'common/base';
 import { useTotalCount } from 'hooks/useCount';
 
-import PlanCard from '../PlanPage/PlanCard';
 import styles from './CurrentSubscription.module.css';
+import PlanCard from '../PlanPage/PlanCard';
 
 const CurrentSubscription = ({ subscriptionPlan, expiredAt }) => {
   const count = useTotalCount();

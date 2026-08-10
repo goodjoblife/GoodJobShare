@@ -1,5 +1,7 @@
-import { Dispatch, GetState } from 'reducers';
+import { Location } from 'history';
 import { match } from 'react-router-dom';
+
+import { Dispatch, GetState } from 'reducers';
 
 interface Store {
   dispatch: Dispatch;
@@ -7,13 +9,15 @@ interface Store {
 }
 
 export interface ServerSideRender<
-  Params extends { [K in keyof Params]?: string } = {}
+  Params extends { [K in keyof Params]?: string } = Record<string, never>
 > {
   fetchData: ({
     store,
     match,
+    location,
   }: {
     store: Store;
     match: match<Params>;
+    location: Location;
   }) => Promise<unknown>;
 }

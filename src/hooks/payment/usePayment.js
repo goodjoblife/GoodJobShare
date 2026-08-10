@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 
 import {
-  redirectUrlSelector,
-  paymentRecordSelector,
-  subscriptionPlansSelector,
   myCurrentSubscriptionSelector,
+  paymentRecordSelector,
+  redirectUrlSelector,
+  subscriptionPlansSelector,
 } from 'selectors/payment';
 
 export const usePaymentRecord = () => useSelector(paymentRecordSelector);

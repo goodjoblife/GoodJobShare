@@ -1,13 +1,13 @@
+import { createBrowserHistory as createHistory } from 'history';
+import qs from 'qs';
+import R from 'ramda';
 import React from 'react';
 import { hydrate } from 'react-dom';
-import { createBrowserHistory as createHistory } from 'history';
-import R from 'ramda';
-import qs from 'qs';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
-import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import Root from './components/Root';
 import configureStore from './store/configureStore';
@@ -15,7 +15,7 @@ import configureStore from './store/configureStore';
 function shouldUpdateScroll(prevProps, props) {
   const mapSearch = ({ search, ...rest }) => {
     let s = qs.parse(search, { ignoreQueryPrefix: true });
-    s = R.omit(['q'], s); // We don't reset scroll on search query change
+    s = R.omit(['q', 'rating'], s); // We don't reset scroll on search query change
     return { search: s, ...rest };
   };
   const getSignature = R.compose(
@@ -39,7 +39,7 @@ function shouldUpdateScroll(prevProps, props) {
     props && props.location && props.location.state && props.location.state.y;
 
   if (shouldScroll && shouldScrollToY && scrollY) {
-    return [0, scrollY];
+    return [0, Math.min(scrollY, window.scrollY)];
   }
 
   return shouldScroll;

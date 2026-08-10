@@ -1,8 +1,7 @@
 import { propEq, reject } from 'ramda';
 
-import createReducer from 'utils/createReducer';
-
 import { PUSH, REMOVE } from 'actions/toastNotification';
+import createReducer from 'utils/createReducer';
 
 const preloadedState = {
   notifications: [],

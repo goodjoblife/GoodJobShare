@@ -1,5 +1,6 @@
 import React from 'react';
-import { Section, Heading } from 'common/base';
+
+import { Heading, Section } from 'common/base';
 
 const TitleSection = ({ ...props }) => (
   <Section {...props}>

@@ -1,17 +1,17 @@
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 
-import RoundCard from 'common/RoundCard';
-import Button from 'common/button/Button';
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
+import Button from 'common/button/Button';
+import RoundCard from 'common/RoundCard';
 import { subscriptionType } from 'constants/subscription';
 import useToBuy from 'hooks/payment/useToBuy';
 
-import styles from './PlanCard.module.css';
 import { getActionTitle } from './helpers';
+import styles from './PlanCard.module.css';
 
 const getButtonType = type => {
   if (type === subscriptionType.submitData) {

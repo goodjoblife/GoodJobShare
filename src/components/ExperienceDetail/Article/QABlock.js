@@ -1,6 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import { P } from 'common/base';
+
 import styles from './QABlock.module.css';
 
 const QABlock = ({ question, answer }) => (

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const useBoundedIndex = (bound, initialIndex) => {
   const [index, setIndex] = useState(initialIndex);
@@ -102,14 +102,11 @@ export default ({
     [onBlur, shouldIgnoreBlur],
   );
 
-  const handleEnter = useCallback(
-    e => {
-      if (isMenuOpen && hasHighlight) {
-        selectHighlightedItem();
-      }
-    },
-    [hasHighlight, isMenuOpen, selectHighlightedItem],
-  );
+  const handleEnter = useCallback(() => {
+    if (isMenuOpen && hasHighlight) {
+      selectHighlightedItem();
+    }
+  }, [hasHighlight, isMenuOpen, selectHighlightedItem]);
 
   const handleArrowUp = useCallback(
     e => {
@@ -157,13 +154,10 @@ export default ({
     [setHighlightedIndex],
   );
 
-  const handleMouseLeaveItem = useCallback(
-    i => {
-      setIgnoreBlur(false);
-      resetHighlightedIndex();
-    },
-    [resetHighlightedIndex],
-  );
+  const handleMouseLeaveItem = useCallback(() => {
+    setIgnoreBlur(false);
+    resetHighlightedIndex();
+  }, [resetHighlightedIndex]);
 
   const handleMouseClickItem = useCallback(
     i => {

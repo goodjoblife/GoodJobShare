@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import Guidelines from './index';
 
 it('renders without crashing', () => {

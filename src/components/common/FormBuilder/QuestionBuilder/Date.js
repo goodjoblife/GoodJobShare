@@ -1,11 +1,12 @@
-import React, { useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import { withShape } from 'airbnb-prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback, useMemo } from 'react';
 
 import Select from 'common/form/Select';
+
 import styles from './Date.module.css';
 import commonStyles from './styles.module.css';
-import { withShape } from 'airbnb-prop-types';
 
 const toNumberOrNull = v => (v === '' ? null : Number(v));
 
@@ -28,18 +29,7 @@ const buildYearOptions = (currentYear, span = 10) =>
     return { value: y, label: y };
   });
 
-const DatePicker = ({
-  className,
-  page,
-  title,
-  description,
-  dataKey,
-  required,
-  defaultValue,
-  value: [year, month],
-  onChange,
-  warning,
-}) => {
+const DatePicker = ({ className, value: [year, month], onChange, warning }) => {
   const [currentYear, currentMonth] = getNow();
   const yearOptions = useMemo(() => buildYearOptions(currentYear, 10), [
     currentYear,
@@ -102,13 +92,7 @@ export const DatePropType = withShape(PropTypes.array.isRequired, {
 
 DatePicker.propTypes = {
   className: PropTypes.string,
-  dataKey: PropTypes.string.isRequired,
-  defaultValue: PropTypes.array.isRequired,
-  description: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  required: PropTypes.bool,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   value: DatePropType,
   warning: PropTypes.string,
 };

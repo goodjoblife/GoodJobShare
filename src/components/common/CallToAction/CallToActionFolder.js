@@ -1,12 +1,14 @@
+import cn from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import cn from 'classnames';
+
 import { Heading } from 'common/base';
-import ProgressBarWithDataCount from 'common/ProgressBarWithDataCount';
-import { useShareLink } from 'hooks/experiments';
 import FolderBanner from 'common/FolderBanner';
-import styles from './CallToActionFolder.module.css';
+import ProgressBarWithDataCount from 'common/ProgressBarWithDataCount';
 import { goalNum } from 'constants/dataProgress';
+import { useShareLink } from 'hooks/experiments';
+
+import styles from './CallToActionFolder.module.css';
 
 const CallToActionFolder = () => {
   const shareLink = useShareLink();

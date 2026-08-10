@@ -1,4 +1,4 @@
-@value below-tablet, above-mobile from "../../common/variables.module.css";
+@value below-mobile, below-tablet from "../../common/variables.module.css";
 
 .summaryBlock {
   display: flex;
@@ -8,26 +8,46 @@
     flex-direction: column;
     align-items: flex-start;
   }
+
+  > * + * {
+    margin-left: 21px;
+  }
 }
 
 .barChart,
 .barChartSm,
-.averageWeekWorkTime {
+.scoreCard {
   display: flex;
 }
 
+/* 尺寸與 ScoreCard.module.css 的 .card / .scoreCard 相同：兩者會並排在同一列 */
 .card {
+  width: 265px;
   height: 265px;
+
+  @media (max-width: below-mobile) {
+    height: auto;
+  }
+}
+
+.scoreCard {
+  @media (max-width: below-tablet) {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+  }
 }
 
 .barChart {
   flex: 1;
   max-width: 547px;
+  height: 265px;
 }
 
 .barChartSm {
   display: block;
   width: 100%;
+  height: 265px;
 }
 
 .emptyData {
@@ -39,45 +59,4 @@
   margin: 58px 0;
   width: auto;
   height: 50%;
-}
-
-.averageWeekWorkTime {
-  margin-left: 21px;
-
-  @media (max-width: below-tablet) {
-    width: 100%;
-    margin-left: 0;
-    margin-top: 10px;
-  }
-}
-
-.averageWeekWorkTimeView {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4px;
-  margin: 0 auto;
-
-  .title {
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.61;
-    color: #333;
-  }
-
-  .body {
-    font-size: 16px;
-    color: #333;
-
-    em {
-      font-size: 71px;
-    }
-  }
-
-  .footer {
-    font-size: 14px;
-    line-height: 1.64;
-    color: #969696;
-  }
 }

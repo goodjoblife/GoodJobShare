@@ -1,19 +1,14 @@
-import React, { useState, useRef, useCallback } from 'react';
-import { useDebounce } from 'react-use';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback, useRef, useState } from 'react';
+import { useDebounce } from 'react-use';
 
 import TextInput from 'common/form/TextInput';
+
 import commonStyles from './styles.module.css';
 
 const Text = ({
   className,
-  page,
-  title,
-  description,
-  dataKey,
-  required,
-  defaultValue,
   value,
   onChange,
   onConfirm,
@@ -90,19 +85,12 @@ const Text = ({
 
 Text.propTypes = {
   className: PropTypes.string,
-  dataKey: PropTypes.string.isRequired,
-  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
-    .isRequired,
-  description: PropTypes.string,
   footnote: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func,
   onSelect: PropTypes.func,
-  page: PropTypes.number.isRequired,
   placeholder: PropTypes.string,
-  required: PropTypes.bool,
   search: PropTypes.func,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   value: PropTypes.string.isRequired,
   warning: PropTypes.string,
 };

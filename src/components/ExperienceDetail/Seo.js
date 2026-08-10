@@ -1,14 +1,16 @@
-import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
 import Helmet from 'react-helmet';
+
 import SeoStructure from 'common/Seo/SeoStructure';
-import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
-import LogoForStructureData from './logo_for_structure_data_600x60.jpg';
+import { formatCanonicalPath, formatTitle } from 'utils/helmetHelper';
+
 import {
-  metaTitleSelector,
   metaDescriptionSelector,
+  metaTitleSelector,
 } from './experienceSelector';
+import LogoForStructureData from './logo_for_structure_data_600x60.jpg';
 
 const SeoHelmet = ({ experience }) => {
   const id = experience.id;

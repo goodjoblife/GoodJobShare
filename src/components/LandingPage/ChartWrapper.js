@@ -1,8 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 import Card from 'common/Card';
+
 import styles from './ChartWrapper.module.css';
 
 const ChartWrapper = ({ className, title, to, children }) => (

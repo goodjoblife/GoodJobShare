@@ -1,0 +1,57 @@
+@value below-small, below-mobile from "../../common/variables.module.css";
+
+.filterBar {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+
+  @media (max-width: below-small) {
+    flex-direction: column;
+    width: 100%;
+    padding-bottom: 12px;
+  }
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  @media (max-width: below-small) {
+    flex-direction: column;
+    align-items: stretch;
+
+    .label {
+      font-weight: bold;
+    }
+  }
+}
+
+.sortGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+
+  @media (max-width: below-small) {
+    margin-left: 0;
+
+    .label {
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .select {
+      flex: 1;
+    }
+  }
+}
+
+.select {
+  height: 32px;
+  line-height: 32px;
+  border: solid 1px #bdbdbd;
+  background: #ffffff;
+  padding: 0 8px;
+  cursor: pointer;
+}

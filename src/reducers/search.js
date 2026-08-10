@@ -1,5 +1,5 @@
-import createReducer from 'utils/createReducer';
 import { SET_SEARCH_BY_KEYWORD } from 'actions/search';
+import createReducer from 'utils/createReducer';
 
 const preloadedState = {
   // keyword -> box

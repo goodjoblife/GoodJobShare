@@ -1,5 +1,5 @@
-import FetchBox, { isFetched } from 'utils/fetchBox';
 import { RootState } from 'reducers';
+import FetchBox, { isFetched } from 'utils/fetchBox';
 
 export const experienceCountBoxSelector = (
   state: RootState,

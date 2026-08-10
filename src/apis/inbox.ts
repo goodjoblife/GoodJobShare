@@ -1,18 +1,18 @@
-import graphqlClient from 'utils/graphqlClient';
+import { InboxMessage } from 'constants/inbox';
 import {
-  queryInboxGql,
-  openInboxGql,
-  readInboxMessageGql,
-  QueryInboxResult,
-  OpenInboxResult,
-  ReadInboxMessageResult,
+  ExperienceType,
   Notification,
-  UserReplyMyExperienceNotification,
+  openInboxGql,
+  OpenInboxResult,
+  queryInboxGql,
+  QueryInboxResult,
+  readInboxMessageGql,
+  ReadInboxMessageResult,
   UserLikeMyExperienceNotification,
   UserLikeMyReplyNotification,
-  ExperienceType,
+  UserReplyMyExperienceNotification,
 } from 'graphql/inbox';
-import { InboxMessage } from 'constants/inbox';
+import graphqlClient from 'utils/graphqlClient';
 
 // queries
 
@@ -107,7 +107,11 @@ export const queryInboxApi = async ({
 
 // mutations
 
-export const openInboxApi = async ({ token }: { token: string }) => {
+export const openInboxApi = async ({
+  token,
+}: {
+  token?: string;
+}): Promise<void> => {
   const {
     openNotificationBell: { success },
   } = await graphqlClient<OpenInboxResult>({
@@ -122,9 +126,9 @@ export const readInboxMessageApi = async ({
   token,
   id,
 }: {
-  token: string;
+  token?: string;
   id: string;
-}) => {
+}): Promise<void> => {
   const {
     markNotificationAsRead: { success },
   } = await graphqlClient<ReadInboxMessageResult>({

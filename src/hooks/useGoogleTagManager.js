@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import { activateOptimize } from 'utils/gtm';
 
 export default () => {

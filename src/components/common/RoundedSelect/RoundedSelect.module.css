@@ -1,0 +1,36 @@
+.sorter {
+  position: relative;
+
+  select {
+    border: 1px solid #bdbdbd;
+    border-radius: 18px;
+    padding: 5px 2em;
+    padding-left: 1em;
+    color: #424242;
+    background-color: #fff;
+    appearance: none;
+  }
+
+  &.hasLeadingIcon {
+    padding-left: 3em;
+  }
+
+  .leadingIcon {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 23px;
+    height: 23px;
+  }
+
+  .caret {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    transform: translateY(50%);
+    rotate: 180deg;
+    width: 10px;
+    height: 10px;
+  }
+}

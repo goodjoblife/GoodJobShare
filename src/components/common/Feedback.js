@@ -1,9 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-import { P, Heading } from 'common/base';
-import Warning from 'common/icons/Warning';
+import { Heading, P } from 'common/base';
 import Button from 'common/button/Button';
+import Warning from 'common/icons/Warning';
 
 import styles from './Feedback.module.css';
 

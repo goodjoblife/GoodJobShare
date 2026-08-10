@@ -1,6 +1,6 @@
+import { SET_POPULAR_COMPANY_AVERAGE_SALARY } from 'actions/popularCompanyAverageSalary';
 import createReducer from 'utils/createReducer';
 import { getUnfetched } from 'utils/fetchBox';
-import { SET_POPULAR_COMPANY_AVERAGE_SALARY } from 'actions/popularCompanyAverageSalary';
 
 /*
   PropTypes.arrayOf(

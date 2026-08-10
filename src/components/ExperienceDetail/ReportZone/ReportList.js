@@ -1,8 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './ReportList.module.css';
+import React from 'react';
+
 import { Heading, P } from 'common/base';
 import Button from 'common/button/Button';
+
+import styles from './ReportList.module.css';
 
 const ReportList = ({ reports, reportCount, onShowReportForm }) => {
   return (

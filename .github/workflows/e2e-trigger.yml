@@ -12,10 +12,18 @@ jobs:
     if: github.repository == 'goodjoblife/GoodJobShare'
     runs-on: ubuntu-latest
     steps:
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          repositories: frontend-e2e
+
       - name: trigger frontend-e2e integration-test
         run: |
-          curl --user "${{ secrets.DEPLOY_CI_TOKEN }}" \
-            -X POST \
+          curl -X POST \
+            -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
             -H "Accept: application/vnd.github.v3+json" \
             -d '{"event_type": "goodjobshare-updated"}' \
             https://api.github.com/repos/goodjoblife/frontend-e2e/dispatches

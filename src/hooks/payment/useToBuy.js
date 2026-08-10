@@ -1,6 +1,6 @@
+import { isNil } from 'ramda';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { isNil } from 'ramda';
 
 import { navigateToBuy } from 'actions/payment';
 

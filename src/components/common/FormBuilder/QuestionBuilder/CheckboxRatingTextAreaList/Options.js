@@ -1,11 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
-import Option from './Option';
-import { OptionPropType } from '../Checkbox/PropTypes';
-import styles from './styles.module.css';
-import commonStyles from '../styles.module.css';
+import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useState } from 'react';
+
 import Scrollable from 'common/FormBuilder/Scrollable';
+
+import Option from './Option';
+import styles from './styles.module.css';
+import { OptionPropType } from '../Checkbox/PropTypes';
+import commonStyles from '../styles.module.css';
 
 const useAnimatedSelectedOptionIndex = ({
   lastSelectedOptionIndex,

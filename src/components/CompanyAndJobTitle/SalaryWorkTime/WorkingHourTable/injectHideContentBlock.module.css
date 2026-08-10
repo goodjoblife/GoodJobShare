@@ -1,0 +1,32 @@
+@value below-small, above-small from "../../../common/variables.module.css";
+
+td.cell {
+  position: relative;
+
+  .hideContentBlock {
+    position: absolute;
+    top: 13px;
+    left: 13px;
+    right: 13px;
+    bottom: 13px;
+    display: flex;
+    @media (max-width: below-small) {
+      top: 3px;
+      left: 120px;
+      right: 3px;
+      bottom: 3px;
+    }
+  }
+
+  @media (max-width: below-small) {
+    display: none !important;
+  }
+
+  &.mobile {
+    display: flex !important;
+
+    @media (min-width: above-small) {
+      display: none !important;
+    }
+  }
+}

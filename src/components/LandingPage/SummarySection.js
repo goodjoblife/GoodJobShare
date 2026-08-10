@@ -1,14 +1,14 @@
-import React, { useState, useMemo } from 'react';
+import loadable from '@loadable/component';
 import PropTypes from 'prop-types';
 import { zip } from 'ramda';
-import loadable from '@loadable/component';
+import React, { useMemo, useState } from 'react';
+
 import Carousel, { CarouselPage } from 'common/Carousel';
-import {
-  pageType as PAGE_TYPE,
-  generatePageURL,
-} from 'constants/companyJobTitle';
+import { generatePageURL, PageType } from 'constants/companyJobTitle';
+
 import ChartWrapper from './ChartWrapper';
 import styles from './SummarySection.module.css';
+
 const SalaryDistributionChart = loadable(() =>
   import('common/Charts/SalaryDistributionChart'),
 );
@@ -45,7 +45,7 @@ const SummarySection = ({
                   className={styles.chartWrapper}
                   title={`${companyAverageSalary.name}的薪水`}
                   to={generatePageURL({
-                    pageType: PAGE_TYPE.COMPANY,
+                    pageType: PageType.COMPANY,
                     pageName: companyAverageSalary.name,
                   })}
                 >
@@ -64,7 +64,7 @@ const SummarySection = ({
                   className={styles.chartWrapper}
                   title={`${jobTitleSalaryDistribution.name}的薪水分佈`}
                   to={generatePageURL({
-                    pageType: PAGE_TYPE.JOB_TITLE,
+                    pageType: PageType.JOB_TITLE,
                     pageName: jobTitleSalaryDistribution.name,
                   })}
                 >

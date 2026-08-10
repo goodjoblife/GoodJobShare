@@ -1,0 +1,22 @@
+.title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.aboveCard {
+  margin-bottom: 15px;
+}
+
+.snippet {
+  .link {
+    font-size: 18px;
+    font-weight: 600;
+    display: block;
+    margin-top: 20px;
+  }
+
+  & + & {
+    margin-top: 60px;
+  }
+}

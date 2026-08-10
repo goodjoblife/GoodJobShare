@@ -1,12 +1,14 @@
-import { Action } from 'redux';
-import { Dispatch, GetState } from 'reducers';
-
-import { queryInboxApi, openInboxApi, readInboxMessageApi } from 'apis/inbox';
+import { openInboxApi, queryInboxApi, readInboxMessageApi } from 'apis/inbox';
+import { InboxMessage } from 'constants/inbox';
+import { Thunk } from 'reducers';
 import { tokenSelector } from 'selectors/authSelector';
 import { messagesBoxSelector } from 'selectors/inbox';
-import { getError, getFetched, isFetching, toFetching } from 'utils/fetchBox';
-import { InboxMessage } from 'constants/inbox';
-import FetchBox from 'utils/fetchBox';
+import FetchBox, {
+  getError,
+  getFetched,
+  isFetching,
+  toFetching,
+} from 'utils/fetchBox';
 
 export const SET_INBOX_COUNT = '@@inbox/SET_INBOX_COUNT';
 export const SET_INBOX = '@@inbox/SET_INBOX';
@@ -25,10 +27,10 @@ const setInboxCount = (count: number): SetInboxCountAction => ({
 
 // Read inbox
 
-export const openInbox = () => async (
-  dispatch: Dispatch<Action>,
-  getState: GetState,
-) => {
+export const openInbox = (): Thunk => async (
+  dispatch,
+  getState,
+): Promise<void> => {
   const state = getState();
   const token = tokenSelector(state);
 
@@ -60,7 +62,7 @@ export const fetchInbox = ({
 }: {
   start: number;
   limit: number;
-}) => async (dispatch: Dispatch<Action>, getState: GetState) => {
+}): Thunk => async (dispatch, getState): Promise<void> => {
   const state = getState();
   const token = tokenSelector(state);
 
@@ -86,10 +88,10 @@ export const fetchInbox = ({
 
 // Read inbox message
 
-export const readInboxMessage = ({ id }: { id: string }) => async (
-  dispatch: Dispatch<Action>,
-  getState: GetState,
-) => {
+export const readInboxMessage = ({ id }: { id: string }): Thunk => async (
+  dispatch,
+  getState,
+): Promise<void> => {
   const state = getState();
   const token = tokenSelector(state);
 

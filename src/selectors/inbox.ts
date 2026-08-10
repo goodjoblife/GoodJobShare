@@ -1,7 +1,8 @@
 import { compose } from 'ramda';
+
+import { InboxMessage } from 'constants/inbox';
 import { RootState } from 'reducers';
 import FetchBox from 'utils/fetchBox';
-import { InboxMessage } from 'constants/inbox';
 
 export const messagesBoxSelector = (
   state: RootState,

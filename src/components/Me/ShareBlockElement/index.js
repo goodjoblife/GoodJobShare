@@ -1,16 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Bookmark from 'common/icons/Bookmark';
 import { Heading, P } from 'common/base';
+import Bookmark from 'common/icons/Bookmark';
 import Modal from 'common/Modal';
-import {
-  pageType as PAGE_TYPE,
-  tabType as TAB_TYPE,
-  generateTabURL,
-} from 'constants/companyJobTitle';
+import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
+
 import styles from './ShareBlockElement.module.css';
 
 const ShareBlock = ({
@@ -58,9 +55,9 @@ const ShareBlock = ({
           {type === '薪時' ? (
             <Link
               to={generateTabURL({
-                pageType: PAGE_TYPE.COMPANY,
+                pageType: PageType.COMPANY,
                 pageName: to,
-                tabType: TAB_TYPE.TIME_AND_SALARY,
+                tabType: TabType.TIME_AND_SALARY,
               })}
               title="檢視薪時"
               className="hoverBlue"

@@ -1,18 +1,20 @@
-import React, { useEffect, useMemo } from 'react';
 import R from 'ramda';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Loader from 'common/Loader';
-import Columns from 'common/Columns';
-import { Section, Wrapper, Heading } from 'common/base';
-import FanPageBlock from 'common/FanPageBlock';
-import { useShareLink } from 'hooks/experiments';
+
 import { queryMenuIfUnfetched } from 'actions/laborRights';
-import { menuBoxSelector } from 'selectors/laborRightsSelector';
-import { isFetching, isError, isFetched } from 'utils/fetchBox';
-import LaborRightsEntry from './LaborRightsEntry';
+import { Heading, Section, Wrapper } from 'common/base';
+import Columns from 'common/Columns';
+import FanPageBlock from 'common/FanPageBlock';
+import Loader from 'common/Loader';
 import StaticHelmet from 'common/StaticHelmet';
-import styles from './LaborRightsEntry.module.css';
+import { useShareLink } from 'hooks/experiments';
+import { menuBoxSelector } from 'selectors/laborRightsSelector';
+import { isError, isFetched, isFetching } from 'utils/fetchBox';
+
 import AdvImage from './banner3_2x.jpg';
+import LaborRightsEntry from './LaborRightsEntry';
+import styles from './LaborRightsEntry.module.css';
 
 const entryToProps = ({ id, title, coverUrl }) => ({
   link: `/labor-rights/${id}`,

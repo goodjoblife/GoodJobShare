@@ -1,19 +1,13 @@
-import { ifElse, isNil, identity } from 'ramda';
-import fetchUtil from 'utils/fetchUtil';
-
-import graphqlClient from 'utils/graphqlClient';
 import {
-  queryExperienceRepliesGql,
-  deleteExpereinceLikeGql,
-  createExperienceLikeGql,
-  queryExperienceGql,
-  queryExperienceLikeGql,
   changeExperienceStatusGql,
-  queryRelatedExperiencesGql,
-  queryExperienceCountGql,
+  createExperienceLikeGql,
+  deleteExpereinceLikeGql,
+  queryExperienceLikeGql,
+  queryExperienceRepliesGql,
 } from 'graphql/experience';
-import { getPopularExperiencesQuery } from 'graphql/popularExperience';
-import { deleteReplyLike, createReplyLike } from 'graphql/reply';
+import { createReplyLike, deleteReplyLike } from 'graphql/reply';
+import fetchUtil from 'utils/fetchUtil';
+import graphqlClient from 'utils/graphqlClient';
 
 export const queryExperienceReplies = async ({ id, token }) =>
   graphqlClient({
@@ -66,41 +60,6 @@ export const patchReply = ({ id, status, token }) =>
     token,
   });
 
-const resolveSubtitleInSection = ({
-  __typename,
-  interview_subtitle,
-  work_subtitle,
-}) => {
-  switch (__typename) {
-    case 'InterviewExperience':
-      return interview_subtitle;
-    case 'WorkExperience':
-      return work_subtitle;
-    default:
-      return null;
-  }
-};
-
-const resolveSubtitlesInExperience = ({ __typename, sections, ...rest }) => ({
-  ...rest,
-  sections: sections.map(({ interview_subtitle, work_subtitle, ...rest }) => ({
-    ...rest,
-    subtitle: resolveSubtitleInSection({
-      __typename,
-      interview_subtitle,
-      work_subtitle,
-    }),
-  })),
-});
-
-export const queryExperience = ({ id }) =>
-  graphqlClient({
-    query: queryExperienceGql,
-    variables: { id },
-  })
-    .then(data => data.experience)
-    .then(ifElse(isNil, identity, resolveSubtitlesInExperience));
-
 export const queryExperienceLike = async ({ id, token }) => {
   const data = await graphqlClient({
     query: queryExperienceLikeGql,
@@ -111,30 +70,9 @@ export const queryExperienceLike = async ({ id, token }) => {
   return data.experience.liked;
 };
 
-export const getPopularExperiences = () =>
-  graphqlClient({
-    query: getPopularExperiencesQuery,
-  }).then(data => data.popular_experiences);
-
 export const changeExperienceStatus = ({ id, status, token }) =>
   graphqlClient({
     query: changeExperienceStatusGql,
     variables: { input: { id, status } },
     token,
   });
-
-export const queryRelatedExperiences = async ({ id, start, limit }) => {
-  const data = await graphqlClient({
-    query: queryRelatedExperiencesGql,
-    variables: { id, start, limit },
-  });
-  const relatedExperiences = data.experience.relatedExperiences;
-  return relatedExperiences.map(resolveSubtitlesInExperience);
-};
-
-export const queryExperienceCountApi = async () => {
-  const data = await graphqlClient({
-    query: queryExperienceCountGql,
-  });
-  return data.experienceCount;
-};

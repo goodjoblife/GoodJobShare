@@ -3,8 +3,11 @@
  * @param {Integer} num the number to be converted
  */
 export const numToChineseReadableString = num => {
-  if (num <= 0) {
+  if (num < 0) {
     return null;
+  }
+  if (num === 0) {
+    return '0';
   }
   const base = [1, 10000, 100000000];
   const baseWord = ['', '萬', '億'];

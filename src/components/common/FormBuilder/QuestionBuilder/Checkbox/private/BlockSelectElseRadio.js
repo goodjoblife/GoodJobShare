@@ -1,14 +1,15 @@
-import React, { useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
-import R from 'ramda';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import R from 'ramda';
+import React, { useCallback, useMemo } from 'react';
 
-import styles from './private.module.css';
 import Radio from 'common/form/Radio';
+
 import BlockSelect from './BlockSelect';
-import { OptionPropType, ValuePropType } from '../PropTypes';
+import styles from './private.module.css';
 import useDebouncedConfirm from '../../../useDebouncedConfirm';
+import { OptionPropType, ValuePropType } from '../PropTypes';
 
 const BlockSelectElseRadio = ({
   dataKey,

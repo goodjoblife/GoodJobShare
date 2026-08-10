@@ -1,12 +1,12 @@
 import ReactGA from 'react-ga4';
+
+import { pushErrorNotificationAndRollbarAndThrowError } from 'actions/toastNotification';
 import {
   postAuthFacebook as postAuthFacebookApi,
   postAuthGoogle as postAuthGoogleApi,
 } from 'apis/auth';
-import { queryMeApi } from 'apis/me';
-import authStatus from 'constants/authStatus';
-import { pushErrorNotificationAndRollbarAndThrowError } from 'actions/toastNotification';
-import { GraphqlError } from 'utils/errors';
+import queryMeApi from 'apis/queryMe';
+import { AuthStatus } from 'constants/authStatus';
 import {
   ER0001,
   ER0002,
@@ -22,12 +22,13 @@ import {
   ER0015,
   ER0016,
 } from 'constants/errorCodeMsg';
+import { GraphqlError } from 'utils/errors';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
 export const LOG_OUT = '@@auth/LOG_OUT';
 
-const setLogin = (status, token = null) => ({
+const setLogin = (status, token = undefined) => ({
   type: SET_LOGIN,
   status,
   token,
@@ -47,7 +48,7 @@ export const logout = () => (dispatch, getState, { history }) => {
   history.push('/');
 };
 
-const getMeInfo = token => (dispatch, getState) =>
+const getMeInfo = token => dispatch =>
   queryMeApi({ token }).catch(error => {
     dispatch(logOutAction());
     throw error;
@@ -63,17 +64,17 @@ const getMeInfo = token => (dispatch, getState) =>
  *                               logout  --|
  *                                         |
  */
-export const loginWithToken = token => (dispatch, getState) => {
+export const loginWithToken = token => dispatch => {
   dispatch(getMeInfo(token))
     .then(user => {
       dispatch(setUser(user));
-      dispatch(setLogin(authStatus.CONNECTED, token));
+      dispatch(setLogin(AuthStatus.CONNECTED, token));
       // identify user for Google Analytics
       ReactGA.set({ userId: user._id });
     })
     .catch(error => {
       console.error(error);
-      dispatch(setLogin(authStatus.NOT_AUTHORIZED));
+      dispatch(setLogin(AuthStatus.NOT_AUTHORIZED));
     });
 };
 
@@ -87,7 +88,7 @@ const FBSDKLogin = FB => {
 /**
  * Use `hooks/login/useFacebookLogin` as possible
  */
-export const loginWithFB = FBSDK => async (dispatch, getState) => {
+export const loginWithFB = FBSDK => async dispatch => {
   if (!FBSDK) {
     dispatch(pushErrorNotificationAndRollbarAndThrowError(ER0001));
   }
@@ -105,13 +106,13 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
   }
 
   switch (fbLoginResponse.status) {
-    case authStatus.CANCELED:
+    case AuthStatus.CANCELED:
       return;
-    case authStatus.NOT_AUTHORIZED:
-      dispatch(setLogin(authStatus.NOT_AUTHORIZED));
+    case AuthStatus.NOT_AUTHORIZED:
+      dispatch(setLogin(AuthStatus.NOT_AUTHORIZED));
       dispatch(pushErrorNotificationAndRollbarAndThrowError(ER0004));
       break;
-    case authStatus.CONNECTED:
+    case AuthStatus.CONNECTED:
       try {
         // call GoodJob GraphQL API to get JWT token issued by GoodJob
         const { token } = await postAuthFacebookApi({
@@ -149,10 +150,7 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
  * "Sign in with Google" buttons
  * https://developers.google.com/identity/gsi/web/guides/integrate#button_customization
  */
-export const loginWithGoogle = credentialResponse => async (
-  dispatch,
-  getState,
-) => {
+export const loginWithGoogle = credentialResponse => async dispatch => {
   //  TODO: 當登入失敗
   if (!credentialResponse || !credentialResponse.credential) {
     dispatch(pushErrorNotificationAndRollbarAndThrowError(ER0009));

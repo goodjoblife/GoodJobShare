@@ -1,10 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Section, Wrapper, Heading } from 'common/base';
-import CtaImage from './cta-01.jpg';
+
+import { Heading, Section, Wrapper } from 'common/base';
+
 import styles from './CallToActionBanner.module.css';
+import CtaImage from './cta-01.jpg';
 
 const CallToActionBanner = ({
   heading,

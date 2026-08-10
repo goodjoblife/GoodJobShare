@@ -1,15 +1,15 @@
+import { isNil } from 'ramda';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { isNil } from 'ramda';
 
 import { fetchMyCurrentSubscription } from 'actions/payment';
-import { isUnfetched, isFetched } from 'utils/fetchBox';
-import { useMyCurrentSubscription } from 'hooks/payment/usePayment';
 import Loading from 'common/Loader';
+import { useMyCurrentSubscription } from 'hooks/payment/usePayment';
+import { isFetched, isUnfetched } from 'utils/fetchBox';
 
-import SubscriptionWrapper from './SubscriptionWrapper';
-import EmptySubscription from './EmptySubscription';
 import CurrentSubscription from './CurrentSubscription';
+import EmptySubscription from './EmptySubscription';
+import SubscriptionWrapper from './SubscriptionWrapper';
 
 const withSubscriptionWrapper = Component => props => (
   <SubscriptionWrapper>

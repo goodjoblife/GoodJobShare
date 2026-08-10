@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback, useState } from 'react';
+
 import Glike from 'common/icons/Glike';
 
 import useDebouncedConfirm from '../useDebouncedConfirm';
@@ -23,12 +24,7 @@ const useHover = () => {
 };
 
 const Rating = ({
-  page,
-  title,
-  description,
   dataKey,
-  required,
-  defaultValue,
   value,
   onChange,
   onConfirm,
@@ -79,14 +75,9 @@ const Rating = ({
 
 Rating.propTypes = {
   dataKey: PropTypes.string.isRequired,
-  defaultValue: PropTypes.number.isRequired,
-  description: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func,
-  page: PropTypes.number.isRequired,
   ratingLabels: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  required: PropTypes.bool,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   value: PropTypes.number.isRequired,
   warning: PropTypes.string,
 };

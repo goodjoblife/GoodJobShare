@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+
 import useExperimentParameters from 'hooks/useExperimentParameters';
 import { activateOptimize } from 'utils/gtm';
 

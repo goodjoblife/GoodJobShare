@@ -1,8 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Wrapper, Heading } from 'common/base';
+
+import { Heading, Wrapper } from 'common/base';
 import NotFoundStatus from 'common/routing/NotFound';
+
 import styles from './NotFound.module.css';
 
 const NotFound = ({ status, heading }) => (

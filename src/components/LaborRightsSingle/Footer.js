@@ -1,14 +1,33 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
+
 import { Wrapper } from 'common/base';
+import { FacebookWrapper } from 'common/facebook';
 import ArrowLeft from 'common/icons/ArrowLeft';
 import Thumbnails from 'common/icons/Thumbnails';
-import { FacebookWrapper } from 'common/facebook';
 import { formatCanonicalPath } from 'utils/helmetHelper';
+
 import styles from './Footer.module.css';
 import { FACEBOOK_APP_ID } from '../../config';
+
+const Pager = ({ className, id, title }) => (
+  <Link to={`/labor-rights/${id}`} className={cn(styles.pager, className)}>
+    <ArrowLeft className={styles.icon} />
+    <h3 className={cn('pLBold', styles.title)}>{title}</h3>
+  </Link>
+);
+
+Pager.propTypes = {
+  className: PropTypes.string,
+  id: PropTypes.string,
+  title: PropTypes.string,
+};
+Pager.defaultProps = {
+  className: '',
+  title: '',
+};
 
 const Footer = ({ id, prev, next }) => (
   <Wrapper size="m" className={styles.footer}>
@@ -52,23 +71,6 @@ Footer.propTypes = {
   id: PropTypes.string.isRequired,
   next: PropTypes.object,
   prev: PropTypes.object,
-};
-
-const Pager = ({ className, id, title }) => (
-  <Link to={`/labor-rights/${id}`} className={cn(styles.pager, className)}>
-    <ArrowLeft className={styles.icon} />
-    <h3 className={cn('pLBold', styles.title)}>{title}</h3>
-  </Link>
-);
-
-Pager.propTypes = {
-  className: PropTypes.string,
-  id: PropTypes.string,
-  title: PropTypes.string,
-};
-Pager.defaultProps = {
-  className: '',
-  title: '',
 };
 
 export default Footer;

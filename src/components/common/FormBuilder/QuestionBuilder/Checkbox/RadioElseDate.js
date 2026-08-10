@@ -1,16 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import Wrapper from './private/Wrapper';
 import BlockSelectElseDate from './private/BlockSelectElseDate';
+import Wrapper from './private/Wrapper';
 import { OptionPropType, ValuePropType } from './PropTypes';
 import { DatePropType } from '../Date';
 
 const RadioElseDate = ({
   page,
   title,
-  description,
   dataKey,
   required,
   defaultValue,
@@ -45,7 +44,6 @@ RadioElseDate.propTypes = {
     // else
     1: DatePropType,
   }),
-  description: PropTypes.string,
   elseOptionValue: ValuePropType.isRequired,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,

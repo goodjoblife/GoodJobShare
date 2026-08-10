@@ -1,8 +1,12 @@
-import { useState, useEffect, useCallback, useMemo, useContext } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useMountedState } from 'react-use';
-import { useLogin } from 'hooks/login';
-import LoginModalContext from 'contexts/LoginModalContext';
 
+import LoginModalContext from 'contexts/LoginModalContext';
+import { useLogin } from 'hooks/login';
+
+/**
+ * @type {(callback: () => Promise<void>) => [() => void, boolean]}
+ */
 const useLoginFlow = callback => {
   const getIsMounted = useMountedState();
   const [state, setState] = useState('init');

@@ -1,38 +1,37 @@
-import React, { Fragment, useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import R from 'ramda';
+import React, { Fragment, useCallback, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
 import { Element as ScrollElement, scroller } from 'react-scroll';
-import { useParams, useLocation } from 'react-router-dom';
-import Loader from 'common/Loader';
-import { Wrapper, Section } from 'common/base';
-import NotFound from 'common/NotFound';
-import BreadCrumb from 'common/BreadCrumb';
-import { isUiNotFoundError } from 'utils/errors';
-import { paramsSelector } from 'common/routing/selectors';
-import usePermission from 'hooks/usePermission';
-import useTrace from './hooks/useTrace';
-import Article from './Article';
-import MessageBoard from './MessageBoard';
-import Seo from './Seo';
-import ExperienceHeading from './Heading';
-import MoreExperiencesBlock from './MoreExperiencesBlock';
-import ChartsZone from './ChartsZone';
-import { isError, isFetched } from 'utils/fetchBox';
+
 import {
   queryExperience,
   queryExperienceIfUnfetched,
   queryRelatedExperiencesOnExperience,
 } from 'actions/experience';
+import { Section, Wrapper } from 'common/base';
+import BreadCrumb from 'common/BreadCrumb';
+import Loader from 'common/Loader';
+import NotFound from 'common/NotFound';
+import { paramsSelector } from 'common/routing/selectors';
+import { PageType, TabType } from 'constants/companyJobTitle';
 import { COMMENT_ZONE } from 'constants/formElements';
-import {
-  pageType as PAGE_TYPE,
-  tabType as TAB_TYPE,
-} from 'constants/companyJobTitle';
-import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
-import styles from './ExperienceDetail.module.css';
+import usePermission from 'hooks/usePermission';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
-import * as VISIBILITY from './Article/visibility';
+import { isUiNotFoundError } from 'utils/errors';
+import { isError, isFetched } from 'utils/fetchBox';
+
+import Article from './Article';
+import VISIBILITY from './Article/visibility';
+import ChartsZone from './ChartsZone';
+import styles from './ExperienceDetail.module.css';
+import ExperienceHeading from './Heading';
+import useTrace from './hooks/useTrace';
+import MessageBoard from './MessageBoard';
+import MoreExperiencesBlock from './MoreExperiencesBlock';
+import Seo from './Seo';
+import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 
 // from params
 const experienceIdSelector = R.prop('id');
@@ -42,13 +41,13 @@ const useExperienceId = () => {
 };
 
 const experienceTypeToTabType = {
-  work: TAB_TYPE.WORK_EXPERIENCE,
-  interview: TAB_TYPE.INTERVIEW_EXPERIENCE,
+  work: TabType.WORK_EXPERIENCE,
+  interview: TabType.INTERVIEW_EXPERIENCE,
 };
 
 const pageTypeToNameSelector = {
-  [PAGE_TYPE.COMPANY]: R.path(['company', 'name']),
-  [PAGE_TYPE.JOB_TITLE]: R.path(['job_title', 'name']),
+  [PageType.COMPANY]: R.path(['company', 'name']),
+  [PageType.JOB_TITLE]: R.path(['job_title', 'name']),
 };
 
 const useExperienceBox = experienceId => {
@@ -58,7 +57,7 @@ const useExperienceBox = experienceId => {
   return useSelector(selector);
 };
 
-const ExperienceDetail = ({ ...props }) => {
+const ExperienceDetail = () => {
   const experienceId = useExperienceId();
   const experienceBox = useExperienceBox(experienceId);
 
@@ -79,7 +78,7 @@ const ExperienceDetail = ({ ...props }) => {
   useTrace(experienceId);
 
   const location = useLocation();
-  const pageType = R.pathOr(PAGE_TYPE.COMPANY, ['state', 'pageType'], location);
+  const pageType = R.pathOr(PageType.COMPANY, ['state', 'pageType'], location);
 
   const scrollToCommentZone = useCallback(() => {
     scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
@@ -137,7 +136,10 @@ const ExperienceDetail = ({ ...props }) => {
               <MoreExperiencesBlock experience={experienceBox.data} />
             </Wrapper>
             <Wrapper size="l">
-              <ChartsZone experience={experienceBox.data} />
+              <ChartsZone
+                companyName={experienceBox.data.company.name}
+                jobTitle={experienceBox.data.job_title.name}
+              />
             </Wrapper>
           </React.Fragment>
         )}

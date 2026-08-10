@@ -1,10 +1,10 @@
 import {
-  pageTypeTranslation,
-  tabTypeTranslation,
-  tabType as TAG_TYPE,
   generateIndexURL,
   generatePageURL,
   generateTabURL,
+  pageTypeTranslation,
+  TabType,
+  tabTypeTranslation,
 } from 'constants/companyJobTitle';
 
 const generateRootLayer = () => ({
@@ -31,12 +31,7 @@ const generateTabTypeLayer = ({ pageType, pageName, tabType }) => ({
   }),
 });
 
-export const generateBreadCrumbData = ({
-  pageType,
-  pageName,
-  tabType,
-  experience,
-}) => {
+export const generateBreadCrumbData = ({ pageType, pageName, tabType }) => {
   const data = [
     generateRootLayer(),
     generatePageTypeLayer({ pageType }),
@@ -44,7 +39,7 @@ export const generateBreadCrumbData = ({
   ];
 
   // TODO: adhoc solution if the page is OVERVIEW
-  if (tabType === TAG_TYPE.OVERVIEW) {
+  if (tabType === TabType.OVERVIEW) {
     return data;
   }
 

@@ -1,10 +1,10 @@
-import fetchUtil from 'utils/fetchUtil';
-import graphqlClient from 'utils/graphqlClient';
 import {
+  changeSalaryWorkTimeStatusGql,
   getSearchCompanyQuery,
   getSearchJobTitleQuery,
-  changeSalaryWorkTimeStatusGql,
 } from 'graphql/timeAndSalary';
+import fetchUtil from 'utils/fetchUtil';
+import graphqlClient from 'utils/graphqlClient';
 
 const endpoint = '/workings';
 

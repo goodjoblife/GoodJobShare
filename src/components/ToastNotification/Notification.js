@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useState } from 'react';
 
+import { P } from 'common/base';
+import CloseNoCircle from 'common/icons/CloseNoCircle';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 import useRemoveNotification from 'hooks/toastNotification/useRemoveToast';
 import useTimer, { countingStatusMap } from 'hooks/useTimer';
-import CloseNoCircle from 'common/icons/CloseNoCircle';
-import { P } from 'common/base';
 
 import { getOffsetY, statusMap } from './helpers';
 import styles from './Notification.module.css';

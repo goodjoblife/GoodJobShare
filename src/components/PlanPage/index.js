@@ -1,16 +1,16 @@
+import R from 'ramda';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import R from 'ramda';
-
-import Heading from 'common/base/Heading';
-import { useSubscriptionPlans } from 'hooks/payment/usePayment';
-import { isUnfetched, isFetched } from 'utils/fetchBox';
-import Loading from 'common/Loader';
-import { subscriptionType } from 'constants/subscription';
 
 import { fetchSubscriptionPlans } from 'actions/payment';
-import styles from './PlanPage.module.css';
+import Heading from 'common/base/Heading';
+import Loading from 'common/Loader';
+import { subscriptionType } from 'constants/subscription';
+import { useSubscriptionPlans } from 'hooks/payment/usePayment';
+import { isFetched, isUnfetched } from 'utils/fetchBox';
+
 import CardSection from './CardSection';
+import styles from './PlanPage.module.css';
 
 const PlanPage = () => {
   const dispatch = useDispatch();

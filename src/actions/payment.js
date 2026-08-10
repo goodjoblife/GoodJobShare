@@ -1,26 +1,24 @@
 import {
-  getError,
-  getFetched,
-  getUnfetched,
-  toFetching,
-  isFetching,
-} from 'utils/fetchBox';
-import { createToastLocationState } from 'utils/toastNotification';
-import { NOTIFICATION_TYPE } from 'constants/toastNotification';
-
-import {
-  paymentRecordSelector,
-  redirectUrlSelector,
-  subscriptionPlansSelector,
-  myCurrentSubscriptionSelector,
-} from 'selectors/payment';
-
-import { tokenSelector } from 'selectors/authSelector';
-import {
   getPaymentRecord as getPaymentRecordApi,
   getSubscriptionPlans as getSubscriptionPlansApi,
   queryMyCurrentSubscriptionApi,
 } from 'apis/payment';
+import { NOTIFICATION_TYPE } from 'constants/toastNotification';
+import { tokenSelector } from 'selectors/authSelector';
+import {
+  myCurrentSubscriptionSelector,
+  paymentRecordSelector,
+  redirectUrlSelector,
+  subscriptionPlansSelector,
+} from 'selectors/payment';
+import {
+  getError,
+  getFetched,
+  getUnfetched,
+  isFetching,
+  toFetching,
+} from 'utils/fetchBox';
+import { createToastLocationState } from 'utils/toastNotification';
 
 export const SET_REDIRECT_URL = '@@PAYMENT_PERSIST/SET_REDIRECT_URL';
 export const SET_PAYMENT_RECORD = '@@PAYMENT/SET_PAYMENT_RECORD';

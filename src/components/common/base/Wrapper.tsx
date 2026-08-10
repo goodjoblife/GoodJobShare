@@ -1,5 +1,6 @@
-import React, { ElementType, ComponentPropsWithRef, ForwardedRef } from 'react';
 import cn from 'classnames';
+import React, { ComponentPropsWithRef, ElementType, ForwardedRef } from 'react';
+
 import styles from './Wrapper.module.css';
 
 interface WrapperBaseProps<T extends ElementType> {

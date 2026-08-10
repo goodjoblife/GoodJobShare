@@ -1,12 +1,14 @@
-import { useMemo } from 'react';
 import R from 'ramda';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+
+import { LaborRightEntry } from 'apis/queryLaborRights';
+import { LaborRightMenuEntry } from 'apis/queryLaborRightsMenu';
 import {
-  menuBoxSelector,
   entryBoxSelectorById,
+  menuBoxSelector,
 } from 'selectors/laborRightsSelector';
 import FetchBox from 'utils/fetchBox';
-import { LaborRightEntry, LaborRightMenuEntry } from 'graphql/laborRight';
 
 export const useNeighborEntry = (
   entryId: string,
@@ -17,7 +19,7 @@ export const useNeighborEntry = (
   const menuBox = useSelector(menuBoxSelector);
   const menuEntries = menuBox.data || [];
 
-  const index = R.findIndex(menuEntry => menuEntry.id == entryId, menuEntries);
+  const index = R.findIndex(menuEntry => menuEntry.id === entryId, menuEntries);
   const prevEntry = index > 0 ? menuEntries[index - 1] : null;
   const nextEntry =
     index < menuEntries.length - 1 ? menuEntries[index + 1] : null;

@@ -1,8 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { replace } from 'ramda';
-import styles from './AutoCompleteItem.module.css';
+import React from 'react';
+
 import { pageTypeTranslation } from 'constants/companyJobTitle';
+
+import styles from './AutoCompleteItem.module.css';
 
 const dropBusinessNumber = replace(/ \(\d+\)$/, '');
 

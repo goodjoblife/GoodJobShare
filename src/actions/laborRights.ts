@@ -1,21 +1,19 @@
 import { AnyAction } from 'redux';
+
+import queryEntryApi, { LaborRightEntry } from 'apis/queryLaborRights';
+import queryMenuApi, { LaborRightMenuEntry } from 'apis/queryLaborRightsMenu';
 import { Thunk } from 'reducers';
-import { LaborRightMenuEntry, LaborRightEntry } from 'graphql/laborRight';
 import {
-  queryLaborRightsMenu as queryMenuApi,
-  queryLaborRights as queryEntryApi,
-} from 'apis/laborRightsApi';
+  entryBoxSelectorById,
+  menuBoxSelector,
+} from 'selectors/laborRightsSelector';
+import { isGraphqlError, UiNotFoundError } from 'utils/errors';
 import FetchBox, {
   getError,
   getFetched,
-  toFetching,
   isUnfetched,
+  toFetching,
 } from 'utils/fetchBox';
-import {
-  menuBoxSelector,
-  entryBoxSelectorById,
-} from 'selectors/laborRightsSelector';
-import { isGraphqlError, UiNotFoundError } from 'utils/errors';
 
 export const SET_MENU = '@@LABOR_RIGHTS/SET_MENU';
 export const SET_ENTRY = '@@LABOR_RIGHTS/SET_ENTRY';
@@ -65,8 +63,7 @@ const queryEntry = (entryId: string): Thunk => async (
     const entry = await queryEntryApi({ entryId });
     return dispatch(setEntry(entryId, getFetched(entry)));
   } catch (error) {
-    // @ts-ignore
-    if (isGraphqlError('GraphqlError')) {
+    if (isGraphqlError(error)) {
       return dispatch(setEntry(entryId, getError(new UiNotFoundError())));
     }
 

@@ -1,28 +1,27 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
-import usePermission from 'hooks/usePermission';
-import { usePage } from 'hooks/routing/page';
-import {
-  tabType as TAB_TYPE,
-  pageType as PAGE_TYPE,
-  PAGE_SIZE,
-} from 'constants/companyJobTitle';
+
 import { queryJobTitleInterviewExperiences } from 'actions/jobTitle';
-import { jobTitleInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import useJobTitle, { jobTitleSelector } from './useJobTitle';
-import { pageFromQuerySelector } from 'selectors/routing/page';
-import {
-  searchTextFromQuerySelector,
-  useSearchTextFromQuery,
-} from 'components/CompanyAndJobTitle/Searchbar';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
+import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
+import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 import {
   sortByFromQuerySelector,
   useSortByFromQuery,
 } from 'components/CompanyAndJobTitle/Sorter';
-import { isFetched, getFetched } from 'utils/fetchBox';
+import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
+import { usePage } from 'hooks/routing/page';
+import usePermission from 'hooks/usePermission';
+import { jobTitleInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
+import {
+  pageFromQuerySelector,
+  queryFromQuerySelector,
+} from 'selectors/routing';
+import { getFetched, isFetched } from 'utils/fetchBox';
+
+import useJobTitleParam, { jobTitleSelector } from './useJobTitleParam';
 
 const useInterviewExperiencesBoxSelector = jobTitle => {
   return useCallback(
@@ -30,7 +29,7 @@ const useInterviewExperiencesBoxSelector = jobTitle => {
       const box = jobTitleInterviewExperiencesBoxSelectorByName(jobTitle)(
         state,
       );
-      if (isFetched(box)) {
+      if (isFetched(box) && box.data) {
         // Get experience data from state.experiences, which serves
         // as the source of truth of experiences.
         const data = {
@@ -47,10 +46,10 @@ const useInterviewExperiencesBoxSelector = jobTitle => {
   );
 };
 
-const JobTitleTimeAndSalaryProvider = () => {
+const JobTitleInterviewExperiencesProvider = () => {
   const dispatch = useDispatch();
-  const pageType = PAGE_TYPE.JOB_TITLE;
-  const jobTitle = useJobTitle();
+  const pageType = PageType.JOB_TITLE;
+  const jobTitle = useJobTitleParam();
   const [companyName] = useSearchTextFromQuery();
   const [sortBy] = useSortByFromQuery();
   const page = usePage();
@@ -77,18 +76,21 @@ const JobTitleTimeAndSalaryProvider = () => {
   const boxSelector = useInterviewExperiencesBoxSelector(jobTitle);
 
   return (
-    <InterviewExperiences
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={jobTitle}
-      page={page}
-      pageSize={PAGE_SIZE}
-      tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
-      boxSelector={boxSelector}
-    />
+      tabType={TabType.INTERVIEW_EXPERIENCE}
+    >
+      <InterviewExperiences
+        page={page}
+        pageSize={PAGE_SIZE}
+        boxSelector={boxSelector}
+      />
+    </CompanyAndJobTitleWrapper>
   );
 };
 
-JobTitleTimeAndSalaryProvider.fetchData = ({
+JobTitleInterviewExperiencesProvider.fetchData = ({
   store: { dispatch },
   ...props
 }) => {
@@ -97,7 +99,7 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const sortBy = sortByFromQuerySelector(query);
-  const companyName = searchTextFromQuerySelector(query) || undefined;
+  const companyName = queryFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   return dispatch(
@@ -111,4 +113,4 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   );
 };
 
-export default JobTitleTimeAndSalaryProvider;
+export default JobTitleInterviewExperiencesProvider;

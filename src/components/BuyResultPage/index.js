@@ -1,11 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { usePaymentRecord } from 'hooks/payment/usePayment';
 import RoundCard from 'common/RoundCard';
+import { usePaymentRecord } from 'hooks/payment/usePayment';
 
-import PaymentResult from './PaymentResult';
 import styles from './BuyResultPage.module.css';
+import PaymentResult from './PaymentResult';
 
 const BuyResultPage = () => {
   const { paymentRecordId } = useParams();

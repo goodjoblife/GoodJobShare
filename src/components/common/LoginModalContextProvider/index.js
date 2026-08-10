@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import React, { useMemo, useState } from 'react';
+
 import LoginModalContext from 'contexts/LoginModalContext';
 
 const LoginModalContextProvider = ({ children }) => {

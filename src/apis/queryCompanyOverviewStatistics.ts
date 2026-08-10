@@ -1,6 +1,7 @@
 import R from 'ramda';
+
+import { SalaryWorkTimeStatistics } from 'apis/salaryWorkTime';
 import graphqlClient from 'utils/graphqlClient';
-import { OvertimeFrequencyCount, JobAverageSalary } from 'apis/salaryWorkTime';
 
 const queryCompanyOverviewStatisticsGql = /* GraphQL */ `
   query($companyName: String!) {
@@ -30,11 +31,12 @@ const queryCompanyOverviewStatisticsGql = /* GraphQL */ `
 
 type QueryCompanyOverviewStatisticsData = {
   company: {
-    salary_work_time_statistics: {
-      average_week_work_time: number | null;
-      overtime_frequency_count: OvertimeFrequencyCount | null;
-      job_average_salaries: JobAverageSalary[];
-    };
+    salary_work_time_statistics: Pick<
+      SalaryWorkTimeStatistics,
+      | 'average_week_work_time'
+      | 'overtime_frequency_count'
+      | 'job_average_salaries'
+    >;
   } | null;
 };
 

@@ -1,9 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
-import Thumbs from './Thumbs';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import { Rating, RatingLabel } from './Rating';
 import styles from './Rating.module.css';
+import Thumbs from './Thumbs';
 
 const OverallRating = ({ size, rating, hasRatingLabel, hasRatingNumber }) => {
   return (

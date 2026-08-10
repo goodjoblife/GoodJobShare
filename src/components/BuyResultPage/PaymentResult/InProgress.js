@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import P from 'common/base/P';
-import useTimer, { countingStatusMap } from 'hooks/useTimer';
+import { FetchStatus } from 'constants/fetchStatus';
 import useFetchPaymentRecord from 'hooks/payment/useFetchPaymentRecord';
-import fetchingStatusMap from 'constants/fetchStatus';
+import useTimer, { countingStatusMap } from 'hooks/useTimer';
 
-import TransactionIcon from './transaction.svg';
-import styles from './PaymentResult.module.css';
 import { renderCountdown } from './helpers';
+import styles from './PaymentResult.module.css';
+import TransactionIcon from './transaction.svg';
 
 const waitingTime = 3000;
 const timeLimit = 30000;
@@ -25,7 +25,7 @@ const InProgress = ({ paymentRecordId, fetchingStatus }) => {
   const fetch = useFetchPaymentRecord(paymentRecordId);
 
   useEffect(() => {
-    if (isTimerEnabled && fetchingStatus === fetchingStatusMap.FETCHED) {
+    if (isTimerEnabled && fetchingStatus === FetchStatus.FETCHED) {
       setLoopFetchCounting(countingStatusMap.counting);
     }
   }, [fetchingStatus, isTimerEnabled]);
@@ -66,7 +66,7 @@ const InProgress = ({ paymentRecordId, fetchingStatus }) => {
 };
 
 InProgress.propTypes = {
-  fetchingStatus: PropTypes.oneOf(Object.values(fetchingStatusMap)),
+  fetchingStatus: PropTypes.oneOf(Object.values(FetchStatus)),
   paymentRecordId: PropTypes.string,
 };
 

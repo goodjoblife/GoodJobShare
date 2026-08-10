@@ -33,9 +33,12 @@ yarn install
 ```
 
 ### build
+
+Node.js 17 以後版本的 OpenSSL 3 與專案目前使用的 webpack 4（Razzle 3）不相容，`build` 時必須加上 `--openssl-legacy-provider`，否則會出現 `error:0308010C:digital envelope routines::unsupported`：
 ```
-npm run build
+NODE_OPTIONS=--openssl-legacy-provider npm run build
 ```
+（`npm run start` 的開發模式不受影響，不需要加這個 flag。）
 
 ### start
 ```

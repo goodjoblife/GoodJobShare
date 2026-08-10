@@ -2,14 +2,13 @@ import React, { useCallback } from 'react';
 import { useHistory } from 'react-router';
 
 import { Wrapper } from 'common/base';
-import LoginModal from 'common/LoginModal';
 import X from 'common/icons/X';
-
+import LoginModal from 'common/LoginModal';
+import InboxContent from 'components/App/Header/InboxContent';
+import entryStyles from 'components/ShareExperience/Entry.module.css';
 import { useIsLoggedIn } from 'hooks/auth';
 
 import styles from './InboxPage.module.css';
-import entryStyles from 'components/ShareExperience/Entry.module.css';
-import InboxContent from 'components/App/Header/InboxContent';
 
 const InboxPage = () => {
   const isLoggedIn = useIsLoggedIn();

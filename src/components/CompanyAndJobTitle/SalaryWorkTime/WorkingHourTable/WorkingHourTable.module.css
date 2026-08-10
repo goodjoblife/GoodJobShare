@@ -1,0 +1,36 @@
+.companyTable {
+  .colPosition,
+  .colCompany {
+    width: 18%;
+  }
+  .colType {
+    width: 8%;
+  }
+  .colDayTime {
+    width: 12%;
+  }
+  .colWeekTime {
+    width: 10%;
+  }
+  .colFrequency {
+    width: 11%;
+  }
+  .colExperience {
+    width: 7%;
+  }
+  .colGender {
+    width: 5%;
+  }
+  .colSalary {
+    width: 11%;
+  }
+  .colHourly {
+    width: 8%;
+  }
+  .colDataTime {
+    width: 7%;
+  }
+  &.rwdTable th {
+    padding-top: 15px;
+  }
+}

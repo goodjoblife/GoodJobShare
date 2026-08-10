@@ -1,7 +1,9 @@
 import React from 'react';
-import ScoreRange from './ScoreRange';
+
 import TextArea from 'common/form/TextArea';
+
 import styles from './ExpandedModal.module.css';
+import ScoreRange from './ScoreRange';
 
 const questionList = [
   {

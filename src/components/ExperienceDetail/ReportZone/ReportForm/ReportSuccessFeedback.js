@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-import Checked from 'common/icons/Checked';
 import Feedback from 'common/Feedback';
+import Checked from 'common/icons/Checked';
 
 const ReportSuccessFeedback = ({ buttonClick }) => (
   <Feedback

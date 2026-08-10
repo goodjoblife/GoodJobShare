@@ -1,14 +1,16 @@
-import React from 'react';
 import R from 'ramda';
+import React from 'react';
 import Helmet from 'react-helmet';
-import { FACEBOOK_APP_ID } from '../../../config';
+
 import { SITE_NAME } from 'constants/helmetData';
-import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
-import DefaultOgImage from 'images/og/default-06-April.jpg';
 import AboutOgImage from 'images/og/about.jpg';
+import DefaultOgImage from 'images/og/default-06-April.jpg';
 import FaqOgImage from 'images/og/faq.jpg';
 import LaborRightsOgImage from 'images/og/labor-rights.jpg';
 import ShareWorkOgImage from 'images/og/share-work.jpg';
+import { formatCanonicalPath, formatTitle } from 'utils/helmetHelper';
+
+import { FACEBOOK_APP_ID } from '../../../config';
 
 /*
   This file will organize most of STATIC meta data information.

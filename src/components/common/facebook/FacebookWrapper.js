@@ -1,5 +1,6 @@
-import React, { useContext, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useRef } from 'react';
+
 import FacebookContext from 'contexts/FacebookContext';
 
 const FacebookWrapper = ({ children }) => {

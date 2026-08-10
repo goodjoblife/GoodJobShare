@@ -1,33 +1,34 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
-import { paramsSelector, querySelector } from 'common/routing/selectors';
-import usePermission from 'hooks/usePermission';
-import { usePage } from 'hooks/routing/page';
-import {
-  tabType as TAB_TYPE,
-  pageType as PAGE_TYPE,
-  PAGE_SIZE,
-} from 'constants/companyJobTitle';
+
 import {
   queryCompanyInterviewExperiences,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
-import { companyInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import useCompanyName, { companyNameSelector } from './useCompanyName';
-import { useTopNJobTitles } from './useTopNJobTitles';
-import {
-  searchTextFromQuerySelector,
-  useSearchTextFromQuery,
-} from 'components/CompanyAndJobTitle/Searchbar';
+import { paramsSelector, querySelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
+import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
+import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 import {
   sortByFromQuerySelector,
   useSortByFromQuery,
 } from 'components/CompanyAndJobTitle/Sorter';
-import { pageFromQuerySelector } from 'selectors/routing/page';
-import { isFetched, getFetched } from 'utils/fetchBox';
+import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
+import { usePage } from 'hooks/routing/page';
+import usePermission from 'hooks/usePermission';
+import { companyInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
+import {
+  pageFromQuerySelector,
+  queryFromQuerySelector,
+} from 'selectors/routing';
+import { getFetched, isFetched } from 'utils/fetchBox';
+
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
+import { useTopNJobTitles } from './useTopNJobTitles';
 
 const useInterviewExperiencesBoxSelector = companyName => {
   return useCallback(
@@ -54,8 +55,8 @@ const useInterviewExperiencesBoxSelector = companyName => {
 
 const CompanyInterviewExperiencesProvider = () => {
   const dispatch = useDispatch();
-  const pageType = PAGE_TYPE.COMPANY;
-  const companyName = useCompanyName();
+  const pageType = PageType.COMPANY;
+  const companyName = useCompanyNameParam();
   const [jobTitle] = useSearchTextFromQuery();
   const [sortBy] = useSortByFromQuery();
   const page = usePage();
@@ -92,15 +93,18 @@ const CompanyInterviewExperiencesProvider = () => {
   const topNJobTitles = useTopNJobTitles(companyName);
 
   return (
-    <InterviewExperiences
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={companyName}
-      page={page}
-      pageSize={PAGE_SIZE}
-      tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
-      topNJobTitles={topNJobTitles.interview}
-      boxSelector={boxSelector}
-    />
+      tabType={TabType.INTERVIEW_EXPERIENCE}
+    >
+      <InterviewExperiences
+        page={page}
+        pageSize={PAGE_SIZE}
+        topNJobTitles={topNJobTitles.interview}
+        boxSelector={boxSelector}
+      />
+    </CompanyAndJobTitleWrapper>
   );
 };
 
@@ -113,7 +117,7 @@ CompanyInterviewExperiencesProvider.fetchData = ({
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const sortBy = sortByFromQuerySelector(query);
-  const jobTitle = searchTextFromQuerySelector(query) || undefined;
+  const jobTitle = queryFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   return Promise.all([

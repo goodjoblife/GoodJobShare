@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import React, { useMemo } from 'react';
+
 import { Section } from 'common/base';
 import { useTotalCount } from 'hooks/useCount';
 import { calcEndTime } from 'utils/dateUtil';
-import SubscriptionPlanCollection from './SubscriptionPlanCollection';
+
 import Captain from './Captain';
+import SubscriptionPlanCollection from './SubscriptionPlanCollection';
 
 const SubscriptionsSection = ({
   plans,

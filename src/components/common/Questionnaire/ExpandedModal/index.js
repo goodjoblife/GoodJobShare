@@ -1,14 +1,16 @@
-import React, { Fragment, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import styles from './ExpandedModal.module.css';
-import Question from './Question';
-import NextButton from './NextButton';
-import questionList from './questionList';
-import AppreciationContent from './AppreciationContent';
-import { postUserFeedback } from 'actions/userFeedback';
+import React, { Fragment, useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
 import { useLocalStorage } from 'react-use';
+
+import { postUserFeedback } from 'actions/userFeedback';
+import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
+
+import AppreciationContent from './AppreciationContent';
+import styles from './ExpandedModal.module.css';
+import NextButton from './NextButton';
+import Question from './Question';
+import questionList from './questionList';
 
 const ExpandedModal = ({ handleToggleModalOpen }) => {
   const [questionIndex, setQuestionIndex] = useState(0);

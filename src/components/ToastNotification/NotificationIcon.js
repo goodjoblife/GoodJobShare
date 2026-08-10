@@ -1,11 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import Checked from 'common/icons/Checked';
 import Close from 'common/icons/Close';
 import Exclamation from 'common/icons/Exclamation';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
-import styles from './NotificationIcon.module.css';
+
 import { getIconColor } from './helpers';
+import styles from './NotificationIcon.module.css';
 
 const NotificationIcon = ({ type }) => {
   const iconColor = getIconColor(type);

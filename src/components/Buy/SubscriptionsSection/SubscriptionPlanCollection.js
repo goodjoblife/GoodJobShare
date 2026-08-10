@@ -1,8 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './SubscriptionsSection.module.css';
-import SubscriptionPlan from './SubscriptionPlan';
+import React from 'react';
+
 import { subscriptionTypes } from 'constants/subscription';
+
+import SubscriptionPlan from './SubscriptionPlan';
+import styles from './SubscriptionsSection.module.css';
 
 const SubscriptionPlanCollection = ({ plans, selectedId, setSelectedId }) => (
   <div className={styles.plans}>

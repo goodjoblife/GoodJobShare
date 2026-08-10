@@ -11,31 +11,9 @@ export const experiencePartialGql = /* GraphQL */ `
   }
   company {
     name
-    salary_work_time_statistics {
-      job_average_salaries {
-        job_title {
-          name
-        }
-        average_salary {
-          type
-          amount
-        }
-        data_count
-      }
-    }
   }
   job_title {
     name
-    salary_distribution {
-      bins {
-        data_count
-        range {
-          type
-          from
-          to
-        }
-      }
-    }
   }
   region
   experience_in_year
@@ -85,26 +63,9 @@ export const workExperiencesPartialGql = ({
   averageSectionRating
   reply_count
   like_count
-`;
-
-export const queryExperienceGql = /* GraphQL */ `
-  query($id: ID!) {
-    experience(id: $id) {
-      ${experiencePartialGql}
-
-      __typename
-
-      ... on InterviewExperience {
-        ${interviewExperiencePartialGql({
-          sectionTitleKey: 'interview_subtitle',
-        })}
-      }
-
-      ... on WorkExperience {
-        ${workExperiencesPartialGql({ sectionTitleKey: 'work_subtitle' })}
-      }
-    }
-  }
+  sector
+  gender
+  jobLevel
 `;
 
 export const queryExperienceLikeGql = /* GraphQL */ `
@@ -151,52 +112,6 @@ mutation CreateWorkExperienceWithRating($input: CreateWorkExperienceWithRatingIn
   }
 }`;
 
-export const queryRelatedExperiencesGql = /* GraphQL */ `
-  query($id: ID!, $start: Int!, $limit: Int!) {
-    experience(id: $id) {
-      id
-      relatedExperiences(start: $start, limit: $limit) {
-        id
-        type
-        originalCompanyName
-        company {
-          name
-        }
-        job_title {
-          name
-        }
-        created_at
-        salary {
-          type
-          amount
-        }
-
-        __typename
-
-        ... on InterviewExperience {
-          sections {
-            interview_subtitle: subtitle
-            content
-          }
-          averageSectionRating
-        }
-
-        ... on WorkExperience {
-          sections {
-            work_subtitle: subtitle
-            content
-            aspect
-            rating
-          }
-          week_work_time
-          recommend_to_others
-          averageSectionRating
-        }
-      }
-    }
-  }
-`;
-
 export const createExperienceLikeGql = /* GraphQL */ `
   mutation($input: CreateExperienceLikeInput!) {
     createExperienceLike(input: $input) {
@@ -212,12 +127,6 @@ export const deleteExpereinceLikeGql = /* GraphQL */ `
     deleteExperienceLike(input: $input) {
       deletedExperienceId
     }
-  }
-`;
-
-export const queryExperienceCountGql = /* GraphQL */ `
-  query {
-    experienceCount
   }
 `;
 

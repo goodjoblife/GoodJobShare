@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  gap: 10px;
+  background: #fffae1;
+  border: 1px solid #ec7910;
+  padding: 10px 12px;
+}
+
+.leftCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #555555;
+  flex-shrink: 0;
+}
+
+.lawName {
+  font-size: 11px;
+  text-align: center;
+  max-width: 52px;
+  line-height: 1.2;
+}
+
+.description {
+  color: #555555;
+  font-size: 13px;
+  line-height: 1.6;
+}
