@@ -17,7 +17,7 @@ import {
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { companyEsgSalaryDataBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
-import { getAvailableYears, getStatisticsByYear } from 'utils/esgYearUtils';
+import { getLatestYear, getStatisticsByYear } from 'utils/esgYearUtils';
 import { isFetched } from 'utils/fetchBox';
 
 import useCompanyNameParam, {
@@ -61,14 +61,11 @@ const getLatestFemaleManagerStatisticsItem = (
 ): FemaleManagerItem | null => {
   if (!esgSalaryData) return null;
 
-  const availableYears = getAvailableYears(esgSalaryData);
-  if (availableYears.length === 0) return null;
+  const years = esgSalaryData.femaleManagerStatistics.map(item => item.year);
+  const latestYear = getLatestYear(years);
 
-  const [latestYear] = availableYears;
-  return (
-    getStatisticsByYear(esgSalaryData, latestYear)
-      .femaleManagerStatisticsItem || null
-  );
+  return getStatisticsByYear(esgSalaryData, latestYear)
+    .femaleManagerStatisticsItem;
 };
 
 type Params = { companyName: string };
