@@ -68,26 +68,6 @@ export const workExperiencesPartialGql = ({
   jobLevel
 `;
 
-export const queryExperienceGql = /* GraphQL */ `
-  query($id: ID!) {
-    experience(id: $id) {
-      ${experiencePartialGql}
-
-      __typename
-
-      ... on InterviewExperience {
-        ${interviewExperiencePartialGql({
-          sectionTitleKey: 'interview_subtitle',
-        })}
-      }
-
-      ... on WorkExperience {
-        ${workExperiencesPartialGql({ sectionTitleKey: 'work_subtitle' })}
-      }
-    }
-  }
-`;
-
 export const queryExperienceLikeGql = /* GraphQL */ `
   query($id: ID!) {
     experience(id: $id) {
@@ -131,52 +111,6 @@ mutation CreateWorkExperienceWithRating($input: CreateWorkExperienceWithRatingIn
     }
   }
 }`;
-
-export const queryRelatedExperiencesGql = /* GraphQL */ `
-  query($id: ID!, $start: Int!, $limit: Int!) {
-    experience(id: $id) {
-      id
-      relatedExperiences(start: $start, limit: $limit) {
-        id
-        type
-        originalCompanyName
-        company {
-          name
-        }
-        job_title {
-          name
-        }
-        created_at
-        salary {
-          type
-          amount
-        }
-
-        __typename
-
-        ... on InterviewExperience {
-          sections {
-            interview_subtitle: subtitle
-            content
-          }
-          averageSectionRating
-        }
-
-        ... on WorkExperience {
-          sections {
-            work_subtitle: subtitle
-            content
-            aspect
-            rating
-          }
-          week_work_time
-          recommend_to_others
-          averageSectionRating
-        }
-      }
-    }
-  }
-`;
 
 export const createExperienceLikeGql = /* GraphQL */ `
   mutation($input: CreateExperienceLikeInput!) {

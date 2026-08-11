@@ -1,41 +1,27 @@
 import React from 'react';
 
 import { Wrapper } from 'common/base';
-import { PageType, TabType } from 'constants/companyJobTitle';
 
-import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import GenderFriendlySection, {
   FemaleManagerItem,
   GenderFriendlyData,
 } from './GenderFriendly';
 
 type Props = {
-  pageType: PageType;
-  pageName: string;
-  tabType: TabType;
   data: GenderFriendlyData;
   femaleManagerStatisticsItem: FemaleManagerItem | null;
 };
 
 const GenderFriendly: React.FC<Props> = ({
-  pageType,
-  pageName,
-  tabType,
   data,
   femaleManagerStatisticsItem,
 }) => (
-  <CompanyAndJobTitleWrapper
-    pageType={pageType}
-    pageName={pageName}
-    tabType={tabType}
-  >
-    <Wrapper size="l">
-      <GenderFriendlySection
-        data={data}
-        femaleManagerStatisticsItem={femaleManagerStatisticsItem}
-      />
-    </Wrapper>
-  </CompanyAndJobTitleWrapper>
+  <Wrapper size="l">
+    <GenderFriendlySection
+      data={data}
+      femaleManagerStatisticsItem={femaleManagerStatisticsItem}
+    />
+  </Wrapper>
 );
 
 export default GenderFriendly;

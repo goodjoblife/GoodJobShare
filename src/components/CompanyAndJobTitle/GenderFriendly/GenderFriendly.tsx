@@ -12,7 +12,7 @@ import styles from './GenderFriendly.module.css';
 import GenderPayComparisonCard, {
   GenderPayComparisonData,
 } from './GenderPayComparisonCard';
-import AspectScoreCard from '../Overview/AspectScoreCard';
+import AspectScoreCard from '../AspectScoreCard';
 import PolicySection from '../PolicySection';
 import { EsgItemBlock } from '../SalaryWorkTime/EsgBlock/EsgBlock';
 

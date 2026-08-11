@@ -4,6 +4,7 @@ import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
+import { JobTitleInIndex } from 'apis/queryJobTitles';
 import { OvertimeStats } from 'apis/salaryWorkTime';
 import { RootState } from 'reducers';
 import {
@@ -15,7 +16,6 @@ import {
   CompanyWorkExperienceResult,
 } from 'reducers/companyIndex';
 import {
-  JobTitleInIndex,
   JobTitleInterviewExperienceResult,
   JobTitleOverview,
   JobTitleOverviewStatistics,

@@ -1,16 +1,16 @@
 import cn from 'classnames';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import linkStyles from 'common/base/Link.module.css';
 import Card from 'common/Card';
 import Caret from 'common/icons/Caret';
 import Info from 'common/icons/Info';
+import { getEsgYearStatistics } from 'utils/esgYearUtils';
 import { formatNumberWithSign } from 'utils/stringUtil';
 
 import styles from './EsgBlock.module.css';
-import { getAvailableYears, getStatisticsByYear } from './esgYearUtils';
-import overviewStyles from '../../Overview/Overview.module.css';
+import snippetStyles from '../../SnippetBlock.module.css';
 
 type EsgItemBlockProps = {
   className?: string;
@@ -77,14 +77,14 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
 }) => {
   const [isCollapsed, setCollapsed] = useState(hasPreviewed);
 
-  const latestYear = useMemo(() => getAvailableYears(data)[0], [data]);
-
   const {
-    avgSalaryStatisticsItem,
-    nonManagerAvgSalaryStatisticsItem,
-    nonManagerMedianSalaryStatisticsItem,
-    femaleManagerStatisticsItem,
-  } = useMemo(() => getStatisticsByYear(data, latestYear), [data, latestYear]);
+    yearStatistics: {
+      avgSalaryStatisticsItem,
+      nonManagerAvgSalaryStatisticsItem,
+      nonManagerMedianSalaryStatisticsItem,
+      femaleManagerStatisticsItem,
+    },
+  } = getEsgYearStatistics(data);
 
   const toggleCollapsed = useCallback(() => {
     setCollapsed(isCollapsed => !isCollapsed);
@@ -92,7 +92,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
 
   return (
     <Card className={cn(styles.card, className)}>
-      <div className={overviewStyles.title}>
+      <div className={snippetStyles.title}>
         企業ESG公開薪資揭露
         {showsToggle && (
           <button
