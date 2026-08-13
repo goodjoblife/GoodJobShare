@@ -79,16 +79,11 @@ const CompanyGenderFriendlyProvider: React.FC &
   )
     ? esgSalaryDataBox.data
     : null;
-  // esgYearStatisticsList 依年份新到舊排序，但各指標的最新年度不一定相同，
-  // 需另外找出「有 female manager 資料」的最新一筆，不能直接取聯集最新年度的第一筆。
-  const femaleManagerYearStatistics = esgYearStatisticsList
-    ? esgYearStatisticsList.find(
-        item => item.femaleManagerStatisticsItem !== null,
-      )
-    : null;
-  const femaleManagerStatisticsItem = femaleManagerYearStatistics
-    ? femaleManagerYearStatistics.femaleManagerStatisticsItem
-    : null;
+  // esgYearStatisticsList 依年份新到舊排序，第一筆即最新年度。
+  const femaleManagerStatisticsItem =
+    esgYearStatisticsList && esgYearStatisticsList.length > 0
+      ? esgYearStatisticsList[0].femaleManagerStatisticsItem
+      : null;
 
   return (
     <CompanyAndJobTitleWrapper
