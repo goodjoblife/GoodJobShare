@@ -1,12 +1,11 @@
 import cn from 'classnames';
 import React, { useCallback, useState } from 'react';
 
-import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import linkStyles from 'common/base/Link.module.css';
 import Card from 'common/Card';
 import Caret from 'common/icons/Caret';
 import Info from 'common/icons/Info';
-import { getEsgYearStatistics } from 'utils/esgYearUtils';
+import { EsgYearStatistics } from 'utils/esgYearUtils';
 import { formatNumberWithSign } from 'utils/stringUtil';
 
 import styles from './EsgBlock.module.css';
@@ -25,7 +24,7 @@ type EsgBlockProps = {
   className?: string;
   showsToggle?: boolean;
   hasPreviewed?: boolean;
-  data: ESGSalaryData;
+  data: EsgYearStatistics[];
 };
 
 export const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
@@ -77,14 +76,13 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
 }) => {
   const [isCollapsed, setCollapsed] = useState(hasPreviewed);
 
+  // data 依年份新到舊排序；沒有年度選單時固定顯示最新一年。
   const {
-    yearStatistics: {
-      avgSalaryStatisticsItem,
-      nonManagerAvgSalaryStatisticsItem,
-      nonManagerMedianSalaryStatisticsItem,
-      femaleManagerStatisticsItem,
-    },
-  } = getEsgYearStatistics(data);
+    avgSalaryStatisticsItem,
+    nonManagerAvgSalaryStatisticsItem,
+    nonManagerMedianSalaryStatisticsItem,
+    femaleManagerStatisticsItem,
+  } = data[0];
 
   const toggleCollapsed = useCallback(() => {
     setCollapsed(isCollapsed => !isCollapsed);

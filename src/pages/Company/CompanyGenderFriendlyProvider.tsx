@@ -6,18 +6,14 @@ import {
   queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
-import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { paramsSelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import GenderFriendly from 'components/CompanyAndJobTitle/GenderFriendly';
-import {
-  FemaleManagerItem,
-  GenderFriendlyData,
-} from 'components/CompanyAndJobTitle/GenderFriendly/GenderFriendly';
+import { GenderFriendlyData } from 'components/CompanyAndJobTitle/GenderFriendly/GenderFriendly';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { companyEsgSalaryDataBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
-import { getLatestYear, getStatisticsByYear } from 'utils/esgYearUtils';
+import { EsgYearStatistics } from 'utils/esgYearUtils';
 import { isFetched } from 'utils/fetchBox';
 
 import useCompanyNameParam, {
@@ -56,18 +52,6 @@ const HARDCODED_DATA: GenderFriendlyData = {
   },
 };
 
-const getLatestFemaleManagerStatisticsItem = (
-  esgSalaryData: ESGSalaryData | null,
-): FemaleManagerItem | null => {
-  if (!esgSalaryData) return null;
-
-  const years = esgSalaryData.femaleManagerStatistics.map(item => item.year);
-  const latestYear = getLatestYear(years);
-
-  return getStatisticsByYear(esgSalaryData, latestYear)
-    .femaleManagerStatisticsItem;
-};
-
 type Params = { companyName: string };
 
 const CompanyGenderFriendlyProvider: React.FC &
@@ -90,12 +74,21 @@ const CompanyGenderFriendlyProvider: React.FC &
   const esgSalaryDataBox = useSelector(
     companyEsgSalaryDataBoxSelectorByName(companyName),
   );
-  const esgSalaryData: ESGSalaryData | null = isFetched(esgSalaryDataBox)
+  const esgYearStatisticsList: EsgYearStatistics[] | null = isFetched(
+    esgSalaryDataBox,
+  )
     ? esgSalaryDataBox.data
     : null;
-  const femaleManagerStatisticsItem = getLatestFemaleManagerStatisticsItem(
-    esgSalaryData,
-  );
+  // esgYearStatisticsList 依年份新到舊排序，但各指標的最新年度不一定相同，
+  // 需另外找出「有 female manager 資料」的最新一筆，不能直接取聯集最新年度的第一筆。
+  const femaleManagerYearStatistics = esgYearStatisticsList
+    ? esgYearStatisticsList.find(
+        item => item.femaleManagerStatisticsItem !== null,
+      )
+    : null;
+  const femaleManagerStatisticsItem = femaleManagerYearStatistics
+    ? femaleManagerYearStatistics.femaleManagerStatisticsItem
+    : null;
 
   return (
     <CompanyAndJobTitleWrapper
