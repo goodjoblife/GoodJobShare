@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDebounce } from 'react-use';
 
 import { Heading, Link, Wrapper } from 'common/base';
 import Pagination from 'common/Pagination';
@@ -44,6 +45,8 @@ type ColumnConfig = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TableColumn = Table.Column as any;
 
+const FILTER_DEBOUNCE_DELAY = 800;
+
 type Props = {
   pageType: PageType;
   pageName: string;
@@ -84,6 +87,14 @@ const LeavePolicySection: React.FC<Props> = ({
   const [selectedValues, setSelectedValues] = useState<string[]>(
     filterOptions.map(o => o.value),
   );
+  const [debouncedSelectedValues, setDebouncedSelectedValues] = useState(
+    selectedValues,
+  );
+  useDebounce(
+    () => setDebouncedSelectedValues(selectedValues),
+    FILTER_DEBOUNCE_DELAY,
+    [selectedValues],
+  );
   const parentPath = generateTabURL({ pageType, pageName, tabType });
   const tabName = tabTypeTranslation[tabType];
   const [createPageLinkTo] = useCreatePageLinkTo();
@@ -95,7 +106,7 @@ const LeavePolicySection: React.FC<Props> = ({
   };
 
   const filteredRecords = records.filter(r =>
-    selectedValues.includes(r.availability),
+    debouncedSelectedValues.includes(r.availability),
   );
   const totalCount = filteredRecords.length;
   const start = (page - 1) * pageSize;
