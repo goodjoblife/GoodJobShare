@@ -141,7 +141,7 @@ const LeavePolicySection: React.FC<Props> = ({
           section={section}
         />
       </Wrapper>
-      <Wrapper size="m">
+      <Wrapper size="l">
         <div className={styles.filter}>
           <span className={styles.filterLabel}>篩選：</span>
           {filterOptions.map(option => (
