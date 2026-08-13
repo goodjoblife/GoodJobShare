@@ -48,7 +48,6 @@
   background: main-black;
   border-color: main-black;
   color: #fff;
-  font-weight: 600;
 }
 
 .checkboxInput:checked + .filterButton:hover {
