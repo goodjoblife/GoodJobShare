@@ -1,13 +1,12 @@
 import cn from 'classnames';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import linkStyles from 'common/base/Link.module.css';
 import Card from 'common/Card';
 import Select from 'common/form/Select';
 import Caret from 'common/icons/Caret';
 import Info from 'common/icons/Info';
-import { getAvailableYears, getStatisticsByYear } from 'utils/esgYearUtils';
+import { EsgYearStatistics } from 'utils/esgYearUtils';
 import { formatNumberWithSign } from 'utils/stringUtil';
 
 import styles from './EsgBlock.module.css';
@@ -26,7 +25,7 @@ type EsgBlockProps = {
   className?: string;
   showsToggle?: boolean;
   hasPreviewed?: boolean;
-  data: ESGSalaryData;
+  data: EsgYearStatistics[];
   yearSelectInContent?: boolean;
 };
 
@@ -80,21 +79,23 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
 }) => {
   const [isCollapsed, setCollapsed] = useState(hasPreviewed);
 
-  const availableYears = useMemo(() => getAvailableYears(data), [data]);
+  // data 依年份新到舊排序；預設顯示最新一年，可透過年度選單切換。
+  const availableYears = useMemo(() => data.map(item => item.year), [data]);
   const [selectedYear, setSelectedYear] = useState(() => availableYears[0]);
   useEffect(() => {
     setSelectedYear(availableYears[0]);
   }, [availableYears]);
 
+  const selectedYearStatistics = useMemo(
+    () => data.find(item => item.year === selectedYear) || null,
+    [data, selectedYear],
+  );
   const {
-    avgSalaryStatisticsItem,
-    nonManagerAvgSalaryStatisticsItem,
-    nonManagerMedianSalaryStatisticsItem,
-    femaleManagerStatisticsItem,
-  } = useMemo(() => getStatisticsByYear(data, selectedYear), [
-    data,
-    selectedYear,
-  ]);
+    avgSalaryStatisticsItem = null,
+    nonManagerAvgSalaryStatisticsItem = null,
+    nonManagerMedianSalaryStatisticsItem = null,
+    femaleManagerStatisticsItem = null,
+  } = selectedYearStatistics || {};
 
   const yearOptions = useMemo(
     () => availableYears.map(year => ({ label: `${year}`, value: year })),
