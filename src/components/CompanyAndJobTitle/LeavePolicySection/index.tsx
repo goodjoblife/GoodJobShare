@@ -16,7 +16,7 @@ import LeaveSectionBlock, {
   LeaveBulletByLabel,
   LeaveSection,
 } from '../LeaveSectionBlock';
-import FilterButton from './FilterButton';
+import FilterToggleButton from './FilterToggleButton';
 import styles from './styles.module.css';
 
 export type LeavePolicyRecord = {
@@ -145,7 +145,7 @@ const LeavePolicySection: React.FC<Props> = ({
         <div className={styles.filter}>
           <span className={styles.filterLabel}>篩選：</span>
           {filterOptions.map(option => (
-            <FilterButton
+            <FilterToggleButton
               key={option.value}
               label={option.label}
               checked={selectedValues.includes(option.value)}

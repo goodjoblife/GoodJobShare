@@ -9,7 +9,7 @@ type Props = {
   onClick: () => void;
 };
 
-const FilterButton: React.FC<Props> = ({ label, checked, onClick }) => (
+const FilterToggleButton: React.FC<Props> = ({ label, checked, onClick }) => (
   <button
     className={cn(styles.filterButton, {
       [styles.filterButtonChecked]: checked,
@@ -28,4 +28,4 @@ const FilterButton: React.FC<Props> = ({ label, checked, onClick }) => (
   </button>
 );
 
-export default FilterButton;
+export default FilterToggleButton;
