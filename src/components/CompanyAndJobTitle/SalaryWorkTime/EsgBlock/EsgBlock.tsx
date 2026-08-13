@@ -1,8 +1,9 @@
 import cn from 'classnames';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import linkStyles from 'common/base/Link.module.css';
 import Card from 'common/Card';
+import Select from 'common/form/Select';
 import Caret from 'common/icons/Caret';
 import Info from 'common/icons/Info';
 import { EsgYearStatistics } from 'utils/esgYearUtils';
@@ -25,6 +26,7 @@ type EsgBlockProps = {
   showsToggle?: boolean;
   hasPreviewed?: boolean;
   data: EsgYearStatistics[];
+  yearSelectInContent?: boolean;
 };
 
 const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
@@ -73,40 +75,84 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
   showsToggle = true,
   hasPreviewed,
   data,
+  yearSelectInContent = false,
 }) => {
   const [isCollapsed, setCollapsed] = useState(hasPreviewed);
 
-  // data 依年份新到舊排序；沒有年度選單時固定顯示最新一年。
+  // data 依年份新到舊排序；預設顯示最新一年，可透過年度選單切換。
+  const availableYears = useMemo(() => data.map(item => item.year), [data]);
+  const [selectedYear, setSelectedYear] = useState(() => availableYears[0]);
+  useEffect(() => {
+    setSelectedYear(availableYears[0]);
+  }, [availableYears]);
+
+  const selectedYearStatistics = useMemo(
+    () => data.find(item => item.year === selectedYear) || null,
+    [data, selectedYear],
+  );
   const {
-    avgSalaryStatisticsItem,
-    nonManagerAvgSalaryStatisticsItem,
-    nonManagerMedianSalaryStatisticsItem,
-    femaleManagerStatisticsItem,
-  } = data[0];
+    avgSalaryStatisticsItem = null,
+    nonManagerAvgSalaryStatisticsItem = null,
+    nonManagerMedianSalaryStatisticsItem = null,
+    femaleManagerStatisticsItem = null,
+  } = selectedYearStatistics || {};
+
+  const yearOptions = useMemo(
+    () => availableYears.map(year => ({ label: `${year}`, value: year })),
+    [availableYears],
+  );
 
   const toggleCollapsed = useCallback(() => {
     setCollapsed(isCollapsed => !isCollapsed);
   }, []);
 
+  const handleYearChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setSelectedYear(Number(e.target.value));
+      setCollapsed(false);
+    },
+    [],
+  );
+
+  const yearSelect = availableYears.length > 1 && (
+    <div
+      className={
+        yearSelectInContent ? styles.mobileYearSelect : styles.yearSelect
+      }
+    >
+      <Select
+        hasNullOption={false}
+        value={selectedYear}
+        options={yearOptions}
+        onChange={handleYearChange}
+      />
+    </div>
+  );
+
   return (
     <Card className={cn(styles.card, className)}>
-      <div className={snippetStyles.title}>
-        企業ESG公開薪資揭露
-        {showsToggle && (
-          <button
-            className={cn(styles.toggle, { [styles.collapsed]: isCollapsed })}
-            aria-expanded={!isCollapsed}
-            onClick={toggleCollapsed}
-          >
-            <Caret />
-          </button>
-        )}
+      <div className={styles.header}>
+        <div className={snippetStyles.title}>
+          企業ESG公開薪資揭露
+          {showsToggle && (
+            <button
+              className={cn(styles.toggle, { [styles.collapsed]: isCollapsed })}
+              aria-expanded={!isCollapsed}
+              onClick={toggleCollapsed}
+            >
+              <Caret />
+            </button>
+          )}
+        </div>
+        {!yearSelectInContent && yearSelect}
       </div>
       <div
         className={cn(styles.content, {
           [styles.collapsed]: isCollapsed,
         })}
       >
+        {yearSelectInContent && yearSelect}
+
         <div className={styles.items}>
           {avgSalaryStatisticsItem && (
             <EsgItemBlock
