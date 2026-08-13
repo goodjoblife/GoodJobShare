@@ -1,4 +1,3 @@
-import cn from 'classnames';
 import React, { useState } from 'react';
 
 import { Heading, Link, Wrapper } from 'common/base';
@@ -17,6 +16,7 @@ import LeaveSectionBlock, {
   LeaveBulletByLabel,
   LeaveSection,
 } from '../LeaveSectionBlock';
+import FilterButton from './FilterButton';
 import styles from './styles.module.css';
 
 export type LeavePolicyRecord = {
@@ -145,25 +145,12 @@ const LeavePolicySection: React.FC<Props> = ({
         <div className={styles.filter}>
           <span className={styles.filterLabel}>篩選：</span>
           {filterOptions.map(option => (
-            <button
+            <FilterButton
               key={option.value}
-              className={cn(styles.filterButton, {
-                [styles.filterButtonChecked]: selectedValues.includes(
-                  option.value,
-                ),
-              })}
+              label={option.label}
+              checked={selectedValues.includes(option.value)}
               onClick={(): void => toggleValue(option.value)}
-            >
-              <input
-                type="checkbox"
-                className={styles.checkbox}
-                checked={selectedValues.includes(option.value)}
-                readOnly
-                tabIndex={-1}
-                aria-hidden="true"
-              />
-              {option.label}
-            </button>
+            />
           ))}
         </div>
         <Table data={pageRecords} primaryKey="id">
