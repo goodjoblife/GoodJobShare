@@ -33,7 +33,9 @@
 }
 
 .filterButton:hover {
-  background: #f5f5f5;
+  background: main-black;
+  border-color: main-black;
+  color: #fff;
 }
 
 .filterButtonChecked {
