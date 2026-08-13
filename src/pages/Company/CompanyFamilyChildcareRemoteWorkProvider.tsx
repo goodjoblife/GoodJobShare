@@ -15,7 +15,9 @@ import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
 import { ServerSideRender } from 'types/serverSideRender';
 
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 
 const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
   是: '有遠端工作制度',
@@ -83,7 +85,7 @@ type Params = { companyName: string };
 const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
   ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
-  const companyName = useCompanyName();
+  const companyName = useCompanyNameParam();
   const page = usePage();
 
   useEffect(() => {

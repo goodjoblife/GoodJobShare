@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { OvertimeStats } from 'apis/salaryWorkTime';
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import BoxRenderer, { BoxesRenderer } from 'common/StatusRenderer';
-import { PageType, TabType } from 'constants/companyJobTitle';
+import { PageType } from 'constants/companyJobTitle';
 import { RootState } from 'reducers';
 import {
   CompanyOverviewStatistics,
@@ -15,10 +14,12 @@ import {
   JobTitleOverviewStatistics,
   JobTitleSalaryWorkTimeResult,
 } from 'reducers/jobTitleIndex';
+import { EsgYearStatistics } from 'utils/esgYearUtils';
 import FetchBox from 'utils/fetchBox';
 
-import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
+import SummaryBlock from '../Overview/SummaryBlock';
 import PageBoxRenderer from '../PageBoxRenderer';
+import { usePageContext } from '../PageContextProvider';
 import EsgBlock from './EsgBlock';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
@@ -26,7 +27,7 @@ import SalaryFilter from './SalaryFilter';
 import SalaryWorkTimeSection from './SalaryWorkTimeSection';
 import SearchBar from '../SearchBar';
 import styles from './SalaryWorkTime.module.css';
-import SummarySection from './SummarySection';
+import SnippetBlock from '../SnippetBlock';
 
 type SalaryWorkTimePageData = Pick<
   CompanySalaryWorkTimeResult | JobTitleSalaryWorkTimeResult,
@@ -34,9 +35,6 @@ type SalaryWorkTimePageData = Pick<
 >;
 
 type Props = {
-  pageType: PageType;
-  pageName: string;
-  tabType: TabType;
   boxSelector: (state: RootState) => FetchBox<SalaryWorkTimePageData | null>;
   statisticsBox: FetchBox<
     CompanyOverviewStatistics | JobTitleOverviewStatistics | null
@@ -46,13 +44,10 @@ type Props = {
   pageSize: number;
   topNJobTitles?: { name: string }[];
   onCloseReport: () => void;
-  esgSalaryDataBox: FetchBox<ESGSalaryData | null>;
+  esgSalaryDataBox: FetchBox<EsgYearStatistics[] | null>;
 };
 
 const SalaryWorkTime: React.FC<Props> = ({
-  pageType,
-  pageName,
-  tabType,
   boxSelector,
   statisticsBox,
   salaryWorkTimeStatisticsBox,
@@ -63,41 +58,18 @@ const SalaryWorkTime: React.FC<Props> = ({
   esgSalaryDataBox,
 }) => {
   const [createPageLinkTo, handleSectionRef, sectionY] = useCreatePageLinkTo();
+  const { pageType, pageName, tabType } = usePageContext();
 
   return (
-    <CompanyAndJobTitleWrapper
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-    >
+    <>
       {pageType === PageType.COMPANY && (
         <BoxRenderer
           box={esgSalaryDataBox}
           render={(data): React.ReactNode => {
-            if (!data) return null;
-
-            const {
-              avgSalaryStatistics: [avgSalaryStatisticsItem],
-              nonManagerAvgSalaryStatistics: [
-                nonManagerAvgSalaryStatisticsItem,
-              ],
-              nonManagerMedianSalaryStatistics: [
-                nonManagerMedianSalaryStatisticsItem,
-              ],
-              femaleManagerStatistics: [femaleManagerStatisticsItem],
-            } = data;
+            if (!data || data.length === 0) return null;
             return (
               <Wrapper size="l">
-                <EsgBlock
-                  avgSalaryStatisticsItem={avgSalaryStatisticsItem}
-                  nonManagerAvgSalaryStatisticsItem={
-                    nonManagerAvgSalaryStatisticsItem
-                  }
-                  nonManagerMedianSalaryStatisticsItem={
-                    nonManagerMedianSalaryStatisticsItem
-                  }
-                  femaleManagerStatisticsItem={femaleManagerStatisticsItem}
-                />
+                <EsgBlock data={data} />
               </Wrapper>
             );
           }}
@@ -114,7 +86,12 @@ const SalaryWorkTime: React.FC<Props> = ({
             return null;
           return (
             <Wrapper size="l">
-              <SummarySection {...statisticsData} />
+              <SnippetBlock
+                title="本站使用者分享之薪資、加班資訊"
+                pageName={pageName}
+              >
+                <SummaryBlock {...statisticsData} />
+              </SnippetBlock>
               <OvertimeSection statistics={overtimeStatisticsData} />
             </Wrapper>
           );
@@ -163,7 +140,7 @@ const SalaryWorkTime: React.FC<Props> = ({
           }}
         />
       </Wrapper>
-    </CompanyAndJobTitleWrapper>
+    </>
   );
 };
 

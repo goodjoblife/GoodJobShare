@@ -16,7 +16,9 @@ import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
 import { ServerSideRender } from 'types/serverSideRender';
 
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 
 const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
   是: { text: '請得到家庭照顧假', icon: <Glike /> },
@@ -84,7 +86,7 @@ type Params = { companyName: string };
 const CompanyFamilyChildcareFamilyCareLeaveProvider: React.FC &
   ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
-  const companyName = useCompanyName();
+  const companyName = useCompanyNameParam();
   const page = usePage();
 
   useEffect(() => {

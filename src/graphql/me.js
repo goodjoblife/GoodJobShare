@@ -17,11 +17,6 @@ export const queryMyPublishIdsGql = /* GraphQL */ `
       salary_work_times {
         id
       }
-      policyReviewGroupList {
-        policyReviews {
-          id
-        }
-      }
     }
   }
 `;

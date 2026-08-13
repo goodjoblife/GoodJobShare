@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { Heading, Section } from 'common/base';
 import Glike from 'common/icons/Glike';
 import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
@@ -11,7 +12,7 @@ import styles from './GenderFriendly.module.css';
 import GenderPayComparisonCard, {
   GenderPayComparisonData,
 } from './GenderPayComparisonCard';
-import AspectScoreCard from '../Overview/AspectScoreCard';
+import AspectScoreCard from '../AspectScoreCard';
 import PolicySection from '../PolicySection';
 import { EsgItemBlock } from '../SalaryWorkTime/EsgBlock/EsgBlock';
 
@@ -20,10 +21,7 @@ export type GenderFriendlyData = {
   genderPayComparison: GenderPayComparisonData;
 };
 
-type FemaleManagerItem = {
-  year: number;
-  percentage: number;
-};
+export type FemaleManagerItem = ESGSalaryData['femaleManagerStatistics'][number];
 
 type GenderFriendlyProps = {
   data: GenderFriendlyData;

@@ -15,13 +15,12 @@ import {
   SET_WORK_EXPERIENCES_ASPECT_STATISTICS,
 } from 'actions/company';
 import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
-import { WorkExperience } from 'apis/experience';
+import { InterviewExperience, WorkExperience } from 'apis/experience';
 import {
   InterviewExperienceInOverview,
   WorkExperienceInOverview,
 } from 'apis/overview';
 import { CompanyInIndex } from 'apis/queryCompanies';
-import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
@@ -35,6 +34,7 @@ import {
 } from 'apis/salaryWorkTime';
 import { Aspect } from 'constants/companyJobTitle';
 import createReducer from 'utils/createReducer';
+import { EsgYearStatistics } from 'utils/esgYearUtils';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
 
 // Flattened from QueryCompanyOverviewData, so a type is defined here
@@ -68,8 +68,15 @@ export type CompanySalaryWorkTimeResult = {
   salaryWorkTimesCount: number;
 };
 
-// TODO: replace with proper CompanyInterviewExperienceResult type
-export type CompanyInterviewExperienceResult = unknown;
+export type CompanyInterviewExperienceResult = {
+  name: string;
+  jobTitle: string | undefined;
+  start: number;
+  limit: number;
+  sortBy: string | undefined;
+  interviewExperiences: InterviewExperience[];
+  interviewExperiencesCount: number;
+};
 
 export type CompanyWorkExperienceResult = {
   name: string;
@@ -124,7 +131,7 @@ type State = {
   >;
   isSubscribedByName: Record<string, FetchBox<CompanyIsSubscribed>>;
   topNJobTitlesByName: Record<string, FetchBox<TopNJobTitles | null>>;
-  esgSalaryData: Record<string, FetchBox<ESGSalaryData | null>>;
+  esgSalaryData: Record<string, FetchBox<EsgYearStatistics[] | null>>;
 };
 
 const preloadedState: State = {
@@ -338,7 +345,7 @@ const reducer = createReducer(preloadedState, {
     {
       companyName,
       box,
-    }: { companyName: string; box: FetchBox<ESGSalaryData | null> },
+    }: { companyName: string; box: FetchBox<EsgYearStatistics[] | null> },
   ) => {
     return {
       ...state,

@@ -35,13 +35,13 @@ import CompanyOverviewProvider from 'pages/Company/CompanyOverviewProvider';
 import CompanySalaryWorkTimeProvider from 'pages/Company/CompanySalaryWorkTimeProvider';
 import CompanyWorkExperiencesAspectProvider from 'pages/Company/CompanyWorkExperiencesAspectProvider';
 import CompanyWorkExperiencesProvider from 'pages/Company/CompanyWorkExperiencesProvider';
-import { companyNameSelector } from 'pages/Company/useCompanyName';
+import { companyNameSelector } from 'pages/Company/useCompanyNameParam';
 import JobTitleIndexProvider from 'pages/JobTitle/JobTitleIndexProvider';
 import JobTitleInterviewExperiencesProvider from 'pages/JobTitle/JobTitleInterviewExperiencesProvider';
 import JobTitleOverviewProvider from 'pages/JobTitle/JobTitleOverviewProvider';
 import JobTitleSalaryWorkTimeProvider from 'pages/JobTitle/JobTitleSalaryWorkTimeProvider';
 import JobTitleWorkExperiencesProvider from 'pages/JobTitle/JobTitleWorkExperiencesProvider';
-import { jobTitleSelector } from 'pages/JobTitle/useJobTitle';
+import { jobTitleSelector } from 'pages/JobTitle/useJobTitleParam';
 import SearchPage from 'pages/SearchPage';
 
 import About from './components/About';

@@ -1,9 +1,9 @@
 import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { CompanyInIndex } from 'apis/queryCompanies';
-import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
+import { JobTitleInIndex } from 'apis/queryJobTitles';
 import { OvertimeStats } from 'apis/salaryWorkTime';
 import { RootState } from 'reducers';
 import {
@@ -15,13 +15,13 @@ import {
   CompanyWorkExperienceResult,
 } from 'reducers/companyIndex';
 import {
-  JobTitleInIndex,
   JobTitleInterviewExperienceResult,
   JobTitleOverview,
   JobTitleOverviewStatistics,
   JobTitleSalaryWorkTimeResult,
   JobTitleWorkExperienceResult,
 } from 'reducers/jobTitleIndex';
+import { EsgYearStatistics } from 'utils/esgYearUtils';
 import FetchBox, { getUnfetched, isFetched } from 'utils/fetchBox';
 
 export const companyIndexesBoxSelectorAtPage = (page: number) => (
@@ -67,7 +67,7 @@ export const companyTopNJobTitlesBoxSelectorByName = (companyName: string) => (
 
 export const companyEsgSalaryDataBoxSelectorByName = (companyName: string) => (
   state: RootState,
-): FetchBox<ESGSalaryData | null> =>
+): FetchBox<EsgYearStatistics[] | null> =>
   state.companyIndex.esgSalaryData[companyName] || getUnfetched();
 
 export const companyInterviewExperiencesBoxSelectorByName = (

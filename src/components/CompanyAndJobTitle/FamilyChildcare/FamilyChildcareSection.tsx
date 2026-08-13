@@ -5,9 +5,9 @@ import Glike from 'common/icons/Glike';
 import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
 import { Aspect } from 'constants/companyJobTitle';
 
+import AspectScoreCard from '../AspectScoreCard';
 import familyCareLeaveIcon from '../familyCareLeaveIcon.svg';
 import { LeaveBulletByLabel, LeaveSection } from '../LeaveSectionBlock';
-import AspectScoreCard from '../Overview/AspectScoreCard';
 import parentalLeaveIcon from '../parentalLeaveIcon.svg';
 import { PolicyDistribution } from '../PolicyBarChart';
 import PolicySection from '../PolicySection';

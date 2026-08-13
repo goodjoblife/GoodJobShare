@@ -1,43 +1,30 @@
 import React from 'react';
 
 import { Wrapper } from 'common/base';
-import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
+import { generateTabURL } from 'constants/companyJobTitle';
 
-import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
+import { usePageContext } from '../PageContextProvider';
 import FamilyChildcareSection, {
   FamilyChildcareData,
 } from './FamilyChildcareSection';
 
 type Props = {
-  pageType: PageType;
-  pageName: string;
-  tabType: TabType;
   data: FamilyChildcareData;
 };
 
-const FamilyChildcare: React.FC<Props> = ({
-  pageType,
-  pageName,
-  tabType,
-  data,
-}) => {
+const FamilyChildcare: React.FC<Props> = ({ data }) => {
+  const { pageType, pageName, tabType } = usePageContext();
   const tabBase = generateTabURL({ pageType, pageName, tabType });
   return (
-    <CompanyAndJobTitleWrapper
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-    >
-      <Wrapper size="l">
-        <FamilyChildcareSection
-          data={data}
-          parentalLeaveLinkTo={`${tabBase}/parental-leave`}
-          familyCareLeaveLinkTo={`${tabBase}/family-care-leave`}
-          flexibleHoursLinkTo={`${tabBase}/flexible-hours`}
-          remoteWorkLinkTo={`${tabBase}/remote-work`}
-        />
-      </Wrapper>
-    </CompanyAndJobTitleWrapper>
+    <Wrapper size="l">
+      <FamilyChildcareSection
+        data={data}
+        parentalLeaveLinkTo={`${tabBase}/parental-leave`}
+        familyCareLeaveLinkTo={`${tabBase}/family-care-leave`}
+        flexibleHoursLinkTo={`${tabBase}/flexible-hours`}
+        remoteWorkLinkTo={`${tabBase}/remote-work`}
+      />
+    </Wrapper>
   );
 };
 

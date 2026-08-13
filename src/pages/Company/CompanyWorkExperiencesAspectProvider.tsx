@@ -5,8 +5,9 @@ import {
   queryCompanyWorkExperiencesAspectExperiences,
   queryCompanyWorkExperiencesAspectStatistics,
 } from 'actions/company';
-import { WorkExperience } from 'apis/experience';
+import { ExperienceType, WorkExperience } from 'apis/experience';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import WorkExperiencesAspect from 'components/CompanyAndJobTitle/WorkExperiences/Aspects';
 import useRating from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/useRating';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
@@ -27,7 +28,9 @@ import { ServerSideRender } from 'types/serverSideRender';
 import FetchBox, { getFetched, isFetched } from 'utils/fetchBox';
 
 import useAspect, { aspectSelector } from './useAspect';
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 
 const useWorkExperiencesAspectExperiencesBoxSelector = (
   pageName: string,
@@ -42,10 +45,12 @@ const useWorkExperiencesAspectExperiencesBoxSelector = (
         // as the source of truth of experiences.
         const data: CompanyAspectExperienceResult = {
           ...box.data,
-          workExperiences: box.data.workExperiences.map(
-            (e: WorkExperience) =>
-              experienceBoxSelectorAtId(e.id)(state).data || e,
-          ),
+          workExperiences: box.data.workExperiences.map((e: WorkExperience) => {
+            const cached = experienceBoxSelectorAtId(e.id)(state).data;
+            // experienceById is keyed across all experience types, so narrow
+            // back to WorkExperience before using the cached copy.
+            return cached && cached.type === ExperienceType.WORK ? cached : e;
+          }),
         };
         return getFetched(data);
       }
@@ -64,7 +69,7 @@ const CompanyWorkExperiencesAspectProvider: React.FC &
   ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
-  const companyName = useCompanyName();
+  const companyName = useCompanyNameParam();
   const aspect = useAspect();
   const [rating] = useRating();
   const page = usePage();
@@ -101,16 +106,19 @@ const CompanyWorkExperiencesAspectProvider: React.FC &
   );
 
   return (
-    <WorkExperiencesAspect
-      aspect={aspect}
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={companyName}
-      page={page as number}
-      pageSize={PAGE_SIZE}
       tabType={TabType.WORK_EXPERIENCE}
-      statisticsBoxSelector={statisticsBoxSelector}
-      experiencesBoxSelector={experiencesBoxSelector}
-    />
+    >
+      <WorkExperiencesAspect
+        aspect={aspect}
+        page={page as number}
+        pageSize={PAGE_SIZE}
+        statisticsBoxSelector={statisticsBoxSelector}
+        experiencesBoxSelector={experiencesBoxSelector}
+      />
+    </CompanyAndJobTitleWrapper>
   );
 };
 

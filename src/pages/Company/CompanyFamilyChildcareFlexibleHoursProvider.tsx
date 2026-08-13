@@ -11,7 +11,9 @@ import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
 import { ServerSideRender } from 'types/serverSideRender';
 
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import useCompanyNameParam, {
+  companyNameSelector,
+} from './useCompanyNameParam';
 
 const SECTION: LeaveSection = {
   dataCount: 100,
@@ -55,7 +57,7 @@ type Params = { companyName: string };
 const CompanyFamilyChildcareFlexibleHoursProvider: React.FC &
   ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
-  const companyName = useCompanyName();
+  const companyName = useCompanyNameParam();
   const page = usePage();
 
   useEffect(() => {
