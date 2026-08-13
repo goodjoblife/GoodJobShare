@@ -5,6 +5,14 @@
   margin-bottom: 24px;
 }
 
+.content {
+  padding-bottom: 64px;
+
+  @media (max-width: 550px) {
+    padding-bottom: 48px;
+  }
+}
+
 .filter {
   display: flex;
   align-items: center;
