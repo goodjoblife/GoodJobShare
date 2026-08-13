@@ -2,12 +2,10 @@ import React from 'react';
 
 import { Wrapper } from 'common/base';
 
-import GenderFriendlySection, { GenderFriendlyData } from './GenderFriendly';
-
-type FemaleManagerItem = {
-  year: number;
-  percentage: number;
-};
+import GenderFriendlySection, {
+  FemaleManagerItem,
+  GenderFriendlyData,
+} from './GenderFriendly';
 
 type Props = {
   data: GenderFriendlyData;
