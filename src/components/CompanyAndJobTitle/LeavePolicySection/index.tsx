@@ -154,9 +154,14 @@ const LeavePolicySection: React.FC<Props> = ({
               })}
               onClick={(): void => toggleValue(option.value)}
             >
-              <span className={styles.checkbox}>
-                {selectedValues.includes(option.value) ? '✓' : '□'}
-              </span>
+              <input
+                type="checkbox"
+                className={styles.checkbox}
+                checked={selectedValues.includes(option.value)}
+                readOnly
+                tabIndex={-1}
+                aria-hidden="true"
+              />
               {option.label}
             </button>
           ))}

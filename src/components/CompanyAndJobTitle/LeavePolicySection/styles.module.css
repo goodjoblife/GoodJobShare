@@ -48,5 +48,30 @@
 }
 
 .checkbox {
-  font-size: 13px;
+  position: relative;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  border: 1px solid #bdbdbd;
+  border-radius: 2px;
+  background-color: #fff;
+  appearance: none;
+  cursor: pointer;
+}
+
+.checkbox:checked {
+  border-color: #fff;
+}
+
+.checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border-right: 2px solid main-black;
+  border-bottom: 2px solid main-black;
+  transform: rotate(40deg);
 }
