@@ -1,31 +1,33 @@
-import cn from 'classnames';
 import React from 'react';
 
 import styles from './styles.module.css';
 
 type Props = {
+  id: string;
   label: string;
   checked: boolean;
-  onClick: () => void;
+  onChange: () => void;
 };
 
-const FilterToggleButton: React.FC<Props> = ({ label, checked, onClick }) => (
-  <button
-    className={cn(styles.filterButton, {
-      [styles.filterButtonChecked]: checked,
-    })}
-    onClick={onClick}
-  >
+const FilterToggleButton: React.FC<Props> = ({
+  id,
+  label,
+  checked,
+  onChange,
+}) => (
+  <React.Fragment>
     <input
       type="checkbox"
-      className={styles.checkbox}
+      id={id}
+      className={styles.checkboxInput}
       checked={checked}
-      readOnly
-      tabIndex={-1}
-      aria-hidden="true"
+      onChange={onChange}
     />
-    {label}
-  </button>
+    <label htmlFor={id} className={styles.filterButton}>
+      <span className={styles.checkbox} />
+      {label}
+    </label>
+  </React.Fragment>
 );
 
 export default FilterToggleButton;

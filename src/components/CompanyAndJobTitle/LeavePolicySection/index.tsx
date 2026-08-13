@@ -147,9 +147,10 @@ const LeavePolicySection: React.FC<Props> = ({
           {filterOptions.map(option => (
             <FilterToggleButton
               key={option.value}
+              id={`filter-${option.value}`}
               label={option.label}
               checked={selectedValues.includes(option.value)}
-              onClick={(): void => toggleValue(option.value)}
+              onChange={(): void => toggleValue(option.value)}
             />
           ))}
         </div>
