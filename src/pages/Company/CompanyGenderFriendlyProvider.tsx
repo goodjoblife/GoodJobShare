@@ -6,7 +6,6 @@ import {
   queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
-import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { paramsSelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import GenderFriendly from 'components/CompanyAndJobTitle/GenderFriendly';
@@ -14,6 +13,7 @@ import { GenderFriendlyData } from 'components/CompanyAndJobTitle/GenderFriendly
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { companyEsgSalaryDataBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
+import { EsgYearStatistics } from 'utils/esgYearUtils';
 import { isFetched } from 'utils/fetchBox';
 
 import useCompanyNameParam, {
@@ -74,14 +74,15 @@ const CompanyGenderFriendlyProvider: React.FC &
   const esgSalaryDataBox = useSelector(
     companyEsgSalaryDataBoxSelectorByName(companyName),
   );
-  const esgSalaryData: ESGSalaryData | null = isFetched(esgSalaryDataBox)
+  const esgYearStatisticsList: EsgYearStatistics[] | null = isFetched(
+    esgSalaryDataBox,
+  )
     ? esgSalaryDataBox.data
     : null;
-  const femaleManagerStatistics =
-    esgSalaryData && esgSalaryData.femaleManagerStatistics;
+  // esgYearStatisticsList 依年份新到舊排序，第一筆即最新年度。
   const femaleManagerStatisticsItem =
-    femaleManagerStatistics && femaleManagerStatistics.length > 0
-      ? femaleManagerStatistics[femaleManagerStatistics.length - 1]
+    esgYearStatisticsList && esgYearStatisticsList.length > 0
+      ? esgYearStatisticsList[0].femaleManagerStatisticsItem
       : null;
 
   return (
