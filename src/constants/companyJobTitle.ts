@@ -55,7 +55,6 @@ const tabTypeURLMap: Record<TabType, string> = {
   [TabType.GENDER_FRIENDLY]: 'gender-friendly',
 };
 
-// 家庭/育兒、性別友善只有公司頁才有對應的路由與資料，職稱頁不應該顯示這兩個分頁
 export const tabTypesByPageType: Record<PageType, TabType[]> = {
   [PageType.COMPANY]: [
     TabType.OVERVIEW,
