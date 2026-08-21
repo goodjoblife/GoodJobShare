@@ -55,16 +55,22 @@ const tabTypeURLMap: Record<TabType, string> = {
   [TabType.GENDER_FRIENDLY]: 'gender-friendly',
 };
 
-const companyOnlyTabTypes: TabType[] = [
-  TabType.FAMILY_CHILDCARE,
-  TabType.GENDER_FRIENDLY,
-];
-
+// 家庭/育兒、性別友善只有公司頁才有對應的路由與資料，職稱頁不應該顯示這兩個分頁
 export const tabTypesByPageType: Record<PageType, TabType[]> = {
-  [PageType.COMPANY]: Object.values(TabType),
-  [PageType.JOB_TITLE]: Object.values(TabType).filter(
-    tabType => !companyOnlyTabTypes.includes(tabType),
-  ),
+  [PageType.COMPANY]: [
+    TabType.OVERVIEW,
+    TabType.TIME_AND_SALARY,
+    TabType.WORK_EXPERIENCE,
+    TabType.INTERVIEW_EXPERIENCE,
+    TabType.FAMILY_CHILDCARE,
+    TabType.GENDER_FRIENDLY,
+  ],
+  [PageType.JOB_TITLE]: [
+    TabType.OVERVIEW,
+    TabType.TIME_AND_SALARY,
+    TabType.WORK_EXPERIENCE,
+    TabType.INTERVIEW_EXPERIENCE,
+  ],
 };
 
 export enum Aspect {
