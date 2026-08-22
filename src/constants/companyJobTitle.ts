@@ -55,6 +55,23 @@ const tabTypeURLMap: Record<TabType, string> = {
   [TabType.GENDER_FRIENDLY]: 'gender-friendly',
 };
 
+export const tabTypesByPageType: Record<PageType, TabType[]> = {
+  [PageType.COMPANY]: [
+    TabType.OVERVIEW,
+    TabType.TIME_AND_SALARY,
+    TabType.WORK_EXPERIENCE,
+    TabType.INTERVIEW_EXPERIENCE,
+    TabType.FAMILY_CHILDCARE,
+    TabType.GENDER_FRIENDLY,
+  ],
+  [PageType.JOB_TITLE]: [
+    TabType.OVERVIEW,
+    TabType.TIME_AND_SALARY,
+    TabType.WORK_EXPERIENCE,
+    TabType.INTERVIEW_EXPERIENCE,
+  ],
+};
+
 export enum Aspect {
   GENDER = '性別友善度',
   WORK_LIFE_BALANCE = '工作與生活平衡',
