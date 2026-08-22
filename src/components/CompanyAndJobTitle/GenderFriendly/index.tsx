@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { Wrapper } from 'common/base';
+import { generateTabURL } from 'constants/companyJobTitle';
 
+import { usePageContext } from '../PageContextProvider';
 import GenderFriendlySection, {
   FemaleManagerItem,
   GenderFriendlyData,
@@ -15,13 +17,18 @@ type Props = {
 const GenderFriendly: React.FC<Props> = ({
   data,
   femaleManagerStatisticsItem,
-}) => (
-  <Wrapper size="l">
-    <GenderFriendlySection
-      data={data}
-      femaleManagerStatisticsItem={femaleManagerStatisticsItem}
-    />
-  </Wrapper>
-);
+}) => {
+  const { pageType, pageName, tabType } = usePageContext();
+  const tabBase = generateTabURL({ pageType, pageName, tabType });
+  return (
+    <Wrapper size="l">
+      <GenderFriendlySection
+        data={data}
+        femaleManagerStatisticsItem={femaleManagerStatisticsItem}
+        menstrualLeaveLinkTo={`${tabBase}/menstrual-leave`}
+      />
+    </Wrapper>
+  );
+};
 
 export default GenderFriendly;

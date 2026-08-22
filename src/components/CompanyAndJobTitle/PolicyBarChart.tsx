@@ -23,6 +23,35 @@ export type PolicyDistribution = {
 const BAR_SIZE = 20;
 const BAR_CATEGORY_GAP = 6;
 
+const Y_AXIS_LABEL_FONT_SIZE = 14;
+const Y_AXIS_LABEL_PADDING = 12;
+const Y_AXIS_MIN_WIDTH = 56;
+const Y_AXIS_MAX_WIDTH = 120;
+
+// CJK/fullwidth characters render roughly as wide as they are tall; Latin
+// letters, digits and punctuation are narrower. No canvas measurement here
+// since this also renders on the server.
+const estimateTextWidth = (text: string, fontSize: number): number =>
+  Array.from(text).reduce(
+    (width, char) =>
+      width + (/[　-鿿＀-￯]/.test(char) ? fontSize : fontSize * 0.6),
+    0,
+  );
+
+const computeYAxisWidth = (items: PolicyItem[]): number => {
+  const longestLabelWidth = Math.max(
+    0,
+    ...items.map(item => estimateTextWidth(item.label, Y_AXIS_LABEL_FONT_SIZE)),
+  );
+  return Math.min(
+    Y_AXIS_MAX_WIDTH,
+    Math.max(
+      Y_AXIS_MIN_WIDTH,
+      Math.ceil(longestLabelWidth) + Y_AXIS_LABEL_PADDING,
+    ),
+  );
+};
+
 type PolicyBarChartProps = {
   distribution: PolicyDistribution;
 };
@@ -31,6 +60,7 @@ const PolicyBarChart: React.FC<PolicyBarChartProps> = ({ distribution }) => {
   const chartHeight =
     distribution.items.length * BAR_SIZE +
     (distribution.items.length - 1) * BAR_CATEGORY_GAP;
+  const yAxisWidth = computeYAxisWidth(distribution.items);
 
   return (
     <div className={styles.chart}>
@@ -46,7 +76,7 @@ const PolicyBarChart: React.FC<PolicyBarChartProps> = ({ distribution }) => {
             <YAxis
               type="category"
               dataKey="label"
-              width={56}
+              width={yAxisWidth}
               axisLine={false}
               tickLine={false}
               tick={{ fill: '#333', fontSize: '14px' }}

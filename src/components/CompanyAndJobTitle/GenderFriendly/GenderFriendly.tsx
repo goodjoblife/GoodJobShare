@@ -26,6 +26,7 @@ export type FemaleManagerItem = ESGSalaryData['femaleManagerStatistics'][number]
 type GenderFriendlyProps = {
   data: GenderFriendlyData;
   femaleManagerStatisticsItem: FemaleManagerItem | null;
+  menstrualLeaveLinkTo?: string;
 };
 
 const menstrualLeaveAvailabilityBulletByLabel: LeaveBulletByLabel = {
@@ -44,6 +45,7 @@ const menstrualLeaveComplianceBulletByLabel: LeaveBulletByLabel = {
 const GenderFriendly: React.FC<GenderFriendlyProps> = ({
   data,
   femaleManagerStatisticsItem,
+  menstrualLeaveLinkTo,
 }) => (
   <Section Tag="main" paddingBottom>
     <div className={styles.section}>
@@ -75,6 +77,7 @@ const GenderFriendly: React.FC<GenderFriendlyProps> = ({
       complianceTitle="生理假法規符合度"
       complianceBulletByLabel={menstrualLeaveComplianceBulletByLabel}
       section={data.menstrualLeave}
+      linkTo={menstrualLeaveLinkTo}
     />
     <div className={styles.section}>
       <Heading className={styles.sectionTitle} Tag="h2">

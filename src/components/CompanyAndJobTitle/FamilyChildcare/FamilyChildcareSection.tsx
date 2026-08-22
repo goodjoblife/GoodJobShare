@@ -23,6 +23,10 @@ export type FamilyChildcareData = {
 
 type Props = {
   data: FamilyChildcareData;
+  parentalLeaveLinkTo?: string;
+  familyCareLeaveLinkTo?: string;
+  flexibleHoursLinkTo?: string;
+  remoteWorkLinkTo?: string;
 };
 
 const parentalLeaveAvailabilityBulletByLabel: LeaveBulletByLabel = {
@@ -64,7 +68,13 @@ const remoteWorkFrequencyBulletByLabel: LeaveBulletByLabel = {
   大於3天: '每週遠端工作超過 3 天',
 };
 
-const FamilyChildcareSection: React.FC<Props> = ({ data }) => (
+const FamilyChildcareSection: React.FC<Props> = ({
+  data,
+  parentalLeaveLinkTo,
+  familyCareLeaveLinkTo,
+  flexibleHoursLinkTo,
+  remoteWorkLinkTo,
+}) => (
   <Section Tag="main" paddingBottom>
     <div className={styles.section}>
       <div className={styles.scoreRow}>
@@ -87,6 +97,7 @@ const FamilyChildcareSection: React.FC<Props> = ({ data }) => (
       complianceTitle="育嬰假法規符合度"
       complianceBulletByLabel={parentalLeaveComplianceBulletByLabel}
       section={data.parentalLeave}
+      linkTo={parentalLeaveLinkTo}
     />
     <PolicySection
       className={styles.section}
@@ -97,6 +108,7 @@ const FamilyChildcareSection: React.FC<Props> = ({ data }) => (
       complianceTitle="家庭照顧假法規符合度"
       complianceBulletByLabel={familyCareLeaveComplianceBulletByLabel}
       section={data.familyCareLeave}
+      linkTo={familyCareLeaveLinkTo}
     />
     <PolicySection
       className={styles.section}
@@ -106,6 +118,7 @@ const FamilyChildcareSection: React.FC<Props> = ({ data }) => (
         dataCount: data.flexibleHours.dataCount,
         availability: data.flexibleHours,
       }}
+      linkTo={flexibleHoursLinkTo}
     />
     <PolicySection
       className={styles.section}
@@ -116,6 +129,7 @@ const FamilyChildcareSection: React.FC<Props> = ({ data }) => (
       complianceTitle="遠端工作每週天數？"
       complianceBulletByLabel={remoteWorkFrequencyBulletByLabel}
       section={data.remoteWork}
+      linkTo={remoteWorkLinkTo}
     />
   </Section>
 );
