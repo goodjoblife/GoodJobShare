@@ -27,7 +27,7 @@ type EsgBlockProps = {
   data: EsgYearStatistics[];
 };
 
-const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
+export const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
   className,
   title,
   year,
@@ -35,7 +35,7 @@ const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
   valueCompared,
   unit,
 }) => (
-  <Card className={className}>
+  <Card className={cn(styles.itemCard, className)}>
     <div className={styles.badge}>{year} 年</div>
     <div className={styles.titleContainer}>
       <div className={styles.title}>{title}</div>
