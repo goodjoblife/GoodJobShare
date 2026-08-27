@@ -1,3 +1,5 @@
+@value MIN_TOUCH_FONT_SIZE from "../variables.module.css";
+
 $below-small: 850px;
 $gray: #b4b4b4;
 $warning: #d50000;
@@ -23,7 +25,7 @@ $warning: #d50000;
   height: 40px;
   border: solid 1px #bdbdbd;
   padding: 8px;
-  font-size: 16px;
+  font-size: max(15px, MIN_TOUCH_FONT_SIZE);
   line-height: 24px;
 }
 

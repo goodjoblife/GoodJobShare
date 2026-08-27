@@ -1,4 +1,4 @@
-@value main-yellow from "../common/variables.module.css";
+@value main-yellow, MIN_TOUCH_FONT_SIZE from "../common/variables.module.css";
 
 .searchbar {
   display: flex;
@@ -10,7 +10,7 @@
     border: solid 1px #bdbdbd;
     background: #ffffff;
     padding: 12px 6px;
-    font-size: 16px;
+    font-size: max(14px, MIN_TOUCH_FONT_SIZE);
     letter-spacing: 0.51px;
     line-height: 32px;
     transition: border-color 0.4s;

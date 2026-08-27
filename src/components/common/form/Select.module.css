@@ -1,4 +1,4 @@
-@value INPUT_HEIGHT, main-gray from "../variables.module.css";
+@value INPUT_HEIGHT, main-gray, MIN_TOUCH_FONT_SIZE from "../variables.module.css";
 
 .wrapper {
   position: relative;
@@ -27,6 +27,5 @@
   padding-right: 31.5px;
   height: INPUT_HEIGHT;
   line-height: INPUT_HEIGHT;
-  /* iOS Safari auto-zooms on focus when the font is smaller than 16px */
-  font-size: 16px;
+  font-size: max(1em, MIN_TOUCH_FONT_SIZE);
 }
