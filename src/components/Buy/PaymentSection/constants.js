@@ -16,9 +16,8 @@ export const fields = {
 export const styles = {
   input: {
     color: 'gray',
-  },
-  'input.ccv': {
-    'font-size': '15px',
+    // iOS Safari auto-zooms on focus when the font is smaller than 16px
+    'font-size': '16px',
   },
   ':focus': {
     color: 'black',

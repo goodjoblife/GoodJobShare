@@ -16,6 +16,8 @@
   padding: 13px 16px;
   height: INPUT_HEIGHT;
   line-height: calc(INPUT_HEIGHT / 2);
+  /* iOS Safari auto-zooms on focus when the font is smaller than 16px */
+  font-size: 16px;
   border: 1px solid main-gray;
 
   textarea& {
