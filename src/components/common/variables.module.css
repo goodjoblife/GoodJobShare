@@ -19,6 +19,9 @@
 
 @value INPUT_HEIGHT: 45px;
 
+/* Mobile Safari zooms the viewport when focusing a field below this size. */
+@value MIN_TOUCH_FONT_SIZE: 16px;
+
 /* ------------------------------------
  *  Color
  * ------------------------------------ */
