@@ -9,6 +9,7 @@ import {
 import { paramsSelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import GenderFriendly from 'components/CompanyAndJobTitle/GenderFriendly';
+import { GenderFriendlyData } from 'components/CompanyAndJobTitle/GenderFriendly/GenderFriendly';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { companyEsgSalaryDataBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
@@ -18,18 +19,37 @@ import { isFetched } from 'utils/fetchBox';
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
-import useCompanyPolicyReviews, {
-  toLeaveSection,
-} from './useCompanyPolicyReviews';
 
-const GENDER_PAY_COMPARISON = {
-  jobTitlePayItems: [
-    { jobTitle: '設備 (33職等)', femaleAvg: 85000, maleAvg: 90000 },
-    { jobTitle: 'RD (33職等)', femaleAvg: 110000, maleAvg: 115000 },
-    { jobTitle: 'IT (33職等)', femaleAvg: 105000, maleAvg: 110000 },
-    { jobTitle: '人資 (32職等)', femaleAvg: 75000, maleAvg: 80000 },
-    { jobTitle: '供應鏈 (32職等)', femaleAvg: 80000, maleAvg: 85000 },
-  ],
+const HARDCODED_DATA: GenderFriendlyData = {
+  menstrualLeave: {
+    dataCount: 100,
+    availability: {
+      dataCount: 100,
+      items: [
+        { label: '是', percentage: 15 },
+        { label: '否', percentage: 60 },
+        { label: '不知道', percentage: 25 },
+      ],
+    },
+    compliance: {
+      dataCount: 100,
+      items: [
+        { label: '符合勞基法', percentage: 5 },
+        { label: '優於勞基法', percentage: 5 },
+        { label: '不符合勞基法', percentage: 65 },
+        { label: '不知道', percentage: 25 },
+      ],
+    },
+  },
+  genderPayComparison: {
+    jobTitlePayItems: [
+      { jobTitle: '設備 (33職等)', femaleAvg: 85000, maleAvg: 90000 },
+      { jobTitle: 'RD (33職等)', femaleAvg: 110000, maleAvg: 115000 },
+      { jobTitle: 'IT (33職等)', femaleAvg: 105000, maleAvg: 110000 },
+      { jobTitle: '人資 (32職等)', femaleAvg: 75000, maleAvg: 80000 },
+      { jobTitle: '供應鏈 (32職等)', femaleAvg: 80000, maleAvg: 85000 },
+    ],
+  },
 };
 
 type Params = { companyName: string };
@@ -38,12 +58,6 @@ const CompanyGenderFriendlyProvider: React.FC &
   ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
-  const { statistics } = useCompanyPolicyReviews({
-    companyName,
-    policy: 'MENSTRUAL_LEAVE',
-    start: 0,
-    limit: 1,
-  });
 
   useEffect(() => {
     dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName }));
@@ -78,13 +92,7 @@ const CompanyGenderFriendlyProvider: React.FC &
       tabType={TabType.GENDER_FRIENDLY}
     >
       <GenderFriendly
-        data={{
-          menstrualLeave: toLeaveSection(
-            statistics.find(item => item.policy === 'MENSTRUAL_LEAVE'),
-            'MENSTRUAL_LEAVE',
-          ),
-          genderPayComparison: GENDER_PAY_COMPARISON,
-        }}
+        data={HARDCODED_DATA}
         femaleManagerStatisticsItem={femaleManagerStatisticsItem}
       />
     </CompanyAndJobTitleWrapper>

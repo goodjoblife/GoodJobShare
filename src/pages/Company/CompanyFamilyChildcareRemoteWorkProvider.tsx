@@ -4,7 +4,10 @@ import { useDispatch } from 'react-redux';
 import { queryRatingStatistics } from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
 import LeavePolicySection from 'components/CompanyAndJobTitle/LeavePolicySection';
-import { LeaveBulletByLabel } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
+import {
+  LeaveBulletByLabel,
+  LeaveSection,
+} from 'components/CompanyAndJobTitle/LeaveSectionBlock';
 import remoteWorkIcon from 'components/CompanyAndJobTitle/remoteWorkIcon.svg';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
@@ -28,6 +31,27 @@ const COMPLIANCE_BULLET_BY_LABEL: LeaveBulletByLabel = {
   大於3天: '每週遠端工作超過 3 天',
 };
 
+const SECTION: LeaveSection = {
+  dataCount: 150,
+  availability: {
+    dataCount: 100,
+    items: [
+      { label: '是', percentage: 15 },
+      { label: '否', percentage: 60 },
+      { label: '不知道', percentage: 25 },
+    ],
+  },
+  compliance: {
+    dataCount: 100,
+    items: [
+      { label: '1天', percentage: 5 },
+      { label: '2天', percentage: 5 },
+      { label: '3天', percentage: 65 },
+      { label: '大於3天', percentage: 25 },
+    ],
+  },
+};
+
 const FILTER_OPTIONS = [
   { value: '是', label: '可以遠端工作' },
   { value: '否', label: '無法遠端工作' },
@@ -41,7 +65,7 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
-  const { records, section, totalCount } = useCompanyPolicyReviews({
+  const { records, totalCount } = useCompanyPolicyReviews({
     companyName,
     policy: 'REMOTE_WORK',
     start: (page - 1) * PAGE_SIZE,
@@ -63,7 +87,7 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
       availabilityBulletByLabel={AVAILABILITY_BULLET_BY_LABEL}
       complianceTitle="遠端工作每週天數？"
       complianceBulletByLabel={COMPLIANCE_BULLET_BY_LABEL}
-      section={section}
+      section={SECTION}
       availabilityColumnTitle="是否可以遠端工作"
       complianceColumnTitle="每週遠端工作天數"
       filterOptions={FILTER_OPTIONS}

@@ -24,23 +24,6 @@ const queryCompanyPolicyReviewsGql = /* GraphQL */ `
           createdAt
         }
       }
-      policyReviewStatistics {
-        policy
-        hasPolicyCount {
-          yes
-          no
-          unknown
-        }
-        complianceCount {
-          yes
-          no
-          unknown
-        }
-        remoteWorkPolicyCount {
-          remoteWorkPolicy
-          count
-        }
-      }
     }
   }
 `;
@@ -52,21 +35,12 @@ export type Policy =
   | 'FLEXIBLE_WORKING_HOUR'
   | 'REMOTE_WORK';
 
-type YesNoOrUnknownCount = {
-  yes: number;
-  no: number;
-  unknown: number;
-};
-
-type RemoteWorkPolicyCount = {
-  remoteWorkPolicy:
-    | 'ONE_DAY_PER_WEEK'
-    | 'TWO_DAYS_PER_WEEK'
-    | 'THREE_DAYS_PER_WEEK'
-    | 'FOUR_DAYS_PER_WEEK'
-    | 'NO_LIMIT';
-  count: number;
-};
+export type RemoteWorkPolicy =
+  | 'ONE_DAY_PER_WEEK'
+  | 'TWO_DAYS_PER_WEEK'
+  | 'THREE_DAYS_PER_WEEK'
+  | 'FOUR_DAYS_PER_WEEK'
+  | 'NO_LIMIT';
 
 export type PolicyReview = {
   id: string;
@@ -75,15 +49,8 @@ export type PolicyReview = {
   review: string | null;
   hasPolicy: 'yes' | 'no' | 'unknown';
   compliance: 'yes' | 'no' | 'unknown' | null;
-  remoteWorkPolicy: RemoteWorkPolicyCount['remoteWorkPolicy'] | null;
+  remoteWorkPolicy: RemoteWorkPolicy | null;
   createdAt: string;
-};
-
-export type CompanyPolicyReviewStatistics = {
-  policy: Policy;
-  hasPolicyCount: YesNoOrUnknownCount;
-  complianceCount: YesNoOrUnknownCount | null;
-  remoteWorkPolicyCount: RemoteWorkPolicyCount[] | null;
 };
 
 export type CompanyPolicyReviews = {
@@ -91,7 +58,6 @@ export type CompanyPolicyReviews = {
     count: number;
     policyReviews: PolicyReview[];
   };
-  policyReviewStatistics: CompanyPolicyReviewStatistics[];
 };
 
 type QueryCompanyPolicyReviewsData = {

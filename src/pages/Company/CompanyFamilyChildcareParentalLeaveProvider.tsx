@@ -5,7 +5,10 @@ import { queryRatingStatistics } from 'actions/company';
 import Glike from 'common/icons/Glike';
 import { paramsSelector } from 'common/routing/selectors';
 import LeavePolicySection from 'components/CompanyAndJobTitle/LeavePolicySection';
-import { LeaveBulletByLabel } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
+import {
+  LeaveBulletByLabel,
+  LeaveSection,
+} from 'components/CompanyAndJobTitle/LeaveSectionBlock';
 import parentalLeaveIcon from 'components/CompanyAndJobTitle/parentalLeaveIcon.svg';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
@@ -24,8 +27,30 @@ const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
 
 const COMPLIANCE_BULLET_BY_LABEL: LeaveBulletByLabel = {
   符合勞基法: { text: '育嬰假符合勞基法', icon: <Glike /> },
+  優於勞基法: { text: '育嬰假優於勞基法', icon: <Glike /> },
   不符合勞基法: '育嬰假不符合勞基法',
   不知道: '不確定育嬰假是否符合勞基法',
+};
+
+const SECTION: LeaveSection = {
+  dataCount: 200,
+  availability: {
+    dataCount: 100,
+    items: [
+      { label: '是', percentage: 15 },
+      { label: '否', percentage: 60 },
+      { label: '不知道', percentage: 25 },
+    ],
+  },
+  compliance: {
+    dataCount: 100,
+    items: [
+      { label: '符合勞基法', percentage: 5 },
+      { label: '優於勞基法', percentage: 5 },
+      { label: '不符合勞基法', percentage: 65 },
+      { label: '不知道', percentage: 25 },
+    ],
+  },
 };
 
 const FILTER_OPTIONS = [
@@ -41,7 +66,7 @@ const CompanyFamilyChildcareParentalLeaveProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
-  const { records, section, totalCount } = useCompanyPolicyReviews({
+  const { records, totalCount } = useCompanyPolicyReviews({
     companyName,
     policy: 'PARENTAL_LEAVE',
     start: (page - 1) * PAGE_SIZE,
@@ -63,7 +88,7 @@ const CompanyFamilyChildcareParentalLeaveProvider: React.FC &
       availabilityBulletByLabel={AVAILABILITY_BULLET_BY_LABEL}
       complianceTitle="育嬰假法規符合度"
       complianceBulletByLabel={COMPLIANCE_BULLET_BY_LABEL}
-      section={section}
+      section={SECTION}
       availabilityColumnTitle="是否請得到育嬰假"
       complianceColumnTitle="勞基法符合度"
       filterOptions={FILTER_OPTIONS}
