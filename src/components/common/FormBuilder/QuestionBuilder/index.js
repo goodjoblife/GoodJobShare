@@ -113,7 +113,7 @@ const useQuestionNode = ({
     case QUESTION_TYPE.TEXTAREA:
       return <TextArea {...commonProps} footnote={footnote} />;
     case QUESTION_TYPE.RADIO:
-      return <Radio {...commonProps} options={options} />;
+      return <Radio {...commonProps} options={options} footnote={footnote} />;
     case QUESTION_TYPE.RADIO_ELSE:
       return (
         <RadioElse
@@ -131,6 +131,7 @@ const useQuestionNode = ({
           options={options}
           elseOptionValue={elseOptionValue}
           elseOptions={elseOptions}
+          footnote={footnote}
         />
       );
     case QUESTION_TYPE.RADIO_ELSE_DATE:
