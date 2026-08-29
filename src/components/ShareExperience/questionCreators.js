@@ -577,42 +577,48 @@ export const createPoliciesQuestion = () => ({
   options: POLICY_OPTIONS,
 });
 
-export const createPolicyQuestion = ({
-  policy,
-  radioTitle,
-  radioOptions,
-  radioElseOptionValue,
-  radioElseOptions,
-  radioFooter,
-}) =>
-  radioElseOptions
-    ? {
-        title: radioTitle,
-        type: QUESTION_TYPE.RADIO_ELSE_RADIO,
-        dataKey: `${DATA_KEY_POLICY_PREFIX}${policy}`,
-        required: true,
-        defaultValue: [null, null],
-        options: radioOptions,
-        elseOptionValue: radioElseOptionValue,
-        elseOptions: radioElseOptions,
-        footnote: radioFooter,
-        validateOrWarn: ([selected, elseValue], { elseOptionValue }) => {
-          if (isNil(selected)) return '請選擇一個選項';
-          if (selected === elseOptionValue && isNil(elseValue))
-            return '請選擇一個選項';
-          return null;
-        },
-      }
-    : {
-        title: radioTitle,
-        type: QUESTION_TYPE.RADIO,
-        dataKey: `${DATA_KEY_POLICY_PREFIX}${policy}`,
-        required: true,
-        defaultValue: null,
-        options: radioOptions,
-        footnote: radioFooter,
-        validateOrWarn: value => isNil(value) && '請選擇一個選項',
-      };
+export const createPolicyQuestion = policyOption => {
+  const {
+    policy,
+    radioTitle,
+    radioOptions,
+    radioElseOptionValue,
+    radioElseOptions,
+    radioFooter,
+  } = policyOption;
+  const dataKey = `${DATA_KEY_POLICY_PREFIX}${policy}`;
+
+  if (!radioElseOptions) {
+    return {
+      title: radioTitle,
+      type: QUESTION_TYPE.RADIO,
+      dataKey,
+      required: true,
+      defaultValue: null,
+      options: radioOptions,
+      footnote: radioFooter,
+      validateOrWarn: value => isNil(value) && '請選擇一個選項',
+    };
+  }
+
+  return {
+    title: radioTitle,
+    type: QUESTION_TYPE.RADIO_ELSE_RADIO,
+    dataKey,
+    required: true,
+    defaultValue: [null, null],
+    options: radioOptions,
+    elseOptionValue: radioElseOptionValue,
+    elseOptions: radioElseOptions,
+    footnote: radioFooter,
+    validateOrWarn: ([selected, elseValue], { elseOptionValue }) => {
+      if (isNil(selected)) return '請選擇一個選項';
+      if (selected === elseOptionValue && isNil(elseValue))
+        return '請選擇一個選項';
+      return null;
+    },
+  };
+};
 
 const Count = () => {
   const count = useTotalCount();
