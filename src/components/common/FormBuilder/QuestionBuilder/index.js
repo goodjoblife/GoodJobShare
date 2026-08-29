@@ -98,6 +98,7 @@ const useQuestionNode = ({
   };
 
   if (options) options = normalizeOptions(options);
+  if (elseOptions) elseOptions = normalizeOptions(elseOptions);
 
   switch (type) {
     case QUESTION_TYPE.TEXT:
