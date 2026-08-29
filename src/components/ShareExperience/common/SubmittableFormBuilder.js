@@ -22,6 +22,8 @@ const SubmittableTypeForm = ({
   onClose,
   redirectPathnameOnSuccess,
   hideProgressBar,
+  successDescription = '感謝你分享你的資訊，台灣的職場因為有你而變得更好！',
+  onSuccessContinue = null,
 }) => {
   const history = useHistory();
   const [submitStatus, setSubmitStatus] = useState('unsubmitted');
@@ -70,6 +72,12 @@ const SubmittableTypeForm = ({
     }
   }, [onClose, redirectPathnameOnSuccess, submittedDraft, submitResult]);
 
+  const onSuccessContinueClick = useCallback(() => {
+    setSubmitStatus('unsubmitted');
+    onClose();
+    onSuccessContinue(submitResult, submittedDraft);
+  }, [onClose, onSuccessContinue, submitResult, submittedDraft]);
+
   const onResume = useCallback(() => {
     setSubmitStatus('unsubmitted');
   }, []);
@@ -99,10 +107,14 @@ const SubmittableTypeForm = ({
         isOpen={submitStatus === 'success'}
         title="上傳成功"
         subtitle="你已解鎖全站資訊囉！"
-        description="感謝你分享你的資訊，台灣的職場因為有你而變得更好！"
+        description={successDescription}
         close={onSuccessClose}
         closableOnClickOutside
-        actions={[['確定', onSuccessClose]]}
+        actions={
+          onSuccessContinue
+            ? [['繼續', onSuccessContinueClick], ['完成', onSuccessClose]]
+            : [['確定', onSuccessClose]]
+        }
       />
       <ConfirmModal
         isOpen={submitStatus === 'error'}
@@ -134,12 +146,14 @@ SubmittableTypeForm.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onSubmitError: PropTypes.func.isRequired,
+  onSuccessContinue: PropTypes.func,
   open: PropTypes.bool.isRequired,
   questions: PropTypes.arrayOf(QuestionPropType).isRequired,
   redirectPathnameOnSuccess: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func,
   ]).isRequired,
+  successDescription: PropTypes.string,
 };
 
 export default SubmittableTypeForm;

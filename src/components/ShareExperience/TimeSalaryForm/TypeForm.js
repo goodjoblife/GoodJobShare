@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useDispatch } from 'react-redux';
 
@@ -36,6 +36,7 @@ import {
   DATA_KEY_SECTOR,
   DATA_KEY_WEEK_WORK_TIME,
 } from '../constants';
+import PolicySimpleTypeForm from '../PolicyForm/SimpleTypeForm';
 import {
   createCompanyQuestion,
   createCompensatoryDayOffQuestion,
@@ -113,6 +114,13 @@ const bodyFromDraft = evolve({
   hasCompensatoryDayoff: draft => draft[DATA_KEY_HAS_COMPENSATORY_DAYOFF],
 });
 
+const redirectToSalaryTab = (_, draft) =>
+  generateTabURL({
+    pageType: PageType.COMPANY,
+    pageName: draft[DATA_KEY_COMPANY_NAME],
+    tabType: TabType.TIME_AND_SALARY,
+  });
+
 const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
   useEffect(() => {
     if (open) {
@@ -166,6 +174,19 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
     [dispatch, hideProgressBar],
   );
 
+  // 薪資送出後，引導使用者接著填寫制度簡易表單，null 代表尚未進入
+  const [policyDraft, setPolicyDraft] = useState(null);
+  const onContinueToPolicyForm = useCallback(
+    (_, draft) => setPolicyDraft(draft),
+    [],
+  );
+  // 制度表單送出後，導向薪資表單原本要導向的頁面
+  const policyFormRedirectPathname = useCallback(
+    () => redirectToSalaryTab(null, policyDraft),
+    [policyDraft],
+  );
+  const closePolicyForm = useCallback(() => setPolicyDraft(null), []);
+
   const onSubmitError = useCallback(
     async error => {
       ReactGA.event({
@@ -184,22 +205,28 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
   );
 
   return (
-    <SubmittableFormBuilder
-      open={open}
-      questions={questions}
-      header={renderCompanyJobTitleHeader}
-      onSubmit={onSubmit}
-      onSubmitError={onSubmitError}
-      onClose={onClose}
-      redirectPathnameOnSuccess={(_, draft) =>
-        generateTabURL({
-          pageType: PageType.COMPANY,
-          pageName: draft[DATA_KEY_COMPANY_NAME],
-          tabType: TabType.TIME_AND_SALARY,
-        })
-      }
-      hideProgressBar={hideProgressBar}
-    />
+    <Fragment>
+      <SubmittableFormBuilder
+        open={open}
+        questions={questions}
+        header={renderCompanyJobTitleHeader}
+        onSubmit={onSubmit}
+        onSubmitError={onSubmitError}
+        onClose={onClose}
+        redirectPathnameOnSuccess={redirectToSalaryTab}
+        hideProgressBar={hideProgressBar}
+        successDescription="再回答幾個問題，讓大家看見這間公司的制度實況！"
+        onSuccessContinue={onContinueToPolicyForm}
+      />
+      <PolicySimpleTypeForm
+        open={policyDraft !== null}
+        onClose={closePolicyForm}
+        companyName={policyDraft?.[DATA_KEY_COMPANY_NAME] || ''}
+        jobTitle={policyDraft?.[DATA_KEY_JOB_TITLE] || ''}
+        sector={policyDraft?.[DATA_KEY_SECTOR] || ''}
+        redirectPathnameOnSuccess={policyFormRedirectPathname}
+      />
+    </Fragment>
   );
 };
 
