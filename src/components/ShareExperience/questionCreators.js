@@ -566,9 +566,9 @@ export const createSensitiveQuestionsQuestion = () => ({
   placeholder: '輸入其他特殊問題內容',
 });
 
-const validateOrWarnPolicyRadio = value => isNil(value) && '請選擇一個選項';
+const validateOrWarnRadio = value => isNil(value) && '請選擇一個選項';
 
-const validateOrWarnPolicyRadioElseRadio = (
+const validateOrWarnRadioElseRadio = (
   [selected, elseValue],
   { elseOptionValue },
 ) => {
@@ -597,7 +597,7 @@ export const createMenstrualLeaveQuestion = () => ({
       女性受僱者因生理日致工作有困難者，每月得請生理假一日。生理假薪資，減半發給。
     </PolicyLawNote>
   ),
-  validateOrWarn: validateOrWarnPolicyRadioElseRadio,
+  validateOrWarn: validateOrWarnRadioElseRadio,
 });
 
 export const createParentalLeaveQuestion = () => ({
@@ -622,7 +622,7 @@ export const createParentalLeaveQuestion = () => ({
       年起可以「日」為單位請育嬰假。
     </PolicyLawNote>
   ),
-  validateOrWarn: validateOrWarnPolicyRadioElseRadio,
+  validateOrWarn: validateOrWarnRadioElseRadio,
 });
 
 export const createFamilyCareLeaveQuestion = () => ({
@@ -646,7 +646,7 @@ export const createFamilyCareLeaveQuestion = () => ({
       天，不得扣全勤獎金、影響考績或其他不利行為，屬主不得拒絕。
     </PolicyLawNote>
   ),
-  validateOrWarn: validateOrWarnPolicyRadioElseRadio,
+  validateOrWarn: validateOrWarnRadioElseRadio,
 });
 
 export const createFlexibleWorkingHourQuestion = () => ({
@@ -657,7 +657,7 @@ export const createFlexibleWorkingHourQuestion = () => ({
   required: true,
   defaultValue: null,
   options: ['有', '沒有', '不知道'],
-  validateOrWarn: validateOrWarnPolicyRadio,
+  validateOrWarn: validateOrWarnRadio,
 });
 
 export const createRemoteWorkQuestion = () => ({
@@ -670,7 +670,7 @@ export const createRemoteWorkQuestion = () => ({
   options: ['是', '否', '不知道'],
   elseOptionValue: '是',
   elseOptions: ['每週一天', '每週兩天', '每週三天', '每週四天', '不限天數'],
-  validateOrWarn: validateOrWarnPolicyRadioElseRadio,
+  validateOrWarn: validateOrWarnRadioElseRadio,
 });
 
 export const createPolicyQuestions = () => [
