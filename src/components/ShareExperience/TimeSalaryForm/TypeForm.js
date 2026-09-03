@@ -225,7 +225,9 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
         onClose={onClose}
         redirectPathnameOnSuccess={redirectToSalaryTab}
         hideProgressBar={hideProgressBar}
-        successDescription="再回答幾個問題，讓大家看見這間公司的制度實況！"
+        successTitle="上傳成功！"
+        successSubtitle="你已經解鎖全站資訊 14 天囉！"
+        successDescription="再回答幾個問題，加碼解鎖 14 天。"
         onSuccessContinue={onContinueToPolicyForm}
       />
       <PolicySimpleTypeForm

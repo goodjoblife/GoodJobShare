@@ -22,6 +22,8 @@ const SubmittableTypeForm = ({
   onClose,
   redirectPathnameOnSuccess,
   hideProgressBar,
+  successTitle = '上傳成功',
+  successSubtitle = '你已解鎖全站資訊囉！',
   successDescription = '感謝你分享你的資訊，台灣的職場因為有你而變得更好！',
   onSuccessContinue = null,
 }) => {
@@ -105,8 +107,8 @@ const SubmittableTypeForm = ({
       />
       <ConfirmModal
         isOpen={submitStatus === 'success'}
-        title="上傳成功"
-        subtitle="你已解鎖全站資訊囉！"
+        title={successTitle}
+        subtitle={successSubtitle}
         description={successDescription}
         close={onSuccessClose}
         closableOnClickOutside
@@ -154,6 +156,8 @@ SubmittableTypeForm.propTypes = {
     PropTypes.func,
   ]).isRequired,
   successDescription: PropTypes.string,
+  successSubtitle: PropTypes.string,
+  successTitle: PropTypes.string,
 };
 
 export default SubmittableTypeForm;
