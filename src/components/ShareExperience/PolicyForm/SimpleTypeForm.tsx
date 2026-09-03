@@ -31,7 +31,7 @@ type Props = {
   jobTitle: string;
   sector?: string;
   redirectPathnameOnSuccess: string | (() => string);
-  redirectOnQuit: boolean;
+  redirectPathnameOnQuit: string | (() => string);
 };
 
 const SimpleTypeForm = ({
@@ -41,7 +41,7 @@ const SimpleTypeForm = ({
   jobTitle,
   sector,
   redirectPathnameOnSuccess,
-  redirectOnQuit,
+  redirectPathnameOnQuit,
 }: Props): React.ReactElement => {
   const dispatch = useDispatch();
 
@@ -77,7 +77,7 @@ const SimpleTypeForm = ({
       onClose={onClose}
       hideProgressBar={false}
       redirectPathnameOnSuccess={redirectPathnameOnSuccess}
-      redirectOnQuit={redirectOnQuit}
+      redirectPathnameOnQuit={redirectPathnameOnQuit}
     />
   );
 };
