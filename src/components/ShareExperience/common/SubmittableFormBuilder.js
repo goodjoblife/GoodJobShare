@@ -21,6 +21,7 @@ const SubmittableTypeForm = ({
   onSubmitError,
   onClose,
   redirectPathnameOnSuccess,
+  redirectOnQuit = false,
   hideProgressBar,
   successSubtitle = '你已解鎖全站資訊囉！',
   successDescription = '感謝你分享你的資訊，台灣的職場因為有你而變得更好！',
@@ -62,16 +63,23 @@ const SubmittableTypeForm = ({
     setSubmitStatus('quitting');
   }, []);
 
+  const redirectTo = useCallback(
+    pathname => {
+      if (typeof window === 'undefined' || !pathname) return;
+      window.location.replace(
+        typeof pathname === 'function'
+          ? pathname(submitResult, submittedDraft)
+          : pathname,
+      );
+    },
+    [submittedDraft, submitResult],
+  );
+
   const onSuccessClose = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
-    if (typeof window !== 'undefined' && redirectPathnameOnSuccess) {
-      let pathname = redirectPathnameOnSuccess;
-      if (typeof pathname === 'function')
-        pathname = pathname(submitResult, submittedDraft);
-      window.location.replace(pathname);
-    }
-  }, [onClose, redirectPathnameOnSuccess, submittedDraft, submitResult]);
+    redirectTo(redirectPathnameOnSuccess);
+  }, [onClose, redirectTo, redirectPathnameOnSuccess]);
 
   const onSuccessContinueClick = useCallback(() => {
     setSubmitStatus('unsubmitted');
@@ -86,12 +94,14 @@ const SubmittableTypeForm = ({
   const onQuit = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
-  }, [onClose]);
+    if (redirectOnQuit) redirectTo(redirectPathnameOnSuccess);
+  }, [onClose, redirectOnQuit, redirectTo, redirectPathnameOnSuccess]);
 
   const onGoToShare = useCallback(() => {
     setSubmitStatus('unsubmitted');
+    onClose();
     history.push('/share');
-  }, [history]);
+  }, [history, onClose]);
 
   return (
     <Fragment>
@@ -150,6 +160,7 @@ SubmittableTypeForm.propTypes = {
   onSuccessContinue: PropTypes.func,
   open: PropTypes.bool.isRequired,
   questions: PropTypes.arrayOf(QuestionPropType).isRequired,
+  redirectOnQuit: PropTypes.bool,
   redirectPathnameOnSuccess: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func,

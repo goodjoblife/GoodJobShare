@@ -233,6 +233,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
         jobTitle={policyDraft?.jobTitle || ''}
         sector={policyDraft?.sector || ''}
         redirectPathnameOnSuccess={policyFormRedirectPathname}
+        redirectOnQuit
       />
     </Fragment>
   );
