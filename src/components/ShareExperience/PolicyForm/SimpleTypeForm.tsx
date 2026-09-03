@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
 import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
 
-import toPolicyReviewInput from './toPolicyReviewInput';
+import { toPolicyReviewInput } from './TypeForm';
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import { CompanyJobTitleHeader } from '../common/TypeFormHeader';
 import { POLICY_OPTIONS } from '../policyOptions';
