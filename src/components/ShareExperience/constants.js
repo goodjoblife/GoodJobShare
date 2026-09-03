@@ -22,7 +22,12 @@ export const DATA_KEY_HAS_COMPENSATORY_DAYOFF = 'hasCompensatoryDayoff';
 export const DATA_KEY_SENSITIVE_QUESTIONS = 'sensitiveQuestions';
 export const DATA_KEY_SECTIONS = 'sections';
 export const DATA_KEY_POLICIES = 'policies';
-export const DATA_KEY_POLICY_PREFIX = 'policy_';
+export const DATA_KEY_POLICY_MENSTRUAL_LEAVE = 'policyMenstrualLeave';
+export const DATA_KEY_POLICY_PARENTAL_LEAVE = 'policyParentalLeave';
+export const DATA_KEY_POLICY_FAMILY_CARE_LEAVE = 'policyFamilyCareLeave';
+export const DATA_KEY_POLICY_FLEXIBLE_WORKING_HOUR =
+  'policyFlexibleWorkingHour';
+export const DATA_KEY_POLICY_REMOTE_WORK = 'policyRemoteWork';
 
 export const REGION_OPTIONS = [
   '基隆市',
