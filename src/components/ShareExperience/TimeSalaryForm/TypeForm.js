@@ -124,10 +124,10 @@ const salaryTabPathnameOf = companyName =>
 const redirectToSalaryTab = (_, draft) =>
   salaryTabPathnameOf(draft[DATA_KEY_COMPANY_NAME]);
 
-const policyFormSubjectFromDraft = draft => ({
-  companyName: draft[DATA_KEY_COMPANY_NAME],
-  jobTitle: draft[DATA_KEY_JOB_TITLE],
-  sector: draft[DATA_KEY_SECTOR],
+const toPolicyDraft = salaryDraft => ({
+  companyName: salaryDraft[DATA_KEY_COMPANY_NAME],
+  jobTitle: salaryDraft[DATA_KEY_JOB_TITLE],
+  sector: salaryDraft[DATA_KEY_SECTOR],
 });
 
 const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
@@ -183,16 +183,16 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
     [dispatch, hideProgressBar],
   );
 
-  const [policyFormSubject, setPolicyFormSubject] = useState(null);
+  const [policyDraft, setPolicyDraft] = useState(null);
   const onContinueToPolicyForm = useCallback(
-    (_, draft) => setPolicyFormSubject(policyFormSubjectFromDraft(draft)),
+    (_, salaryDraft) => setPolicyDraft(toPolicyDraft(salaryDraft)),
     [],
   );
   const policyFormRedirectPathname = useCallback(
-    () => salaryTabPathnameOf(policyFormSubject.companyName),
-    [policyFormSubject],
+    () => salaryTabPathnameOf(policyDraft.companyName),
+    [policyDraft],
   );
-  const closePolicyForm = useCallback(() => setPolicyFormSubject(null), []);
+  const closePolicyForm = useCallback(() => setPolicyDraft(null), []);
 
   const onSubmitError = useCallback(
     async error => {
@@ -227,11 +227,11 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
         onSuccessContinue={onContinueToPolicyForm}
       />
       <PolicySimpleTypeForm
-        open={policyFormSubject !== null}
+        open={policyDraft !== null}
         onClose={closePolicyForm}
-        companyName={policyFormSubject?.companyName || ''}
-        jobTitle={policyFormSubject?.jobTitle || ''}
-        sector={policyFormSubject?.sector || ''}
+        companyName={policyDraft?.companyName || ''}
+        jobTitle={policyDraft?.jobTitle || ''}
+        sector={policyDraft?.sector || ''}
         redirectPathnameOnSuccess={policyFormRedirectPathname}
       />
     </Fragment>
