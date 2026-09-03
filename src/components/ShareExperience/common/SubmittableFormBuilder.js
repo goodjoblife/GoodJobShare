@@ -13,7 +13,6 @@ import rollbar from 'utils/rollbar';
 
 import Footer from './TypeFormFooter';
 
-// 型別標註讓 redirectPathnameOnQuit 保持選填，又能接受字串或函式
 const NO_REDIRECT = /** @type {string | (() => string) | null} */ (null);
 
 const SubmittableTypeForm = ({

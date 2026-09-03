@@ -19,7 +19,6 @@ const questions = [...policyQuestions, createSubmitQuestion({ label: '制度' })
 const toPolicyReviews = (draft: Record<string, unknown>): PolicyReviewInput[] =>
   policyQuestions.map(({ label, dataKey }) => {
     const answer = draft[dataKey];
-    // RADIO 題只有 hasPolicy，RADIO_ELSE_RADIO 題則是 [hasPolicy, detail]
     const [hasPolicy, detail] = Array.isArray(answer) ? answer : [answer, null];
     return toPolicyReviewInput([label, hasPolicy, detail, null]);
   });
