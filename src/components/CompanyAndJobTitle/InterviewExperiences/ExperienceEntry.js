@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { Heading, P } from 'common/base';
 import Coin from 'common/icons/Coin';
 import OverallRating from 'common/OverallRating';
+import { toCanonicalJobTitle } from 'constants/jobTitleMergeMockup';
 
 import { formatCreatedAt, formatSalary, formatSalaryRange } from './helper';
 import styles from './InterviewExperiences.module.css';
@@ -72,7 +73,7 @@ const ExperienceEntry = ({
           size={size === 'l' ? 'sl' : 'sm'}
           className={styles.heading}
         >
-          {originalCompanyName} {jobTitle}
+          {originalCompanyName} {jobTitle && toCanonicalJobTitle(jobTitle)}
         </Heading>
 
         <div className={styles.snippetWrapper}>

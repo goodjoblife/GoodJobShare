@@ -10,6 +10,7 @@ import {
   TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
 } from 'constants/companyJobTitle';
+import { toCanonicalJobTitle } from 'constants/jobTitleMergeMockup';
 import { ACTION, CONTENT_TYPE } from 'constants/viewLog';
 import usePermission from 'hooks/usePermission';
 import { useTrackEvent } from 'hooks/viewLog';
@@ -65,7 +66,7 @@ const useExperienceTitle = ({
       experience.job_title &&
       experience.job_title.name
     ) {
-      str = experience.job_title.name;
+      str = toCanonicalJobTitle(experience.job_title.name);
     } else if (
       pageType === PageType.JOB_TITLE &&
       experience.company &&

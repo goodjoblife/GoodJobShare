@@ -1,3 +1,4 @@
+import qs from 'qs';
 import React, { useMemo } from 'react';
 
 import { Wrapper } from 'common/base';
@@ -5,15 +6,20 @@ import Heading from 'common/base/Heading';
 import BreadCrumb from 'common/BreadCrumb';
 import FanPageBlock from 'common/FanPageBlock';
 import TabLinkGroup from 'common/TabLinkGroup';
+import JobTitleChips from 'components/CompanyAndJobTitle/JobTitleChips';
 import StatisticsCard from 'components/CompanyAndJobTitle/StatisticsCard';
 import SubscribeNotificationButton from 'components/CompanyAndJobTitle/SubscribeNotificationButton';
 import {
+  generatePageURL,
   generateTabURL,
   PageType,
   TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
   tabTypeTranslation,
 } from 'constants/companyJobTitle';
+import { getSubJobTitles } from 'constants/jobTitleMergeMockup';
+import { useQuery } from 'hooks/routing';
+import { queryFromQuerySelector } from 'selectors/routing';
 
 import styles from './CompanyAndJobTitleWrapper.module.css';
 import { PageContextProvider } from './PageContextProvider';
@@ -33,19 +39,34 @@ const CompanyAndJobTitleWrapper: React.FC<CompanyAndJobTitleWrapperProps> = ({
   tabType,
   children,
 }) => {
+  // [職稱合併 mockup] 公司頁的職稱篩選（?q=）跨分頁保留
+  const query = useQuery();
+  const jobTitleFilter = queryFromQuerySelector(query);
+  const tabSearch =
+    pageType === PageType.COMPANY && jobTitleFilter
+      ? qs.stringify({ q: jobTitleFilter }, { addQueryPrefix: true })
+      : '';
+
   const tabLinkOptions = useMemo(
     () =>
       (Object.entries(tabTypeTranslation) as [TabType, string][]).map(
         ([type, label]) => ({
           label,
-          to: generateTabURL({
-            pageType,
-            pageName,
-            tabType: type,
-          }),
+          to:
+            generateTabURL({
+              pageType,
+              pageName,
+              tabType: type,
+            }) + tabSearch,
           exact: type === TabType.OVERVIEW,
         }),
       ),
+    [pageType, pageName, tabSearch],
+  );
+
+  // [職稱合併 mockup] 職稱頁的細分職稱
+  const subJobTitles = useMemo(
+    () => (pageType === PageType.JOB_TITLE ? getSubJobTitles(pageName) : []),
     [pageType, pageName],
   );
 
@@ -81,6 +102,20 @@ const CompanyAndJobTitleWrapper: React.FC<CompanyAndJobTitleWrapperProps> = ({
               )}
             </div>
             <StatisticsCard pageType={pageType} pageName={pageName} />
+            {subJobTitles.length > 0 && (
+              <JobTitleChips
+                className={styles.subJobTitles}
+                label="細分職稱："
+                moreTitle={`${pageName}的細分職稱`}
+                items={subJobTitles}
+                getLinkTo={(name): string =>
+                  generatePageURL({
+                    pageType: PageType.JOB_TITLE,
+                    pageName: name,
+                  })
+                }
+              />
+            )}
           </div>
           <TabLinkGroup
             className=""

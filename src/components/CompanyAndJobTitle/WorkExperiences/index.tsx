@@ -12,6 +12,7 @@ import { useCompanyName, usePageContext } from '../PageContextProvider';
 import Helmet from './Helmet';
 import WorkExperiencesSection from './WorkExperiencesSection';
 import AspectScoreCard, { useAspectsData } from '../AspectScoreCard';
+import CompanyJobTitleChips from '../CompanyJobTitleChips';
 import SearchBar from '../SearchBar';
 import Sorter from '../Sorter';
 import styles from '../styles.module.css';
@@ -62,6 +63,7 @@ const WorkExperiences: React.FC<Props> = ({
           <Sorter />
         </div>
       </Wrapper>
+      {pageType === PageType.COMPANY && <CompanyJobTitleChips />}
       <Wrapper size="m">
         <PageBoxRenderer
           pageType={pageType}

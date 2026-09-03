@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useHistory } from 'react-router';
 
@@ -13,6 +13,7 @@ import {
   tabTypeTranslation,
 } from 'constants/companyJobTitle';
 import { GA_ACTION, GA_CATEGORY } from 'constants/gaConstants';
+import { toCanonicalJobTitle } from 'constants/jobTitleMergeMockup';
 import { useQuery } from 'hooks/routing';
 import { queryFromQuerySelector } from 'selectors/routing';
 
@@ -24,7 +25,9 @@ export const useSearchTextFromQuery = () => {
   const query = useQuery();
   const searchText = queryFromQuerySelector(query);
   const setSearchText = useCallback(
-    nextSearchText => {
+    rawSearchText => {
+      // [職稱合併 mockup] 別名一律轉成正規名再進 query
+      const nextSearchText = toCanonicalJobTitle(rawSearchText);
       if (searchText === nextSearchText) return;
       const { q, p, ...restQuery } = query; // remove page when search text changes
       const nextQuery = { ...restQuery, q: nextSearchText };
@@ -40,6 +43,11 @@ const SearchBar = ({ className, label, placeholder, onSubmit, pageType }) => {
   const [searchTextFromQuery] = useSearchTextFromQuery();
   const [searchText, setSearchText] = useState(searchTextFromQuery);
   const ref = useRef(null);
+
+  // [職稱合併 mockup] 點 chip 改了 ?q= 時，同步到輸入框
+  useEffect(() => {
+    setSearchText(searchTextFromQuery);
+  }, [searchTextFromQuery]);
 
   const onBlur = useCallback(() => {
     onSubmit(searchText);

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { formatSalaryAmount, formatSalaryType } from 'common/formatter';
 import { generatePageURL, PageType } from 'constants/companyJobTitle';
 import { employmentTypeTranslation } from 'constants/employmentType';
+import { toCanonicalJobTitle } from 'constants/jobTitleMergeMockup';
 
 import styles from './formatter.module.css';
 
@@ -23,10 +24,11 @@ export const getNameAsJobTitle = (o, row) => (
   <Link
     to={generatePageURL({
       pageType: PageType.JOB_TITLE,
-      pageName: o.name,
+      pageName: toCanonicalJobTitle(o.name),
     })}
   >
-    {o.name} <span className={`pM ${styles.sector}`}>{row.sector}</span>
+    {toCanonicalJobTitle(o.name)}{' '}
+    <span className={`pM ${styles.sector}`}>{row.sector}</span>
   </Link>
 );
 
