@@ -14,12 +14,10 @@ const Wrapper = ({ warning, footnote, children }) => (
       className={cn(styles.warnableContainer, commonStyles.warnableContainer)}
     >
       <div className={styles.options}>
-        <Scrollable className={styles.optionsContent}>
-          {children}
-          {footnote && <div className={styles.footnote}>{footnote}</div>}
-        </Scrollable>
+        <Scrollable className={styles.optionsContent}>{children}</Scrollable>
       </div>
     </div>
+    {footnote && <div className={styles.footnote}>{footnote}</div>}
     <div className={commonStyles.warning}>{warning}</div>
   </div>
 );
