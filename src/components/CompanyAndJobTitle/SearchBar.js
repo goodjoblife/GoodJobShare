@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useHistory } from 'react-router';
 
@@ -43,11 +43,6 @@ const SearchBar = ({ className, label, placeholder, onSubmit, pageType }) => {
   const [searchTextFromQuery] = useSearchTextFromQuery();
   const [searchText, setSearchText] = useState(searchTextFromQuery);
   const ref = useRef(null);
-
-  // [職稱合併 mockup] 點 chip 改了 ?q= 時，同步到輸入框
-  useEffect(() => {
-    setSearchText(searchTextFromQuery);
-  }, [searchTextFromQuery]);
 
   const onBlur = useCallback(() => {
     onSubmit(searchText);

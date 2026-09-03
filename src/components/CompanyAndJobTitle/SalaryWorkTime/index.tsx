@@ -24,7 +24,6 @@ import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
 import SalaryFilter from './SalaryFilter';
 import SalaryWorkTimeSection from './SalaryWorkTimeSection';
-import CompanyJobTitleChips from '../CompanyJobTitleChips';
 import SearchBar from '../SearchBar';
 import styles from './SalaryWorkTime.module.css';
 import SnippetBlock from '../SnippetBlock';
@@ -105,7 +104,6 @@ const SalaryWorkTime: React.FC<Props> = ({
         <SearchBar pageType={pageType} tabType={tabType} />
         <SalaryFilter y={sectionY as number | null} />
       </Wrapper>
-      {pageType === PageType.COMPANY && <CompanyJobTitleChips size="l" />}
       <Wrapper size="l">
         <PageBoxRenderer
           pageType={pageType}
