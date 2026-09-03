@@ -11,14 +11,32 @@ import ShareBlockElement from './ShareBlockElement';
 import {
   useFetchMyPublishes,
   useToggleExperienceStatus,
+  useTogglePolicyReviewGroupStatus,
   useToggleReplyStatus,
   useToggleSalaryWorkTimeStatus,
 } from './useQuery';
+
+const toPolicyReviewGroupBlocks = policyReviewGroupList =>
+  (policyReviewGroupList || [])
+    .filter(({ policyReviews }) => policyReviews.length > 0)
+    .map(({ policyReviews }) => {
+      const [{ groupId, company, jobTitle }] = policyReviews;
+      return {
+        groupId,
+        companyName: company.name,
+        jobTitle,
+        status: policyReviews.every(o => o.status === 'hidden')
+          ? 'hidden'
+          : 'published',
+        archive: policyReviews.find(o => o.archive.is_archived)?.archive,
+      };
+    });
 
 const Me = () => {
   const [myPublishesState, fetchMyPublishes] = useFetchMyPublishes();
   const toggleExperienceStatus = useToggleExperienceStatus();
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
+  const togglePolicyReviewGroupStatus = useTogglePolicyReviewGroupStatus();
   const toggleReplyStatus = useToggleReplyStatus();
 
   useEffect(() => {
@@ -80,6 +98,31 @@ const Me = () => {
                           }
                           publishHandler={async () => {
                             await toggleSalaryWorkTimeStatus(o);
+                            await fetchMyPublishes();
+                          }}
+                          archive={o.archive}
+                        />
+                      ))}
+                      {toPolicyReviewGroupBlocks(
+                        myPublishesState.value.me.policyReviewGroupList,
+                      ).map(o => (
+                        <ShareBlockElement
+                          key={o.groupId}
+                          type="制度"
+                          heading={o.companyName}
+                          position={o.jobTitle}
+                          to={generateTabURL({
+                            pageType: PageType.COMPANY,
+                            pageName: o.companyName,
+                            tabType: TabType.FAMILY_CHILDCARE,
+                          })}
+                          linkTitle="檢視制度"
+                          disabled={
+                            o.status === 'hidden' ||
+                            (o.archive && o.archive.is_archived)
+                          }
+                          publishHandler={async () => {
+                            await togglePolicyReviewGroupStatus(o);
                             await fetchMyPublishes();
                           }}
                           archive={o.archive}

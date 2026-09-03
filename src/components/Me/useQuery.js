@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useAsyncFn } from 'react-use';
 
+import changePolicyReviewGroupStatus from 'apis/changePolicyReviewGroupStatus';
 import {
   changeExperienceStatus,
   patchReply as patchReplyApi,
@@ -40,6 +41,20 @@ export const useToggleSalaryWorkTimeStatus = () => {
       return changeSalaryWorkTimeStatus({
         id: o.id,
         status: o.status === 'published' ? 'hidden' : 'published',
+        token,
+      });
+    },
+    [token],
+  );
+};
+
+export const useTogglePolicyReviewGroupStatus = () => {
+  const token = useToken();
+  return useCallback(
+    ({ groupId, status }) => {
+      return changePolicyReviewGroupStatus({
+        groupId,
+        status: status === 'published' ? 'hidden' : 'published',
         token,
       });
     },
