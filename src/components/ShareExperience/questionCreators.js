@@ -681,7 +681,6 @@ export const createPolicyQuestions = () => [
   createRemoteWorkQuestion(),
 ];
 
-// 把單題的制度題目接成清單題的選項；text* 只有清單題的文字子頁面才有
 const toPolicyListOption = (
   { label, title, options, elseOptionValue, elseOptions, footnote },
   { textTitle, textPlaceholder, hasText },

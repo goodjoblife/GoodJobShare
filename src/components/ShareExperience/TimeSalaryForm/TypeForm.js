@@ -124,7 +124,6 @@ const salaryTabPathnameOf = companyName =>
 const redirectToSalaryTab = (_, draft) =>
   salaryTabPathnameOf(draft[DATA_KEY_COMPANY_NAME]);
 
-// 制度表單只沿用薪資表單填過的公司／職稱／廠區，其餘題目由制度表單自己重新填
 const policyFormSubjectFromDraft = draft => ({
   companyName: draft[DATA_KEY_COMPANY_NAME],
   jobTitle: draft[DATA_KEY_JOB_TITLE],
@@ -184,13 +183,11 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
     [dispatch, hideProgressBar],
   );
 
-  // 薪資送出後，引導使用者接著填寫制度簡易表單，null 代表尚未進入
   const [policyFormSubject, setPolicyFormSubject] = useState(null);
   const onContinueToPolicyForm = useCallback(
     (_, draft) => setPolicyFormSubject(policyFormSubjectFromDraft(draft)),
     [],
   );
-  // 制度表單送出後，導向薪資表單原本要導向的頁面
   const policyFormRedirectPathname = useCallback(
     () => salaryTabPathnameOf(policyFormSubject.companyName),
     [policyFormSubject],
