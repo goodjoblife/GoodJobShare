@@ -7,22 +7,21 @@ import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
 import { toPolicyReviewInput } from './TypeForm';
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import { CompanyJobTitleHeader } from '../common/TypeFormHeader';
-import { POLICY_OPTIONS } from '../policyOptions';
 import {
-  createPolicyQuestion,
+  createPolicyQuestions,
   createSubmitQuestion,
 } from '../questionCreators';
 
-const policyQuestions = POLICY_OPTIONS.map(createPolicyQuestion);
+const policyQuestions = createPolicyQuestions();
 
 const questions = [...policyQuestions, createSubmitQuestion({ label: '制度' })];
 
 const toPolicyReviews = (draft: Record<string, unknown>): PolicyReviewInput[] =>
-  POLICY_OPTIONS.map(({ value }, index) => {
-    const answer = draft[policyQuestions[index].dataKey];
+  policyQuestions.map(({ label, dataKey }) => {
+    const answer = draft[dataKey];
     // RADIO 題只有 hasPolicy，RADIO_ELSE_RADIO 題則是 [hasPolicy, detail]
     const [hasPolicy, detail] = Array.isArray(answer) ? answer : [answer, null];
-    return toPolicyReviewInput([value, hasPolicy, detail, null]);
+    return toPolicyReviewInput([label, hasPolicy, detail, null]);
   });
 
 type Props = {
