@@ -615,13 +615,6 @@ const createPolicyQuestion = ({
   };
 };
 
-const GENDER_EQUALITY_COMPLIANCE_OPTIONS = [
-  '有，優於性別平等工作法',
-  '有，符合性別平等工作法',
-  '有，不符合性別平等工作法',
-  '有，不清楚是否符合性別平等工作法',
-];
-
 export const createMenstrualLeaveQuestion = () =>
   createPolicyQuestion({
     policy: 'MENSTRUAL_LEAVE',
@@ -629,7 +622,12 @@ export const createMenstrualLeaveQuestion = () =>
     title: '自己或同事是否請得到生理假？',
     options: ['是', '否', '不知道'],
     elseOptionValue: '是',
-    elseOptions: GENDER_EQUALITY_COMPLIANCE_OPTIONS,
+    elseOptions: [
+      '有，優於性別平等工作法',
+      '有，符合性別平等工作法',
+      '有，不符合性別平等工作法',
+      '有，不清楚是否符合性別平等工作法',
+    ],
     footnote: (
       <PolicyLawNote lawName="性別平等工作法">
         女性受僱者因生理日致工作有困難者，每月得請生理假一日。生理假薪資，減半發給。
@@ -648,7 +646,12 @@ export const createParentalLeaveQuestion = () =>
     title: '自己或同事是否請得到育嬰假？',
     options: ['是', '否', '不知道'],
     elseOptionValue: '是',
-    elseOptions: GENDER_EQUALITY_COMPLIANCE_OPTIONS,
+    elseOptions: [
+      '有，優於性別平等工作法',
+      '有，符合性別平等工作法',
+      '有，不符合性別平等工作法',
+      '有，不清楚是否符合性別平等工作法',
+    ],
     footnote: (
       <PolicyLawNote lawName="性別平等工作法">
         工作年資 6 個月以上，子女未滿 3
@@ -669,7 +672,12 @@ export const createFamilyCareLeaveQuestion = () =>
     title: '自己或同事是否請得到家庭照顧假？',
     options: ['是', '否', '不知道'],
     elseOptionValue: '是',
-    elseOptions: GENDER_EQUALITY_COMPLIANCE_OPTIONS,
+    elseOptions: [
+      '有，優於性別平等工作法',
+      '有，符合性別平等工作法',
+      '有，不符合性別平等工作法',
+      '有，不清楚是否符合性別平等工作法',
+    ],
     footnote: (
       <PolicyLawNote lawName="性別平等工作法">
         家庭照顧假一年至多 7
