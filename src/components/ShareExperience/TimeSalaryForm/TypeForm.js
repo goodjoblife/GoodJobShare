@@ -114,12 +114,22 @@ const bodyFromDraft = evolve({
   hasCompensatoryDayoff: draft => draft[DATA_KEY_HAS_COMPENSATORY_DAYOFF],
 });
 
-const redirectToSalaryTab = (_, draft) =>
+const salaryTabPathnameOf = companyName =>
   generateTabURL({
     pageType: PageType.COMPANY,
-    pageName: draft[DATA_KEY_COMPANY_NAME],
+    pageName: companyName,
     tabType: TabType.TIME_AND_SALARY,
   });
+
+const redirectToSalaryTab = (_, draft) =>
+  salaryTabPathnameOf(draft[DATA_KEY_COMPANY_NAME]);
+
+// 制度表單只沿用薪資表單填過的公司／職稱／廠區，其餘題目由制度表單自己重新填
+const policyFormSubjectFromDraft = draft => ({
+  companyName: draft[DATA_KEY_COMPANY_NAME],
+  jobTitle: draft[DATA_KEY_JOB_TITLE],
+  sector: draft[DATA_KEY_SECTOR],
+});
 
 const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
   useEffect(() => {
@@ -175,17 +185,17 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
   );
 
   // 薪資送出後，引導使用者接著填寫制度簡易表單，null 代表尚未進入
-  const [policyDraft, setPolicyDraft] = useState(null);
+  const [policyFormSubject, setPolicyFormSubject] = useState(null);
   const onContinueToPolicyForm = useCallback(
-    (_, draft) => setPolicyDraft(draft),
+    (_, draft) => setPolicyFormSubject(policyFormSubjectFromDraft(draft)),
     [],
   );
   // 制度表單送出後，導向薪資表單原本要導向的頁面
   const policyFormRedirectPathname = useCallback(
-    () => redirectToSalaryTab(null, policyDraft),
-    [policyDraft],
+    () => salaryTabPathnameOf(policyFormSubject.companyName),
+    [policyFormSubject],
   );
-  const closePolicyForm = useCallback(() => setPolicyDraft(null), []);
+  const closePolicyForm = useCallback(() => setPolicyFormSubject(null), []);
 
   const onSubmitError = useCallback(
     async error => {
@@ -219,11 +229,11 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
         onSuccessContinue={onContinueToPolicyForm}
       />
       <PolicySimpleTypeForm
-        open={policyDraft !== null}
+        open={policyFormSubject !== null}
         onClose={closePolicyForm}
-        companyName={policyDraft?.[DATA_KEY_COMPANY_NAME] || ''}
-        jobTitle={policyDraft?.[DATA_KEY_JOB_TITLE] || ''}
-        sector={policyDraft?.[DATA_KEY_SECTOR] || ''}
+        companyName={policyFormSubject?.companyName || ''}
+        jobTitle={policyFormSubject?.jobTitle || ''}
+        sector={policyFormSubject?.sector || ''}
         redirectPathnameOnSuccess={policyFormRedirectPathname}
       />
     </Fragment>
