@@ -67,7 +67,7 @@ const SubmittableTypeForm = ({
 
   const redirectTo = useCallback(
     pathname => {
-      if (typeof window === 'undefined' || !pathname) return;
+      if (typeof window === 'undefined') return;
       window.location.replace(
         typeof pathname === 'function'
           ? pathname(submitResult, submittedDraft)
@@ -80,7 +80,7 @@ const SubmittableTypeForm = ({
   const onSuccessClose = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
-    redirectTo(redirectPathnameOnSuccess);
+    if (redirectPathnameOnSuccess) redirectTo(redirectPathnameOnSuccess);
   }, [onClose, redirectTo, redirectPathnameOnSuccess]);
 
   const onSuccessContinueClick = useCallback(() => {
@@ -96,7 +96,7 @@ const SubmittableTypeForm = ({
   const onQuit = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
-    redirectTo(redirectPathnameOnQuit);
+    if (redirectPathnameOnQuit) redirectTo(redirectPathnameOnQuit);
   }, [onClose, redirectTo, redirectPathnameOnQuit]);
 
   const onGoToShare = useCallback(() => {
