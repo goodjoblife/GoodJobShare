@@ -4,6 +4,7 @@ import { Heading, Section, Wrapper } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Comment2 from 'common/icons/Comment2';
 import Loader from 'common/Loader';
+import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 
 import AuthMask from './AuthMask';
 import ShareBlockElement from './ShareBlockElement';
@@ -67,7 +68,12 @@ const Me = () => {
                           type="薪時"
                           heading={o.company.name}
                           position={o.job_title.name}
-                          to={o.company.name}
+                          to={generateTabURL({
+                            pageType: PageType.COMPANY,
+                            pageName: o.company.name,
+                            tabType: TabType.TIME_AND_SALARY,
+                          })}
+                          linkTitle="檢視薪時"
                           disabled={
                             o.status === 'hidden' ||
                             (o.archive && o.archive.is_archived)
