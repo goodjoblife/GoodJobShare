@@ -17,8 +17,8 @@ const Wrapper = ({ warning, footnote, children }) => (
         <Scrollable className={styles.optionsContent}>{children}</Scrollable>
       </div>
     </div>
-    {footnote && <div className={styles.footnote}>{footnote}</div>}
     <div className={commonStyles.warning}>{warning}</div>
+    {footnote && <div className={styles.footnote}>{footnote}</div>}
   </div>
 );
 
