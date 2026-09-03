@@ -566,182 +566,137 @@ export const createSensitiveQuestionsQuestion = () => ({
   placeholder: '輸入其他特殊問題內容',
 });
 
-// asListOption 為真時回傳 CHECKBOX_RADIO_ELSE_RADIO_TEXTAREA_LIST 的清單選項，
-// 否則回傳可以獨立成一頁的 RADIO / RADIO_ELSE_RADIO 題目
-const createPolicyQuestion = ({
-  asListOption,
-  policy,
+const validateOrWarnPolicyRadio = value => isNil(value) && '請選擇一個選項';
+
+const validateOrWarnPolicyRadioElseRadio = (
+  [selected, elseValue],
+  { elseOptionValue },
+) => {
+  if (isNil(selected)) return '請選擇一個選項';
+  if (selected === elseOptionValue && isNil(elseValue)) return '請選擇一個選項';
+  return null;
+};
+
+export const createMenstrualLeaveQuestion = () => ({
+  label: '生理假',
+  title: '自己或同事是否請得到生理假？',
+  type: QUESTION_TYPE.RADIO_ELSE_RADIO,
+  dataKey: `${DATA_KEY_POLICY_PREFIX}MENSTRUAL_LEAVE`,
+  required: true,
+  defaultValue: [null, null],
+  options: ['是', '否', '不知道'],
+  elseOptionValue: '是',
+  elseOptions: [
+    '有，優於性別平等工作法',
+    '有，符合性別平等工作法',
+    '有，不符合性別平等工作法',
+    '有，不清楚是否符合性別平等工作法',
+  ],
+  footnote: (
+    <PolicyLawNote lawName="性別平等工作法">
+      女性受僱者因生理日致工作有困難者，每月得請生理假一日。生理假薪資，減半發給。
+    </PolicyLawNote>
+  ),
+  validateOrWarn: validateOrWarnPolicyRadioElseRadio,
+});
+
+export const createParentalLeaveQuestion = () => ({
+  label: '育嬰假',
+  title: '自己或同事是否請得到育嬰假？',
+  type: QUESTION_TYPE.RADIO_ELSE_RADIO,
+  dataKey: `${DATA_KEY_POLICY_PREFIX}PARENTAL_LEAVE`,
+  required: true,
+  defaultValue: [null, null],
+  options: ['是', '否', '不知道'],
+  elseOptionValue: '是',
+  elseOptions: [
+    '有，優於性別平等工作法',
+    '有，符合性別平等工作法',
+    '有，不符合性別平等工作法',
+    '有，不清楚是否符合性別平等工作法',
+  ],
+  footnote: (
+    <PolicyLawNote lawName="性別平等工作法">
+      工作年資 6 個月以上，子女未滿 3
+      歲的雙親，可分別申請育嬰假（育嬰留職停薪），最長 2 年。2026
+      年起可以「日」為單位請育嬰假。
+    </PolicyLawNote>
+  ),
+  validateOrWarn: validateOrWarnPolicyRadioElseRadio,
+});
+
+export const createFamilyCareLeaveQuestion = () => ({
+  label: '家庭照顧假',
+  title: '自己或同事是否請得到家庭照顧假？',
+  type: QUESTION_TYPE.RADIO_ELSE_RADIO,
+  dataKey: `${DATA_KEY_POLICY_PREFIX}FAMILY_CARE_LEAVE`,
+  required: true,
+  defaultValue: [null, null],
+  options: ['是', '否', '不知道'],
+  elseOptionValue: '是',
+  elseOptions: [
+    '有，優於性別平等工作法',
+    '有，符合性別平等工作法',
+    '有，不符合性別平等工作法',
+    '有，不清楚是否符合性別平等工作法',
+  ],
+  footnote: (
+    <PolicyLawNote lawName="性別平等工作法">
+      家庭照顧假一年至多 7
+      天，不得扣全勤獎金、影響考績或其他不利行為，屬主不得拒絕。
+    </PolicyLawNote>
+  ),
+  validateOrWarn: validateOrWarnPolicyRadioElseRadio,
+});
+
+export const createFlexibleWorkingHourQuestion = () => ({
+  label: '彈性上下班時間',
+  title: '是否有彈性上下班時間制度？',
+  type: QUESTION_TYPE.RADIO,
+  dataKey: `${DATA_KEY_POLICY_PREFIX}FLEXIBLE_WORKING_HOUR`,
+  required: true,
+  defaultValue: null,
+  options: ['有', '沒有', '不知道'],
+  validateOrWarn: validateOrWarnPolicyRadio,
+});
+
+export const createRemoteWorkQuestion = () => ({
+  label: '遠端工作',
+  title: '是否可以遠端工作？',
+  type: QUESTION_TYPE.RADIO_ELSE_RADIO,
+  dataKey: `${DATA_KEY_POLICY_PREFIX}REMOTE_WORK`,
+  required: true,
+  defaultValue: [null, null],
+  options: ['是', '否', '不知道'],
+  elseOptionValue: '是',
+  elseOptions: ['每週一天', '每週兩天', '每週三天', '每週四天', '不限天數'],
+  validateOrWarn: validateOrWarnPolicyRadioElseRadio,
+});
+
+export const createPolicyQuestions = () => [
+  createMenstrualLeaveQuestion(),
+  createParentalLeaveQuestion(),
+  createFamilyCareLeaveQuestion(),
+  createFlexibleWorkingHourQuestion(),
+  createRemoteWorkQuestion(),
+];
+
+// 把單題的制度題目接成清單題的選項；text* 只有清單題的文字子頁面才有
+const toPolicyListOption = (
+  { label, title, options, elseOptionValue, elseOptions, footnote },
+  { textTitle, textPlaceholder, hasText },
+) => ({
   label,
-  title,
-  options,
-  elseOptionValue,
-  elseOptions,
-  footnote,
+  value: label,
+  radioTitle: title,
+  radioOptions: options,
+  radioElseOptionValue: elseOptionValue,
+  radioElseOptions: elseOptions,
+  radioFooter: footnote,
   textTitle,
   textPlaceholder,
   hasText,
-}) => {
-  if (asListOption) {
-    return {
-      label,
-      value: label,
-      radioTitle: title,
-      radioOptions: options,
-      radioElseOptionValue: elseOptionValue,
-      radioElseOptions: elseOptions,
-      radioFooter: footnote,
-      textTitle,
-      textPlaceholder,
-      hasText,
-    };
-  }
-
-  const question = {
-    label,
-    title,
-    dataKey: `${DATA_KEY_POLICY_PREFIX}${policy}`,
-    required: true,
-    options,
-    footnote,
-  };
-
-  if (!elseOptions) {
-    return {
-      ...question,
-      type: QUESTION_TYPE.RADIO,
-      defaultValue: null,
-      validateOrWarn: value => isNil(value) && '請選擇一個選項',
-    };
-  }
-
-  return {
-    ...question,
-    type: QUESTION_TYPE.RADIO_ELSE_RADIO,
-    defaultValue: [null, null],
-    elseOptionValue,
-    elseOptions,
-    validateOrWarn: ([selected, elseValue]) => {
-      if (isNil(selected)) return '請選擇一個選項';
-      if (selected === elseOptionValue && isNil(elseValue))
-        return '請選擇一個選項';
-      return null;
-    },
-  };
-};
-
-export const createMenstrualLeaveQuestion = ({ asListOption } = {}) =>
-  createPolicyQuestion({
-    asListOption,
-    policy: 'MENSTRUAL_LEAVE',
-    label: '生理假',
-    title: '自己或同事是否請得到生理假？',
-    options: ['是', '否', '不知道'],
-    elseOptionValue: '是',
-    elseOptions: [
-      '有，優於性別平等工作法',
-      '有，符合性別平等工作法',
-      '有，不符合性別平等工作法',
-      '有，不清楚是否符合性別平等工作法',
-    ],
-    footnote: (
-      <PolicyLawNote lawName="性別平等工作法">
-        女性受僱者因生理日致工作有困難者，每月得請生理假一日。生理假薪資，減半發給。
-      </PolicyLawNote>
-    ),
-    textTitle: '請分享自身或同事請生理假的實際狀況',
-    textPlaceholder:
-      '請生理假是否曾經遇到什麼困難？生理假薪資有正常給嗎（減半），或是有更好的福利？',
-    hasText: ([, v]) => v === '是' || v === '否',
-  });
-
-export const createParentalLeaveQuestion = ({ asListOption } = {}) =>
-  createPolicyQuestion({
-    asListOption,
-    policy: 'PARENTAL_LEAVE',
-    label: '育嬰假',
-    title: '自己或同事是否請得到育嬰假？',
-    options: ['是', '否', '不知道'],
-    elseOptionValue: '是',
-    elseOptions: [
-      '有，優於性別平等工作法',
-      '有，符合性別平等工作法',
-      '有，不符合性別平等工作法',
-      '有，不清楚是否符合性別平等工作法',
-    ],
-    footnote: (
-      <PolicyLawNote lawName="性別平等工作法">
-        工作年資 6 個月以上，子女未滿 3
-        歲的雙親，可分別申請育嬰假（育嬰留職停薪），最長 2 年。2026
-        年起可以「日」為單位請育嬰假。
-      </PolicyLawNote>
-    ),
-    textTitle: '請分享自身或同事請育嬰假/育嬰留職停薪的實際狀況',
-    textPlaceholder:
-      '自身、或有看過同事請育嬰假嗎？育嬰假是否曾經遇到什麼困難？公司有額外的育嬰福利嗎？（例如：多給幾天給薪育嬰假）',
-    hasText: ([, v]) => v === '是' || v === '否',
-  });
-
-export const createFamilyCareLeaveQuestion = ({ asListOption } = {}) =>
-  createPolicyQuestion({
-    asListOption,
-    policy: 'FAMILY_CARE_LEAVE',
-    label: '家庭照顧假',
-    title: '自己或同事是否請得到家庭照顧假？',
-    options: ['是', '否', '不知道'],
-    elseOptionValue: '是',
-    elseOptions: [
-      '有，優於性別平等工作法',
-      '有，符合性別平等工作法',
-      '有，不符合性別平等工作法',
-      '有，不清楚是否符合性別平等工作法',
-    ],
-    footnote: (
-      <PolicyLawNote lawName="性別平等工作法">
-        家庭照顧假一年至多 7
-        天，不得扣全勤獎金、影響考績或其他不利行為，屬主不得拒絕。
-      </PolicyLawNote>
-    ),
-    textTitle: '請分享自身或同事家庭照顧假的實際狀況',
-    textPlaceholder:
-      '自身、或有看過同事請家庭照顧假嗎？請家庭照顧假是否曾經遇到什麼困難？公司有額外的家庭照顧假福利嗎？（例如：多給幾天給薪家庭照顧假）',
-    hasText: ([, v]) => v === '是' || v === '否',
-  });
-
-export const createFlexibleWorkingHourQuestion = ({ asListOption } = {}) =>
-  createPolicyQuestion({
-    asListOption,
-    policy: 'FLEXIBLE_WORKING_HOUR',
-    label: '彈性上下班時間',
-    title: '是否有彈性上下班時間制度？',
-    options: ['有', '沒有', '不知道'],
-    textTitle: '請分享彈性上下班時間制度、實際狀況',
-    textPlaceholder:
-      '彈性上班的時間範圍？彈性下班的時間範圍？實際上來說，是否有同事或自身真的可以運用到彈性上下班？',
-    hasText: ([, v]) => v === '有',
-  });
-
-export const createRemoteWorkQuestion = ({ asListOption } = {}) =>
-  createPolicyQuestion({
-    asListOption,
-    policy: 'REMOTE_WORK',
-    label: '遠端工作',
-    title: '是否可以遠端工作？',
-    options: ['是', '否', '不知道'],
-    elseOptionValue: '是',
-    elseOptions: ['每週一天', '每週兩天', '每週三天', '每週四天', '不限天數'],
-    textTitle: '請分享遠端工作的實際狀況',
-    textPlaceholder:
-      '一週可以遠端工作幾天？需要先申請或報備嗎？若公司以遠端工作為主，是否有額外的方式讓團隊成員更加認識彼此？',
-    hasText: ([, v]) => v === '是',
-  });
-
-export const createPolicyQuestions = (options = {}) => [
-  createMenstrualLeaveQuestion(options),
-  createParentalLeaveQuestion(options),
-  createFamilyCareLeaveQuestion(options),
-  createFlexibleWorkingHourQuestion(options),
-  createRemoteWorkQuestion(options),
-];
+});
 
 export const createPoliciesQuestion = () => ({
   title: '至少分享三種制度的實際狀況',
@@ -751,7 +706,38 @@ export const createPoliciesQuestion = () => ({
   defaultValue: [],
   validateOrWarn: items =>
     items.length < 3 ? '至少填寫三種制度的實際狀況' : null,
-  options: createPolicyQuestions({ asListOption: true }),
+  options: [
+    toPolicyListOption(createMenstrualLeaveQuestion(), {
+      textTitle: '請分享自身或同事請生理假的實際狀況',
+      textPlaceholder:
+        '請生理假是否曾經遇到什麼困難？生理假薪資有正常給嗎（減半），或是有更好的福利？',
+      hasText: ([, v]) => v === '是' || v === '否',
+    }),
+    toPolicyListOption(createParentalLeaveQuestion(), {
+      textTitle: '請分享自身或同事請育嬰假/育嬰留職停薪的實際狀況',
+      textPlaceholder:
+        '自身、或有看過同事請育嬰假嗎？育嬰假是否曾經遇到什麼困難？公司有額外的育嬰福利嗎？（例如：多給幾天給薪育嬰假）',
+      hasText: ([, v]) => v === '是' || v === '否',
+    }),
+    toPolicyListOption(createFamilyCareLeaveQuestion(), {
+      textTitle: '請分享自身或同事家庭照顧假的實際狀況',
+      textPlaceholder:
+        '自身、或有看過同事請家庭照顧假嗎？請家庭照顧假是否曾經遇到什麼困難？公司有額外的家庭照顧假福利嗎？（例如：多給幾天給薪家庭照顧假）',
+      hasText: ([, v]) => v === '是' || v === '否',
+    }),
+    toPolicyListOption(createFlexibleWorkingHourQuestion(), {
+      textTitle: '請分享彈性上下班時間制度、實際狀況',
+      textPlaceholder:
+        '彈性上班的時間範圍？彈性下班的時間範圍？實際上來說，是否有同事或自身真的可以運用到彈性上下班？',
+      hasText: ([, v]) => v === '有',
+    }),
+    toPolicyListOption(createRemoteWorkQuestion(), {
+      textTitle: '請分享遠端工作的實際狀況',
+      textPlaceholder:
+        '一週可以遠端工作幾天？需要先申請或報備嗎？若公司以遠端工作為主，是否有額外的方式讓團隊成員更加認識彼此？',
+      hasText: ([, v]) => v === '是',
+    }),
+  ],
 });
 
 const Count = () => {
