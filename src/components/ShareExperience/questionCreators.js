@@ -566,7 +566,10 @@ export const createSensitiveQuestionsQuestion = () => ({
   placeholder: '輸入其他特殊問題內容',
 });
 
+// asListOption 為真時回傳 CHECKBOX_RADIO_ELSE_RADIO_TEXTAREA_LIST 的清單選項，
+// 否則回傳可以獨立成一頁的 RADIO / RADIO_ELSE_RADIO 題目
 const createPolicyQuestion = ({
+  asListOption,
   policy,
   label,
   title,
@@ -578,12 +581,23 @@ const createPolicyQuestion = ({
   textPlaceholder,
   hasText,
 }) => {
-  // label 與 text* 只有 createPoliciesQuestion 組成清單選項時會用到，單題模式不會用到
-  const common = {
+  if (asListOption) {
+    return {
+      label,
+      value: label,
+      radioTitle: title,
+      radioOptions: options,
+      radioElseOptionValue: elseOptionValue,
+      radioElseOptions: elseOptions,
+      radioFooter: footnote,
+      textTitle,
+      textPlaceholder,
+      hasText,
+    };
+  }
+
+  const question = {
     label,
-    textTitle,
-    textPlaceholder,
-    hasText,
     title,
     dataKey: `${DATA_KEY_POLICY_PREFIX}${policy}`,
     required: true,
@@ -593,7 +607,7 @@ const createPolicyQuestion = ({
 
   if (!elseOptions) {
     return {
-      ...common,
+      ...question,
       type: QUESTION_TYPE.RADIO,
       defaultValue: null,
       validateOrWarn: value => isNil(value) && '請選擇一個選項',
@@ -601,7 +615,7 @@ const createPolicyQuestion = ({
   }
 
   return {
-    ...common,
+    ...question,
     type: QUESTION_TYPE.RADIO_ELSE_RADIO,
     defaultValue: [null, null],
     elseOptionValue,
@@ -615,8 +629,9 @@ const createPolicyQuestion = ({
   };
 };
 
-export const createMenstrualLeaveQuestion = () =>
+export const createMenstrualLeaveQuestion = ({ asListOption } = {}) =>
   createPolicyQuestion({
+    asListOption,
     policy: 'MENSTRUAL_LEAVE',
     label: '生理假',
     title: '自己或同事是否請得到生理假？',
@@ -639,8 +654,9 @@ export const createMenstrualLeaveQuestion = () =>
     hasText: ([, v]) => v === '是' || v === '否',
   });
 
-export const createParentalLeaveQuestion = () =>
+export const createParentalLeaveQuestion = ({ asListOption } = {}) =>
   createPolicyQuestion({
+    asListOption,
     policy: 'PARENTAL_LEAVE',
     label: '育嬰假',
     title: '自己或同事是否請得到育嬰假？',
@@ -665,8 +681,9 @@ export const createParentalLeaveQuestion = () =>
     hasText: ([, v]) => v === '是' || v === '否',
   });
 
-export const createFamilyCareLeaveQuestion = () =>
+export const createFamilyCareLeaveQuestion = ({ asListOption } = {}) =>
   createPolicyQuestion({
+    asListOption,
     policy: 'FAMILY_CARE_LEAVE',
     label: '家庭照顧假',
     title: '自己或同事是否請得到家庭照顧假？',
@@ -690,8 +707,9 @@ export const createFamilyCareLeaveQuestion = () =>
     hasText: ([, v]) => v === '是' || v === '否',
   });
 
-export const createFlexibleWorkingHourQuestion = () =>
+export const createFlexibleWorkingHourQuestion = ({ asListOption } = {}) =>
   createPolicyQuestion({
+    asListOption,
     policy: 'FLEXIBLE_WORKING_HOUR',
     label: '彈性上下班時間',
     title: '是否有彈性上下班時間制度？',
@@ -702,8 +720,9 @@ export const createFlexibleWorkingHourQuestion = () =>
     hasText: ([, v]) => v === '有',
   });
 
-export const createRemoteWorkQuestion = () =>
+export const createRemoteWorkQuestion = ({ asListOption } = {}) =>
   createPolicyQuestion({
+    asListOption,
     policy: 'REMOTE_WORK',
     label: '遠端工作',
     title: '是否可以遠端工作？',
@@ -716,36 +735,13 @@ export const createRemoteWorkQuestion = () =>
     hasText: ([, v]) => v === '是',
   });
 
-export const createPolicyQuestions = () => [
-  createMenstrualLeaveQuestion(),
-  createParentalLeaveQuestion(),
-  createFamilyCareLeaveQuestion(),
-  createFlexibleWorkingHourQuestion(),
-  createRemoteWorkQuestion(),
+export const createPolicyQuestions = (options = {}) => [
+  createMenstrualLeaveQuestion(options),
+  createParentalLeaveQuestion(options),
+  createFamilyCareLeaveQuestion(options),
+  createFlexibleWorkingHourQuestion(options),
+  createRemoteWorkQuestion(options),
 ];
-
-const toPolicyListOption = ({
-  label,
-  title,
-  options,
-  elseOptionValue,
-  elseOptions,
-  footnote,
-  textTitle,
-  textPlaceholder,
-  hasText,
-}) => ({
-  label,
-  value: label,
-  radioTitle: title,
-  radioOptions: options,
-  radioElseOptionValue: elseOptionValue,
-  radioElseOptions: elseOptions,
-  radioFooter: footnote,
-  textTitle,
-  textPlaceholder,
-  hasText,
-});
 
 export const createPoliciesQuestion = () => ({
   title: '至少分享三種制度的實際狀況',
@@ -755,7 +751,7 @@ export const createPoliciesQuestion = () => ({
   defaultValue: [],
   validateOrWarn: items =>
     items.length < 3 ? '至少填寫三種制度的實際狀況' : null,
-  options: createPolicyQuestions().map(toPolicyListOption),
+  options: createPolicyQuestions({ asListOption: true }),
 });
 
 const Count = () => {

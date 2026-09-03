@@ -16,8 +16,12 @@ const policyQuestions = createPolicyQuestions();
 
 const questions = [...policyQuestions, createSubmitQuestion({ label: '制度' })];
 
+// createPolicyQuestions 沒帶 asListOption，回傳的是單題形狀；
+// questionCreators 是 JS，型別上是兩種形狀的聯集，故在此收斂
+type PolicyQuestion = { label: string; dataKey: string };
+
 const toPolicyReviews = (draft: Record<string, unknown>): PolicyReviewInput[] =>
-  policyQuestions.map(({ label, dataKey }) => {
+  (policyQuestions as PolicyQuestion[]).map(({ label, dataKey }) => {
     const answer = draft[dataKey];
     // RADIO 題只有 hasPolicy，RADIO_ELSE_RADIO 題則是 [hasPolicy, detail]
     const [hasPolicy, detail] = Array.isArray(answer) ? answer : [answer, null];
