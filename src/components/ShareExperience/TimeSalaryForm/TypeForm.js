@@ -23,7 +23,6 @@ import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
 import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_CURRENTLY_EMPLOYED,
-  DATA_KEY_DAY_PROMISED_WORK_TIME,
   DATA_KEY_DAY_REAL_WORK_TIME,
   DATA_KEY_EMPLOY_TYPE,
   DATA_KEY_EXPERIENCE_IN_YEAR,
@@ -41,7 +40,6 @@ import {
   createCompanyQuestion,
   createCompensatoryDayOffQuestion,
   createCurrentlyEmployedQuestion,
-  createDayPromisedWorkTimeQuestion,
   createDayRealWorkTimeQuestion,
   createEmployTypeQuestion,
   createExperienceInYearQuestion,
@@ -75,7 +73,6 @@ const questions = [
   createGenderQuestion(),
   createRequiredSalaryQuestion({ type: TabType.TIME_AND_SALARY }),
   createExperienceInYearQuestion(),
-  createDayPromisedWorkTimeQuestion(),
   createDayRealWorkTimeQuestion(),
   createWeekWorkTimeQuestion(),
   createOvertimeFrequencyQuestion(),
@@ -105,7 +102,6 @@ const bodyFromDraft = evolve({
   salaryAmount: draft =>
     parseSalaryAmount(draft[DATA_KEY_SALARY][1]).toString(),
   experienceInYear: draft => draft[DATA_KEY_EXPERIENCE_IN_YEAR].toString(),
-  dayPromisedWorkTime: draft => draft[DATA_KEY_DAY_PROMISED_WORK_TIME],
   dayRealWorkTime: draft => draft[DATA_KEY_DAY_REAL_WORK_TIME],
   weekWorkTime: draft => draft[DATA_KEY_WEEK_WORK_TIME],
   overtimeFrequency: draft => draft[DATA_KEY_OVERTIME_FREQUENCY].toString(),

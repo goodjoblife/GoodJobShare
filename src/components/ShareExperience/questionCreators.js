@@ -25,7 +25,6 @@ import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_CURRENTLY_EMPLOYED,
   DATA_KEY_DATE,
-  DATA_KEY_DAY_PROMISED_WORK_TIME,
   DATA_KEY_DAY_REAL_WORK_TIME,
   DATA_KEY_EMPLOY_TYPE,
   DATA_KEY_EXPERIENCE_IN_YEAR,
@@ -311,18 +310,6 @@ const validateWorkingTime = (fieldName, min, max) => value => {
     return `${fieldName}必須在${min}~${max}之間`;
   }
 };
-
-export const createDayPromisedWorkTimeQuestion = () => ({
-  title: '工作日表訂工時(一日)',
-  type: QUESTION_TYPE.TEXT,
-  dataKey: DATA_KEY_DAY_PROMISED_WORK_TIME,
-  required: true,
-  defaultValue: '',
-  validateOrWarn: validateWorkingTime('工作日表訂工時', 0, 24),
-  placeholder: '8 或 8.5',
-  footnote:
-    '工作日指與雇主約定的上班日，或是排班排定的日子。一天表訂要工作多久。',
-});
 
 export const createDayRealWorkTimeQuestion = () => ({
   title: '工作日實際平均工時(一日)',
