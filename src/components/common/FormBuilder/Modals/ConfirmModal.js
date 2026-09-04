@@ -3,6 +3,7 @@ import cn from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Button from 'common/button/Button';
 import Modal from 'common/Modal';
 
 import styles from './styles.module.css';
@@ -15,15 +16,14 @@ const ConfirmModal = ({ title, subtitle, description, actions, ...props }) => (
     </div>
     <div className={styles.description}>{description}</div>
     {actions.map(([text, action, appearance = 'black']) => (
-      <button
+      <Button
         key={text}
-        className={cn(styles.btn, {
-          [styles.whiteBtn]: appearance === 'white',
-        })}
+        className={styles.btn}
+        btnStyle={appearance === 'white' ? 'blackLine' : 'black'}
         onClick={action}
       >
         {text}
-      </button>
+      </Button>
     ))}
   </Modal>
 );
