@@ -25,13 +25,13 @@ import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_CURRENTLY_EMPLOYED,
   DATA_KEY_DATE,
-  DATA_KEY_DAY_PROMISED_WORK_TIME,
   DATA_KEY_DAY_REAL_WORK_TIME,
   DATA_KEY_EMPLOY_TYPE,
   DATA_KEY_EXPERIENCE_IN_YEAR,
   DATA_KEY_GENDER,
   DATA_KEY_HAS_COMPENSATORY_DAYOFF,
   DATA_KEY_HAS_OVERTIME_SALARY,
+  DATA_KEY_JOB_LADDER,
   DATA_KEY_JOB_LEVEL,
   DATA_KEY_JOB_TENURE,
   DATA_KEY_JOB_TITLE,
@@ -303,6 +303,13 @@ export const createExperienceInYearQuestion = () => ({
   validateOrWarn: value => isNil(value) && '需填寫工作經歷',
 });
 
+export const createJobLadderQuestion = () => ({
+  title: '職等',
+  type: QUESTION_TYPE.TEXT,
+  dataKey: DATA_KEY_JOB_LADDER,
+  defaultValue: '',
+});
+
 const validateWorkingTime = (fieldName, min, max) => value => {
   if (isNot(isNumber, value)) {
     return `請填寫${fieldName}`;
@@ -311,18 +318,6 @@ const validateWorkingTime = (fieldName, min, max) => value => {
     return `${fieldName}必須在${min}~${max}之間`;
   }
 };
-
-export const createDayPromisedWorkTimeQuestion = () => ({
-  title: '工作日表訂工時(一日)',
-  type: QUESTION_TYPE.TEXT,
-  dataKey: DATA_KEY_DAY_PROMISED_WORK_TIME,
-  required: true,
-  defaultValue: '',
-  validateOrWarn: validateWorkingTime('工作日表訂工時', 0, 24),
-  placeholder: '8 或 8.5',
-  footnote:
-    '工作日指與雇主約定的上班日，或是排班排定的日子。一天表訂要工作多久。',
-});
 
 export const createDayRealWorkTimeQuestion = () => ({
   title: '工作日實際平均工時(一日)',
@@ -523,9 +518,12 @@ export const createOvertimeSalaryQuestion = () => ({
   title: '加班有無加班費',
   type: QUESTION_TYPE.RADIO_ELSE_RADIO,
   dataKey: DATA_KEY_HAS_OVERTIME_SALARY,
+  required: true,
   defaultValue: [null, null],
   validateOrWarn: ([selected, elseValue], { elseOptionValue }) =>
-    selected === elseOptionValue && elseValue === null
+    isNil(selected)
+      ? '需填寫加班有無加班費'
+      : selected === elseOptionValue && elseValue === null
       ? '需填寫加班費是否符合勞基法'
       : null,
   options: [
@@ -545,7 +543,9 @@ export const createCompensatoryDayOffQuestion = () => ({
   title: '加班有無補休',
   type: QUESTION_TYPE.RADIO,
   dataKey: DATA_KEY_HAS_COMPENSATORY_DAYOFF,
+  required: true,
   defaultValue: null,
+  validateOrWarn: value => isNil(value) && '需填寫加班有無補休',
   options: [
     { label: '有', value: 'yes' },
     { label: '沒有', value: 'no' },
