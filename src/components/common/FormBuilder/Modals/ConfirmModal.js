@@ -8,7 +8,13 @@ import Modal from 'common/Modal';
 
 import styles from './styles.module.css';
 
-const ConfirmModal = ({ title, subtitle, description, actions, ...props }) => (
+const ConfirmModal = ({
+  title,
+  subtitle = '',
+  description,
+  actions,
+  ...props
+}) => (
   <Modal {...props} size="xs" contentClassName={styles.content}>
     <div className={styles.title}>{title}</div>
     <div className={cn(styles.subTitle, { [styles.hidden]: !subtitle })}>
