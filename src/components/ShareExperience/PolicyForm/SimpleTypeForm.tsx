@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
 import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
 
-import { toPolicyReviewInput } from './TypeForm';
+import { companyOverviewPathnameOf, toPolicyReviewInput } from './TypeForm';
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import { CompanyJobTitleHeader } from '../common/TypeFormHeader';
 import {
@@ -29,7 +29,6 @@ type Props = {
   companyName: string;
   jobTitle: string;
   sector?: string;
-  redirectPathnameOnSuccess: string | (() => string);
   redirectPathnameOnQuit: string | (() => string);
 };
 
@@ -39,10 +38,14 @@ const SimpleTypeForm = ({
   companyName,
   jobTitle,
   sector,
-  redirectPathnameOnSuccess,
   redirectPathnameOnQuit,
 }: Props): React.ReactElement => {
   const dispatch = useDispatch();
+
+  const redirectPathnameOnSuccess = useCallback(
+    () => companyOverviewPathnameOf(companyName),
+    [companyName],
+  );
 
   const onSubmit = useCallback(
     (draft: Record<string, unknown>) =>

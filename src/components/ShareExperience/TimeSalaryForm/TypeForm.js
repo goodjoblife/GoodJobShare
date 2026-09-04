@@ -188,7 +188,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
     (_, salaryDraft) => setPolicyDraft(toPolicyDraft(salaryDraft)),
     [],
   );
-  const policyFormRedirectPathname = useCallback(
+  const policyFormQuitPathname = useCallback(
     () => salaryTabPathnameOf(policyDraft.companyName),
     [policyDraft],
   );
@@ -232,8 +232,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
         companyName={policyDraft?.companyName || ''}
         jobTitle={policyDraft?.jobTitle || ''}
         sector={policyDraft?.sector || ''}
-        redirectPathnameOnSuccess={policyFormRedirectPathname}
-        redirectPathnameOnQuit={policyFormRedirectPathname}
+        redirectPathnameOnQuit={policyFormQuitPathname}
       />
     </Fragment>
   );
