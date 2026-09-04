@@ -31,6 +31,7 @@ import {
   DATA_KEY_GENDER,
   DATA_KEY_HAS_COMPENSATORY_DAYOFF,
   DATA_KEY_HAS_OVERTIME_SALARY,
+  DATA_KEY_JOB_LADDER,
   DATA_KEY_JOB_LEVEL,
   DATA_KEY_JOB_TENURE,
   DATA_KEY_JOB_TITLE,
@@ -300,6 +301,13 @@ export const createExperienceInYearQuestion = () => ({
     value: n,
   })),
   validateOrWarn: value => isNil(value) && '需填寫工作經歷',
+});
+
+export const createJobLadderQuestion = () => ({
+  title: '職等',
+  type: QUESTION_TYPE.TEXT,
+  dataKey: DATA_KEY_JOB_LADDER,
+  defaultValue: '',
 });
 
 const validateWorkingTime = (fieldName, min, max) => value => {

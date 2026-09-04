@@ -13,6 +13,7 @@ export const DATA_KEY_JOB_TENURE = 'experienceInYear';
 export const DATA_KEY_JOB_LEVEL = 'jobLevel';
 export const DATA_KEY_SALARY = 'salary';
 export const DATA_KEY_EXPERIENCE_IN_YEAR = 'experienceInYear';
+export const DATA_KEY_JOB_LADDER = 'jobLadder';
 export const DATA_KEY_DAY_REAL_WORK_TIME = 'dayRealWorkTime';
 export const DATA_KEY_WEEK_WORK_TIME = 'weekWorkTime';
 export const DATA_KEY_OVERTIME_FREQUENCY = 'overtimeFrequency';
