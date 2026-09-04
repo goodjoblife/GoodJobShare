@@ -24,11 +24,20 @@ type SubmitStatus =
 
 type Pathname = string | ((result: unknown, draft: Draft) => string);
 
+// TODO: replace with a proper Question type; the shape is still only described
+// by QuestionPropType in common/FormBuilder
+type Question = unknown;
+
+// TODO: the function form should be (draft: Draft) => ReactNode, matching
+// PageEndPropType. It is any because PolicyForm/TypeForm passes a narrower
+// param type ({ companyName, jobTitle }), which strictFunctionTypes rejects.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type PageEnd = React.ReactNode | ((draft: any) => React.ReactNode);
+
 type Props = {
   open: boolean;
-  questions: unknown[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  header?: React.ReactNode | ((draft: any) => React.ReactNode);
+  questions: Question[];
+  header?: PageEnd;
   onSubmit: (draft: Draft) => unknown;
   onSubmitError: (error: unknown) => void | Promise<void>;
   onClose: () => void;
