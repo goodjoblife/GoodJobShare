@@ -4,9 +4,7 @@ import { useDispatch } from 'react-redux';
 import { queryRatingStatistics } from 'actions/company';
 import Glike from 'common/icons/Glike';
 import { paramsSelector } from 'common/routing/selectors';
-import LeavePolicySection, {
-  LeavePolicyRecord,
-} from 'components/CompanyAndJobTitle/LeavePolicySection';
+import LeavePolicySection from 'components/CompanyAndJobTitle/LeavePolicySection';
 import {
   LeaveBulletByLabel,
   LeaveSection,
@@ -19,6 +17,7 @@ import { ServerSideRender } from 'types/serverSideRender';
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
+import useCompanyPolicyReviews from './useCompanyPolicyReviews';
 
 const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
   是: { text: '請得到生理假', icon: <Glike /> },
@@ -60,27 +59,6 @@ const FILTER_OPTIONS = [
   { value: '不知道', label: '不知道' },
 ];
 
-const RECORDS: LeavePolicyRecord[] = [
-  {
-    id: '1',
-    jobTitle: 'QA',
-    region: 'IT',
-    availability: '是',
-    compliance: '優於',
-    experience: '每個月可以請兩天，應該優於勞基法。我偶爾會請，沒有什麼問題',
-    sharedAt: '2025.08.11',
-  },
-  {
-    id: '2',
-    jobTitle: 'Data Engineer',
-    region: 'IT',
-    availability: '是',
-    compliance: '符合',
-    experience: '請得到，主管也是女性，可以理解女生的需求',
-    sharedAt: '2025.07.11',
-  },
-];
-
 type Params = { companyName: string };
 
 const CompanyGenderFriendlyMenstrualLeaveProvider: React.FC &
@@ -88,6 +66,12 @@ const CompanyGenderFriendlyMenstrualLeaveProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
+  const { records, totalCount } = useCompanyPolicyReviews({
+    companyName,
+    policy: 'MENSTRUAL_LEAVE',
+    start: (page - 1) * PAGE_SIZE,
+    limit: PAGE_SIZE,
+  });
 
   useEffect(() => {
     dispatch(queryRatingStatistics(companyName));
@@ -108,7 +92,8 @@ const CompanyGenderFriendlyMenstrualLeaveProvider: React.FC &
       availabilityColumnTitle="是否請得到生理假"
       complianceColumnTitle="勞基法符合度"
       filterOptions={FILTER_OPTIONS}
-      records={RECORDS}
+      records={records}
+      totalCount={totalCount}
       page={page}
       pageSize={PAGE_SIZE}
     />

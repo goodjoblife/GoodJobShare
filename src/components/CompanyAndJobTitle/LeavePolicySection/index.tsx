@@ -62,6 +62,7 @@ type Props = {
   complianceColumnTitle?: string;
   filterOptions: FilterOption[];
   records: LeavePolicyRecord[];
+  totalCount: number;
   page: number;
   pageSize: number;
 };
@@ -81,6 +82,7 @@ const LeavePolicySection: React.FC<Props> = ({
   complianceColumnTitle,
   filterOptions,
   records,
+  totalCount,
   page,
   pageSize,
 }) => {
@@ -108,9 +110,10 @@ const LeavePolicySection: React.FC<Props> = ({
   const filteredRecords = records.filter(r =>
     debouncedSelectedValues.includes(r.availability),
   );
-  const totalCount = filteredRecords.length;
-  const start = (page - 1) * pageSize;
-  const pageRecords = filteredRecords.slice(start, start + pageSize);
+  const filteredTotalCount =
+    selectedValues.length === filterOptions.length
+      ? totalCount
+      : filteredRecords.length;
 
   const columns: ColumnConfig[] = [
     { id: 'jobTitle', title: '職稱', dataField: 'jobTitle' },
@@ -165,7 +168,7 @@ const LeavePolicySection: React.FC<Props> = ({
             />
           ))}
         </div>
-        <Table data={pageRecords} primaryKey="id">
+        <Table data={filteredRecords} primaryKey="id">
           {columns.map(
             ({ id, ...colProps }): React.ReactNode => (
               <TableColumn key={id} {...colProps} />
@@ -173,7 +176,7 @@ const LeavePolicySection: React.FC<Props> = ({
           )}
         </Table>
         <Pagination
-          totalCount={totalCount}
+          totalCount={filteredTotalCount}
           unit={pageSize}
           currentPage={page}
           createPageLinkTo={createPageLinkTo}

@@ -4,9 +4,7 @@ import { useDispatch } from 'react-redux';
 import { queryRatingStatistics } from 'actions/company';
 import Glike from 'common/icons/Glike';
 import { paramsSelector } from 'common/routing/selectors';
-import LeavePolicySection, {
-  LeavePolicyRecord,
-} from 'components/CompanyAndJobTitle/LeavePolicySection';
+import LeavePolicySection from 'components/CompanyAndJobTitle/LeavePolicySection';
 import {
   LeaveBulletByLabel,
   LeaveSection,
@@ -19,6 +17,7 @@ import { ServerSideRender } from 'types/serverSideRender';
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
+import useCompanyPolicyReviews from './useCompanyPolicyReviews';
 
 const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
   是: { text: '請得到育嬰假', icon: <Glike /> },
@@ -60,27 +59,6 @@ const FILTER_OPTIONS = [
   { value: '不知道', label: '不知道' },
 ];
 
-const RECORDS: LeavePolicyRecord[] = [
-  {
-    id: '1',
-    jobTitle: 'Software Engineer',
-    region: 'RD',
-    availability: '是',
-    compliance: '優於',
-    experience: '公司育嬰假制度完善，主管也很支持，沒有任何壓力',
-    sharedAt: '2025.09.01',
-  },
-  {
-    id: '2',
-    jobTitle: 'HR',
-    region: '人資',
-    availability: '否',
-    compliance: '不符合',
-    experience: '上司暗示不要請，說影響升遷，感覺公司文化還需改善',
-    sharedAt: '2025.06.15',
-  },
-];
-
 type Params = { companyName: string };
 
 const CompanyFamilyChildcareParentalLeaveProvider: React.FC &
@@ -88,6 +66,12 @@ const CompanyFamilyChildcareParentalLeaveProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
+  const { records, totalCount } = useCompanyPolicyReviews({
+    companyName,
+    policy: 'PARENTAL_LEAVE',
+    start: (page - 1) * PAGE_SIZE,
+    limit: PAGE_SIZE,
+  });
 
   useEffect(() => {
     dispatch(queryRatingStatistics(companyName));
@@ -108,7 +92,8 @@ const CompanyFamilyChildcareParentalLeaveProvider: React.FC &
       availabilityColumnTitle="是否請得到育嬰假"
       complianceColumnTitle="勞基法符合度"
       filterOptions={FILTER_OPTIONS}
-      records={RECORDS}
+      records={records}
+      totalCount={totalCount}
       page={page}
       pageSize={PAGE_SIZE}
     />
