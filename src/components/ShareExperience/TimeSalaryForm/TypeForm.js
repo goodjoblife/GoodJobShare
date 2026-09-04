@@ -84,9 +84,6 @@ const questions = [
   createSubmitQuestion({ label: tabTypeTranslation[TabType.TIME_AND_SALARY] }),
 ];
 
-// 表訂工時題目已移除，但後端仍要求此欄位，故以勞基法的法定正常工時填入
-const DEFAULT_DAY_PROMISED_WORK_TIME = '8';
-
 const bodyFromDraft = evolve({
   company: draft => draft[DATA_KEY_COMPANY_NAME],
   companyId: '',
@@ -109,7 +106,7 @@ const bodyFromDraft = evolve({
     parseSalaryAmount(draft[DATA_KEY_SALARY][1]).toString(),
   experienceInYear: draft => draft[DATA_KEY_EXPERIENCE_IN_YEAR].toString(),
   jobLadder: draft => draft[DATA_KEY_JOB_LADDER],
-  dayPromisedWorkTime: DEFAULT_DAY_PROMISED_WORK_TIME,
+  dayPromisedWorkTime: '8',
   dayRealWorkTime: draft => draft[DATA_KEY_DAY_REAL_WORK_TIME],
   weekWorkTime: draft => draft[DATA_KEY_WEEK_WORK_TIME],
   overtimeFrequency: draft => draft[DATA_KEY_OVERTIME_FREQUENCY].toString(),
