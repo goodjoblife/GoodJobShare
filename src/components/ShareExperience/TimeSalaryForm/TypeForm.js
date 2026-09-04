@@ -130,7 +130,13 @@ const toPolicyDraft = salaryDraft => ({
   sector: salaryDraft[DATA_KEY_SECTOR],
 });
 
-const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
+const SalaryTypeForm = ({
+  open,
+  onClose,
+  hideProgressBar,
+  successDescription,
+  onSuccessContinue,
+}) => {
   useEffect(() => {
     if (open) {
       // send hotjar event for recording
@@ -183,17 +189,6 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
     [dispatch, hideProgressBar],
   );
 
-  const [policyDraft, setPolicyDraft] = useState(null);
-  const onContinueToPolicyForm = useCallback(
-    (_, salaryDraft) => setPolicyDraft(toPolicyDraft(salaryDraft)),
-    [],
-  );
-  const policyFormQuitPathname = useCallback(
-    () => salaryTabPathnameOf(policyDraft.companyName),
-    [policyDraft],
-  );
-  const closePolicyForm = useCallback(() => setPolicyDraft(null), []);
-
   const onSubmitError = useCallback(
     async error => {
       ReactGA.event({
@@ -212,17 +207,48 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
   );
 
   return (
+    <SubmittableFormBuilder
+      open={open}
+      questions={questions}
+      header={renderCompanyJobTitleHeader}
+      onSubmit={onSubmit}
+      onSubmitError={onSubmitError}
+      onClose={onClose}
+      redirectPathnameOnSuccess={redirectToSalaryTab}
+      hideProgressBar={hideProgressBar}
+      successSubtitle="你已解鎖全站資訊 14 天囉！"
+      successDescription={successDescription}
+      onSuccessContinue={onSuccessContinue}
+    />
+  );
+};
+
+SalaryTypeForm.propTypes = {
+  hideProgressBar: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
+  onSuccessContinue: PropTypes.func,
+  open: PropTypes.bool.isRequired,
+  successDescription: PropTypes.string,
+};
+
+const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
+  const [policyDraft, setPolicyDraft] = useState(null);
+  const onContinueToPolicyForm = useCallback(
+    (_, salaryDraft) => setPolicyDraft(toPolicyDraft(salaryDraft)),
+    [],
+  );
+  const closePolicyForm = useCallback(() => setPolicyDraft(null), []);
+  const policyFormQuitPathname = useCallback(
+    () => salaryTabPathnameOf(policyDraft.companyName),
+    [policyDraft],
+  );
+
+  return (
     <Fragment>
-      <SubmittableFormBuilder
+      <SalaryTypeForm
         open={open}
-        questions={questions}
-        header={renderCompanyJobTitleHeader}
-        onSubmit={onSubmit}
-        onSubmitError={onSubmitError}
         onClose={onClose}
-        redirectPathnameOnSuccess={redirectToSalaryTab}
         hideProgressBar={hideProgressBar}
-        successSubtitle="你已解鎖全站資訊 14 天囉！"
         successDescription="再回答幾個問題，加碼解鎖 14 天。"
         onSuccessContinue={onContinueToPolicyForm}
       />
