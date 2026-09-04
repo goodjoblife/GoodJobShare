@@ -125,7 +125,10 @@ const SubmittableTypeForm = ({
         closableOnClickOutside
         actions={
           onSuccessContinue
-            ? [['繼續', onSuccessContinueClick], ['完成', onSuccessClose]]
+            ? [
+                ['繼續', onSuccessContinueClick],
+                ['完成', onSuccessClose, 'white'],
+              ]
             : [['確定', onSuccessClose]]
         }
       />

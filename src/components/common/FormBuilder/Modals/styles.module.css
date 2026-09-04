@@ -49,3 +49,9 @@
     margin-top: 8px;
   }
 }
+
+.whiteBtn {
+  background-color: #ffffff;
+  border: solid 1px #000000;
+  color: #000000;
+}

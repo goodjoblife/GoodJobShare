@@ -14,8 +14,14 @@ const ConfirmModal = ({ title, subtitle, description, actions, ...props }) => (
       {subtitle}
     </div>
     <div className={styles.description}>{description}</div>
-    {actions.map(([text, action]) => (
-      <button key={text} className={styles.btn} onClick={action}>
+    {actions.map(([text, action, appearance = 'black']) => (
+      <button
+        key={text}
+        className={cn(styles.btn, {
+          [styles.whiteBtn]: appearance === 'white',
+        })}
+        onClick={action}
+      >
         {text}
       </button>
     ))}
@@ -27,6 +33,7 @@ ConfirmModal.propTypes = {
     withShape(PropTypes.array.isRequired, {
       0: PropTypes.string.isRequired,
       1: PropTypes.func.isRequired,
+      2: PropTypes.oneOf(['black', 'white']),
     }),
   ),
   description: PropTypes.string,
