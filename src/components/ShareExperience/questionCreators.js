@@ -518,9 +518,12 @@ export const createOvertimeSalaryQuestion = () => ({
   title: '加班有無加班費',
   type: QUESTION_TYPE.RADIO_ELSE_RADIO,
   dataKey: DATA_KEY_HAS_OVERTIME_SALARY,
+  required: true,
   defaultValue: [null, null],
   validateOrWarn: ([selected, elseValue], { elseOptionValue }) =>
-    selected === elseOptionValue && elseValue === null
+    isNil(selected)
+      ? '需填寫加班有無加班費'
+      : selected === elseOptionValue && elseValue === null
       ? '需填寫加班費是否符合勞基法'
       : null,
   options: [
@@ -540,7 +543,9 @@ export const createCompensatoryDayOffQuestion = () => ({
   title: '加班有無補休',
   type: QUESTION_TYPE.RADIO,
   dataKey: DATA_KEY_HAS_COMPENSATORY_DAYOFF,
+  required: true,
   defaultValue: null,
+  validateOrWarn: value => isNil(value) && '需填寫加班有無補休',
   options: [
     { label: '有', value: 'yes' },
     { label: '沒有', value: 'no' },
