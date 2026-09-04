@@ -13,8 +13,9 @@ const Radio = ({
   onConfirm,
   warning,
   options,
+  footnote,
 }) => (
-  <Wrapper warning={warning}>
+  <Wrapper warning={warning} footnote={footnote}>
     <BlockSelect
       dataKey={dataKey}
       required={required}
@@ -28,6 +29,7 @@ const Radio = ({
 
 Radio.propTypes = {
   dataKey: PropTypes.string.isRequired,
+  footnote: PropTypes.node,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(OptionPropType).isRequired,

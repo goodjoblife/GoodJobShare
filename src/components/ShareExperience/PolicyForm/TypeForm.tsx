@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
 import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
+import { generatePageURL, PageType } from 'constants/companyJobTitle';
 
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
@@ -75,7 +76,7 @@ const remoteWorkPolicyMap: Record<string, string> = {
   不限天數: 'NO_LIMIT',
 };
 
-const toPolicyReviewInput = ([
+export const toPolicyReviewInput = ([
   optionValue,
   radioValue,
   elseOptionValue,
@@ -109,6 +110,14 @@ const toPolicyReviewInput = ([
       : undefined,
   };
 };
+
+export const companyOverviewPathnameOf = (companyName: string): string =>
+  generatePageURL({ pageType: PageType.COMPANY, pageName: companyName });
+
+const redirectToCompanyOverview = (
+  _: unknown,
+  draft: Record<string, unknown>,
+): string => companyOverviewPathnameOf(draft[DATA_KEY_COMPANY_NAME] as string);
 
 const TypeForm = ({
   open,
@@ -148,7 +157,7 @@ const TypeForm = ({
       onSubmitError={onSubmitError}
       onClose={onClose}
       hideProgressBar={false}
-      redirectPathnameOnSuccess={(): string => '/'}
+      redirectPathnameOnSuccess={redirectToCompanyOverview}
     />
   );
 };
