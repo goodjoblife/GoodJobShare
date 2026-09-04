@@ -1,0 +1,10 @@
+.chart {
+  flex: 1;
+  min-height: 120px;
+}
+
+.chartContent {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
