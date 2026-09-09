@@ -9,6 +9,7 @@ import {
   map,
   path,
   range,
+  trim,
   when,
 } from 'ramda';
 import React, { Fragment } from 'react';
@@ -81,7 +82,7 @@ export const createCompanyQuestion = ({ header }) => ({
     return companyName;
   },
   required: true,
-  validateOrWarn: value => isEmpty(value) && '請填寫公司名稱',
+  validateOrWarn: value => isEmpty(trim(value)) && '請填寫公司名稱',
   placeholder: 'ＯＯ 股份有限公司',
   search: value =>
     fetchSearchCompany({ companyName: value, hasData: false, limit: 10 }).then(
@@ -105,7 +106,7 @@ export const createJobTitleQuestion = ({ header }) => ({
   dataKey: DATA_KEY_JOB_TITLE,
   defaultValue: '',
   required: true,
-  validateOrWarn: value => isEmpty(value) && '請填寫職稱',
+  validateOrWarn: value => isEmpty(trim(value)) && '請填寫職稱',
   placeholder: '軟體工程師',
   search: value =>
     getJobTitlesSearch({ key: value }).then(when(isNot(isArray), always([]))),
