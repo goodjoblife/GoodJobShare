@@ -71,8 +71,8 @@ const CompanyFamilyChildcareFamilyCareLeaveProvider: React.FC &
   const {
     records,
     totalCount,
-    selectedValues,
-    toggleValue,
+    selectedHasPolicy,
+    toggleHasPolicy,
   } = useCompanyPolicyReviews({
     companyName,
     policy: 'FAMILY_CARE_LEAVE',
@@ -99,8 +99,8 @@ const CompanyFamilyChildcareFamilyCareLeaveProvider: React.FC &
       availabilityColumnTitle="是否請得到家庭照顧假"
       complianceColumnTitle="勞基法符合度"
       filterOptions={FILTER_OPTIONS}
-      selectedValues={selectedValues}
-      onToggleValue={toggleValue}
+      selectedHasPolicy={selectedHasPolicy}
+      onToggleHasPolicy={toggleHasPolicy}
       records={records}
       totalCount={totalCount}
       page={page}

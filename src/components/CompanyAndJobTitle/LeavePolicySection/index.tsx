@@ -59,8 +59,8 @@ type Props = {
   availabilityColumnTitle: string;
   complianceColumnTitle?: string;
   filterOptions: FilterOption[];
-  selectedValues: HasPolicy[];
-  onToggleValue: (value: HasPolicy) => void;
+  selectedHasPolicy: HasPolicy[];
+  onToggleHasPolicy: (value: HasPolicy) => void;
   records: LeavePolicyRecord[];
   totalCount: number;
   page: number;
@@ -81,8 +81,8 @@ const LeavePolicySection: React.FC<Props> = ({
   availabilityColumnTitle,
   complianceColumnTitle,
   filterOptions,
-  selectedValues,
-  onToggleValue,
+  selectedHasPolicy,
+  onToggleHasPolicy,
   records,
   totalCount,
   page,
@@ -140,8 +140,8 @@ const LeavePolicySection: React.FC<Props> = ({
               key={option.value}
               id={`filter-${option.value}`}
               label={option.label}
-              checked={selectedValues.includes(option.value)}
-              onChange={(): void => onToggleValue(option.value)}
+              checked={selectedHasPolicy.includes(option.value)}
+              onChange={(): void => onToggleHasPolicy(option.value)}
             />
           ))}
         </div>

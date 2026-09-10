@@ -60,8 +60,12 @@ const toRecord = (review: PolicyReview): LeavePolicyRecord => ({
 });
 
 // The backend rejects an empty array, so ask it to filter only on a real subset
-const toHasPolicyVariable = (selectedValues: HasPolicy[]): HasPolicy[] | null =>
-  selectedValues.length === HAS_POLICY_VALUES.length ? null : selectedValues;
+const toHasPolicyVariable = (
+  selectedHasPolicy: HasPolicy[],
+): HasPolicy[] | null =>
+  selectedHasPolicy.length === HAS_POLICY_VALUES.length
+    ? null
+    : selectedHasPolicy;
 
 const useCompanyPolicyReviews = ({
   companyName,
@@ -76,28 +80,28 @@ const useCompanyPolicyReviews = ({
 }): {
   records: LeavePolicyRecord[];
   totalCount: number;
-  selectedValues: HasPolicy[];
-  toggleValue: (value: HasPolicy) => void;
+  selectedHasPolicy: HasPolicy[];
+  toggleHasPolicy: (value: HasPolicy) => void;
 } => {
   const history = useHistory();
   const query = useQuery();
-  const [selectedValues, setSelectedValues] = useState<HasPolicy[]>(
+  const [selectedHasPolicy, setSelectedHasPolicy] = useState<HasPolicy[]>(
     HAS_POLICY_VALUES,
   );
-  const [debouncedSelectedValues, setDebouncedSelectedValues] = useState(
-    selectedValues,
+  const [debouncedSelectedHasPolicy, setDebouncedSelectedHasPolicy] = useState(
+    selectedHasPolicy,
   );
   useDebounce(
-    () => setDebouncedSelectedValues(selectedValues),
+    () => setDebouncedSelectedHasPolicy(selectedHasPolicy),
     FILTER_DEBOUNCE_DELAY,
-    [selectedValues],
+    [selectedHasPolicy],
   );
 
   // The backend paginates the filtered list, so the current page no longer
   // applies once the filter changes
-  const toggleValue = useCallback(
+  const toggleHasPolicy = useCallback(
     (value: HasPolicy): void => {
-      setSelectedValues(prev =>
+      setSelectedHasPolicy(prev =>
         prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value],
       );
       const { p, ...restQuery } = query;
@@ -113,7 +117,7 @@ const useCompanyPolicyReviews = ({
   const [data, setData] = useState<
     Awaited<ReturnType<typeof queryCompanyPolicyReviews>>
   >(null);
-  const isEmptySelection = debouncedSelectedValues.length === 0;
+  const isEmptySelection = debouncedSelectedHasPolicy.length === 0;
 
   useEffect(() => {
     if (isEmptySelection) return;
@@ -121,7 +125,7 @@ const useCompanyPolicyReviews = ({
     queryCompanyPolicyReviews({
       companyName,
       policy,
-      hasPolicy: toHasPolicyVariable(debouncedSelectedValues),
+      hasPolicy: toHasPolicyVariable(debouncedSelectedHasPolicy),
       start,
       limit,
     }).then(response => {
@@ -135,7 +139,7 @@ const useCompanyPolicyReviews = ({
   }, [
     companyName,
     policy,
-    debouncedSelectedValues,
+    debouncedSelectedHasPolicy,
     isEmptySelection,
     start,
     limit,
@@ -146,10 +150,10 @@ const useCompanyPolicyReviews = ({
     return {
       records: result ? result.policyReviews.map(toRecord) : [],
       totalCount: result ? result.count : 0,
-      selectedValues,
-      toggleValue,
+      selectedHasPolicy,
+      toggleHasPolicy,
     };
-  }, [data, isEmptySelection, selectedValues, toggleValue]);
+  }, [data, isEmptySelection, selectedHasPolicy, toggleHasPolicy]);
 };
 
 export default useCompanyPolicyReviews;

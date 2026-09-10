@@ -70,8 +70,8 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
   const {
     records,
     totalCount,
-    selectedValues,
-    toggleValue,
+    selectedHasPolicy,
+    toggleHasPolicy,
   } = useCompanyPolicyReviews({
     companyName,
     policy: 'REMOTE_WORK',
@@ -98,8 +98,8 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
       availabilityColumnTitle="是否可以遠端工作"
       complianceColumnTitle="每週遠端工作天數"
       filterOptions={FILTER_OPTIONS}
-      selectedValues={selectedValues}
-      onToggleValue={toggleValue}
+      selectedHasPolicy={selectedHasPolicy}
+      onToggleHasPolicy={toggleHasPolicy}
       records={records}
       totalCount={totalCount}
       page={page}

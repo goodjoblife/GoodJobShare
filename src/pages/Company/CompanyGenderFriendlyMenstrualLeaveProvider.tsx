@@ -71,8 +71,8 @@ const CompanyGenderFriendlyMenstrualLeaveProvider: React.FC &
   const {
     records,
     totalCount,
-    selectedValues,
-    toggleValue,
+    selectedHasPolicy,
+    toggleHasPolicy,
   } = useCompanyPolicyReviews({
     companyName,
     policy: 'MENSTRUAL_LEAVE',
@@ -99,8 +99,8 @@ const CompanyGenderFriendlyMenstrualLeaveProvider: React.FC &
       availabilityColumnTitle="是否請得到生理假"
       complianceColumnTitle="勞基法符合度"
       filterOptions={FILTER_OPTIONS}
-      selectedValues={selectedValues}
-      onToggleValue={toggleValue}
+      selectedHasPolicy={selectedHasPolicy}
+      onToggleHasPolicy={toggleHasPolicy}
       records={records}
       totalCount={totalCount}
       page={page}

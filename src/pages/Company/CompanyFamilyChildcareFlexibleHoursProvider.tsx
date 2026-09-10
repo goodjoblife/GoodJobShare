@@ -44,8 +44,8 @@ const CompanyFamilyChildcareFlexibleHoursProvider: React.FC &
   const {
     records,
     totalCount,
-    selectedValues,
-    toggleValue,
+    selectedHasPolicy,
+    toggleHasPolicy,
   } = useCompanyPolicyReviews({
     companyName,
     policy: 'FLEXIBLE_WORKING_HOUR',
@@ -67,8 +67,8 @@ const CompanyFamilyChildcareFlexibleHoursProvider: React.FC &
       section={SECTION}
       availabilityColumnTitle="是否有彈性上下班時間制度"
       filterOptions={FILTER_OPTIONS}
-      selectedValues={selectedValues}
-      onToggleValue={toggleValue}
+      selectedHasPolicy={selectedHasPolicy}
+      onToggleHasPolicy={toggleHasPolicy}
       records={records}
       totalCount={totalCount}
       page={page}
