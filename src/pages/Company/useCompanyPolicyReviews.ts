@@ -1,6 +1,4 @@
-import qs from 'qs';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useHistory } from 'react-router';
+import { useEffect, useMemo, useState } from 'react';
 import { useDebounce } from 'react-use';
 
 import queryCompanyPolicyReviews, {
@@ -10,9 +8,7 @@ import queryCompanyPolicyReviews, {
   RemoteWorkPolicy,
 } from 'apis/queryCompanyPolicyReviews';
 import { LeavePolicyRecord } from 'components/CompanyAndJobTitle/LeavePolicySection';
-import { useQuery } from 'hooks/routing';
-
-export const HAS_POLICY_VALUES: HasPolicy[] = ['yes', 'no', 'unknown'];
+import { HAS_POLICY_VALUES } from 'selectors/policyFilter';
 
 const FILTER_DEBOUNCE_DELAY = 800;
 
@@ -59,7 +55,7 @@ const toRecord = (review: PolicyReview): LeavePolicyRecord => ({
   sharedAt: toDate(review.createdAt),
 });
 
-// The backend rejects an empty array, so ask it to filter only on a real subset
+// 後端擋掉空陣列，所以只有真的篩掉某些答案時才帶這個變數
 const toHasPolicyVariable = (
   selectedHasPolicy: HasPolicy[],
 ): HasPolicy[] | null =>
@@ -70,54 +66,29 @@ const toHasPolicyVariable = (
 const useCompanyPolicyReviews = ({
   companyName,
   policy,
+  hasPolicy,
   start,
   limit,
 }: {
   companyName: string;
   policy: Policy;
+  hasPolicy: HasPolicy[];
   start: number;
   limit: number;
 }): {
   records: LeavePolicyRecord[];
   totalCount: number;
-  selectedHasPolicy: HasPolicy[];
-  toggleHasPolicy: (value: HasPolicy) => void;
 } => {
-  const history = useHistory();
-  const query = useQuery();
-  const [selectedHasPolicy, setSelectedHasPolicy] = useState<HasPolicy[]>(
-    HAS_POLICY_VALUES,
-  );
-  const [debouncedSelectedHasPolicy, setDebouncedSelectedHasPolicy] = useState(
-    selectedHasPolicy,
-  );
-  useDebounce(
-    () => setDebouncedSelectedHasPolicy(selectedHasPolicy),
-    FILTER_DEBOUNCE_DELAY,
-    [selectedHasPolicy],
-  );
-
-  // The backend paginates the filtered list, so the current page no longer
-  // applies once the filter changes
-  const toggleHasPolicy = useCallback(
-    (value: HasPolicy): void => {
-      setSelectedHasPolicy(prev =>
-        prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value],
-      );
-      const { p, ...restQuery } = query;
-      if (p !== undefined) {
-        history.replace({
-          search: qs.stringify(restQuery, { addQueryPrefix: true }),
-        });
-      }
-    },
-    [query, history],
-  );
+  // 篩選的勾選狀態即時反映在網址上，但查詢等它停下來再發
+  const [debouncedHasPolicy, setDebouncedHasPolicy] = useState(hasPolicy);
+  useDebounce(() => setDebouncedHasPolicy(hasPolicy), FILTER_DEBOUNCE_DELAY, [
+    hasPolicy,
+  ]);
 
   const [data, setData] = useState<
     Awaited<ReturnType<typeof queryCompanyPolicyReviews>>
   >(null);
-  const isEmptySelection = debouncedSelectedHasPolicy.length === 0;
+  const isEmptySelection = debouncedHasPolicy.length === 0;
 
   useEffect(() => {
     if (isEmptySelection) return;
@@ -125,7 +96,7 @@ const useCompanyPolicyReviews = ({
     queryCompanyPolicyReviews({
       companyName,
       policy,
-      hasPolicy: toHasPolicyVariable(debouncedSelectedHasPolicy),
+      hasPolicy: toHasPolicyVariable(debouncedHasPolicy),
       start,
       limit,
     }).then(response => {
@@ -136,24 +107,15 @@ const useCompanyPolicyReviews = ({
     return () => {
       isActive = false;
     };
-  }, [
-    companyName,
-    policy,
-    debouncedSelectedHasPolicy,
-    isEmptySelection,
-    start,
-    limit,
-  ]);
+  }, [companyName, policy, debouncedHasPolicy, isEmptySelection, start, limit]);
 
   return useMemo(() => {
     const result = isEmptySelection || !data ? null : data.policyReviewsResult;
     return {
       records: result ? result.policyReviews.map(toRecord) : [],
       totalCount: result ? result.count : 0,
-      selectedHasPolicy,
-      toggleHasPolicy,
     };
-  }, [data, isEmptySelection, selectedHasPolicy, toggleHasPolicy]);
+  }, [data, isEmptySelection]);
 };
 
 export default useCompanyPolicyReviews;

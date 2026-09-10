@@ -19,6 +19,7 @@ import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
 import useCompanyPolicyReviews from './useCompanyPolicyReviews';
+import useHasPolicyFilter from './useHasPolicyFilter';
 
 const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
   是: '有遠端工作制度',
@@ -67,14 +68,11 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
-  const {
-    records,
-    totalCount,
-    selectedHasPolicy,
-    toggleHasPolicy,
-  } = useCompanyPolicyReviews({
+  const [selectedHasPolicy, toggleHasPolicy] = useHasPolicyFilter();
+  const { records, totalCount } = useCompanyPolicyReviews({
     companyName,
     policy: 'REMOTE_WORK',
+    hasPolicy: selectedHasPolicy,
     start: (page - 1) * PAGE_SIZE,
     limit: PAGE_SIZE,
   });

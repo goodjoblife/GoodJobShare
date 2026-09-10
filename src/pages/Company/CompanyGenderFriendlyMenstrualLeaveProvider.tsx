@@ -20,6 +20,7 @@ import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
 import useCompanyPolicyReviews from './useCompanyPolicyReviews';
+import useHasPolicyFilter from './useHasPolicyFilter';
 
 const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
   是: { text: '請得到生理假', icon: <Glike /> },
@@ -68,14 +69,11 @@ const CompanyGenderFriendlyMenstrualLeaveProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
-  const {
-    records,
-    totalCount,
-    selectedHasPolicy,
-    toggleHasPolicy,
-  } = useCompanyPolicyReviews({
+  const [selectedHasPolicy, toggleHasPolicy] = useHasPolicyFilter();
+  const { records, totalCount } = useCompanyPolicyReviews({
     companyName,
     policy: 'MENSTRUAL_LEAVE',
+    hasPolicy: selectedHasPolicy,
     start: (page - 1) * PAGE_SIZE,
     limit: PAGE_SIZE,
   });
