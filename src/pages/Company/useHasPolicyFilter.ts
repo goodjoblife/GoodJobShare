@@ -12,7 +12,7 @@ import {
 
 const useHasPolicyFilter = (): readonly [
   HasPolicy[],
-  (value: HasPolicy) => void,
+  (value: HasPolicy, y: number | null) => void,
 ] => {
   const history = useHistory();
   const query = useQuery();
@@ -21,7 +21,7 @@ const useHasPolicyFilter = (): readonly [
   ]);
 
   const toggleHasPolicy = useCallback(
-    (value: HasPolicy): void => {
+    (value: HasPolicy, y: number | null): void => {
       // 依 HAS_POLICY_VALUES 的順序組回去，網址才不會因為點選順序而不同
       const next = HAS_POLICY_VALUES.filter(v =>
         v === value
@@ -30,6 +30,7 @@ const useHasPolicyFilter = (): readonly [
       );
       // 後端是對篩選後的列表分頁，篩選一改，原本的頁數就不適用了
       const { p, [HAS_POLICY_QUERY_KEY]: prev, ...restQuery } = query;
+      // y 讓 client.js 的 shouldUpdateScroll 捲回篩選區塊，而不是跳回頁首
       history.replace({
         search: qs.stringify(
           next.length === HAS_POLICY_VALUES.length
@@ -37,6 +38,7 @@ const useHasPolicyFilter = (): readonly [
             : { ...restQuery, [HAS_POLICY_QUERY_KEY]: next.join(',') },
           { addQueryPrefix: true },
         ),
+        state: { y },
       });
     },
     [query, selectedHasPolicy, history],

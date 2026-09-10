@@ -60,7 +60,7 @@ type Props = {
   complianceColumnTitle?: string;
   filterOptions: FilterOption[];
   selectedHasPolicy: HasPolicy[];
-  onToggleHasPolicy: (value: HasPolicy) => void;
+  onToggleHasPolicy: (value: HasPolicy, y: number | null) => void;
   records: LeavePolicyRecord[];
   totalCount: number;
   page: number;
@@ -90,7 +90,7 @@ const LeavePolicySection: React.FC<Props> = ({
 }) => {
   const parentPath = generateTabURL({ pageType, pageName, tabType });
   const tabName = tabTypeTranslation[tabType];
-  const [createPageLinkTo] = useCreatePageLinkTo();
+  const [createPageLinkTo, handleSectionRef, sectionY] = useCreatePageLinkTo();
 
   const columns: ColumnConfig[] = [
     { id: 'jobTitle', title: '職稱', dataField: 'jobTitle' },
@@ -133,7 +133,10 @@ const LeavePolicySection: React.FC<Props> = ({
         />
       </Wrapper>
       <Wrapper size="l" className={styles.content}>
-        <div className={styles.filter}>
+        <div
+          ref={handleSectionRef as React.Ref<HTMLDivElement>}
+          className={styles.filter}
+        >
           <span className={styles.filterLabel}>篩選：</span>
           {filterOptions.map(option => (
             <FilterToggleButton
@@ -141,7 +144,7 @@ const LeavePolicySection: React.FC<Props> = ({
               id={`filter-${option.value}`}
               label={option.label}
               checked={selectedHasPolicy.includes(option.value)}
-              onChange={(): void => onToggleHasPolicy(option.value)}
+              onChange={(): void => onToggleHasPolicy(option.value, sectionY)}
             />
           ))}
         </div>

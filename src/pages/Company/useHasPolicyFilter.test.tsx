@@ -25,17 +25,20 @@ const renderFilterAt = (
 ): {
   current: {
     selectedHasPolicy: HasPolicy[];
-    toggleHasPolicy: (value: HasPolicy) => void;
+    toggleHasPolicy: (value: HasPolicy, y: number | null) => void;
     search: string;
+    state: { y: number | null } | undefined;
   };
 } => {
   const { result } = renderHook(
     () => {
       const [selectedHasPolicy, toggleHasPolicy] = useHasPolicyFilter();
+      const location = useLocation<{ y: number | null } | undefined>();
       return {
         selectedHasPolicy,
         toggleHasPolicy,
-        search: useLocation().search,
+        search: location.search,
+        state: location.state,
       };
     },
     { wrapper: wrapperAt(entry) },
@@ -54,40 +57,46 @@ describe('useHasPolicyFilter', () => {
 
   it('取消一個答案時把剩下的寫進網址', () => {
     const result = renderFilterAt('/');
-    act(() => result.current.toggleHasPolicy('no'));
+    act(() => result.current.toggleHasPolicy('no', null));
     expect(result.current.selectedHasPolicy).toEqual(['yes', 'unknown']);
     expect(result.current.search).toBe('?hasPolicy=yes%2Cunknown');
   });
 
   it('全部選回來時把 param 移掉，而不是留下三個值', () => {
     const result = renderFilterAt('/?hasPolicy=yes%2Cunknown');
-    act(() => result.current.toggleHasPolicy('no'));
+    act(() => result.current.toggleHasPolicy('no', null));
     expect(result.current.selectedHasPolicy).toEqual(['yes', 'no', 'unknown']);
     expect(result.current.search).toBe('');
   });
 
   it('全部取消時留下空字串，不會變成沒帶 param', () => {
     const result = renderFilterAt('/?hasPolicy=yes');
-    act(() => result.current.toggleHasPolicy('yes'));
+    act(() => result.current.toggleHasPolicy('yes', null));
     expect(result.current.selectedHasPolicy).toEqual([]);
     expect(result.current.search).toBe('?hasPolicy=');
   });
 
   it('網址順序固定，不隨點選順序改變', () => {
     const result = renderFilterAt('/?hasPolicy=unknown');
-    act(() => result.current.toggleHasPolicy('yes'));
+    act(() => result.current.toggleHasPolicy('yes', null));
     expect(result.current.search).toBe('?hasPolicy=yes%2Cunknown');
   });
 
   it('切換篩選時把頁數移掉，因為後端是對篩選後的列表分頁', () => {
     const result = renderFilterAt('/?p=3');
-    act(() => result.current.toggleHasPolicy('no'));
+    act(() => result.current.toggleHasPolicy('no', null));
     expect(result.current.search).toBe('?hasPolicy=yes%2Cunknown');
+  });
+
+  it('把篩選區塊的位置放進 location state，讓畫面不會跳回頁首', () => {
+    const result = renderFilterAt('/');
+    act(() => result.current.toggleHasPolicy('no', 420));
+    expect(result.current.state).toEqual({ y: 420 });
   });
 
   it('保留其他無關的 query param', () => {
     const result = renderFilterAt('/?utm_source=fb&p=2');
-    act(() => result.current.toggleHasPolicy('no'));
+    act(() => result.current.toggleHasPolicy('no', null));
     expect(result.current.search).toBe(
       '?utm_source=fb&hasPolicy=yes%2Cunknown',
     );
