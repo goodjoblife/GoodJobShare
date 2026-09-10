@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useDebounce } from 'react-use';
+import React from 'react';
 
+import { HasPolicy } from 'apis/queryCompanyPolicyReviews';
 import { Heading, Link, Wrapper } from 'common/base';
 import Pagination from 'common/Pagination';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
@@ -30,8 +30,8 @@ export type LeavePolicyRecord = {
   sharedAt: string;
 };
 
-type FilterOption = {
-  value: string;
+export type FilterOption = {
+  value: HasPolicy;
   label: string;
 };
 
@@ -44,8 +44,6 @@ type ColumnConfig = {
 // Table.Column is a JS component; cast to accept arbitrary props including dataField
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TableColumn = Table.Column as any;
-
-const FILTER_DEBOUNCE_DELAY = 800;
 
 type Props = {
   pageType: PageType;
@@ -61,6 +59,8 @@ type Props = {
   availabilityColumnTitle: string;
   complianceColumnTitle?: string;
   filterOptions: FilterOption[];
+  selectedValues: HasPolicy[];
+  onToggleValue: (value: HasPolicy) => void;
   records: LeavePolicyRecord[];
   totalCount: number;
   page: number;
@@ -81,39 +81,16 @@ const LeavePolicySection: React.FC<Props> = ({
   availabilityColumnTitle,
   complianceColumnTitle,
   filterOptions,
+  selectedValues,
+  onToggleValue,
   records,
   totalCount,
   page,
   pageSize,
 }) => {
-  const [selectedValues, setSelectedValues] = useState<string[]>(
-    filterOptions.map(o => o.value),
-  );
-  const [debouncedSelectedValues, setDebouncedSelectedValues] = useState(
-    selectedValues,
-  );
-  useDebounce(
-    () => setDebouncedSelectedValues(selectedValues),
-    FILTER_DEBOUNCE_DELAY,
-    [selectedValues],
-  );
   const parentPath = generateTabURL({ pageType, pageName, tabType });
   const tabName = tabTypeTranslation[tabType];
   const [createPageLinkTo] = useCreatePageLinkTo();
-
-  const toggleValue = (value: string): void => {
-    setSelectedValues(prev =>
-      prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value],
-    );
-  };
-
-  const filteredRecords = records.filter(r =>
-    debouncedSelectedValues.includes(r.availability),
-  );
-  const filteredTotalCount =
-    selectedValues.length === filterOptions.length
-      ? totalCount
-      : filteredRecords.length;
 
   const columns: ColumnConfig[] = [
     { id: 'jobTitle', title: '職稱', dataField: 'jobTitle' },
@@ -164,11 +141,11 @@ const LeavePolicySection: React.FC<Props> = ({
               id={`filter-${option.value}`}
               label={option.label}
               checked={selectedValues.includes(option.value)}
-              onChange={(): void => toggleValue(option.value)}
+              onChange={(): void => onToggleValue(option.value)}
             />
           ))}
         </div>
-        <Table data={filteredRecords} primaryKey="id">
+        <Table data={records} primaryKey="id">
           {columns.map(
             ({ id, ...colProps }): React.ReactNode => (
               <TableColumn key={id} {...colProps} />
@@ -176,7 +153,7 @@ const LeavePolicySection: React.FC<Props> = ({
           )}
         </Table>
         <Pagination
-          totalCount={filteredTotalCount}
+          totalCount={totalCount}
           unit={pageSize}
           currentPage={page}
           createPageLinkTo={createPageLinkTo}

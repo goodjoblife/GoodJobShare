@@ -7,11 +7,17 @@ const queryCompanyPolicyReviewsGql = /* GraphQL */ `
   query(
     $companyName: String!
     $policy: PolicyEnum!
+    $hasPolicy: [YesNoOrUnknown!]
     $start: Int!
     $limit: Int!
   ) {
     company(name: $companyName) {
-      policyReviewsResult(policy: $policy, start: $start, limit: $limit) {
+      policyReviewsResult(
+        policy: $policy
+        hasPolicy: $hasPolicy
+        start: $start
+        limit: $limit
+      ) {
         count
         policyReviews {
           id
@@ -35,6 +41,8 @@ export type Policy =
   | 'FLEXIBLE_WORKING_HOUR'
   | 'REMOTE_WORK';
 
+export type HasPolicy = 'yes' | 'no' | 'unknown';
+
 export type RemoteWorkPolicy =
   | 'ONE_DAY_PER_WEEK'
   | 'TWO_DAYS_PER_WEEK'
@@ -47,8 +55,8 @@ export type PolicyReview = {
   jobTitle: string;
   sector: string | null;
   review: string | null;
-  hasPolicy: 'yes' | 'no' | 'unknown';
-  compliance: 'yes' | 'no' | 'unknown' | null;
+  hasPolicy: HasPolicy;
+  compliance: HasPolicy | null;
   remoteWorkPolicy: RemoteWorkPolicy | null;
   createdAt: string;
 };
@@ -67,17 +75,20 @@ type QueryCompanyPolicyReviewsData = {
 const queryCompanyPolicyReviews = ({
   companyName,
   policy,
+  hasPolicy,
   start,
   limit,
 }: {
   companyName: string;
   policy: Policy;
+  // null means no filtering; an empty array is rejected by the backend
+  hasPolicy: HasPolicy[] | null;
   start: number;
   limit: number;
 }): Promise<QueryCompanyPolicyReviewsData['company']> =>
   graphqlClient<QueryCompanyPolicyReviewsData>({
     query: queryCompanyPolicyReviewsGql,
-    variables: { companyName, policy, start, limit },
+    variables: { companyName, policy, hasPolicy, start, limit },
   }).then(R.prop('company'));
 
 export default queryCompanyPolicyReviews;

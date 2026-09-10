@@ -3,7 +3,9 @@ import { useDispatch } from 'react-redux';
 
 import { queryRatingStatistics } from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
-import LeavePolicySection from 'components/CompanyAndJobTitle/LeavePolicySection';
+import LeavePolicySection, {
+  FilterOption,
+} from 'components/CompanyAndJobTitle/LeavePolicySection';
 import { LeaveSection } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
@@ -26,10 +28,10 @@ const SECTION: LeaveSection = {
   },
 };
 
-const FILTER_OPTIONS = [
-  { value: '是', label: '有彈性上下班時間' },
-  { value: '否', label: '沒有彈性上下班時間' },
-  { value: '不知道', label: '不知道' },
+const FILTER_OPTIONS: FilterOption[] = [
+  { value: 'yes', label: '有彈性上下班時間' },
+  { value: 'no', label: '沒有彈性上下班時間' },
+  { value: 'unknown', label: '不知道' },
 ];
 
 type Params = { companyName: string };
@@ -39,7 +41,12 @@ const CompanyFamilyChildcareFlexibleHoursProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
-  const { records, totalCount } = useCompanyPolicyReviews({
+  const {
+    records,
+    totalCount,
+    selectedValues,
+    toggleValue,
+  } = useCompanyPolicyReviews({
     companyName,
     policy: 'FLEXIBLE_WORKING_HOUR',
     start: (page - 1) * PAGE_SIZE,
@@ -60,6 +67,8 @@ const CompanyFamilyChildcareFlexibleHoursProvider: React.FC &
       section={SECTION}
       availabilityColumnTitle="是否有彈性上下班時間制度"
       filterOptions={FILTER_OPTIONS}
+      selectedValues={selectedValues}
+      onToggleValue={toggleValue}
       records={records}
       totalCount={totalCount}
       page={page}

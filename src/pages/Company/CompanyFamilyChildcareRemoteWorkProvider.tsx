@@ -3,7 +3,9 @@ import { useDispatch } from 'react-redux';
 
 import { queryRatingStatistics } from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
-import LeavePolicySection from 'components/CompanyAndJobTitle/LeavePolicySection';
+import LeavePolicySection, {
+  FilterOption,
+} from 'components/CompanyAndJobTitle/LeavePolicySection';
 import {
   LeaveBulletByLabel,
   LeaveSection,
@@ -52,10 +54,10 @@ const SECTION: LeaveSection = {
   },
 };
 
-const FILTER_OPTIONS = [
-  { value: '是', label: '可以遠端工作' },
-  { value: '否', label: '無法遠端工作' },
-  { value: '不知道', label: '不知道' },
+const FILTER_OPTIONS: FilterOption[] = [
+  { value: 'yes', label: '可以遠端工作' },
+  { value: 'no', label: '無法遠端工作' },
+  { value: 'unknown', label: '不知道' },
 ];
 
 type Params = { companyName: string };
@@ -65,7 +67,12 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
-  const { records, totalCount } = useCompanyPolicyReviews({
+  const {
+    records,
+    totalCount,
+    selectedValues,
+    toggleValue,
+  } = useCompanyPolicyReviews({
     companyName,
     policy: 'REMOTE_WORK',
     start: (page - 1) * PAGE_SIZE,
@@ -91,6 +98,8 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
       availabilityColumnTitle="是否可以遠端工作"
       complianceColumnTitle="每週遠端工作天數"
       filterOptions={FILTER_OPTIONS}
+      selectedValues={selectedValues}
+      onToggleValue={toggleValue}
       records={records}
       totalCount={totalCount}
       page={page}

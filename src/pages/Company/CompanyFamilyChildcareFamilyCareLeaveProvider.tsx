@@ -5,7 +5,9 @@ import { queryRatingStatistics } from 'actions/company';
 import Glike from 'common/icons/Glike';
 import { paramsSelector } from 'common/routing/selectors';
 import familyCareLeaveIcon from 'components/CompanyAndJobTitle/familyCareLeaveIcon.svg';
-import LeavePolicySection from 'components/CompanyAndJobTitle/LeavePolicySection';
+import LeavePolicySection, {
+  FilterOption,
+} from 'components/CompanyAndJobTitle/LeavePolicySection';
 import {
   LeaveBulletByLabel,
   LeaveSection,
@@ -53,10 +55,10 @@ const SECTION: LeaveSection = {
   },
 };
 
-const FILTER_OPTIONS = [
-  { value: '是', label: '請得到家庭照顧假' },
-  { value: '否', label: '請不到家庭照顧假' },
-  { value: '不知道', label: '不知道' },
+const FILTER_OPTIONS: FilterOption[] = [
+  { value: 'yes', label: '請得到家庭照顧假' },
+  { value: 'no', label: '請不到家庭照顧假' },
+  { value: 'unknown', label: '不知道' },
 ];
 
 type Params = { companyName: string };
@@ -66,7 +68,12 @@ const CompanyFamilyChildcareFamilyCareLeaveProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
-  const { records, totalCount } = useCompanyPolicyReviews({
+  const {
+    records,
+    totalCount,
+    selectedValues,
+    toggleValue,
+  } = useCompanyPolicyReviews({
     companyName,
     policy: 'FAMILY_CARE_LEAVE',
     start: (page - 1) * PAGE_SIZE,
@@ -92,6 +99,8 @@ const CompanyFamilyChildcareFamilyCareLeaveProvider: React.FC &
       availabilityColumnTitle="是否請得到家庭照顧假"
       complianceColumnTitle="勞基法符合度"
       filterOptions={FILTER_OPTIONS}
+      selectedValues={selectedValues}
+      onToggleValue={toggleValue}
       records={records}
       totalCount={totalCount}
       page={page}
