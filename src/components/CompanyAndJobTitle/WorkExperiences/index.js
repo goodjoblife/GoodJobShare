@@ -50,9 +50,6 @@ const WorkExperiences = ({ boxSelector, page, pageSize }) => {
             jobTitles={TABS.work.jobTitles}
             appliedTitles={appliedJobTitles}
             onApply={setAppliedJobTitles}
-            onRemoveOne={title =>
-              setAppliedJobTitles(prev => prev.filter(t => t !== title))
-            }
             onClearAll={() => setAppliedJobTitles([])}
           />
           <Sorter />

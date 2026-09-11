@@ -31,9 +31,6 @@ const InterviewExperiences = ({
             jobTitles={TABS.interview.jobTitles}
             appliedTitles={appliedJobTitles}
             onApply={setAppliedJobTitles}
-            onRemoveOne={title =>
-              setAppliedJobTitles(prev => prev.filter(t => t !== title))
-            }
             onClearAll={() => setAppliedJobTitles([])}
           />
           <Sorter />

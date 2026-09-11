@@ -44,6 +44,7 @@ type TScrollY = number | null;
 
 type TSalaryFilterProps = {
   y?: TScrollY;
+  jobTitlePicker?: React.ReactNode;
 };
 
 type TSalaryFilterSelectProps = {
@@ -167,7 +168,10 @@ const SalaryFilterSelect = ({
   </select>
 );
 
-const SalaryFilter = ({ y = null }: TSalaryFilterProps): React.ReactElement => {
+const SalaryFilter = ({
+  y = null,
+  jobTitlePicker,
+}: TSalaryFilterProps): React.ReactElement => {
   const [dataTime, setDataTime] = useDataTimeFromQuery(y);
   const [experience, setExperience] = useExperienceFromQuery(y);
   const [gender, setGender] = useGenderFromQuery(y);
@@ -177,6 +181,7 @@ const SalaryFilter = ({ y = null }: TSalaryFilterProps): React.ReactElement => {
     <div className={styles.filterBar}>
       <div className={styles.group}>
         <span className={styles.label}>篩選：</span>
+        {jobTitlePicker}
         <SalaryFilterSelect
           options={DATA_TIME_OPTIONS}
           defaultLabel="所有參考時間"

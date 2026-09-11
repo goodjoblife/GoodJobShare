@@ -104,16 +104,17 @@ const SalaryWorkTime: React.FC<Props> = ({
         size="l"
         className={styles.searchbar}
       >
-        <JobTitlePicker
-          jobTitles={TABS.salary.jobTitles}
-          appliedTitles={appliedJobTitles}
-          onApply={setAppliedJobTitles}
-          onRemoveOne={(title): void =>
-            setAppliedJobTitles(prev => prev.filter(t => t !== title))
+        <SalaryFilter
+          y={sectionY as number | null}
+          jobTitlePicker={
+            <JobTitlePicker
+              jobTitles={TABS.salary.jobTitles}
+              appliedTitles={appliedJobTitles}
+              onApply={setAppliedJobTitles}
+              onClearAll={(): void => setAppliedJobTitles([])}
+            />
           }
-          onClearAll={(): void => setAppliedJobTitles([])}
         />
-        <SalaryFilter y={sectionY as number | null} />
       </Wrapper>
       <Wrapper size="l">
         <PageBoxRenderer

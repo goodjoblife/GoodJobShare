@@ -14,13 +14,9 @@ type Props = {
   jobTitles: JobTitleCount[];
   appliedTitles: string[];
   onApply: (titles: string[]) => void;
-  onRemoveOne: (title: string) => void;
   onClearAll: () => void;
   placeholder?: string;
 };
-
-const sameTitleSet = (a: Set<string>, b: string[]): boolean =>
-  a.size === b.length && b.every(title => a.has(title));
 
 const ChevronIcon = (): React.ReactElement => (
   <svg
@@ -39,24 +35,23 @@ const ChevronIcon = (): React.ReactElement => (
 // 資料來自 mockData.ts 的假資料，等提案通過才會接上真實 API。
 //
 // 互動模型摘要：
-// - 已套用的職稱以可移除的 tag 顯示在輸入框內；點 tag 的 × 立即生效重新查詢。
+// - 輸入框不逐一列出已選的職稱名稱，收合時只顯示「已選 N 個」的數量摘要
+//   （0 個則不顯示）；展開面板時輸入框改成單純的搜尋輸入，不重複顯示數量
+//   （已選幾個看面板下方的 pendingNote 就好）。
 // - focus 輸入框展開下拉面板：面板內是該 tab 全部職稱的 chip 網格，
 //   先用字首前綴分群、群組間依總筆數排序，讓相關職稱（如「前端」「前端工程師」）彼此靠近。
 // - 面板內打字為本地即時過濾；已勾選的 chip 即使不符合過濾字串仍保持可見、不搬位。
-// - 面板內新增勾選需要按「套用」才會通知外部重新查詢；未套用就關閉面板則作廢。
-// - 「清除全部」比照「移除單一 tag」，立即生效，不需要透過套用。
+// - 點 chip 立即套用（toggle），即時反映在數量摘要上；面板維持開啟方便繼續多選；
+//   「套用」按鈕與按 Enter 純粹是收合面板的捷徑，不再是「確認送出」的動作。
+// - 「清除全部」立即生效。摘要旁的 × 是清除全部的捷徑，沒有單一移除的 UI。
 const JobTitlePicker: React.FC<Props> = ({
   jobTitles,
   appliedTitles,
   onApply,
-  onRemoveOne,
   onClearAll,
-  placeholder = '打字搜尋職稱，或點擊瀏覽全部職稱',
+  placeholder = '職稱篩選',
 }) => {
   const [isOpen, setOpen] = useState(false);
-  const [pendingTitles, setPendingTitles] = useState<Set<string>>(
-    () => new Set(appliedTitles),
-  );
   const [filterText, setFilterText] = useState('');
 
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -70,16 +65,12 @@ const JobTitlePicker: React.FC<Props> = ({
     setOpen(true);
   }, []);
 
-  const closePanel = useCallback(
-    ({ discard = true }: { discard?: boolean } = {}) => {
-      setOpen(false);
-      setFilterText('');
-      if (discard) setPendingTitles(new Set(appliedTitles));
-    },
-    [appliedTitles],
-  );
+  const closePanel = useCallback(() => {
+    setOpen(false);
+    setFilterText('');
+  }, []);
 
-  // 點面板外面關閉，並作廢未套用的勾選（Q14）。
+  // 點面板外面就收合。
   useEffect(() => {
     if (!isOpen) return undefined;
     const handleMouseDown = (e: MouseEvent): void => {
@@ -91,40 +82,25 @@ const JobTitlePicker: React.FC<Props> = ({
     return () => document.removeEventListener('mousedown', handleMouseDown);
   }, [isOpen, closePanel]);
 
-  const toggleChip = useCallback((name: string) => {
-    setPendingTitles(prev => {
-      const next = new Set(prev);
-      if (next.has(name)) next.delete(name);
-      else next.add(name);
-      return next;
-    });
-  }, []);
-
-  const hasPendingChange = !sameTitleSet(pendingTitles, appliedTitles);
-
-  const handleApply = useCallback(() => {
-    if (!hasPendingChange) return;
-    onApply(Array.from(pendingTitles));
-    closePanel({ discard: false });
-  }, [hasPendingChange, onApply, pendingTitles, closePanel]);
-
-  const handleClearAll = useCallback(() => {
-    setPendingTitles(new Set());
-    onClearAll();
-  }, [onClearAll]);
+  const toggleChip = useCallback(
+    (name: string) => {
+      const next = appliedTitles.includes(name)
+        ? appliedTitles.filter(title => title !== name)
+        : [...appliedTitles, name];
+      onApply(next);
+    },
+    [appliedTitles, onApply],
+  );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        handleApply();
-      } else if (e.key === 'Escape') {
+      if (e.key === 'Enter' || e.key === 'Escape') {
         e.preventDefault();
         closePanel();
         if (inputRef.current) inputRef.current.blur();
       }
     },
-    [handleApply, closePanel],
+    [closePanel],
   );
 
   const query = filterText.trim().toLowerCase();
@@ -132,48 +108,49 @@ const JobTitlePicker: React.FC<Props> = ({
     item =>
       !query ||
       item.name.toLowerCase().includes(query) ||
-      pendingTitles.has(item.name),
+      appliedTitles.includes(item.name),
   );
 
   return (
     <div className={styles.wrap} ref={wrapRef}>
-      <span className={styles.label}>依職稱篩選</span>
       <div
         className={cn(styles.field, { [styles.isOpen]: isOpen })}
         onClick={(): void => {
           if (inputRef.current) inputRef.current.focus();
         }}
       >
-        {appliedTitles.map(title => (
-          <span className={styles.tag} key={title}>
-            <span>{title}</span>
-            <button
-              type="button"
-              className={styles.tagRemove}
-              aria-label={`移除 ${title}`}
-              onClick={(e): void => {
-                e.stopPropagation();
-                onRemoveOne(title);
-              }}
-            >
-              ×
-            </button>
-          </span>
-        ))}
-        <input
-          ref={inputRef}
-          type="text"
-          className={styles.input}
-          placeholder={placeholder}
-          autoComplete="off"
-          value={filterText}
-          onFocus={openPanel}
-          onChange={(e): void => {
-            setFilterText(e.target.value);
-            if (!isOpen) openPanel();
-          }}
-          onKeyDown={handleKeyDown}
-        />
+        <div className={styles.valueRow}>
+          {appliedTitles.length > 0 && !isOpen && (
+            <span className={styles.summary}>
+              <span>已選 {appliedTitles.length} 個</span>
+              <button
+                type="button"
+                className={styles.summaryClear}
+                aria-label="清除已選職稱"
+                onClick={(e): void => {
+                  e.stopPropagation();
+                  onClearAll();
+                }}
+              >
+                ×
+              </button>
+            </span>
+          )}
+          <input
+            ref={inputRef}
+            type="text"
+            className={styles.input}
+            placeholder={placeholder}
+            autoComplete="off"
+            value={filterText}
+            onFocus={openPanel}
+            onChange={(e): void => {
+              setFilterText(e.target.value);
+              if (!isOpen) openPanel();
+            }}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
         <button
           type="button"
           className={styles.chevron}
@@ -198,7 +175,7 @@ const JobTitlePicker: React.FC<Props> = ({
             {visibleTitles.length > 0 ? (
               <div className={styles.chipGrid}>
                 {visibleTitles.map(item => {
-                  const selected = pendingTitles.has(item.name);
+                  const selected = appliedTitles.includes(item.name);
                   return (
                     <button
                       type="button"
@@ -224,18 +201,17 @@ const JobTitlePicker: React.FC<Props> = ({
             <button
               type="button"
               className={cn(styles.btn, styles.btnGhost)}
-              onClick={handleClearAll}
+              onClick={onClearAll}
             >
               清除全部
             </button>
             <span className={styles.pendingNote}>
-              {pendingTitles.size ? `已勾選 ${pendingTitles.size} 個` : ''}
+              {appliedTitles.length ? `已選 ${appliedTitles.length} 個` : ''}
             </span>
             <button
               type="button"
               className={cn(styles.btn, styles.btnPrimary)}
-              disabled={!hasPendingChange}
-              onClick={handleApply}
+              onClick={closePanel}
             >
               套用
             </button>
