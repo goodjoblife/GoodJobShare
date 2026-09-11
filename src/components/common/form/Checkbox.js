@@ -5,6 +5,7 @@ import React from 'react';
 import styles from './Checkbox.module.css';
 
 const Checkbox = ({
+  className,
   id,
   name,
   label,
@@ -16,7 +17,9 @@ const Checkbox = ({
   style,
 }) => (
   <div
-    className={cn(styles.formGroup, { [styles.disabled]: disabled })}
+    className={cn(styles.formGroup, className, {
+      [styles.disabled]: disabled,
+    })}
     style={{ margin, ...style }}
   >
     <input
@@ -25,6 +28,7 @@ const Checkbox = ({
       name={name}
       value={value}
       checked={checked}
+      disabled={disabled}
       onChange={onChange}
     />
     <label htmlFor={id || `checkbox-${value}`}>
@@ -35,11 +39,17 @@ const Checkbox = ({
 );
 
 Checkbox.defaultProps = {
+  className: undefined,
+  disabled: false,
+  id: undefined,
   margin: '20px 0 0 0',
+  name: undefined,
+  style: {},
 };
 
 Checkbox.propTypes = {
   checked: PropTypes.bool.isRequired,
+  className: PropTypes.string,
   disabled: PropTypes.bool,
   id: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,

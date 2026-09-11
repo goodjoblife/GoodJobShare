@@ -7,6 +7,8 @@ import React, {
   useState,
 } from 'react';
 
+import Checkbox from 'common/form/Checkbox';
+
 import { groupJobTitles, JobTitleCount } from './groupJobTitles';
 import styles from './JobTitlePicker.module.css';
 
@@ -38,10 +40,10 @@ const ChevronIcon = (): React.ReactElement => (
 // - 輸入框不逐一列出已選的職稱名稱，收合時只顯示「已選 N 個」的數量摘要
 //   （0 個則不顯示）；展開面板時輸入框改成單純的搜尋輸入，不重複顯示數量
 //   （已選幾個看面板下方的 pendingNote 就好）。
-// - focus 輸入框展開下拉面板：面板內是該 tab 全部職稱的 chip 網格，
+// - focus 輸入框展開下拉面板：面板內是該 tab 全部職稱的 checkbox 網格，
 //   先用字首前綴分群、群組間依總筆數排序，讓相關職稱（如「前端」「前端工程師」）彼此靠近。
-// - 面板內打字為本地即時過濾；已勾選的 chip 即使不符合過濾字串仍保持可見、不搬位。
-// - 點 chip 立即套用（toggle），即時反映在數量摘要上；面板維持開啟方便繼續多選；
+// - 面板內打字為本地即時過濾；已勾選的項目即使不符合過濾字串仍保持可見、不搬位。
+// - 點 checkbox 立即套用（toggle），即時反映在數量摘要上；面板維持開啟方便繼續多選；
 //   「套用」按鈕與按 Enter 純粹是收合面板的捷徑，不再是「確認送出」的動作。
 // - 「清除全部」立即生效。摘要旁的 × 是清除全部的捷徑，沒有單一移除的 UI。
 const JobTitlePicker: React.FC<Props> = ({
@@ -82,7 +84,7 @@ const JobTitlePicker: React.FC<Props> = ({
     return () => document.removeEventListener('mousedown', handleMouseDown);
   }, [isOpen, closePanel]);
 
-  const toggleChip = useCallback(
+  const toggleTitle = useCallback(
     (name: string) => {
       const next = appliedTitles.includes(name)
         ? appliedTitles.filter(title => title !== name)
@@ -173,23 +175,23 @@ const JobTitlePicker: React.FC<Props> = ({
         <div className={styles.panel}>
           <div className={styles.panelScroll}>
             {visibleTitles.length > 0 ? (
-              <div className={styles.chipGrid}>
+              <div className={styles.checkboxGrid}>
                 {visibleTitles.map(item => {
                   const selected = appliedTitles.includes(item.name);
                   return (
-                    <button
-                      type="button"
+                    <Checkbox
                       key={item.name}
-                      className={cn(styles.chip, {
-                        [styles.chipSelected]: selected,
+                      className={cn(styles.checkboxOption, {
+                        [styles.checkboxOptionSelected]: selected,
                       })}
-                      title={`${item.count} 筆資料`}
-                      aria-pressed={selected}
-                      onClick={(): void => toggleChip(item.name)}
-                    >
-                      {selected && <span className={styles.chipMark}>✓</span>}
-                      <span>{item.name}</span>
-                    </button>
+                      label={
+                        <span title={`${item.count} 筆資料`}>{item.name}</span>
+                      }
+                      value={item.name}
+                      checked={selected}
+                      margin="0"
+                      onChange={(): void => toggleTitle(item.name)}
+                    />
                   );
                 })}
               </div>
