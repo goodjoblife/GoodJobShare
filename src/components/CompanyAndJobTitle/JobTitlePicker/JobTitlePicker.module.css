@@ -132,11 +132,41 @@
   border: 1px solid card-border-gray;
   border-radius: 10px;
   box-shadow: 0 12px 28px -12px rgba(34, 34, 34, 0.28);
-  overflow: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 138px;
+    width: 0;
+    height: 0;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+    transform: translateX(-50%);
+  }
+
+  &::before {
+    top: -9px;
+    border-bottom: 9px solid card-border-gray;
+  }
+
+  &::after {
+    top: -7px;
+    border-right-width: 7px;
+    border-bottom: 8px solid #ffffff;
+    border-left-width: 7px;
+  }
 
   @media (max-width: 850px) {
     width: 100%;
     max-width: none;
+  }
+
+  @media (max-width: below-small) {
+    &::before,
+    &::after {
+      left: 100px;
+    }
   }
 }
 
@@ -202,6 +232,7 @@
   gap: 10px;
   padding: 10px 12px;
   border-top: 1px solid border-gray;
+  border-radius: 0 0 9px 9px;
   background: #fafafa;
 }
 
