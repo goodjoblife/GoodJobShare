@@ -1,4 +1,4 @@
-@value main-yellow, border-gray, main-gray, warning-red, INPUT_HEIGHT, main-gray from "../../variables.module.css";
+@value main-yellow, border-gray, main-gray, warning-red, INPUT_HEIGHT, MIN_TOUCH_FONT_SIZE from "../../variables.module.css";
 
 .wrapper {
   position: relative;
@@ -16,6 +16,7 @@
   padding: 13px 16px;
   height: INPUT_HEIGHT;
   line-height: calc(INPUT_HEIGHT / 2);
+  font-size: max(1em, MIN_TOUCH_FONT_SIZE);
   border: 1px solid main-gray;
 
   textarea& {
