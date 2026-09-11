@@ -1,0 +1,231 @@
+@value main-yellow, yellow-dark, yellow-bg, main-black, gray-dark, text-gray, border-gray, card-border-gray, warning-red, primary-font, MIN_TOUCH_FONT_SIZE from "../../common/variables.module.css";
+
+.wrap {
+  position: relative;
+}
+
+.label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: gray-dark;
+  margin-bottom: 6px;
+}
+
+.field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 45px;
+  padding: 5px 6px;
+  background: #fff;
+  border: 1.5px solid card-border-gray;
+  border-radius: 6px;
+  cursor: text;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &.isOpen {
+    border-color: yellow-dark;
+    box-shadow: 0 0 0 3px yellow-bg;
+  }
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: yellow-bg;
+  color: #4a3c00;
+  border: 1px solid yellow-dark;
+  border-radius: 999px;
+  padding: 4px 4px 4px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tagRemove {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+
+  &:hover {
+    background: yellow-dark;
+    color: #fff;
+  }
+}
+
+.input {
+  flex: 1 1 120px;
+  min-width: 120px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: primary-font;
+  font-size: max(14px, MIN_TOUCH_FONT_SIZE);
+  padding: 6px 4px;
+  color: main-black;
+
+  &::placeholder {
+    color: gray-dark;
+  }
+}
+
+.chevron {
+  all: unset;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: gray-dark;
+  cursor: pointer;
+  border-radius: 50%;
+
+  svg {
+    width: 13px;
+    height: 13px;
+    transition: transform 0.15s;
+  }
+
+  &:hover {
+    background: #f2f2f2;
+  }
+}
+
+.isOpen .chevron svg {
+  transform: rotate(180deg);
+}
+
+.panel {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 480px;
+  max-width: 90vw;
+  background: #fff;
+  border: 1px solid card-border-gray;
+  border-radius: 10px;
+  box-shadow: 0 12px 28px -12px rgba(34, 34, 34, 0.28);
+  overflow: hidden;
+
+  @media (max-width: 850px) {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.panelScroll {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.chipGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  border-radius: 999px;
+  border: 1px solid card-border-gray;
+  background: #fff;
+  color: main-black;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s;
+
+  &:hover {
+    border-color: yellow-dark;
+  }
+
+  &:focus-visible {
+    outline: 2px solid yellow-dark;
+    outline-offset: 2px;
+  }
+}
+
+.chipSelected {
+  background: main-yellow;
+  border-color: yellow-dark;
+  color: #4a3c00;
+  font-weight: 700;
+}
+
+.chipMark {
+  font-size: 12px;
+}
+
+.panelEmpty {
+  padding: 28px 12px;
+  text-align: center;
+  color: gray-dark;
+  font-size: 14px;
+}
+
+.panelFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-top: 1px solid border-gray;
+  background: #fafafa;
+}
+
+.pendingNote {
+  font-size: 12px;
+  color: gray-dark;
+}
+
+.btn {
+  font-family: primary-font;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 7px 14px;
+  cursor: pointer;
+  border: 1px solid transparent;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.btnGhost {
+  background: transparent;
+  color: text-gray;
+  border-color: card-border-gray;
+
+  &:hover:not(:disabled) {
+    color: warning-red;
+    border-color: warning-red;
+  }
+}
+
+.btnPrimary {
+  background: main-yellow;
+  color: main-black;
+
+  &:hover:not(:disabled) {
+    background: yellow-dark;
+  }
+}
