@@ -19,7 +19,7 @@
       height: 20px;
       border: 1px solid main-gray;
       border-radius: 3px;
-      margin-right: 10px;
+      margin-right: 6px;
       transition-property: color, background-color, border;
       transition-duration: 0.3s;
       cursor: pointer;
