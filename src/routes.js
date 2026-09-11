@@ -22,7 +22,6 @@ import CompanySalaryWorkTimeProvider from 'pages/Company/CompanySalaryWorkTimePr
 import CompanyWorkExperiencesAspectProvider from 'pages/Company/CompanyWorkExperiencesAspectProvider';
 import CompanyWorkExperiencesProvider from 'pages/Company/CompanyWorkExperiencesProvider';
 import { companyNameSelector } from 'pages/Company/useCompanyNameParam';
-import JobTitlePickerDemoPage from 'pages/Demo/JobTitlePickerDemoPage';
 import JobTitleIndexProvider from 'pages/JobTitle/JobTitleIndexProvider';
 import JobTitleInterviewExperiencesProvider from 'pages/JobTitle/JobTitleInterviewExperiencesProvider';
 import JobTitleOverviewProvider from 'pages/JobTitle/JobTitleOverviewProvider';
@@ -201,26 +200,6 @@ const routes = [
         component: NotFound,
       },
     ],
-  },
-  {
-    path: '/demo/job-title-picker',
-    exact: true,
-    component: () => <Redirect to="/demo/job-title-picker/salary-work-times" />,
-  },
-  {
-    path: '/demo/job-title-picker/salary-work-times',
-    exact: true,
-    render: () => <JobTitlePickerDemoPage tabKey="salary" />,
-  },
-  {
-    path: '/demo/job-title-picker/interview-experiences',
-    exact: true,
-    render: () => <JobTitlePickerDemoPage tabKey="interview" />,
-  },
-  {
-    path: '/demo/job-title-picker/work-experiences',
-    exact: true,
-    render: () => <JobTitlePickerDemoPage tabKey="work" />,
   },
   {
     path: '/buy',

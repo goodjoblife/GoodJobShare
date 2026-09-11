@@ -34,7 +34,9 @@ const ChevronIcon = (): React.ReactElement => (
   </svg>
 );
 
-// 公司頁「依職稱篩選」的多選瀏覽元件（sandbox demo，見 pages/Demo/JobTitlePickerDemo）。
+// 公司頁「依職稱篩選」的多選瀏覽元件。目前為 UI/UX prototype demo，
+// 直接換掉 SalaryWorkTime / InterviewExperiences / WorkExperiences 的 SearchBar，
+// 資料來自 mockData.ts 的假資料，等提案通過才會接上真實 API。
 //
 // 互動模型摘要：
 // - 已套用的職稱以可移除的 tag 顯示在輸入框內；點 tag 的 × 立即生效重新查詢。

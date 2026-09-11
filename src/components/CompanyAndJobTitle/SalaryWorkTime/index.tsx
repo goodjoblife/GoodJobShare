@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { OvertimeStats } from 'apis/salaryWorkTime';
 import { Wrapper } from 'common/base';
@@ -17,6 +17,7 @@ import {
 import { EsgYearStatistics } from 'utils/esgYearUtils';
 import FetchBox from 'utils/fetchBox';
 
+import JobTitlePicker, { TABS } from '../JobTitlePicker';
 import SummaryBlock from '../Overview/SummaryBlock';
 import PageBoxRenderer from '../PageBoxRenderer';
 import { usePageContext } from '../PageContextProvider';
@@ -24,9 +25,8 @@ import EsgBlock from './EsgBlock';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
 import SalaryFilter from './SalaryFilter';
-import SalaryWorkTimeSection from './SalaryWorkTimeSection';
-import SearchBar from '../SearchBar';
 import styles from './SalaryWorkTime.module.css';
+import SalaryWorkTimeSection from './SalaryWorkTimeSection';
 import SnippetBlock from '../SnippetBlock';
 
 type SalaryWorkTimePageData = Pick<
@@ -59,6 +59,8 @@ const SalaryWorkTime: React.FC<Props> = ({
 }) => {
   const [createPageLinkTo, handleSectionRef, sectionY] = useCreatePageLinkTo();
   const { pageType, pageName, tabType } = usePageContext();
+  // Prototype demo（依職稱篩選）：假資料，等 UI/UX 提案通過後才接真實 API。
+  const [appliedJobTitles, setAppliedJobTitles] = useState<string[]>([]);
 
   return (
     <>
@@ -102,7 +104,15 @@ const SalaryWorkTime: React.FC<Props> = ({
         size="l"
         className={styles.searchbar}
       >
-        <SearchBar pageType={pageType} tabType={tabType} />
+        <JobTitlePicker
+          jobTitles={TABS.salary.jobTitles}
+          appliedTitles={appliedJobTitles}
+          onApply={setAppliedJobTitles}
+          onRemoveOne={(title): void =>
+            setAppliedJobTitles(prev => prev.filter(t => t !== title))
+          }
+          onClearAll={(): void => setAppliedJobTitles([])}
+        />
         <SalaryFilter y={sectionY as number | null} />
       </Wrapper>
       <Wrapper size="l">

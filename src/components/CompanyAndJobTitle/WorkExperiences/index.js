@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import { Aspects, PageType } from 'constants/companyJobTitle';
 
+import JobTitlePicker, { TABS } from '../JobTitlePicker';
 import PageBoxRenderer from '../PageBoxRenderer';
 import { useCompanyName, usePageContext } from '../PageContextProvider';
 import Helmet from './Helmet';
 import WorkExperiencesSection from './WorkExperiences';
 import AspectScoreCard, { useAspectsData } from '../AspectScoreCard';
-import SearchBar from '../SearchBar';
 import Sorter from '../Sorter';
 import styles from '../styles.module.css';
 
@@ -38,13 +38,23 @@ const AspectScoreCards = () => {
 const WorkExperiences = ({ boxSelector, page, pageSize }) => {
   const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
   const { pageType, pageName, tabType } = usePageContext();
+  // Prototype demo（依職稱篩選）：假資料，等 UI/UX 提案通過後才接真實 API。
+  const [appliedJobTitles, setAppliedJobTitles] = useState([]);
 
   return (
     <Fragment>
       {pageType === PageType.COMPANY && <AspectScoreCards />}
       <Wrapper ref={handleSectionRef} size="m">
         <div className={styles.interactive}>
-          <SearchBar pageType={pageType} tabType={tabType} />
+          <JobTitlePicker
+            jobTitles={TABS.work.jobTitles}
+            appliedTitles={appliedJobTitles}
+            onApply={setAppliedJobTitles}
+            onRemoveOne={title =>
+              setAppliedJobTitles(prev => prev.filter(t => t !== title))
+            }
+            onClearAll={() => setAppliedJobTitles([])}
+          />
           <Sorter />
         </div>
       </Wrapper>
