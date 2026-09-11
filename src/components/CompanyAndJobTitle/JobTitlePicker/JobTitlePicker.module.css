@@ -17,11 +17,13 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-  min-height: 45px;
-  padding: 5px 6px;
-  background: #fff;
-  border: 1.5px solid card-border-gray;
-  border-radius: 6px;
+  min-height: 32px;
+  /* 比照 SalaryFilter.module.css 的 .select（height:32px / border:solid 1px #bdbdbd /
+     padding:0 8px / border-radius 0），讓搜尋框跟旁邊的篩選下拉樣式一致 */
+  padding: 0 8px;
+  background: #ffffff;
+  border: solid 1px #bdbdbd;
+  border-radius: 0;
   cursor: text;
   transition: border-color 0.2s, box-shadow 0.2s;
 
@@ -71,7 +73,8 @@
   background: transparent;
   font-family: primary-font;
   font-size: max(14px, MIN_TOUCH_FONT_SIZE);
-  padding: 6px 4px;
+  line-height: 20px;
+  padding: 5px 4px;
   color: main-black;
 
   &::placeholder {
@@ -82,8 +85,8 @@
 .chevron {
   all: unset;
   flex: none;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
