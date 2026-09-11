@@ -1,25 +1,27 @@
-@value main-yellow, yellow-dark, yellow-bg, main-black, gray-dark, text-gray, border-gray, card-border-gray, warning-red, primary-font, MIN_TOUCH_FONT_SIZE from "../../common/variables.module.css";
+@value main-yellow, yellow-dark, yellow-bg, main-black, gray-dark, text-gray, border-gray, card-border-gray, warning-red, primary-font, MIN_TOUCH_FONT_SIZE, below-small from "../../common/variables.module.css";
 
 .wrap {
   position: relative;
-}
+  /* 比照被取代的 SearchBar.module.css 的 .textInput 寬度（276px；below-small 以下 200px），
+     讓新版搜尋框跟原本被換掉的寬度一致。 */
+  flex: 0 0 276px;
+  width: 276px;
 
-.label {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  color: gray-dark;
-  margin-bottom: 6px;
+  @media (max-width: below-small) {
+    flex-basis: 200px;
+    width: 200px;
+  }
 }
 
 .field {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-  min-height: 32px;
   /* 比照 SalaryFilter.module.css 的 .select（height:32px / border:solid 1px #bdbdbd /
-     padding:0 8px / border-radius 0），讓搜尋框跟旁邊的篩選下拉樣式一致 */
+     padding:0 8px / border-radius 0），讓搜尋框跟旁邊的篩選下拉樣式一致。
+     欄位不逐一列出已選職稱、只顯示數量摘要，所以永遠是單行固定高度，
+     不會因為選了多少職稱而變高、也不需要處理換行或撐開版面的問題。 */
+  height: 32px;
   padding: 0 8px;
   background: #ffffff;
   border: solid 1px #bdbdbd;
@@ -33,7 +35,16 @@
   }
 }
 
-.tag {
+.valueRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.summary {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -45,9 +56,10 @@
   font-size: 13px;
   font-weight: 700;
   white-space: nowrap;
+  flex: none;
 }
 
-.tagRemove {
+.summaryClear {
   all: unset;
   display: inline-flex;
   align-items: center;
