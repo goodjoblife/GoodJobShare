@@ -1,11 +1,7 @@
-import PropTypes from 'prop-types';
 import React, { Fragment, useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
 
-import FormBuilder, {
-  PageEndPropType,
-  QuestionPropType,
-} from 'common/FormBuilder';
+import FormBuilder from 'common/FormBuilder';
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
 import { ER0018, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
@@ -13,7 +9,41 @@ import rollbar from 'utils/rollbar';
 
 import Footer from './TypeFormFooter';
 
-const NO_REDIRECT = /** @type {string | (() => string) | null} */ (null);
+type Draft = Record<string, unknown>;
+
+type SubmitStatus =
+  | 'unsubmitted'
+  | 'submitting'
+  | 'success'
+  | 'error'
+  | 'quitting';
+
+type Pathname = string | ((result: unknown, draft: Draft) => string);
+
+// TODO: replace with a proper Question type; the shape is still only described
+// by QuestionPropType in common/FormBuilder
+type Question = unknown;
+
+// TODO: the function form should be (draft: Draft) => ReactNode, matching
+// PageEndPropType. It is any because PolicyForm/TypeForm passes a narrower
+// param type ({ companyName, jobTitle }), which strictFunctionTypes rejects.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type PageEnd = React.ReactNode | ((draft: any) => React.ReactNode);
+
+type Props = {
+  open: boolean;
+  questions: Question[];
+  header?: PageEnd;
+  onSubmit: (draft: Draft) => unknown;
+  onSubmitError: (error: unknown) => void | Promise<void>;
+  onClose: () => void;
+  redirectPathnameOnSuccess: Pathname;
+  redirectPathnameOnQuit?: Pathname | null;
+  hideProgressBar?: boolean;
+  successSubtitle?: string;
+  successDescription?: string;
+  onSuccessContinue?: ((result: unknown, draft: Draft) => void) | null;
+};
 
 const SubmittableTypeForm = ({
   open,
@@ -23,19 +53,19 @@ const SubmittableTypeForm = ({
   onSubmitError,
   onClose,
   redirectPathnameOnSuccess,
-  redirectPathnameOnQuit = NO_REDIRECT,
+  redirectPathnameOnQuit = null,
   hideProgressBar,
   successSubtitle = '你已解鎖全站資訊囉！',
   successDescription = '感謝你分享你的資訊，台灣的職場因為有你而變得更好！',
   onSuccessContinue = null,
-}) => {
+}: Props): React.ReactElement => {
   const history = useHistory();
-  const [submitStatus, setSubmitStatus] = useState('unsubmitted');
-  const [submittedDraft, setSubmittedDraft] = useState(null);
-  const [submitResult, setSubmitResult] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('unsubmitted');
+  const [submittedDraft, setSubmittedDraft] = useState<Draft | null>(null);
+  const [submitResult, setSubmitResult] = useState<unknown>(null);
   const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = useCallback(
-    async draft => {
+    async (draft: Draft) => {
       try {
         if (submitStatus === 'submitting') {
           return;
@@ -48,9 +78,9 @@ const SubmittableTypeForm = ({
         const errorCode = ER0018;
         rollbar.error(
           `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal} ${error}`,
-          error,
+          error as Error,
         );
-        setErrorMessage(error.message);
+        setErrorMessage((error as Error).message);
         setSubmitStatus('error');
         await onSubmitError(error);
       }
@@ -66,11 +96,11 @@ const SubmittableTypeForm = ({
   }, []);
 
   const redirectTo = useCallback(
-    pathname => {
+    (pathname: Pathname) => {
       if (typeof window === 'undefined') return;
       window.location.replace(
         typeof pathname === 'function'
-          ? pathname(submitResult, submittedDraft)
+          ? pathname(submitResult, submittedDraft as Draft)
           : pathname,
       );
     },
@@ -86,7 +116,8 @@ const SubmittableTypeForm = ({
   const onSuccessContinueClick = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
-    onSuccessContinue(submitResult, submittedDraft);
+    if (onSuccessContinue)
+      onSuccessContinue(submitResult, submittedDraft as Draft);
   }, [onClose, onSuccessContinue, submitResult, submittedDraft]);
 
   const onResume = useCallback(() => {
@@ -125,7 +156,10 @@ const SubmittableTypeForm = ({
         closableOnClickOutside
         actions={
           onSuccessContinue
-            ? [['繼續', onSuccessContinueClick], ['完成', onSuccessClose]]
+            ? [
+                ['繼續', onSuccessContinueClick],
+                ['完成', onSuccessClose, 'white'],
+              ]
             : [['確定', onSuccessClose]]
         }
       />
@@ -151,27 +185,6 @@ const SubmittableTypeForm = ({
       />
     </Fragment>
   );
-};
-
-SubmittableTypeForm.propTypes = {
-  header: PageEndPropType,
-  hideProgressBar: PropTypes.bool,
-  onClose: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  onSubmitError: PropTypes.func.isRequired,
-  onSuccessContinue: PropTypes.func,
-  open: PropTypes.bool.isRequired,
-  questions: PropTypes.arrayOf(QuestionPropType).isRequired,
-  redirectPathnameOnQuit: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
-  redirectPathnameOnSuccess: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]).isRequired,
-  successDescription: PropTypes.string,
-  successSubtitle: PropTypes.string,
 };
 
 export default SubmittableTypeForm;
