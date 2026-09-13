@@ -5,10 +5,7 @@ const createPolicyReviewGroupGql = /* GraphQL */ `
     createPolicyReviewGroup(input: $input) {
       success
       policyReviewGroup {
-        policyReviews {
-          id
-          groupId
-        }
+        groupId
       }
     }
   }
@@ -18,10 +15,7 @@ type CreatePolicyReviewGroupData = {
   createPolicyReviewGroup: {
     success: boolean;
     policyReviewGroup: {
-      policyReviews: {
-        id: string;
-        groupId: string;
-      }[];
+      groupId: string;
     };
   };
 };
