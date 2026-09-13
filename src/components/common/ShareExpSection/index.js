@@ -10,6 +10,7 @@ import WorkExperienceImg from './share-3.png';
 import styles from './ShareExpSection.module.css';
 import {
   generateShareInterviewTypeForm,
+  generateSharePolicyForm,
   generateShareTimeSalaryTypeForm,
   generateShareWork,
 } from './shareLinkTo';
@@ -71,6 +72,19 @@ const ShareExpSection = ({ heading, Subheading }) => {
             </P>
             <P className={styles.description} size="l">
               常加班、薪水又少嗎？快分享避免他人踩雷！
+            </P>
+          </Link>
+          <Link to={generateSharePolicyForm()} className={styles.item}>
+            <img
+              src={SalaryWorkTimeImg}
+              alt="分享公司制度"
+              className={styles.image}
+            />
+            <P size="l" Tag="h3" bold className={styles.button}>
+              制度
+            </P>
+            <P className={styles.description} size="l">
+              生理假、育嬰假、遠端工作……公司制度實際執行如何？
             </P>
           </Link>
         </div>
