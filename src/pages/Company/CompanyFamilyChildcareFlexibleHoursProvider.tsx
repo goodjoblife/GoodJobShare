@@ -43,7 +43,7 @@ const CompanyFamilyChildcareFlexibleHoursProvider: React.FC &
   const companyName = useCompanyNameParam();
   const page = usePage();
   const [selectedHasPolicy, toggleHasPolicy] = useHasPolicyFilter();
-  const { records, totalCount } = useCompanyPolicyReviews({
+  const reviewsBox = useCompanyPolicyReviews({
     companyName,
     policy: 'FLEXIBLE_WORKING_HOUR',
     hasPolicy: selectedHasPolicy,
@@ -67,8 +67,7 @@ const CompanyFamilyChildcareFlexibleHoursProvider: React.FC &
       filterOptions={FILTER_OPTIONS}
       selectedHasPolicy={selectedHasPolicy}
       onToggleHasPolicy={toggleHasPolicy}
-      records={records}
-      totalCount={totalCount}
+      reviewsBox={reviewsBox}
       page={page}
       pageSize={PAGE_SIZE}
     />

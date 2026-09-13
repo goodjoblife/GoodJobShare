@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDebounce } from 'react-use';
 
 import queryCompanyPolicyReviews, {
@@ -9,6 +9,12 @@ import queryCompanyPolicyReviews, {
 } from 'apis/queryCompanyPolicyReviews';
 import { LeavePolicyRecord } from 'components/CompanyAndJobTitle/LeavePolicySection';
 import { HAS_POLICY_VALUES } from 'selectors/policyFilter';
+import FetchBox, {
+  getError,
+  getFetched,
+  getUnfetched,
+  toFetching,
+} from 'utils/fetchBox';
 
 const FILTER_DEBOUNCE_DELAY = 800;
 
@@ -63,6 +69,18 @@ const toHasPolicyVariable = (
     ? null
     : selectedHasPolicy;
 
+export type PolicyReviewsResult = {
+  records: LeavePolicyRecord[];
+  totalCount: number;
+};
+
+// 用篩選值組出穩定的字串 key：值一樣 key 就一樣，換頁時不會因為 selectedHasPolicy
+// 每次都是新的陣列 reference 而重打一次相同的 request
+const toFilterKey = (selectedHasPolicy: HasPolicy[]): string =>
+  [...selectedHasPolicy].sort().join(',');
+
+const EMPTY_RESULT: PolicyReviewsResult = { records: [], totalCount: 0 };
+
 const useCompanyPolicyReviews = ({
   companyName,
   policy,
@@ -75,23 +93,30 @@ const useCompanyPolicyReviews = ({
   hasPolicy: HasPolicy[];
   start: number;
   limit: number;
-}): {
-  records: LeavePolicyRecord[];
-  totalCount: number;
-} => {
+}): FetchBox<PolicyReviewsResult> => {
   // 篩選的勾選狀態即時反映在網址上，但查詢等它停下來再發
+  const filterKey = toFilterKey(hasPolicy);
   const [debouncedHasPolicy, setDebouncedHasPolicy] = useState(hasPolicy);
   useDebounce(() => setDebouncedHasPolicy(hasPolicy), FILTER_DEBOUNCE_DELAY, [
-    hasPolicy,
+    // 依穩定的 key 觸發 debounce，值沒變就不重排程
+    filterKey,
   ]);
 
-  const [data, setData] = useState<
-    Awaited<ReturnType<typeof queryCompanyPolicyReviews>>
-  >(null);
+  const [box, setBox] = useState<FetchBox<PolicyReviewsResult>>(getUnfetched());
+
   const isEmptySelection = debouncedHasPolicy.length === 0;
+  // debounce 還沒追上目前的篩選（使用者還在切換）時先不要打，避免送出「舊篩選＋新頁碼」
+  const isDebouncePending = toFilterKey(debouncedHasPolicy) !== filterKey;
 
   useEffect(() => {
-    if (isEmptySelection) return;
+    if (isEmptySelection) {
+      setBox(getFetched(EMPTY_RESULT));
+      return;
+    }
+    // 切換篩選期間先進 loading（保留舊資料當作 overlay 底圖），等 debounce 停下再打
+    setBox(prev => toFetching(prev));
+    if (isDebouncePending) return;
+
     let isActive = true;
     queryCompanyPolicyReviews({
       companyName,
@@ -99,23 +124,39 @@ const useCompanyPolicyReviews = ({
       hasPolicy: toHasPolicyVariable(debouncedHasPolicy),
       start,
       limit,
-    }).then(response => {
-      if (isActive) {
-        setData(response);
-      }
-    });
+    })
+      .then(company => {
+        if (!isActive) return;
+        const result = company ? company.policyReviewsResult : undefined;
+        setBox(
+          getFetched(
+            result
+              ? {
+                  records: result.policyReviews.map(toRecord),
+                  totalCount: result.count,
+                }
+              : EMPTY_RESULT,
+          ),
+        );
+      })
+      .catch(error => {
+        if (isActive) setBox(getError(error));
+      });
     return () => {
       isActive = false;
     };
-  }, [companyName, policy, debouncedHasPolicy, isEmptySelection, start, limit]);
+  }, [
+    companyName,
+    policy,
+    filterKey,
+    debouncedHasPolicy,
+    isDebouncePending,
+    isEmptySelection,
+    start,
+    limit,
+  ]);
 
-  return useMemo(() => {
-    const result = isEmptySelection || !data ? null : data.policyReviewsResult;
-    return {
-      records: result ? result.policyReviews.map(toRecord) : [],
-      totalCount: result ? result.count : 0,
-    };
-  }, [data, isEmptySelection]);
+  return box;
 };
 
 export default useCompanyPolicyReviews;

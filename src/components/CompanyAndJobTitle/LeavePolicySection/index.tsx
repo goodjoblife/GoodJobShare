@@ -5,12 +5,14 @@ import { Heading, Link, Wrapper } from 'common/base';
 import Pagination from 'common/Pagination';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import Table from 'common/table/Table';
+import BoxRenderer from 'components/common/StatusRenderer/BoxRenderer';
 import {
   generateTabURL,
   PageType,
   TabType,
   tabTypeTranslation,
 } from 'constants/companyJobTitle';
+import FetchBox from 'utils/fetchBox';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import LeaveSectionBlock, {
@@ -61,8 +63,7 @@ type Props = {
   filterOptions: FilterOption[];
   selectedHasPolicy: HasPolicy[];
   onToggleHasPolicy: (value: HasPolicy, y: number | null) => void;
-  records: LeavePolicyRecord[];
-  totalCount: number;
+  reviewsBox: FetchBox<{ records: LeavePolicyRecord[]; totalCount: number }>;
   page: number;
   pageSize: number;
 };
@@ -83,8 +84,7 @@ const LeavePolicySection: React.FC<Props> = ({
   filterOptions,
   selectedHasPolicy,
   onToggleHasPolicy,
-  records,
-  totalCount,
+  reviewsBox,
   page,
   pageSize,
 }) => {
@@ -148,18 +148,25 @@ const LeavePolicySection: React.FC<Props> = ({
             />
           ))}
         </div>
-        <Table data={records} primaryKey="id">
-          {columns.map(
-            ({ id, ...colProps }): React.ReactNode => (
-              <TableColumn key={id} {...colProps} />
-            ),
+        <BoxRenderer
+          box={reviewsBox}
+          render={({ records, totalCount }): React.ReactNode => (
+            <>
+              <Table data={records} primaryKey="id">
+                {columns.map(
+                  ({ id, ...colProps }): React.ReactNode => (
+                    <TableColumn key={id} {...colProps} />
+                  ),
+                )}
+              </Table>
+              <Pagination
+                totalCount={totalCount}
+                unit={pageSize}
+                currentPage={page}
+                createPageLinkTo={createPageLinkTo}
+              />
+            </>
           )}
-        </Table>
-        <Pagination
-          totalCount={totalCount}
-          unit={pageSize}
-          currentPage={page}
-          createPageLinkTo={createPageLinkTo}
         />
       </Wrapper>
     </CompanyAndJobTitleWrapper>

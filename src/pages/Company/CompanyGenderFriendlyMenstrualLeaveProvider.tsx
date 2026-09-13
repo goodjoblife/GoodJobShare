@@ -70,7 +70,7 @@ const CompanyGenderFriendlyMenstrualLeaveProvider: React.FC &
   const companyName = useCompanyNameParam();
   const page = usePage();
   const [selectedHasPolicy, toggleHasPolicy] = useHasPolicyFilter();
-  const { records, totalCount } = useCompanyPolicyReviews({
+  const reviewsBox = useCompanyPolicyReviews({
     companyName,
     policy: 'MENSTRUAL_LEAVE',
     hasPolicy: selectedHasPolicy,
@@ -99,8 +99,7 @@ const CompanyGenderFriendlyMenstrualLeaveProvider: React.FC &
       filterOptions={FILTER_OPTIONS}
       selectedHasPolicy={selectedHasPolicy}
       onToggleHasPolicy={toggleHasPolicy}
-      records={records}
-      totalCount={totalCount}
+      reviewsBox={reviewsBox}
       page={page}
       pageSize={PAGE_SIZE}
     />
