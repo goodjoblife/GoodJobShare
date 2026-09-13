@@ -4,9 +4,6 @@ const createPolicyReviewGroupGql = /* GraphQL */ `
   mutation CreatePolicyReviewGroup($input: CreatePolicyReviewGroupInput!) {
     createPolicyReviewGroup(input: $input) {
       success
-      policyReviewGroup {
-        groupId
-      }
     }
   }
 `;
@@ -14,9 +11,6 @@ const createPolicyReviewGroupGql = /* GraphQL */ `
 type CreatePolicyReviewGroupData = {
   createPolicyReviewGroup: {
     success: boolean;
-    policyReviewGroup: {
-      groupId: string;
-    };
   };
 };
 
