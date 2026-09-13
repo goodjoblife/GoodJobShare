@@ -4,20 +4,39 @@ import { Heading, Section, Wrapper } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Comment2 from 'common/icons/Comment2';
 import Loader from 'common/Loader';
+import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 
 import AuthMask from './AuthMask';
 import ShareBlockElement from './ShareBlockElement';
 import {
   useFetchMyPublishes,
   useToggleExperienceStatus,
+  useTogglePolicyReviewGroupStatus,
   useToggleReplyStatus,
   useToggleSalaryWorkTimeStatus,
 } from './useQuery';
+
+const toPolicyReviewGroupBlocks = policyReviewGroupList =>
+  (policyReviewGroupList || [])
+    .filter(({ policyReviews }) => policyReviews.length > 0)
+    .map(({ policyReviews }) => {
+      const [{ groupId, company, jobTitle }] = policyReviews;
+      return {
+        groupId,
+        companyName: company.name,
+        jobTitle,
+        status: policyReviews.every(o => o.status === 'hidden')
+          ? 'hidden'
+          : 'published',
+        archive: policyReviews.find(o => o.archive.is_archived)?.archive,
+      };
+    });
 
 const Me = () => {
   const [myPublishesState, fetchMyPublishes] = useFetchMyPublishes();
   const toggleExperienceStatus = useToggleExperienceStatus();
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
+  const togglePolicyReviewGroupStatus = useTogglePolicyReviewGroupStatus();
   const toggleReplyStatus = useToggleReplyStatus();
 
   useEffect(() => {
@@ -67,13 +86,43 @@ const Me = () => {
                           type="薪時"
                           heading={o.company.name}
                           position={o.job_title.name}
-                          to={o.company.name}
+                          to={generateTabURL({
+                            pageType: PageType.COMPANY,
+                            pageName: o.company.name,
+                            tabType: TabType.TIME_AND_SALARY,
+                          })}
+                          linkTitle="檢視薪時"
                           disabled={
                             o.status === 'hidden' ||
                             (o.archive && o.archive.is_archived)
                           }
                           publishHandler={async () => {
                             await toggleSalaryWorkTimeStatus(o);
+                            await fetchMyPublishes();
+                          }}
+                          archive={o.archive}
+                        />
+                      ))}
+                      {toPolicyReviewGroupBlocks(
+                        myPublishesState.value.me.policyReviewGroupList,
+                      ).map(o => (
+                        <ShareBlockElement
+                          key={o.groupId}
+                          type="制度"
+                          heading={o.companyName}
+                          position={o.jobTitle}
+                          to={generateTabURL({
+                            pageType: PageType.COMPANY,
+                            pageName: o.companyName,
+                            tabType: TabType.FAMILY_CHILDCARE,
+                          })}
+                          linkTitle="檢視制度"
+                          disabled={
+                            o.status === 'hidden' ||
+                            (o.archive && o.archive.is_archived)
+                          }
+                          publishHandler={async () => {
+                            await togglePolicyReviewGroupStatus(o);
                             await fetchMyPublishes();
                           }}
                           archive={o.archive}
