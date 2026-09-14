@@ -91,39 +91,35 @@ const useCompanyPolicyReviewsBox = ({
   start: number;
   limit: number;
 }): FetchBox<PolicyReviewsResult> => {
-  // 參數 hasPolicy 是網址上的勾選狀態，使用者一點就變
   const selectedKey = toFilterKey(hasPolicy);
 
-  // queried 是「已經拿去查詢的那份篩選」，跟網址上的勾選狀態是兩回事：
-  // 使用者還在切換的那 800ms 內，queried 停在上一次查詢的選擇，跟網址不一樣，
-  // 直到安靜下來才追上。所以凡是跟 request 有關的判斷都只能看 queried，
-  // 畫面上勾勾的狀態則是看網址的那份。
+  // Query for the request. This might not match the current query in the URL
+  // until the debounce on user's frequent interactions is complete.
   const [queried, setQueried] = useState(() => ({
     key: selectedKey,
     hasPolicy,
   }));
 
-  // queried 追上網址了沒？沒追上就代表還在 debounce
-  const isFilterSettled = queried.key === selectedKey;
-
-  // 排程時要用最新的勾選狀態，但它的 reference 不該害排程重來，所以放 ref
+  // HasPolicy for the request. We use ref because we don't expect to trigger
+  // re-rendering until the debounce is complete.
   const hasPolicyRef = useRef(hasPolicy);
   hasPolicyRef.current = hasPolicy;
 
+  // Queried won't match the query in the URL until debounce is complete.
+  const isDebouncing = queried.key !== selectedKey;
+
   useEffect(() => {
-    // 已經追上就沒什麼要排程的；使用者在 800ms 內切回原本的選擇時也會走到
-    // 這裡，順手把還沒觸發的排程清掉，不會多打一次已經有資料的 request
-    if (isFilterSettled) return;
-    const timer = setTimeout(
-      () => setQueried({ key: selectedKey, hasPolicy: hasPolicyRef.current }),
-      FILTER_DEBOUNCE_DELAY,
-    );
-    return (): void => clearTimeout(timer);
-  }, [isFilterSettled, selectedKey]);
+    if (isDebouncing) {
+      const timer = setTimeout(
+        () => setQueried({ key: selectedKey, hasPolicy: hasPolicyRef.current }),
+        FILTER_DEBOUNCE_DELAY,
+      );
+      return (): void => clearTimeout(timer);
+    }
+  }, [isDebouncing, selectedKey]);
 
   const [box, setBox] = useState<FetchBox<PolicyReviewsResult>>(getUnfetched());
 
-  // 注意：以下都是 queried.hasPolicy，不是參數的 hasPolicy
   const queriedHasPolicy = queried.hasPolicy;
   const isEmptySelection = queriedHasPolicy.length === 0;
 
@@ -164,10 +160,8 @@ const useCompanyPolicyReviewsBox = ({
     };
   }, [companyName, policy, queriedHasPolicy, isEmptySelection, start, limit]);
 
-  // queried 還沒追上網址的期間讓表格蓋上 loading（舊資料留著當底圖），
-  // 因為此時 box 裝的是上一個篩選的結果，跟畫面上的勾勾對不起來
-  return useMemo(() => (isFilterSettled ? box : toFetching(box)), [
-    isFilterSettled,
+  return useMemo(() => (isDebouncing ? toFetching(box) : box), [
+    isDebouncing,
     box,
   ]);
 };
