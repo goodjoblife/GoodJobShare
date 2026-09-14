@@ -19,7 +19,7 @@ import { ServerSideRender } from 'types/serverSideRender';
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
-import useCompanyPolicyReviews from './useCompanyPolicyReviews';
+import useCompanyPolicyReviewsBox from './useCompanyPolicyReviewsBox';
 import useHasPolicyFilter from './useHasPolicyFilter';
 
 const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
@@ -70,7 +70,7 @@ const CompanyFamilyChildcareParentalLeaveProvider: React.FC &
   const companyName = useCompanyNameParam();
   const page = usePage();
   const [selectedHasPolicy, toggleHasPolicy] = useHasPolicyFilter();
-  const reviewsBox = useCompanyPolicyReviews({
+  const reviewsBox = useCompanyPolicyReviewsBox({
     companyName,
     policy: 'PARENTAL_LEAVE',
     hasPolicy: selectedHasPolicy,

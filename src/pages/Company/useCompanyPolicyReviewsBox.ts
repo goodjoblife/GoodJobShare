@@ -74,14 +74,12 @@ export type PolicyReviewsResult = {
   totalCount: number;
 };
 
-// 用篩選值組出穩定的字串 key：值一樣 key 就一樣，換頁時不會因為 selectedHasPolicy
-// 每次都是新的陣列 reference 而重打一次相同的 request
 const toFilterKey = (selectedHasPolicy: HasPolicy[]): string =>
   [...selectedHasPolicy].sort().join(',');
 
 const EMPTY_RESULT: PolicyReviewsResult = { records: [], totalCount: 0 };
 
-const useCompanyPolicyReviews = ({
+const useCompanyPolicyReviewsBox = ({
   companyName,
   policy,
   hasPolicy,
@@ -105,8 +103,6 @@ const useCompanyPolicyReviews = ({
   const [box, setBox] = useState<FetchBox<PolicyReviewsResult>>(getUnfetched());
 
   const isEmptySelection = debouncedHasPolicy.length === 0;
-  // debounce 還沒追上目前的篩選（使用者還在切換）時先不要打，避免送出「舊篩選＋新頁碼」
-  const isDebouncePending = toFilterKey(debouncedHasPolicy) !== filterKey;
 
   useEffect(() => {
     if (isEmptySelection) {
@@ -115,7 +111,8 @@ const useCompanyPolicyReviews = ({
     }
     // 切換篩選期間先進 loading（保留舊資料當作 overlay 底圖），等 debounce 停下再打
     setBox(prev => toFetching(prev));
-    if (isDebouncePending) return;
+    // debounce 還沒追上目前的篩選（使用者還在切換）時先不要打，避免送出「舊篩選＋新頁碼」
+    if (toFilterKey(debouncedHasPolicy) !== filterKey) return;
 
     let isActive = true;
     queryCompanyPolicyReviews({
@@ -150,7 +147,6 @@ const useCompanyPolicyReviews = ({
     policy,
     filterKey,
     debouncedHasPolicy,
-    isDebouncePending,
     isEmptySelection,
     start,
     limit,
@@ -159,4 +155,4 @@ const useCompanyPolicyReviews = ({
   return box;
 };
 
-export default useCompanyPolicyReviews;
+export default useCompanyPolicyReviewsBox;
