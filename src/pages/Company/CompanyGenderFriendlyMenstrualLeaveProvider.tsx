@@ -5,7 +5,7 @@ import { queryRatingStatistics } from 'actions/company';
 import Glike from 'common/icons/Glike';
 import { paramsSelector } from 'common/routing/selectors';
 import LeavePolicySection, {
-  LeavePolicyRecord,
+  FilterOption,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
 import {
   LeaveBulletByLabel,
@@ -19,6 +19,8 @@ import { ServerSideRender } from 'types/serverSideRender';
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
+import useCompanyPolicyReviewsBox from './useCompanyPolicyReviewsBox';
+import useHasPolicyFilter from './useHasPolicyFilter';
 
 const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
   是: { text: '請得到生理假', icon: <Glike /> },
@@ -54,31 +56,10 @@ const SECTION: LeaveSection = {
   },
 };
 
-const FILTER_OPTIONS = [
-  { value: '是', label: '請得到生理假' },
-  { value: '否', label: '請不到生理假' },
-  { value: '不知道', label: '不知道' },
-];
-
-const RECORDS: LeavePolicyRecord[] = [
-  {
-    id: '1',
-    jobTitle: 'QA',
-    region: 'IT',
-    availability: '是',
-    compliance: '優於',
-    experience: '每個月可以請兩天，應該優於勞基法。我偶爾會請，沒有什麼問題',
-    sharedAt: '2025.08.11',
-  },
-  {
-    id: '2',
-    jobTitle: 'Data Engineer',
-    region: 'IT',
-    availability: '是',
-    compliance: '符合',
-    experience: '請得到，主管也是女性，可以理解女生的需求',
-    sharedAt: '2025.07.11',
-  },
+const FILTER_OPTIONS: FilterOption[] = [
+  { value: 'yes', label: '請得到生理假' },
+  { value: 'no', label: '請不到生理假' },
+  { value: 'unknown', label: '不知道' },
 ];
 
 type Params = { companyName: string };
@@ -88,6 +69,14 @@ const CompanyGenderFriendlyMenstrualLeaveProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
+  const [selectedHasPolicy, toggleHasPolicy] = useHasPolicyFilter();
+  const reviewsBox = useCompanyPolicyReviewsBox({
+    companyName,
+    policy: 'MENSTRUAL_LEAVE',
+    hasPolicy: selectedHasPolicy,
+    start: (page - 1) * PAGE_SIZE,
+    limit: PAGE_SIZE,
+  });
 
   useEffect(() => {
     dispatch(queryRatingStatistics(companyName));
@@ -108,7 +97,9 @@ const CompanyGenderFriendlyMenstrualLeaveProvider: React.FC &
       availabilityColumnTitle="是否請得到生理假"
       complianceColumnTitle="勞基法符合度"
       filterOptions={FILTER_OPTIONS}
-      records={RECORDS}
+      selectedHasPolicy={selectedHasPolicy}
+      onToggleHasPolicy={toggleHasPolicy}
+      reviewsBox={reviewsBox}
       page={page}
       pageSize={PAGE_SIZE}
     />

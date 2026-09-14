@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { queryRatingStatistics } from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
 import LeavePolicySection, {
-  LeavePolicyRecord,
+  FilterOption,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
 import {
   LeaveBulletByLabel,
@@ -18,6 +18,8 @@ import { ServerSideRender } from 'types/serverSideRender';
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
+import useCompanyPolicyReviewsBox from './useCompanyPolicyReviewsBox';
+import useHasPolicyFilter from './useHasPolicyFilter';
 
 const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
   是: '有遠端工作制度',
@@ -53,31 +55,10 @@ const SECTION: LeaveSection = {
   },
 };
 
-const FILTER_OPTIONS = [
-  { value: '是', label: '可以遠端工作' },
-  { value: '否', label: '無法遠端工作' },
-  { value: '不知道', label: '不知道' },
-];
-
-const RECORDS: LeavePolicyRecord[] = [
-  {
-    id: '1',
-    jobTitle: 'Backend Engineer',
-    region: 'IT',
-    availability: '是',
-    compliance: '3天',
-    experience: '每週可以遠端三天，非常彈性，工作生活品質大幅提升',
-    sharedAt: '2025.09.10',
-  },
-  {
-    id: '2',
-    jobTitle: 'Analyst',
-    region: '營運',
-    availability: '否',
-    compliance: undefined,
-    experience: '主管要求每天到辦公室，遠端工作只有緊急情況才允許',
-    sharedAt: '2025.08.03',
-  },
+const FILTER_OPTIONS: FilterOption[] = [
+  { value: 'yes', label: '可以遠端工作' },
+  { value: 'no', label: '無法遠端工作' },
+  { value: 'unknown', label: '不知道' },
 ];
 
 type Params = { companyName: string };
@@ -87,6 +68,14 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
+  const [selectedHasPolicy, toggleHasPolicy] = useHasPolicyFilter();
+  const reviewsBox = useCompanyPolicyReviewsBox({
+    companyName,
+    policy: 'REMOTE_WORK',
+    hasPolicy: selectedHasPolicy,
+    start: (page - 1) * PAGE_SIZE,
+    limit: PAGE_SIZE,
+  });
 
   useEffect(() => {
     dispatch(queryRatingStatistics(companyName));
@@ -107,7 +96,9 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
       availabilityColumnTitle="是否可以遠端工作"
       complianceColumnTitle="每週遠端工作天數"
       filterOptions={FILTER_OPTIONS}
-      records={RECORDS}
+      selectedHasPolicy={selectedHasPolicy}
+      onToggleHasPolicy={toggleHasPolicy}
+      reviewsBox={reviewsBox}
       page={page}
       pageSize={PAGE_SIZE}
     />

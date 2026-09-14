@@ -5,7 +5,7 @@ import { queryRatingStatistics } from 'actions/company';
 import Glike from 'common/icons/Glike';
 import { paramsSelector } from 'common/routing/selectors';
 import LeavePolicySection, {
-  LeavePolicyRecord,
+  FilterOption,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
 import {
   LeaveBulletByLabel,
@@ -19,6 +19,8 @@ import { ServerSideRender } from 'types/serverSideRender';
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
+import useCompanyPolicyReviewsBox from './useCompanyPolicyReviewsBox';
+import useHasPolicyFilter from './useHasPolicyFilter';
 
 const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
   是: { text: '請得到育嬰假', icon: <Glike /> },
@@ -54,31 +56,10 @@ const SECTION: LeaveSection = {
   },
 };
 
-const FILTER_OPTIONS = [
-  { value: '是', label: '請得到育嬰假' },
-  { value: '否', label: '請不到育嬰假' },
-  { value: '不知道', label: '不知道' },
-];
-
-const RECORDS: LeavePolicyRecord[] = [
-  {
-    id: '1',
-    jobTitle: 'Software Engineer',
-    region: 'RD',
-    availability: '是',
-    compliance: '優於',
-    experience: '公司育嬰假制度完善，主管也很支持，沒有任何壓力',
-    sharedAt: '2025.09.01',
-  },
-  {
-    id: '2',
-    jobTitle: 'HR',
-    region: '人資',
-    availability: '否',
-    compliance: '不符合',
-    experience: '上司暗示不要請，說影響升遷，感覺公司文化還需改善',
-    sharedAt: '2025.06.15',
-  },
+const FILTER_OPTIONS: FilterOption[] = [
+  { value: 'yes', label: '請得到育嬰假' },
+  { value: 'no', label: '請不到育嬰假' },
+  { value: 'unknown', label: '不知道' },
 ];
 
 type Params = { companyName: string };
@@ -88,6 +69,14 @@ const CompanyFamilyChildcareParentalLeaveProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
+  const [selectedHasPolicy, toggleHasPolicy] = useHasPolicyFilter();
+  const reviewsBox = useCompanyPolicyReviewsBox({
+    companyName,
+    policy: 'PARENTAL_LEAVE',
+    hasPolicy: selectedHasPolicy,
+    start: (page - 1) * PAGE_SIZE,
+    limit: PAGE_SIZE,
+  });
 
   useEffect(() => {
     dispatch(queryRatingStatistics(companyName));
@@ -108,7 +97,9 @@ const CompanyFamilyChildcareParentalLeaveProvider: React.FC &
       availabilityColumnTitle="是否請得到育嬰假"
       complianceColumnTitle="勞基法符合度"
       filterOptions={FILTER_OPTIONS}
-      records={RECORDS}
+      selectedHasPolicy={selectedHasPolicy}
+      onToggleHasPolicy={toggleHasPolicy}
+      reviewsBox={reviewsBox}
       page={page}
       pageSize={PAGE_SIZE}
     />
