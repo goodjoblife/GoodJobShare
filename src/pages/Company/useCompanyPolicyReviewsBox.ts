@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useDebounce } from 'react-use';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import queryCompanyPolicyReviews, {
   HasPolicy,
@@ -92,33 +91,54 @@ const useCompanyPolicyReviewsBox = ({
   start: number;
   limit: number;
 }): FetchBox<PolicyReviewsResult> => {
-  // 篩選的勾選狀態即時反映在網址上，但查詢等它停下來再發
-  const filterKey = toFilterKey(hasPolicy);
-  const [debouncedHasPolicy, setDebouncedHasPolicy] = useState(hasPolicy);
-  useDebounce(() => setDebouncedHasPolicy(hasPolicy), FILTER_DEBOUNCE_DELAY, [
-    // 依穩定的 key 觸發 debounce，值沒變就不重排程
-    filterKey,
-  ]);
+  // 參數 hasPolicy 是網址上的勾選狀態，使用者一點就變
+  const selectedKey = toFilterKey(hasPolicy);
+
+  // queried 是「已經拿去查詢的那份篩選」，跟網址上的勾選狀態是兩回事：
+  // 使用者還在切換的那 800ms 內，queried 停在上一次查詢的選擇，跟網址不一樣，
+  // 直到安靜下來才追上。所以凡是跟 request 有關的判斷都只能看 queried，
+  // 畫面上勾勾的狀態則是看網址的那份。
+  const [queried, setQueried] = useState(() => ({
+    key: selectedKey,
+    hasPolicy,
+  }));
+
+  // queried 追上網址了沒？沒追上就代表還在 debounce
+  const isFilterSettled = queried.key === selectedKey;
+
+  // 排程時要用最新的勾選狀態，但它的 reference 不該害排程重來，所以放 ref
+  const hasPolicyRef = useRef(hasPolicy);
+  hasPolicyRef.current = hasPolicy;
+
+  useEffect(() => {
+    // 已經追上就沒什麼要排程的；使用者在 800ms 內切回原本的選擇時也會走到
+    // 這裡，順手把還沒觸發的排程清掉，不會多打一次已經有資料的 request
+    if (isFilterSettled) return;
+    const timer = setTimeout(
+      () => setQueried({ key: selectedKey, hasPolicy: hasPolicyRef.current }),
+      FILTER_DEBOUNCE_DELAY,
+    );
+    return (): void => clearTimeout(timer);
+  }, [isFilterSettled, selectedKey]);
 
   const [box, setBox] = useState<FetchBox<PolicyReviewsResult>>(getUnfetched());
 
-  const isEmptySelection = debouncedHasPolicy.length === 0;
+  // 注意：以下都是 queried.hasPolicy，不是參數的 hasPolicy
+  const queriedHasPolicy = queried.hasPolicy;
+  const isEmptySelection = queriedHasPolicy.length === 0;
 
   useEffect(() => {
     if (isEmptySelection) {
       setBox(getFetched(EMPTY_RESULT));
       return;
     }
-    // 切換篩選期間先進 loading（保留舊資料當作 overlay 底圖），等 debounce 停下再打
     setBox(prev => toFetching(prev));
-    // debounce 還沒追上目前的篩選（使用者還在切換）時先不要打，避免送出「舊篩選＋新頁碼」
-    if (toFilterKey(debouncedHasPolicy) !== filterKey) return;
 
     let isActive = true;
     queryCompanyPolicyReviews({
       companyName,
       policy,
-      hasPolicy: toHasPolicyVariable(debouncedHasPolicy),
+      hasPolicy: toHasPolicyVariable(queriedHasPolicy),
       start,
       limit,
     })
@@ -139,20 +159,17 @@ const useCompanyPolicyReviewsBox = ({
       .catch(error => {
         if (isActive) setBox(getError(error));
       });
-    return () => {
+    return (): void => {
       isActive = false;
     };
-  }, [
-    companyName,
-    policy,
-    filterKey,
-    debouncedHasPolicy,
-    isEmptySelection,
-    start,
-    limit,
-  ]);
+  }, [companyName, policy, queriedHasPolicy, isEmptySelection, start, limit]);
 
-  return box;
+  // queried 還沒追上網址的期間讓表格蓋上 loading（舊資料留著當底圖），
+  // 因為此時 box 裝的是上一個篩選的結果，跟畫面上的勾勾對不起來
+  return useMemo(() => (isFilterSettled ? box : toFetching(box)), [
+    isFilterSettled,
+    box,
+  ]);
 };
 
 export default useCompanyPolicyReviewsBox;
