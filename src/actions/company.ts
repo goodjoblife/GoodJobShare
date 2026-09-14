@@ -11,6 +11,9 @@ import queryCompanyIsSubscribedApi, {
 } from 'apis/queryCompanyIsSubscribed';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
 import queryCompanyOverviewStatisticsApi from 'apis/queryCompanyOverviewStatistics';
+import queryCompanyPolicyReviewStatisticsApi, {
+  PolicyReviewStatistics,
+} from 'apis/queryCompanyPolicyReviewStatistics';
 import queryCompanyRatingStatisticsApi, {
   RatingStatistics,
 } from 'apis/queryCompanyRatingStatistics';
@@ -45,6 +48,7 @@ import {
   companyIsSubscribedBoxSelectorByName,
   companyOverviewBoxSelectorByName,
   companyOverviewStatisticsBoxSelectorByName,
+  companyPolicyReviewStatisticsBoxSelectorByName,
   companyRatingStatisticsBoxSelectorByName,
   companySalaryWorkTimeBoxSelectorByName,
   companySalaryWorkTimeStatisticsBoxSelectorByName,
@@ -84,6 +88,8 @@ export const SET_COMPANY_TOP_N_JOB_TITLES =
 export const SET_COMPANY_ESG_SALARY_DATA =
   '@@COMPANY/SET_COMPANY_ESG_SALARY_DATA';
 export const SET_IS_SUBSCRIBED = '@@COMPANY/SET_IS_SUBSCRIBED';
+export const SET_POLICY_REVIEW_STATISTICS =
+  '@@COMPANY/SET_POLICY_REVIEW_STATISTICS';
 
 const setIndex = (
   page: number,
@@ -165,6 +171,36 @@ export const queryRatingStatistics = (companyName: string): Thunk => async (
       dispatch(setRatingStatistcs(companyName, getError(error)));
     }
     throw error;
+  }
+};
+
+const setPolicyReviewStatistics = (
+  companyName: string,
+  box: FetchBox<PolicyReviewStatistics[] | null>,
+): AnyAction => ({
+  type: SET_POLICY_REVIEW_STATISTICS,
+  companyName,
+  box,
+});
+
+export const queryCompanyPolicyReviewStatistics = (
+  companyName: string,
+): Thunk => async (dispatch, getState): Promise<unknown> => {
+  const box = companyPolicyReviewStatisticsBoxSelectorByName(companyName)(
+    getState(),
+  );
+  if (isFetching(box) || isFetched(box)) {
+    return;
+  }
+
+  dispatch(setPolicyReviewStatistics(companyName, toFetching()));
+
+  try {
+    const data = await queryCompanyPolicyReviewStatisticsApi({ companyName });
+
+    dispatch(setPolicyReviewStatistics(companyName, getFetched(data)));
+  } catch (error) {
+    dispatch(setPolicyReviewStatistics(companyName, getError(error)));
   }
 };
 
