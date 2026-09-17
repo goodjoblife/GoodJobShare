@@ -1,10 +1,8 @@
 import { useCallback } from 'react';
 import { useAsyncFn } from 'react-use';
 
-import {
-  changeExperienceStatus,
-  patchReply as patchReplyApi,
-} from 'apis/experiencesApi';
+import changeExperienceStatus from 'apis/changeExperienceStatus';
+import changeReplyStatus from 'apis/changeReplyStatus';
 import { queryMyPublishesApi } from 'apis/me';
 import { changeSalaryWorkTimeStatus } from 'apis/timeAndSalaryApi';
 import { useToken } from 'hooks/auth';
@@ -51,7 +49,7 @@ export const useToggleReplyStatus = () => {
   const token = useToken();
   return useCallback(
     o => {
-      return patchReplyApi({
+      return changeReplyStatus({
         id: o.id,
         status: o.status === 'published' ? 'hidden' : 'published',
         token,

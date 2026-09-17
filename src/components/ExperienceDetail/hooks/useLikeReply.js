@@ -1,9 +1,7 @@
 import { useCallback } from 'react';
 
-import {
-  deleteReplyLikes as deleteReplyLikesApi,
-  postReplyLikes as postReplyLikesApi,
-} from 'apis/experiencesApi';
+import createReplyLikeApi from 'apis/createReplyLike';
+import deleteReplyLikeApi from 'apis/deleteReplyLike';
 import { useToken } from 'hooks/auth';
 
 const useLikeReply = () => {
@@ -12,9 +10,9 @@ const useLikeReply = () => {
     async reply => {
       const { id: replyId, liked } = reply;
       if (liked) {
-        await deleteReplyLikesApi({ id: replyId, token });
+        await deleteReplyLikeApi({ id: replyId, token });
       } else {
-        await postReplyLikesApi({ id: replyId, token });
+        await createReplyLikeApi({ id: replyId, token });
       }
     },
     [token],

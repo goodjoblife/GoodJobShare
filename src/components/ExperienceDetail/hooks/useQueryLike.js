@@ -1,6 +1,6 @@
 import { useAsyncFn } from 'react-use';
 
-import { queryExperienceLike } from 'apis/experiencesApi';
+import queryExperienceLike from 'apis/queryExperienceLike';
 import { useToken } from 'hooks/auth';
 
 const useQueryLike = experienceId => {
