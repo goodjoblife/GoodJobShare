@@ -52,14 +52,6 @@ export const postReplyLikes = ({ id, token }) =>
     token,
   });
 
-export const patchReply = ({ id, status, token }) =>
-  fetchUtil(`/replies/${id}`).patch({
-    body: {
-      status,
-    },
-    token,
-  });
-
 export const queryExperienceLike = async ({ id, token }) => {
   const data = await graphqlClient({
     query: queryExperienceLikeGql,
