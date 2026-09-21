@@ -10,9 +10,9 @@ import Loader from 'common/Loader';
 import CommentBlock from './CommentBlock';
 import styles from './MessageBoard.module.css';
 import useCreateReply from '../hooks/useCreateReply';
-import useLikeReply from '../hooks/useLikeReply';
 import useLoginFlow from '../hooks/useLoginFlow';
 import useQueryReplies from '../hooks/useQueryReplies';
+import useToggleReplyLike from '../hooks/useToggleReplyLike';
 
 const recommendedSentences = [
   '詳細給推',
@@ -44,7 +44,7 @@ const MessageBoard = ({ experienceId }) => {
     queryReplies();
   }, [queryReplies]);
 
-  const likeReply = useLikeReply();
+  const toggleReplyLike = useToggleReplyLike();
 
   return (
     <div className={styles.container}>
@@ -88,7 +88,7 @@ const MessageBoard = ({ experienceId }) => {
                 key={reply.id}
                 reply={reply}
                 toggleReplyLike={async () => {
-                  await likeReply(reply);
+                  await toggleReplyLike(reply);
                   await queryReplies();
                 }}
               />

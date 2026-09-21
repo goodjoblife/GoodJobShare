@@ -5,7 +5,7 @@ import deleteReplyLikeApi from 'apis/deleteReplyLike';
 import { Reply } from 'apis/queryExperienceReplies';
 import { useToken } from 'hooks/auth';
 
-const useLikeReply = (): ((reply: Reply) => Promise<void>) => {
+const useToggleReplyLike = (): ((reply: Reply) => Promise<void>) => {
   const token = useToken();
   return useCallback(
     async (reply: Reply): Promise<void> => {
@@ -20,4 +20,4 @@ const useLikeReply = (): ((reply: Reply) => Promise<void>) => {
   );
 };
 
-export default useLikeReply;
+export default useToggleReplyLike;

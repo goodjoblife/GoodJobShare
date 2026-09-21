@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import createExperienceLikeApi from 'apis/createExperienceLike';
-import deleteExperienceLikesApi from 'apis/deleteExperienceLike';
+import deleteExperienceLikeApi from 'apis/deleteExperienceLike';
 import { useToken } from 'hooks/auth';
 
 const useToggleLike = (
@@ -11,7 +11,7 @@ const useToggleLike = (
   return useCallback(
     async (liked: boolean): Promise<void> => {
       if (liked) {
-        await deleteExperienceLikesApi({
+        await deleteExperienceLikeApi({
           id: experienceId,
           token,
         });
