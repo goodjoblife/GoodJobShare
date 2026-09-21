@@ -4,23 +4,19 @@ import createExperienceLikeApi from 'apis/createExperienceLike';
 import deleteExperienceLikesApi from 'apis/deleteExperienceLike';
 import { useToken } from 'hooks/auth';
 
-type ToggleLikeResult =
-  | ReturnType<typeof createExperienceLikeApi>
-  | ReturnType<typeof deleteExperienceLikesApi>;
-
 const useToggleLike = (
   experienceId: string,
-): ((liked: boolean) => ToggleLikeResult) => {
+): ((liked: boolean) => Promise<void>) => {
   const token = useToken();
   return useCallback(
-    (liked: boolean): ToggleLikeResult => {
+    async (liked: boolean): Promise<void> => {
       if (liked) {
-        return deleteExperienceLikesApi({
+        await deleteExperienceLikesApi({
           id: experienceId,
           token,
         });
       } else {
-        return createExperienceLikeApi({
+        await createExperienceLikeApi({
           id: experienceId,
           token,
         });
