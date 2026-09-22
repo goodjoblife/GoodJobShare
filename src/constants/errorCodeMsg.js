@@ -107,6 +107,6 @@ export const ERROR_CODE_MSG = {
     internal: 'Warning without validation failure',
   },
   [ER0022]: {
-    internal: 'FB SDK failed to load',
+    internal: 'FB SDK failed to load or timed out',
   },
 };

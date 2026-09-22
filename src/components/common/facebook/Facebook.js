@@ -4,8 +4,6 @@
 // reference: https://github.com/CherryProjects/react-facebook/blob/master/src/Facebook.js
 // 由於需要 DOM，所以 Server Side Rendering 不能使用
 
-const LOAD_TIMEOUT_MS = 10000;
-
 export default class Facebook {
   constructor(appId) {
     this.appId = appId;
@@ -20,14 +18,8 @@ export default class Facebook {
     this.loadingPromise = new Promise((resolve, reject) => {
       const appId = this.appId;
 
-      const timeoutId = setTimeout(() => {
-        reject(new Error('Facebook SDK load timed out'));
-      }, LOAD_TIMEOUT_MS);
-
       // FB SDK loading 後會觸發 window.fbAsyncInit
       window.fbAsyncInit = () => {
-        clearTimeout(timeoutId);
-
         window.FB.init({
           appId,
           cookie: true,
@@ -47,7 +39,10 @@ export default class Facebook {
         js.id = id;
         js.src = '//connect.facebook.net/zh_TW/sdk.js';
         js.onerror = () => {
-          clearTimeout(timeoutId);
+          // Remove the failed script so a later init can retry loading it.
+          if (js.parentNode) {
+            js.parentNode.removeChild(js);
+          }
           reject(new Error('Facebook SDK failed to load'));
         };
         fjs.parentNode.insertBefore(js, fjs);
