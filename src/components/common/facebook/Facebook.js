@@ -39,7 +39,6 @@ export default class Facebook {
         js.id = id;
         js.src = '//connect.facebook.net/zh_TW/sdk.js';
         js.onerror = () => {
-          // Remove the failed script so a later init can retry loading it.
           if (js.parentNode) {
             js.parentNode.removeChild(js);
           }
