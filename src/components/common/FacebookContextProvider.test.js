@@ -67,12 +67,7 @@ describe('FacebookContextProvider', () => {
 
     await act(async () => {
       rejectFacebook(new Error('Facebook SDK failed to load'));
-
-      try {
-        await initPromise;
-      } catch (error) {
-        // FacebookContextProvider handles the rejected init promise.
-      }
+      await expect(initPromise).rejects.toThrow('Facebook SDK failed to load');
     });
 
     expect(rollbar.error).toHaveBeenCalledTimes(1);
