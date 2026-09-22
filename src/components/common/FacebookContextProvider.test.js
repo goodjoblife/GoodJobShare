@@ -35,6 +35,28 @@ describe('FacebookContextProvider', () => {
     jest.clearAllMocks();
   });
 
+  it('makes the Facebook SDK available without reporting an error when it loads in time', async () => {
+    const { getByTestId } = render(
+      <FacebookContextProvider>
+        <FacebookStatus />
+      </FacebookContextProvider>,
+    );
+    const facebookSdk = { login: jest.fn() };
+
+    await act(async () => {
+      resolveFacebook(facebookSdk);
+      await initPromise;
+    });
+
+    expect(getByTestId('facebook-status').textContent).toBe('ready');
+
+    act(() => {
+      jest.advanceTimersByTime(10000);
+    });
+
+    expect(rollbar.error).not.toHaveBeenCalled();
+  });
+
   it('makes a late Facebook SDK available after reporting a timeout', async () => {
     const { getByTestId } = render(
       <FacebookContextProvider>
@@ -46,7 +68,10 @@ describe('FacebookContextProvider', () => {
       jest.advanceTimersByTime(10000);
     });
 
-    expect(rollbar.error).toHaveBeenCalledTimes(1);
+    expect(rollbar.error).toHaveBeenCalledWith(
+      '[ER0022] FB SDK failed to load or timed out Facebook SDK load timed out',
+      expect.objectContaining({ message: 'Facebook SDK load timed out' }),
+    );
     expect(getByTestId('facebook-status').textContent).toBe('loading');
 
     await act(async () => {
@@ -59,6 +84,8 @@ describe('FacebookContextProvider', () => {
   });
 
   it('reports an SDK load failure without waiting for the timeout', async () => {
+    const loadError = new Error('Facebook SDK failed to load');
+
     render(
       <FacebookContextProvider>
         <FacebookStatus />
@@ -66,11 +93,14 @@ describe('FacebookContextProvider', () => {
     );
 
     await act(async () => {
-      rejectFacebook(new Error('Facebook SDK failed to load'));
+      rejectFacebook(loadError);
       await expect(initPromise).rejects.toThrow('Facebook SDK failed to load');
     });
 
-    expect(rollbar.error).toHaveBeenCalledTimes(1);
+    expect(rollbar.error).toHaveBeenCalledWith(
+      '[ER0022] FB SDK failed to load or timed out Facebook SDK failed to load',
+      loadError,
+    );
 
     act(() => {
       jest.advanceTimersByTime(10000);
