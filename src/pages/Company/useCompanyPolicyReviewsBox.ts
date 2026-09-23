@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import queryCompanyPolicyReviews, {
   HasPolicy,
@@ -14,8 +14,6 @@ import FetchBox, {
   getUnfetched,
   toFetching,
 } from 'utils/fetchBox';
-
-const FILTER_DEBOUNCE_DELAY = 800;
 
 const HAS_POLICY_LABELS: Record<HasPolicy, string> = {
   yes: '是',
@@ -73,9 +71,6 @@ export type PolicyReviewsResult = {
   totalCount: number;
 };
 
-const toFilterKey = (selectedHasPolicy: HasPolicy[]): string =>
-  [...selectedHasPolicy].sort().join(',');
-
 const EMPTY_RESULT: PolicyReviewsResult = { records: [], totalCount: 0 };
 
 const useCompanyPolicyReviewsBox = ({
@@ -91,37 +86,9 @@ const useCompanyPolicyReviewsBox = ({
   start: number;
   limit: number;
 }): FetchBox<PolicyReviewsResult> => {
-  const selectedKey = toFilterKey(hasPolicy);
-
-  // Query for the request. This might not match the current query in the URL
-  // until the debounce on user's frequent interactions is complete.
-  const [queried, setQueried] = useState(() => ({
-    key: selectedKey,
-    hasPolicy,
-  }));
-
-  // HasPolicy for the request. We use ref because we don't expect to trigger
-  // re-rendering until the debounce is complete.
-  const hasPolicyRef = useRef(hasPolicy);
-  hasPolicyRef.current = hasPolicy;
-
-  // Queried won't match the query in the URL until debounce is complete.
-  const isDebouncing = queried.key !== selectedKey;
-
-  useEffect(() => {
-    if (isDebouncing) {
-      const timer = setTimeout(
-        () => setQueried({ key: selectedKey, hasPolicy: hasPolicyRef.current }),
-        FILTER_DEBOUNCE_DELAY,
-      );
-      return (): void => clearTimeout(timer);
-    }
-  }, [isDebouncing, selectedKey]);
-
   const [box, setBox] = useState<FetchBox<PolicyReviewsResult>>(getUnfetched());
 
-  const queriedHasPolicy = queried.hasPolicy;
-  const isEmptySelection = queriedHasPolicy.length === 0;
+  const isEmptySelection = hasPolicy.length === 0;
 
   useEffect(() => {
     if (isEmptySelection) {
@@ -134,7 +101,7 @@ const useCompanyPolicyReviewsBox = ({
     queryCompanyPolicyReviews({
       companyName,
       policy,
-      hasPolicy: toHasPolicyVariable(queriedHasPolicy),
+      hasPolicy: toHasPolicyVariable(hasPolicy),
       start,
       limit,
     })
@@ -158,12 +125,9 @@ const useCompanyPolicyReviewsBox = ({
     return (): void => {
       isActive = false;
     };
-  }, [companyName, policy, queriedHasPolicy, isEmptySelection, start, limit]);
+  }, [companyName, policy, hasPolicy, isEmptySelection, start, limit]);
 
-  return useMemo(() => (isDebouncing ? toFetching(box) : box), [
-    isDebouncing,
-    box,
-  ]);
+  return box;
 };
 
 export default useCompanyPolicyReviewsBox;
