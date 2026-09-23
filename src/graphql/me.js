@@ -61,18 +61,15 @@ export const queryMyPublishesGql = /* GraphQL */ `
       }
 
       policyReviewGroupList {
-        policyReviews {
-          id
-          groupId
-          company {
-            name
-          }
-          jobTitle
-          status
-          archive {
-            is_archived
-            reason
-          }
+        groupId
+        company {
+          name
+        }
+        jobTitle
+        status
+        archive {
+          is_archived
+          reason
         }
       }
     }
