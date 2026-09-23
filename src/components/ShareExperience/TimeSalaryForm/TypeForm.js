@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useDispatch } from 'react-redux';
 
@@ -23,28 +23,29 @@ import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
 import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_CURRENTLY_EMPLOYED,
-  DATA_KEY_DAY_PROMISED_WORK_TIME,
   DATA_KEY_DAY_REAL_WORK_TIME,
   DATA_KEY_EMPLOY_TYPE,
   DATA_KEY_EXPERIENCE_IN_YEAR,
   DATA_KEY_GENDER,
   DATA_KEY_HAS_COMPENSATORY_DAYOFF,
   DATA_KEY_HAS_OVERTIME_SALARY,
+  DATA_KEY_JOB_LADDER,
   DATA_KEY_JOB_TITLE,
   DATA_KEY_OVERTIME_FREQUENCY,
   DATA_KEY_SALARY,
   DATA_KEY_SECTOR,
   DATA_KEY_WEEK_WORK_TIME,
 } from '../constants';
+import PolicySimpleTypeForm from '../PolicyForm/SimpleTypeForm';
 import {
   createCompanyQuestion,
   createCompensatoryDayOffQuestion,
   createCurrentlyEmployedQuestion,
-  createDayPromisedWorkTimeQuestion,
   createDayRealWorkTimeQuestion,
   createEmployTypeQuestion,
   createExperienceInYearQuestion,
   createGenderQuestion,
+  createJobLadderQuestion,
   createJobTitleQuestion,
   createOvertimeFrequencyQuestion,
   createOvertimeSalaryQuestion,
@@ -74,7 +75,7 @@ const questions = [
   createGenderQuestion(),
   createRequiredSalaryQuestion({ type: TabType.TIME_AND_SALARY }),
   createExperienceInYearQuestion(),
-  createDayPromisedWorkTimeQuestion(),
+  createJobLadderQuestion(),
   createDayRealWorkTimeQuestion(),
   createWeekWorkTimeQuestion(),
   createOvertimeFrequencyQuestion(),
@@ -104,7 +105,8 @@ const bodyFromDraft = evolve({
   salaryAmount: draft =>
     parseSalaryAmount(draft[DATA_KEY_SALARY][1]).toString(),
   experienceInYear: draft => draft[DATA_KEY_EXPERIENCE_IN_YEAR].toString(),
-  dayPromisedWorkTime: draft => draft[DATA_KEY_DAY_PROMISED_WORK_TIME],
+  jobLadder: draft => draft[DATA_KEY_JOB_LADDER],
+  dayPromisedWorkTime: '8',
   dayRealWorkTime: draft => draft[DATA_KEY_DAY_REAL_WORK_TIME],
   weekWorkTime: draft => draft[DATA_KEY_WEEK_WORK_TIME],
   overtimeFrequency: draft => draft[DATA_KEY_OVERTIME_FREQUENCY].toString(),
@@ -113,7 +115,29 @@ const bodyFromDraft = evolve({
   hasCompensatoryDayoff: draft => draft[DATA_KEY_HAS_COMPENSATORY_DAYOFF],
 });
 
-const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
+const salaryTabPathnameOf = companyName =>
+  generateTabURL({
+    pageType: PageType.COMPANY,
+    pageName: companyName,
+    tabType: TabType.TIME_AND_SALARY,
+  });
+
+const redirectToSalaryTab = (_, draft) =>
+  salaryTabPathnameOf(draft[DATA_KEY_COMPANY_NAME]);
+
+const toPolicyDraft = salaryDraft => ({
+  companyName: salaryDraft[DATA_KEY_COMPANY_NAME],
+  jobTitle: salaryDraft[DATA_KEY_JOB_TITLE],
+  sector: salaryDraft[DATA_KEY_SECTOR],
+});
+
+const SalaryTypeForm = ({
+  open,
+  onClose,
+  hideProgressBar,
+  successDescription,
+  onSuccessContinue,
+}) => {
   useEffect(() => {
     if (open) {
       // send hotjar event for recording
@@ -191,15 +215,53 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
       onSubmit={onSubmit}
       onSubmitError={onSubmitError}
       onClose={onClose}
-      redirectPathnameOnSuccess={(_, draft) =>
-        generateTabURL({
-          pageType: PageType.COMPANY,
-          pageName: draft[DATA_KEY_COMPANY_NAME],
-          tabType: TabType.TIME_AND_SALARY,
-        })
-      }
+      redirectPathnameOnSuccess={redirectToSalaryTab}
       hideProgressBar={hideProgressBar}
+      successSubtitle="你已解鎖全站資訊 14 天囉！"
+      successDescription={successDescription}
+      onSuccessContinue={onSuccessContinue}
     />
+  );
+};
+
+SalaryTypeForm.propTypes = {
+  hideProgressBar: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
+  onSuccessContinue: PropTypes.func,
+  open: PropTypes.bool.isRequired,
+  successDescription: PropTypes.string,
+};
+
+const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
+  const [policyDraft, setPolicyDraft] = useState(null);
+  const onContinueToPolicyForm = useCallback(
+    (_, salaryDraft) => setPolicyDraft(toPolicyDraft(salaryDraft)),
+    [],
+  );
+  const closePolicyForm = useCallback(() => setPolicyDraft(null), []);
+  const policyFormQuitPathname = useCallback(
+    () => salaryTabPathnameOf(policyDraft.companyName),
+    [policyDraft],
+  );
+
+  return (
+    <Fragment>
+      <SalaryTypeForm
+        open={open}
+        onClose={onClose}
+        hideProgressBar={hideProgressBar}
+        successDescription="再回答幾個問題，加碼解鎖 14 天。"
+        onSuccessContinue={onContinueToPolicyForm}
+      />
+      <PolicySimpleTypeForm
+        open={policyDraft !== null}
+        onClose={closePolicyForm}
+        companyName={policyDraft?.companyName || ''}
+        jobTitle={policyDraft?.jobTitle || ''}
+        sector={policyDraft?.sector || ''}
+        redirectPathnameOnQuit={policyFormQuitPathname}
+      />
+    </Fragment>
   );
 };
 
