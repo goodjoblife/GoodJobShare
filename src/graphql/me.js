@@ -59,6 +59,19 @@ export const queryMyPublishesGql = /* GraphQL */ `
           reason
         }
       }
+
+      policyReviewGroupList {
+        groupId
+        company {
+          name
+        }
+        jobTitle
+        status
+        archive {
+          is_archived
+          reason
+        }
+      }
     }
   }
 `;

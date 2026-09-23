@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { Heading, P } from 'common/base';
 import Bookmark from 'common/icons/Bookmark';
 import Modal from 'common/Modal';
-import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 
 import styles from './ShareBlockElement.module.css';
 
@@ -15,6 +14,7 @@ const ShareBlock = ({
   type,
   heading,
   to,
+  linkTitle = '檢視文章',
   position,
   comment,
   disabled,
@@ -52,25 +52,10 @@ const ShareBlock = ({
         </div>
       ) : (
         <Heading size="sl" Tag="h3">
-          {type === '薪時' ? (
-            <Link
-              to={generateTabURL({
-                pageType: PageType.COMPANY,
-                pageName: to,
-                tabType: TabType.TIME_AND_SALARY,
-              })}
-              title="檢視薪時"
-              className="hoverBlue"
-            >
-              {heading}
-              {position && <span> - {position}</span>}
-            </Link>
-          ) : (
-            <Link to={to} title="檢視文章" className="hoverBlue">
-              {heading}
-              {position && <span> - {position}</span>}
-            </Link>
-          )}
+          <Link to={to} title={linkTitle} className="hoverBlue">
+            {heading}
+            {position && <span> - {position}</span>}
+          </Link>
           {archive && archive.is_archived && (
             <span className={cn(styles.badge, styles.archive)}>已封存</span>
           )}
@@ -111,6 +96,7 @@ ShareBlock.propTypes = {
   disabled: PropTypes.bool,
   heading: PropTypes.string.isRequired,
   isArchiveModalOpen: PropTypes.bool.isRequired,
+  linkTitle: PropTypes.string,
   options: PropTypes.object,
   position: PropTypes.string,
   publishHandler: PropTypes.func.isRequired,
