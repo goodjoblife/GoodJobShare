@@ -39,11 +39,33 @@ const esgYearStatisticsList: EsgYearStatistics[] = [
   },
 ];
 
-test('固定顯示陣列中第一筆（最新）年份，四張卡片皆為該年', () => {
+beforeAll(() => {
+  window.matchMedia = (query: string): MediaQueryList => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  });
+});
+
+test('預設顯示最新年份 2024，四張卡片皆為該年', () => {
   render(<EsgBlock data={esgYearStatisticsList} hasPreviewed />);
   expect(screen.getAllByText('2024 年')).toHaveLength(4);
   expect(screen.queryByText('2023 年')).not.toBeInTheDocument();
   expect(screen.getByText('101.0')).toBeInTheDocument(); // 1010000 / 10000
+});
+
+test('切換到 2023 後卡片更新', () => {
+  render(<EsgBlock data={esgYearStatisticsList} hasPreviewed />);
+  fireEvent.change(screen.getByRole('combobox'), {
+    target: { value: '2023' },
+  });
+  expect(screen.getAllByText('2023 年')).toHaveLength(4);
+  expect(screen.getByText('97.3')).toBeInTheDocument(); // 973000 / 10000
 });
 
 test('某指標為 null → 該卡片不渲染', () => {
@@ -64,11 +86,38 @@ test('某指標為 null → 該卡片不渲染', () => {
   expect(screen.getAllByText('2025 年')).toHaveLength(1);
 });
 
+test('只有單一年份時不顯示年份下拉，但仍顯示卡片', () => {
+  const singleYear: EsgYearStatistics[] = [esgYearStatisticsList[0]];
+  render(<EsgBlock data={singleYear} hasPreviewed />);
+  expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
+  expect(screen.getAllByText('2024 年')).toHaveLength(4);
+});
+
 test('toggle 按鈕以 aria-expanded 反映收合狀態', () => {
   render(<EsgBlock data={esgYearStatisticsList} hasPreviewed />);
   const toggle = screen.getByRole('button');
   expect(toggle).toHaveAttribute('aria-expanded', 'false'); // hasPreviewed 初始為收合
   fireEvent.click(toggle);
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
+});
+
+test('收合狀態下切換年份會自動展開區塊', () => {
+  render(<EsgBlock data={esgYearStatisticsList} hasPreviewed />);
+  const toggle = screen.getByRole('button');
+  expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  fireEvent.change(screen.getByRole('combobox'), {
+    target: { value: '2023' },
+  });
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
+});
+
+test('展開狀態下切換年份維持展開', () => {
+  render(<EsgBlock data={esgYearStatisticsList} />);
+  const toggle = screen.getByRole('button');
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  fireEvent.change(screen.getByRole('combobox'), {
+    target: { value: '2023' },
+  });
   expect(toggle).toHaveAttribute('aria-expanded', 'true');
 });
 
@@ -89,4 +138,5 @@ test('四個指標皆為 null 不會 crash，仍顯示標題', () => {
   ];
   render(<EsgBlock data={empty} hasPreviewed />);
   expect(screen.getByText('企業ESG公開薪資揭露')).toBeInTheDocument();
+  expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
 });
