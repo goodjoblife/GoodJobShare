@@ -9,14 +9,14 @@ import { isFetching } from 'utils/fetchBox';
 import AuthMask from './AuthMask';
 import ShareBlockElement from './ShareBlockElement';
 import {
-  useFetchMyPublishes,
+  useFetchMyPublishesBox,
   useToggleExperienceStatus,
   useToggleReplyStatus,
   useToggleSalaryWorkTimeStatus,
 } from './useQuery';
 
 const Me = () => {
-  const [myPublishesBox, fetchMyPublishes] = useFetchMyPublishes();
+  const [myPublishesBox, fetchMyPublishes] = useFetchMyPublishesBox();
   const toggleExperienceStatus = useToggleExperienceStatus();
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
   const toggleReplyStatus = useToggleReplyStatus();

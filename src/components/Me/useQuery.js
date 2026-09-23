@@ -7,7 +7,7 @@ import { changeSalaryWorkTimeStatus } from 'apis/timeAndSalaryApi';
 import { useToken } from 'hooks/auth';
 import { getError, getFetched, getUnfetched, toFetching } from 'utils/fetchBox';
 
-export const useFetchMyPublishes = () => {
+export const useFetchMyPublishesBox = () => {
   const token = useToken();
 
   const [box, setBox] = useState(getUnfetched());
