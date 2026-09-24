@@ -7,6 +7,7 @@ import {
   SET_IS_SUBSCRIBED,
   SET_OVERVIEW,
   SET_OVERVIEW_STATISTICS,
+  SET_POLICY_REVIEW_STATISTICS,
   SET_RATING_STATISTICS,
   SET_SALARY_WORK_TIME,
   SET_SALARY_WORK_TIME_STATISTICS,
@@ -22,6 +23,7 @@ import {
 } from 'apis/overview';
 import { CompanyInIndex } from 'apis/queryCompanies';
 import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
+import { PolicyReviewStatistics } from 'apis/queryCompanyPolicyReviewStatistics';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import {
@@ -132,6 +134,10 @@ type State = {
   isSubscribedByName: Record<string, FetchBox<CompanyIsSubscribed>>;
   topNJobTitlesByName: Record<string, FetchBox<TopNJobTitles | null>>;
   esgSalaryData: Record<string, FetchBox<EsgYearStatistics[] | null>>;
+  policyReviewStatisticsByName: Record<
+    string,
+    FetchBox<PolicyReviewStatistics[] | null>
+  >;
 };
 
 const preloadedState: State = {
@@ -153,6 +159,7 @@ const preloadedState: State = {
   // box.data: null | {all, interview, work, salary}
   topNJobTitlesByName: {},
   esgSalaryData: {},
+  policyReviewStatisticsByName: {},
 };
 
 const reducer = createReducer(preloadedState, {
@@ -183,6 +190,24 @@ const reducer = createReducer(preloadedState, {
       ...state,
       ratingStatisticsByName: {
         ...state.ratingStatisticsByName,
+        [companyName]: box,
+      },
+    };
+  },
+  [SET_POLICY_REVIEW_STATISTICS]: (
+    state,
+    {
+      companyName,
+      box,
+    }: {
+      companyName: string;
+      box: FetchBox<PolicyReviewStatistics[] | null>;
+    },
+  ) => {
+    return {
+      ...state,
+      policyReviewStatisticsByName: {
+        ...state.policyReviewStatisticsByName,
         [companyName]: box,
       },
     };
