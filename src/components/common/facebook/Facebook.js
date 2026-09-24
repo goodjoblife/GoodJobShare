@@ -15,7 +15,7 @@ export default class Facebook {
       return this.loadingPromise;
     }
 
-    this.loadingPromise = new Promise(resolve => {
+    this.loadingPromise = new Promise((resolve, reject) => {
       const appId = this.appId;
 
       // FB SDK loading 後會觸發 window.fbAsyncInit
@@ -38,8 +38,17 @@ export default class Facebook {
         const js = d.createElement(s);
         js.id = id;
         js.src = '//connect.facebook.net/zh_TW/sdk.js';
+        js.onerror = () => {
+          if (js.parentNode) {
+            js.parentNode.removeChild(js);
+          }
+          reject(new Error('Facebook SDK failed to load'));
+        };
         fjs.parentNode.insertBefore(js, fjs);
       })(document, 'script', 'facebook-jssdk');
+    }).catch(error => {
+      this.loadingPromise = null;
+      throw error;
     });
 
     return this.loadingPromise;

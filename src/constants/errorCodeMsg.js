@@ -24,6 +24,7 @@ export const ER0018 = 'ER0018';
 export const ER0019 = 'ER0019';
 export const ER0020 = 'ER0020';
 export const ER0021 = 'ER0021';
+export const ER0022 = 'ER0022';
 
 // maintain a list of global error code
 export const ERROR_CODE_MSG = {
@@ -104,5 +105,8 @@ export const ERROR_CODE_MSG = {
   },
   [ER0021]: {
     internal: 'Warning without validation failure',
+  },
+  [ER0022]: {
+    internal: 'FB SDK failed to load or timed out',
   },
 };
