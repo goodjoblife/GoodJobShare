@@ -3,19 +3,19 @@ import React, { Fragment, useEffect } from 'react';
 import { Heading, Section, Wrapper } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Comment2 from 'common/icons/Comment2';
-import Loader from 'common/Loader';
+import BoxRenderer from 'common/StatusRenderer';
 
 import AuthMask from './AuthMask';
 import ShareBlockElement from './ShareBlockElement';
 import {
-  useFetchMyPublishes,
+  useFetchMyPublishesBox,
   useToggleExperienceStatus,
   useToggleReplyStatus,
   useToggleSalaryWorkTimeStatus,
 } from './useQuery';
 
 const Me = () => {
-  const [myPublishesState, fetchMyPublishes] = useFetchMyPublishes();
+  const [myPublishesBox, fetchMyPublishes] = useFetchMyPublishesBox();
   const toggleExperienceStatus = useToggleExperienceStatus();
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
   const toggleReplyStatus = useToggleReplyStatus();
@@ -39,12 +39,11 @@ const Me = () => {
               noPadding
             >
               <div>
-                {myPublishesState.loading && <Loader size="s" />}
-                {!myPublishesState.loading &&
-                  !myPublishesState.error &&
-                  myPublishesState.value && (
+                <BoxRenderer
+                  box={myPublishesBox}
+                  render={({ me }) => (
                     <Fragment>
-                      {myPublishesState.value.me.experiences.map(o => (
+                      {me.experiences.map(o => (
                         <ShareBlockElement
                           key={o.id}
                           type={o.type === 'work' ? '工作' : '面試'}
@@ -61,7 +60,7 @@ const Me = () => {
                           archive={o.archive}
                         />
                       ))}
-                      {myPublishesState.value.me.salary_work_times.map(o => (
+                      {me.salary_work_times.map(o => (
                         <ShareBlockElement
                           key={o.id}
                           type="薪時"
@@ -79,7 +78,7 @@ const Me = () => {
                           archive={o.archive}
                         />
                       ))}
-                      {(myPublishesState.value.me.replies || []).map(o => (
+                      {(me.replies || []).map(o => (
                         <ShareBlockElement
                           key={o.id}
                           type="留言"
@@ -98,6 +97,7 @@ const Me = () => {
                       ))}
                     </Fragment>
                   )}
+                />
               </div>
             </IconHeadingBlock>
           </div>
