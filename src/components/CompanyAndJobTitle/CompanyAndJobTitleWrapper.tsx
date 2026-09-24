@@ -12,6 +12,7 @@ import {
   PageType,
   TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
+  tabTypesByPageType,
   tabTypeTranslation,
 } from 'constants/companyJobTitle';
 
@@ -35,17 +36,15 @@ const CompanyAndJobTitleWrapper: React.FC<CompanyAndJobTitleWrapperProps> = ({
 }) => {
   const tabLinkOptions = useMemo(
     () =>
-      (Object.entries(tabTypeTranslation) as [TabType, string][]).map(
-        ([type, label]) => ({
-          label,
-          to: generateTabURL({
-            pageType,
-            pageName,
-            tabType: type,
-          }),
-          exact: type === TabType.OVERVIEW,
+      tabTypesByPageType[pageType].map(type => ({
+        label: tabTypeTranslation[type],
+        to: generateTabURL({
+          pageType,
+          pageName,
+          tabType: type,
         }),
-      ),
+        exact: type === TabType.OVERVIEW,
+      })),
     [pageType, pageName],
   );
 
