@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
+import changeExperienceStatus from 'apis/changeExperienceStatus';
 import changeReplyStatus from 'apis/changeReplyStatus';
-import { changeExperienceStatus } from 'apis/experiencesApi';
 import { queryMyPublishesApi } from 'apis/me';
 import { changeSalaryWorkTimeStatus } from 'apis/timeAndSalaryApi';
 import { useToken } from 'hooks/auth';
