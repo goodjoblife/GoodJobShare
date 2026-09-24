@@ -1,6 +1,6 @@
 import graphqlClient from 'utils/graphqlClient';
 
-const queryExperienceLikeGql = /* GraphQL */ `
+const queryExperienceLikedGql = /* GraphQL */ `
   query($id: ID!) {
     experience(id: $id) {
       liked
@@ -8,19 +8,19 @@ const queryExperienceLikeGql = /* GraphQL */ `
   }
 `;
 
-type QueryExperienceLikeData = {
+type QueryExperienceLikedData = {
   experience: { liked: boolean } | null;
 };
 
-const queryExperienceLike = ({
+const queryExperienceLiked = ({
   id,
   token,
 }: {
   id: string;
   token?: string;
 }): Promise<boolean> =>
-  graphqlClient<QueryExperienceLikeData>({
-    query: queryExperienceLikeGql,
+  graphqlClient<QueryExperienceLikedData>({
+    query: queryExperienceLikedGql,
     variables: { id },
     token,
   }).then(data => {
@@ -30,4 +30,4 @@ const queryExperienceLike = ({
     return data.experience.liked;
   });
 
-export default queryExperienceLike;
+export default queryExperienceLiked;

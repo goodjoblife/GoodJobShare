@@ -15,7 +15,7 @@ const queryExperienceRepliesGql = /* GraphQL */ `
   }
 `;
 
-type Reply = {
+export type Reply = {
   id: string;
   content: string;
   like_count: number;

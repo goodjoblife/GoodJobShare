@@ -2,12 +2,13 @@ import { useCallback } from 'react';
 
 import createReplyLikeApi from 'apis/createReplyLike';
 import deleteReplyLikeApi from 'apis/deleteReplyLike';
+import { Reply } from 'apis/queryExperienceReplies';
 import { useToken } from 'hooks/auth';
 
-const useLikeReply = () => {
+const useToggleReplyLike = (): ((reply: Reply) => Promise<void>) => {
   const token = useToken();
   return useCallback(
-    async reply => {
+    async (reply: Reply): Promise<void> => {
       const { id: replyId, liked } = reply;
       if (liked) {
         await deleteReplyLikeApi({ id: replyId, token });
@@ -19,4 +20,4 @@ const useLikeReply = () => {
   );
 };
 
-export default useLikeReply;
+export default useToggleReplyLike;
