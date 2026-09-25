@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 
 import { Heading, Section, Wrapper } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
@@ -6,6 +6,8 @@ import Comment2 from 'common/icons/Comment2';
 import BoxRenderer from 'common/StatusRenderer';
 
 import AuthMask from './AuthMask';
+import fakePolicyReviewGroups from './fakePolicyReviewGroups';
+import PolicyReviewGroupModal from './PolicyReviewGroupModal';
 import ShareBlockElement from './ShareBlockElement';
 import {
   useFetchMyPublishesBox,
@@ -19,6 +21,26 @@ const Me = () => {
   const toggleExperienceStatus = useToggleExperienceStatus();
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
   const toggleReplyStatus = useToggleReplyStatus();
+
+  // TODO: 後端 me.policyReviewGroupList 接上後改成從 query 取得，隱藏改打
+  //       changePolicyReviewGroupStatus
+  const [policyReviewGroups, setPolicyReviewGroups] = useState(
+    fakePolicyReviewGroups,
+  );
+  const [openedPolicyReviewGroup, setOpenedPolicyReviewGroup] = useState(null);
+
+  const togglePolicyReviewGroupStatus = useCallback(groupId => {
+    setPolicyReviewGroups(groups =>
+      groups.map(group =>
+        group.groupId === groupId
+          ? {
+              ...group,
+              status: group.status === 'published' ? 'hidden' : 'published',
+            }
+          : group,
+      ),
+    );
+  }, []);
 
   useEffect(() => {
     fetchMyPublishes();
@@ -95,6 +117,23 @@ const Me = () => {
                           options={{ replyId: o.id }}
                         />
                       ))}
+                      {/* 制度沒有獨立頁面，點標題開彈窗看內容 */}
+                      {policyReviewGroups.map(o => (
+                        <ShareBlockElement
+                          key={o.groupId}
+                          type="制度"
+                          heading={o.company.name}
+                          position={o.jobTitle}
+                          onHeadingClick={() => setOpenedPolicyReviewGroup(o)}
+                          disabled={
+                            o.status === 'hidden' || o.archive.is_archived
+                          }
+                          publishHandler={() =>
+                            togglePolicyReviewGroupStatus(o.groupId)
+                          }
+                          archive={o.archive}
+                        />
+                      ))}
                     </Fragment>
                   )}
                 />
@@ -102,6 +141,10 @@ const Me = () => {
             </IconHeadingBlock>
           </div>
         </AuthMask>
+        <PolicyReviewGroupModal
+          policyReviewGroup={openedPolicyReviewGroup}
+          close={() => setOpenedPolicyReviewGroup(null)}
+        />
       </Wrapper>
     </Section>
   );

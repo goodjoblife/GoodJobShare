@@ -10,11 +10,67 @@ import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 
 import styles from './ShareBlockElement.module.css';
 
+const HeadingLabel = ({ heading, position }) => (
+  <React.Fragment>
+    {heading}
+    {position && <span> - {position}</span>}
+  </React.Fragment>
+);
+HeadingLabel.propTypes = {
+  heading: PropTypes.string.isRequired,
+  position: PropTypes.string,
+};
+
+// 沒有獨立頁面的資料型態（如制度）用 onHeadingClick 開彈窗，其餘導去該筆資料的頁面
+const HeadingAction = ({ type, to, onHeadingClick, heading, position }) => {
+  if (onHeadingClick) {
+    return (
+      <button
+        className={cn(styles.headingButton, 'hoverBlue')}
+        onClick={onHeadingClick}
+        title="檢視內容"
+      >
+        <HeadingLabel heading={heading} position={position} />
+      </button>
+    );
+  }
+
+  if (type === '薪時') {
+    return (
+      <Link
+        to={generateTabURL({
+          pageType: PageType.COMPANY,
+          pageName: to,
+          tabType: TabType.TIME_AND_SALARY,
+        })}
+        title="檢視薪時"
+        className="hoverBlue"
+      >
+        <HeadingLabel heading={heading} position={position} />
+      </Link>
+    );
+  }
+
+  return (
+    <Link to={to} title="檢視文章" className="hoverBlue">
+      <HeadingLabel heading={heading} position={position} />
+    </Link>
+  );
+};
+HeadingAction.propTypes = {
+  heading: PropTypes.string.isRequired,
+  onHeadingClick: PropTypes.func,
+  position: PropTypes.string,
+  to: PropTypes.string,
+  type: PropTypes.string.isRequired,
+};
+
 const ShareBlock = ({
   options,
   type,
   heading,
   to,
+  onHeadingClick,
   position,
   comment,
   disabled,
@@ -52,25 +108,13 @@ const ShareBlock = ({
         </div>
       ) : (
         <Heading size="sl" Tag="h3">
-          {type === '薪時' ? (
-            <Link
-              to={generateTabURL({
-                pageType: PageType.COMPANY,
-                pageName: to,
-                tabType: TabType.TIME_AND_SALARY,
-              })}
-              title="檢視薪時"
-              className="hoverBlue"
-            >
-              {heading}
-              {position && <span> - {position}</span>}
-            </Link>
-          ) : (
-            <Link to={to} title="檢視文章" className="hoverBlue">
-              {heading}
-              {position && <span> - {position}</span>}
-            </Link>
-          )}
+          <HeadingAction
+            type={type}
+            to={to}
+            onHeadingClick={onHeadingClick}
+            heading={heading}
+            position={position}
+          />
           {archive && archive.is_archived && (
             <span className={cn(styles.badge, styles.archive)}>已封存</span>
           )}
@@ -111,11 +155,12 @@ ShareBlock.propTypes = {
   disabled: PropTypes.bool,
   heading: PropTypes.string.isRequired,
   isArchiveModalOpen: PropTypes.bool.isRequired,
+  onHeadingClick: PropTypes.func,
   options: PropTypes.object,
   position: PropTypes.string,
   publishHandler: PropTypes.func.isRequired,
   setArchiveModalOpen: PropTypes.func.isRequired,
-  to: PropTypes.string.isRequired,
+  to: PropTypes.string,
   type: PropTypes.string.isRequired,
 };
 

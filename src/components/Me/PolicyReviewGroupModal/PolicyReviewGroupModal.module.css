@@ -1,0 +1,29 @@
+@value text-gray, border-gray from "../../common/variables.module.css";
+
+.modalContent {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.sector {
+  margin-top: 4px;
+  color: text-gray;
+}
+
+.policyList {
+  margin-top: 16px;
+}
+
+.policyItem {
+  padding: 16px 0;
+  border-top: 1px solid border-gray;
+}
+
+.answer {
+  margin-top: 4px;
+}
+
+.review {
+  margin-top: 8px;
+  white-space: pre-wrap;
+}
