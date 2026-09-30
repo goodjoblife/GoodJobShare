@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import { Heading, Section, Wrapper } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
@@ -7,6 +7,7 @@ import BoxRenderer from 'common/StatusRenderer';
 import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 
 import AuthMask from './AuthMask';
+import PolicyReviewGroupModal from './PolicyReviewGroupModal';
 import ShareBlockElement from './ShareBlockElement';
 import {
   useFetchMyPublishesBox,
@@ -22,6 +23,7 @@ const Me = () => {
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
   const togglePolicyReviewGroupStatus = useTogglePolicyReviewGroupStatus();
   const toggleReplyStatus = useToggleReplyStatus();
+  const [openedPolicyReviewGroup, setOpenedPolicyReviewGroup] = useState(null);
 
   useEffect(() => {
     fetchMyPublishes();
@@ -92,12 +94,7 @@ const Me = () => {
                           type="制度"
                           heading={o.company.name}
                           position={o.jobTitle}
-                          to={generateTabURL({
-                            pageType: PageType.COMPANY,
-                            pageName: o.company.name,
-                            tabType: TabType.FAMILY_CHILDCARE,
-                          })}
-                          linkTitle="檢視制度"
+                          onTitleClick={() => setOpenedPolicyReviewGroup(o)}
                           disabled={
                             o.status === 'hidden' ||
                             (o.archive && o.archive.is_archived)
@@ -134,6 +131,11 @@ const Me = () => {
           </div>
         </AuthMask>
       </Wrapper>
+      <PolicyReviewGroupModal
+        group={openedPolicyReviewGroup}
+        isOpen={openedPolicyReviewGroup !== null}
+        close={() => setOpenedPolicyReviewGroup(null)}
+      />
     </Section>
   );
 };

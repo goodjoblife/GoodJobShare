@@ -71,6 +71,7 @@ export const queryMyPublishesGql = /* GraphQL */ `
           is_archived
           reason
         }
+        createdAt
       }
     }
   }
