@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
-import { useDebounce } from 'react-use';
+import React from 'react';
 
+import { HasPolicy } from 'apis/queryCompanyPolicyReviews';
 import { Heading, Link, Wrapper } from 'common/base';
 import Pagination from 'common/Pagination';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import Table from 'common/table/Table';
+import BoxRenderer from 'components/common/StatusRenderer/BoxRenderer';
 import {
   generateTabURL,
   PageType,
   TabType,
   tabTypeTranslation,
 } from 'constants/companyJobTitle';
+import FetchBox from 'utils/fetchBox';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import LeaveSectionBlock, {
@@ -30,8 +32,8 @@ export type LeavePolicyRecord = {
   sharedAt: string;
 };
 
-type FilterOption = {
-  value: string;
+export type FilterOption = {
+  value: HasPolicy;
   label: string;
 };
 
@@ -44,8 +46,6 @@ type ColumnConfig = {
 // Table.Column is a JS component; cast to accept arbitrary props including dataField
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TableColumn = Table.Column as any;
-
-const FILTER_DEBOUNCE_DELAY = 800;
 
 type Props = {
   pageType: PageType;
@@ -61,7 +61,9 @@ type Props = {
   availabilityColumnTitle: string;
   complianceColumnTitle?: string;
   filterOptions: FilterOption[];
-  records: LeavePolicyRecord[];
+  selectedHasPolicy: HasPolicy[];
+  onToggleHasPolicy: (value: HasPolicy, y: number | null) => void;
+  reviewsBox: FetchBox<{ records: LeavePolicyRecord[]; totalCount: number }>;
   page: number;
   pageSize: number;
 };
@@ -80,37 +82,15 @@ const LeavePolicySection: React.FC<Props> = ({
   availabilityColumnTitle,
   complianceColumnTitle,
   filterOptions,
-  records,
+  selectedHasPolicy,
+  onToggleHasPolicy,
+  reviewsBox,
   page,
   pageSize,
 }) => {
-  const [selectedValues, setSelectedValues] = useState<string[]>(
-    filterOptions.map(o => o.value),
-  );
-  const [debouncedSelectedValues, setDebouncedSelectedValues] = useState(
-    selectedValues,
-  );
-  useDebounce(
-    () => setDebouncedSelectedValues(selectedValues),
-    FILTER_DEBOUNCE_DELAY,
-    [selectedValues],
-  );
   const parentPath = generateTabURL({ pageType, pageName, tabType });
   const tabName = tabTypeTranslation[tabType];
-  const [createPageLinkTo] = useCreatePageLinkTo();
-
-  const toggleValue = (value: string): void => {
-    setSelectedValues(prev =>
-      prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value],
-    );
-  };
-
-  const filteredRecords = records.filter(r =>
-    debouncedSelectedValues.includes(r.availability),
-  );
-  const totalCount = filteredRecords.length;
-  const start = (page - 1) * pageSize;
-  const pageRecords = filteredRecords.slice(start, start + pageSize);
+  const [createPageLinkTo, handleSectionRef, sectionY] = useCreatePageLinkTo();
 
   const columns: ColumnConfig[] = [
     { id: 'jobTitle', title: '職稱', dataField: 'jobTitle' },
@@ -153,30 +133,40 @@ const LeavePolicySection: React.FC<Props> = ({
         />
       </Wrapper>
       <Wrapper size="l" className={styles.content}>
-        <div className={styles.filter}>
+        <div
+          ref={handleSectionRef as React.Ref<HTMLDivElement>}
+          className={styles.filter}
+        >
           <span className={styles.filterLabel}>篩選：</span>
           {filterOptions.map(option => (
             <FilterToggleButton
               key={option.value}
               id={`filter-${option.value}`}
               label={option.label}
-              checked={selectedValues.includes(option.value)}
-              onChange={(): void => toggleValue(option.value)}
+              checked={selectedHasPolicy.includes(option.value)}
+              onChange={(): void => onToggleHasPolicy(option.value, sectionY)}
             />
           ))}
         </div>
-        <Table data={pageRecords} primaryKey="id">
-          {columns.map(
-            ({ id, ...colProps }): React.ReactNode => (
-              <TableColumn key={id} {...colProps} />
-            ),
+        <BoxRenderer
+          box={reviewsBox}
+          render={({ records, totalCount }): React.ReactNode => (
+            <>
+              <Table data={records} primaryKey="id">
+                {columns.map(
+                  ({ id, ...colProps }): React.ReactNode => (
+                    <TableColumn key={id} {...colProps} />
+                  ),
+                )}
+              </Table>
+              <Pagination
+                totalCount={totalCount}
+                unit={pageSize}
+                currentPage={page}
+                createPageLinkTo={createPageLinkTo}
+              />
+            </>
           )}
-        </Table>
-        <Pagination
-          totalCount={totalCount}
-          unit={pageSize}
-          currentPage={page}
-          createPageLinkTo={createPageLinkTo}
         />
       </Wrapper>
     </CompanyAndJobTitleWrapper>
