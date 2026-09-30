@@ -7,6 +7,7 @@ import BoxRenderer from 'common/StatusRenderer';
 import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 
 import AuthMask from './AuthMask';
+import { byPolicyReviewGroup } from './byPolicyReviewGroup';
 import PolicyReviewGroupModal from './PolicyReviewGroupModal';
 import ShareBlockElement from './ShareBlockElement';
 import {
@@ -88,7 +89,7 @@ const Me = () => {
                           archive={o.archive}
                         />
                       ))}
-                      {me.policyReviewGroupList.map(o => (
+                      {byPolicyReviewGroup(me.policyReviewGroupList).map(o => (
                         <ShareBlockElement
                           key={o.groupId}
                           type="制度"
