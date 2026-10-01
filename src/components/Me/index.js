@@ -7,6 +7,7 @@ import BoxRenderer from 'common/StatusRenderer';
 
 import AuthMask from './AuthMask';
 import ShareBlockElement from './ShareBlockElement';
+import { sortByCreatedAtDesc } from './sortByCreatedAtDesc';
 import {
   useFetchMyPublishesBox,
   useToggleExperienceStatus,
@@ -43,58 +44,69 @@ const Me = () => {
                   box={myPublishesBox}
                   render={({ me }) => (
                     <Fragment>
-                      {me.experiences.map(o => (
-                        <ShareBlockElement
-                          key={o.id}
-                          type={o.type === 'work' ? '工作' : '面試'}
-                          heading={o.title}
-                          to={`/experiences/${o.id}?backable=true`}
-                          disabled={
-                            o.status === 'hidden' ||
-                            (o.archive && o.archive.is_archived)
-                          }
-                          publishHandler={async () => {
-                            await toggleExperienceStatus(o);
-                            await fetchMyPublishes();
-                          }}
-                          archive={o.archive}
-                        />
-                      ))}
-                      {me.salary_work_times.map(o => (
-                        <ShareBlockElement
-                          key={o.id}
-                          type="薪時"
-                          heading={o.company.name}
-                          position={o.job_title.name}
-                          to={o.company.name}
-                          disabled={
-                            o.status === 'hidden' ||
-                            (o.archive && o.archive.is_archived)
-                          }
-                          publishHandler={async () => {
-                            await toggleSalaryWorkTimeStatus(o);
-                            await fetchMyPublishes();
-                          }}
-                          archive={o.archive}
-                        />
-                      ))}
-                      {(me.replies || []).map(o => (
-                        <ShareBlockElement
-                          key={o.id}
-                          type="留言"
-                          heading={o.experience ? o.experience.title : ''}
-                          comment={o.content}
-                          to={`/experiences/${
-                            o.experience ? o.experience.id : ''
-                          }`}
-                          disabled={o.status === 'hidden'}
-                          publishHandler={async () => {
-                            await toggleReplyStatus(o);
-                            await fetchMyPublishes();
-                          }}
-                          options={{ replyId: o.id }}
-                        />
-                      ))}
+                      {sortByCreatedAtDesc([
+                        ...me.experiences.map(o => ({
+                          createdAt: o.created_at,
+                          element: (
+                            <ShareBlockElement
+                              key={`experience-${o.id}`}
+                              type={o.type === 'work' ? '工作' : '面試'}
+                              heading={o.title}
+                              to={`/experiences/${o.id}?backable=true`}
+                              disabled={
+                                o.status === 'hidden' ||
+                                (o.archive && o.archive.is_archived)
+                              }
+                              publishHandler={async () => {
+                                await toggleExperienceStatus(o);
+                                await fetchMyPublishes();
+                              }}
+                              archive={o.archive}
+                            />
+                          ),
+                        })),
+                        ...me.salary_work_times.map(o => ({
+                          createdAt: o.created_at,
+                          element: (
+                            <ShareBlockElement
+                              key={`salary-work-time-${o.id}`}
+                              type="薪時"
+                              heading={o.company.name}
+                              position={o.job_title.name}
+                              to={o.company.name}
+                              disabled={
+                                o.status === 'hidden' ||
+                                (o.archive && o.archive.is_archived)
+                              }
+                              publishHandler={async () => {
+                                await toggleSalaryWorkTimeStatus(o);
+                                await fetchMyPublishes();
+                              }}
+                              archive={o.archive}
+                            />
+                          ),
+                        })),
+                        ...(me.replies || []).map(o => ({
+                          createdAt: o.created_at,
+                          element: (
+                            <ShareBlockElement
+                              key={`reply-${o.id}`}
+                              type="留言"
+                              heading={o.experience ? o.experience.title : ''}
+                              comment={o.content}
+                              to={`/experiences/${
+                                o.experience ? o.experience.id : ''
+                              }`}
+                              disabled={o.status === 'hidden'}
+                              publishHandler={async () => {
+                                await toggleReplyStatus(o);
+                                await fetchMyPublishes();
+                              }}
+                              options={{ replyId: o.id }}
+                            />
+                          ),
+                        })),
+                      ]).map(({ element }) => element)}
                     </Fragment>
                   )}
                 />
