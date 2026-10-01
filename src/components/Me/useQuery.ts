@@ -1,18 +1,41 @@
 import { useCallback, useState } from 'react';
 
 import changeExperienceStatus from 'apis/changeExperienceStatus';
-import changePolicyReviewGroupStatus from 'apis/changePolicyReviewGroupStatus';
+import changePolicyReviewGroupStatus, {
+  PublishStatus,
+} from 'apis/changePolicyReviewGroupStatus';
 import changeReplyStatus from 'apis/changeReplyStatus';
 import { queryMyPublishesApi } from 'apis/me';
-import queryPolicyReviewGroup from 'apis/queryPolicyReviewGroup';
+import queryPolicyReviewGroup, {
+  PolicyReviewGroup,
+} from 'apis/queryPolicyReviewGroup';
 import { changeSalaryWorkTimeStatus } from 'apis/timeAndSalaryApi';
 import { useToken } from 'hooks/auth';
-import { getError, getFetched, getUnfetched, toFetching } from 'utils/fetchBox';
+import FetchBox, {
+  getError,
+  getFetched,
+  getUnfetched,
+  toFetching,
+} from 'utils/fetchBox';
 
-export const useFetchMyPublishesBox = () => {
+// apis/me 還是 JS，拿不到回傳型別；這裡只負責搬運，交給使用端解讀
+type MyPublishes = unknown;
+
+type PublishItem = {
+  id: string;
+  status: PublishStatus;
+};
+
+const toggled = (status: PublishStatus): PublishStatus =>
+  status === 'published' ? 'hidden' : 'published';
+
+export const useFetchMyPublishesBox = (): [
+  FetchBox<MyPublishes>,
+  () => Promise<void>,
+] => {
   const token = useToken();
 
-  const [box, setBox] = useState(getUnfetched());
+  const [box, setBox] = useState<FetchBox<MyPublishes>>(getUnfetched());
 
   const callback = useCallback(async () => {
     setBox(prevBox => toFetching(prevBox));
@@ -28,13 +51,17 @@ export const useFetchMyPublishesBox = () => {
 };
 
 // 清單只拿得到整組共用的欄位，組內每一項制度等使用者點開才查
-export const useFetchPolicyReviewGroupBox = () => {
+export const useFetchPolicyReviewGroupBox = (): [
+  FetchBox<PolicyReviewGroup>,
+  (groupId: string) => Promise<void>,
+  () => void,
+] => {
   const token = useToken();
 
-  const [box, setBox] = useState(getUnfetched());
+  const [box, setBox] = useState<FetchBox<PolicyReviewGroup>>(getUnfetched());
 
   const fetchPolicyReviewGroup = useCallback(
-    async groupId => {
+    async (groupId: string) => {
       setBox(toFetching());
       try {
         setBox(getFetched(await queryPolicyReviewGroup({ groupId, token })));
@@ -50,13 +77,15 @@ export const useFetchPolicyReviewGroupBox = () => {
   return [box, fetchPolicyReviewGroup, clearPolicyReviewGroup];
 };
 
-export const useToggleExperienceStatus = () => {
+export const useToggleExperienceStatus = (): ((
+  o: PublishItem,
+) => Promise<unknown>) => {
   const token = useToken();
   return useCallback(
-    o => {
+    (o: PublishItem) => {
       return changeExperienceStatus({
         id: o.id,
-        status: o.status === 'published' ? 'hidden' : 'published',
+        status: toggled(o.status),
         token,
       });
     },
@@ -64,13 +93,15 @@ export const useToggleExperienceStatus = () => {
   );
 };
 
-export const useToggleSalaryWorkTimeStatus = () => {
+export const useToggleSalaryWorkTimeStatus = (): ((
+  o: PublishItem,
+) => Promise<unknown>) => {
   const token = useToken();
   return useCallback(
-    o => {
+    (o: PublishItem) => {
       return changeSalaryWorkTimeStatus({
         id: o.id,
-        status: o.status === 'published' ? 'hidden' : 'published',
+        status: toggled(o.status),
         token,
       });
     },
@@ -78,13 +109,16 @@ export const useToggleSalaryWorkTimeStatus = () => {
   );
 };
 
-export const useTogglePolicyReviewGroupStatus = () => {
+export const useTogglePolicyReviewGroupStatus = (): ((o: {
+  groupId: string;
+  status: PublishStatus;
+}) => Promise<unknown>) => {
   const token = useToken();
   return useCallback(
-    ({ groupId, status }) => {
+    ({ groupId, status }: { groupId: string; status: PublishStatus }) => {
       return changePolicyReviewGroupStatus({
         groupId,
-        status: status === 'published' ? 'hidden' : 'published',
+        status: toggled(status),
         token,
       });
     },
@@ -92,13 +126,15 @@ export const useTogglePolicyReviewGroupStatus = () => {
   );
 };
 
-export const useToggleReplyStatus = () => {
+export const useToggleReplyStatus = (): ((
+  o: PublishItem,
+) => Promise<unknown>) => {
   const token = useToken();
   return useCallback(
-    o => {
+    (o: PublishItem) => {
       return changeReplyStatus({
         id: o.id,
-        status: o.status === 'published' ? 'hidden' : 'published',
+        status: toggled(o.status),
         token,
       });
     },

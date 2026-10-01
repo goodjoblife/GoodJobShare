@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import { Heading, P } from 'common/base';
@@ -7,7 +6,22 @@ import DividedList, { DividedListItem } from 'common/DividedList';
 
 import styles from './ReportList.module.css';
 
-const ReportList = ({ reports, reportCount, onShowReportForm }) => {
+type Report = {
+  reasonCategory: string;
+  reason: string;
+};
+
+type Props = {
+  reports: Report[];
+  reportCount?: number;
+  onShowReportForm: () => void;
+};
+
+const ReportList: React.FC<Props> = ({
+  reports,
+  reportCount,
+  onShowReportForm,
+}) => {
   return (
     <div className={styles.reportList}>
       {reportCount === 0 ? (
@@ -41,12 +55,6 @@ const ReportList = ({ reports, reportCount, onShowReportForm }) => {
       </Button>
     </div>
   );
-};
-
-ReportList.propTypes = {
-  onShowReportForm: PropTypes.func.isRequired,
-  reportCount: PropTypes.number,
-  reports: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default ReportList;

@@ -1,12 +1,21 @@
 import cn from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import Cross from 'images/x.svg';
 
 import styles from './Modal.module.css';
 
-export const InlineModal = ({
+type ModalSize = 'xs' | 's' | 'm';
+
+type InlineModalProps = {
+  children?: React.ReactNode;
+  hasClose?: boolean;
+  close: () => void;
+  size?: ModalSize;
+  contentClassName?: string;
+};
+
+export const InlineModal: React.FC<InlineModalProps> = ({
   children,
   hasClose = true,
   close,
@@ -21,14 +30,17 @@ export const InlineModal = ({
           <img
             src={Cross}
             className={styles.close__icon}
-            onClick={e => e.stopPropagation() || close()}
+            onClick={(e): void => {
+              e.stopPropagation();
+              close();
+            }}
             alt="close"
           />
         </div>
       ) : null}
       <div
         className={cn(styles.content, contentClassName)}
-        onClick={e => e.stopPropagation()}
+        onClick={(e): void => e.stopPropagation()}
       >
         {children}
       </div>
@@ -36,29 +48,25 @@ export const InlineModal = ({
   );
 };
 
-InlineModal.propTypes = {
-  children: PropTypes.node,
-  close: PropTypes.func.isRequired,
-  contentClassName: PropTypes.string,
-  hasClose: PropTypes.bool,
-  size: PropTypes.string,
+type ModalProps = InlineModalProps & {
+  isOpen?: boolean;
+  closableOnClickOutside?: boolean;
 };
 
-// 選填的 prop 給預設值，TypeScript 的使用端才不會被要求一定要傳
-const Modal = ({
+const Modal: React.FC<ModalProps> = ({
   children,
   isOpen = false,
-  hasClose,
+  hasClose = true,
   close,
   closableOnClickOutside = false,
-  size,
-  contentClassName = undefined,
+  size = 's',
+  contentClassName,
 }) => (
   <div
     className={cn(styles.modal, {
       [styles.isOpen]: isOpen,
     })}
-    onClick={() => {
+    onClick={(): void => {
       if (closableOnClickOutside) {
         close();
       }
@@ -66,42 +74,28 @@ const Modal = ({
   >
     <div className={styles.inner}>
       <InlineModal
-        children={children}
         hasClose={hasClose}
         close={close}
         size={size}
         contentClassName={contentClassName}
-      />
+      >
+        {children}
+      </InlineModal>
     </div>
   </div>
 );
 
-Modal.propTypes = {
-  children: PropTypes.node,
-  closableOnClickOutside: PropTypes.bool,
-  close: PropTypes.func.isRequired,
-  contentClassName: PropTypes.string,
-  hasClose: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  size: PropTypes.string,
-};
-
-Modal.defaultProps = {
-  hasClose: true,
-  size: 's',
-};
-
 export default Modal;
 
-const InfoButton = ({ children, onClick }) => (
+type InfoButtonProps = {
+  children?: React.ReactNode;
+  onClick: () => void;
+};
+
+const InfoButton: React.FC<InfoButtonProps> = ({ children, onClick }) => (
   <button className={styles.infoButton} onClick={onClick}>
     {children}
   </button>
 );
-
-InfoButton.propTypes = {
-  children: PropTypes.node,
-  onClick: PropTypes.func.isRequired,
-};
 
 export { InfoButton };
