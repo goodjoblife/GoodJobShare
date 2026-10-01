@@ -11,6 +11,7 @@ const group = {
   company: { name: '好工作股份有限公司' },
   jobTitle: '前端工程師',
   sector: '台北總部',
+  createdAt: '2026-01-02T00:00:00.000Z',
   policyReviews: [
     {
       policy: 'MENSTRUAL_LEAVE',
@@ -61,6 +62,34 @@ describe('PolicyReviewGroupModal', () => {
     expect(
       screen.getByText('好工作股份有限公司 － 前端工程師'),
     ).toBeInTheDocument();
+  });
+
+  it('shows when the group was shared, under the sector', () => {
+    renderModal();
+
+    const sector = screen.getByText('台北總部');
+    const sharedAt = screen.getByText('分享於 2026.1.2');
+    expect(sharedAt).toBeInTheDocument();
+    // 分享日期在廠區下面一行
+    expect(
+      sector.compareDocumentPosition(sharedAt) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
+  it('puts the policy reviews in their own container', () => {
+    renderModal();
+
+    // 每一項制度都有上框線；它們自成一個容器，所以標題與第一項之間就有一條線，
+    // 而標題那幾行不會被畫到。
+    const policyReviews = screen.getByText('生理假').parentElement
+      .parentElement;
+
+    expect(policyReviews.children).toHaveLength(3);
+    expect(policyReviews.contains(screen.getByText('台北總部'))).toBe(false);
+    expect(policyReviews.contains(screen.getByText('分享於 2026.1.2'))).toBe(
+      false,
+    );
   });
 
   it('lists every policy review in the group', () => {

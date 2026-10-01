@@ -11,6 +11,7 @@ const queryPolicyReviewGroupGql = /* GraphQL */ `
         }
         jobTitle
         sector
+        createdAt
         policyReviews {
           policy
           hasPolicy
@@ -28,6 +29,7 @@ export type PolicyReviewGroup = {
   company: { name: string };
   jobTitle: string;
   sector: string | null;
+  createdAt: string;
   policyReviews: PolicyReview[];
 };
 

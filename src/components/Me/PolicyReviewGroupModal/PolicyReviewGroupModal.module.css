@@ -9,19 +9,20 @@
   color: #808080;
 }
 
+.sharedAt {
+  margin-top: 4px;
+  color: #808080;
+}
+
+.policyReviews {
+  margin-top: 16px;
+  width: 100%;
+}
+
+/* 每一項都有上框線，標題與第一項之間自然就有一條分隔線 */
 .policyReview {
   padding: 16px 0;
-  border-bottom: 1px solid #d8d8d8;
-  width: 100%;
-
-  &:first-of-type {
-    margin-top: 16px;
-    border-top: 1px solid #d8d8d8;
-  }
-
-  &:last-of-type {
-    border-bottom: none;
-  }
+  border-top: 1px solid #d8d8d8;
 }
 
 .answer {
