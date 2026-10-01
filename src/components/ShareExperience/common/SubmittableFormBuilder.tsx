@@ -18,7 +18,22 @@ type SubmitStatus =
   | 'error'
   | 'quitting';
 
-type Pathname = string | ((result: unknown, draft: Draft) => string);
+type RedirectLocation = string | { pathname: string; state?: unknown };
+
+type Pathname =
+  | RedirectLocation
+  | ((result: unknown, draft: Draft) => RedirectLocation);
+
+const replaceLocation = (location: RedirectLocation): void => {
+  if (typeof location === 'string') {
+    window.location.replace(location);
+    return;
+  }
+  // react-router's BrowserHistory restores location.state from
+  // window.history.state on load, so the state survives the reload
+  window.history.replaceState({ state: location.state }, '', location.pathname);
+  window.location.reload();
+};
 
 // TODO: replace with a proper Question type; the shape is still only described
 // by QuestionPropType in common/FormBuilder
@@ -98,7 +113,7 @@ const SubmittableTypeForm = ({
   const redirectTo = useCallback(
     (pathname: Pathname) => {
       if (typeof window === 'undefined') return;
-      window.location.replace(
+      replaceLocation(
         typeof pathname === 'function'
           ? pathname(submitResult, submittedDraft as Draft)
           : pathname,
