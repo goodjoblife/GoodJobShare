@@ -27,7 +27,7 @@ export const useFetchMyPublishesBox = () => {
   return [box, callback];
 };
 
-// 清單只拿得到整組共用的欄位，組內每一項制度等使用者點開才查
+// box 一次只裝一組：彈窗當下打開的那一組，關掉就清空
 export const useFetchPolicyReviewGroupBox = () => {
   const token = useToken();
 
