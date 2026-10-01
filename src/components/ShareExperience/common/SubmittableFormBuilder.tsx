@@ -20,11 +20,10 @@ type SubmitStatus =
 
 type RedirectLocation = string | { pathname: string; state?: unknown };
 
-type Pathname =
-  | RedirectLocation
-  | ((result: unknown, draft: Draft) => RedirectLocation);
+type Submission<Result> = { result: Result; draft: Draft };
 
 const replaceLocation = (location: RedirectLocation): void => {
+  if (typeof window === 'undefined') return;
   if (typeof location === 'string') {
     window.location.replace(location);
     return;
@@ -45,22 +44,24 @@ type Question = unknown;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PageEnd = React.ReactNode | ((draft: any) => React.ReactNode);
 
-type Props = {
+type Props<Result> = {
   open: boolean;
   questions: Question[];
   header?: PageEnd;
-  onSubmit: (draft: Draft) => unknown;
+  onSubmit: (draft: Draft) => Result | Promise<Result>;
   onSubmitError: (error: unknown) => void | Promise<void>;
   onClose: () => void;
-  redirectPathnameOnSuccess: Pathname;
-  redirectPathnameOnQuit?: Pathname | null;
+  redirectPathnameOnSuccess:
+    | RedirectLocation
+    | ((result: Result, draft: Draft) => RedirectLocation);
+  redirectPathnameOnQuit?: RedirectLocation | (() => RedirectLocation) | null;
   hideProgressBar?: boolean;
   successSubtitle?: string;
   successDescription?: string;
-  onSuccessContinue?: ((result: unknown, draft: Draft) => void) | null;
+  onSuccessContinue?: ((result: Result, draft: Draft) => void) | null;
 };
 
-const SubmittableTypeForm = ({
+const SubmittableTypeForm = <Result,>({
   open,
   questions,
   header,
@@ -73,11 +74,10 @@ const SubmittableTypeForm = ({
   successSubtitle = '你已解鎖全站資訊囉！',
   successDescription = '感謝你分享你的資訊，台灣的職場因為有你而變得更好！',
   onSuccessContinue = null,
-}: Props): React.ReactElement => {
+}: Props<Result>): React.ReactElement => {
   const history = useHistory();
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('unsubmitted');
-  const [submittedDraft, setSubmittedDraft] = useState<Draft | null>(null);
-  const [submitResult, setSubmitResult] = useState<unknown>(null);
+  const [submission, setSubmission] = useState<Submission<Result> | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = useCallback(
     async (draft: Draft) => {
@@ -86,8 +86,7 @@ const SubmittableTypeForm = ({
           return;
         }
         setSubmitStatus('submitting');
-        setSubmitResult(await onSubmit(draft));
-        setSubmittedDraft(draft);
+        setSubmission({ result: await onSubmit(draft), draft });
         setSubmitStatus('success');
       } catch (error) {
         const errorCode = ER0018;
@@ -110,30 +109,23 @@ const SubmittableTypeForm = ({
     setSubmitStatus('quitting');
   }, []);
 
-  const redirectTo = useCallback(
-    (pathname: Pathname) => {
-      if (typeof window === 'undefined') return;
-      replaceLocation(
-        typeof pathname === 'function'
-          ? pathname(submitResult, submittedDraft as Draft)
-          : pathname,
-      );
-    },
-    [submittedDraft, submitResult],
-  );
-
   const onSuccessClose = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
-    if (redirectPathnameOnSuccess) redirectTo(redirectPathnameOnSuccess);
-  }, [onClose, redirectTo, redirectPathnameOnSuccess]);
+    if (!redirectPathnameOnSuccess || !submission) return;
+    replaceLocation(
+      typeof redirectPathnameOnSuccess === 'function'
+        ? redirectPathnameOnSuccess(submission.result, submission.draft)
+        : redirectPathnameOnSuccess,
+    );
+  }, [onClose, redirectPathnameOnSuccess, submission]);
 
   const onSuccessContinueClick = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
-    if (onSuccessContinue)
-      onSuccessContinue(submitResult, submittedDraft as Draft);
-  }, [onClose, onSuccessContinue, submitResult, submittedDraft]);
+    if (onSuccessContinue && submission)
+      onSuccessContinue(submission.result, submission.draft);
+  }, [onClose, onSuccessContinue, submission]);
 
   const onResume = useCallback(() => {
     setSubmitStatus('unsubmitted');
@@ -142,8 +134,13 @@ const SubmittableTypeForm = ({
   const onQuit = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
-    if (redirectPathnameOnQuit) redirectTo(redirectPathnameOnQuit);
-  }, [onClose, redirectTo, redirectPathnameOnQuit]);
+    if (!redirectPathnameOnQuit) return;
+    replaceLocation(
+      typeof redirectPathnameOnQuit === 'function'
+        ? redirectPathnameOnQuit()
+        : redirectPathnameOnQuit,
+    );
+  }, [onClose, redirectPathnameOnQuit]);
 
   const onGoToShare = useCallback(() => {
     setSubmitStatus('unsubmitted');
