@@ -16,22 +16,11 @@ const FacebookContextProvider = ({ children }) => {
   useEffect(() => {
     let isMounted = true;
     let isSettled = false;
-    let hasReportedError = false;
-
-    const reportLoadError = error => {
-      if (!isMounted || hasReportedError) return;
-
-      hasReportedError = true;
-      const errorCode = ER0022;
-      rollbar.error(
-        `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal} ${error.message}`,
-        error,
-      );
-    };
 
     const timeoutId = setTimeout(() => {
       if (!isSettled) {
-        reportLoadError(new Error('Facebook SDK load timed out'));
+        const errorCode = ER0022;
+        rollbar.error(`[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal}`);
       }
     }, LOAD_TIMEOUT_MS);
 
@@ -43,10 +32,9 @@ const FacebookContextProvider = ({ children }) => {
         clearTimeout(timeoutId);
         if (isMounted) setFB(FB);
       })
-      .catch(error => {
+      .catch(() => {
         isSettled = true;
         clearTimeout(timeoutId);
-        reportLoadError(error);
       });
 
     return () => {

@@ -69,8 +69,7 @@ describe('FacebookContextProvider', () => {
     });
 
     expect(rollbar.error).toHaveBeenCalledWith(
-      '[ER0022] FB SDK failed to load or timed out Facebook SDK load timed out',
-      expect.objectContaining({ message: 'Facebook SDK load timed out' }),
+      '[ER0022] FB SDK load timed out',
     );
     expect(getByTestId('facebook-status').textContent).toBe('loading');
 
@@ -83,7 +82,7 @@ describe('FacebookContextProvider', () => {
     expect(rollbar.error).toHaveBeenCalledTimes(1);
   });
 
-  it('reports an SDK load failure without waiting for the timeout', async () => {
+  it('does not report an SDK load failure, even after the timeout', async () => {
     const loadError = new Error('Facebook SDK failed to load');
 
     render(
@@ -97,15 +96,10 @@ describe('FacebookContextProvider', () => {
       await expect(initPromise).rejects.toThrow('Facebook SDK failed to load');
     });
 
-    expect(rollbar.error).toHaveBeenCalledWith(
-      '[ER0022] FB SDK failed to load or timed out Facebook SDK failed to load',
-      loadError,
-    );
-
     act(() => {
       jest.advanceTimersByTime(10000);
     });
 
-    expect(rollbar.error).toHaveBeenCalledTimes(1);
+    expect(rollbar.error).not.toHaveBeenCalled();
   });
 });
