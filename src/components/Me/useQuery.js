@@ -27,7 +27,6 @@ export const useFetchMyPublishesBox = () => {
   return [box, callback];
 };
 
-// box 一次只裝一組：彈窗當下打開的那一組，關掉就清空
 export const useFetchPolicyReviewGroupBox = () => {
   const token = useToken();
 
