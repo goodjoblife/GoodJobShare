@@ -49,6 +49,20 @@ export const remoteWorkPolicyTranslation: Record<RemoteWorkPolicy, string> = {
   [RemoteWorkPolicy.NO_LIMIT]: '不限天數',
 };
 
+// 表單的選項文字就是上面那幾張對照表的值，所以反查表直接從它們產生，
+// 中文字串只會有一份。見 ShareExperience/questionCreators 的 label / elseOptions。
+const byLabel = <T extends string>(
+  translation: Record<T, string>,
+): Record<string, T> =>
+  (Object.keys(translation) as T[]).reduce(
+    (result, key) => ({ ...result, [translation[key]]: key }),
+    {} as Record<string, T>,
+  );
+
+export const policyByLabel = byLabel(policyTranslation);
+
+export const remoteWorkPolicyByLabel = byLabel(remoteWorkPolicyTranslation);
+
 export type PolicyReview = {
   policy: Policy;
   hasPolicy: YesNoOrUnknown;
