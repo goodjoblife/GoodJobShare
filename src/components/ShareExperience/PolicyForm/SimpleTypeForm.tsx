@@ -2,7 +2,10 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
-import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
+import {
+  CreatePolicyReviewGroupResult,
+  PolicyReviewInput,
+} from 'apis/createPolicyReviewGroup';
 
 import {
   companyOverviewWithPolicyReviewGroupOf,
@@ -46,21 +49,23 @@ const SimpleTypeForm = ({
   const dispatch = useDispatch();
 
   const redirectPathnameOnSuccess = useCallback(
-    (result: unknown) =>
-      companyOverviewWithPolicyReviewGroupOf(companyName, result),
+    (groupId: string) =>
+      companyOverviewWithPolicyReviewGroupOf(companyName, groupId),
     [companyName],
   );
 
   const onSubmit = useCallback(
-    (draft: Record<string, unknown>) =>
-      dispatch(
+    async (draft: Record<string, unknown>) => {
+      const { policyReviewGroup } = ((await dispatch(
         createPolicyReviewGroup({
           company: { query: companyName },
           jobTitle,
           sector: sector || undefined,
           policyReviews: toPolicyReviews(draft),
         }),
-      ),
+      )) as unknown) as CreatePolicyReviewGroupResult;
+      return policyReviewGroup.groupId;
+    },
     [companyName, dispatch, jobTitle, sector],
   );
 

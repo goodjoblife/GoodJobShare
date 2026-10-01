@@ -110,21 +110,19 @@ const companyOverviewPathnameOf = (companyName: string): string =>
 
 export const companyOverviewWithPolicyReviewGroupOf = (
   companyName: string,
-  result: unknown,
+  groupId: string,
 ): { pathname: string; state: unknown } => ({
   pathname: companyOverviewPathnameOf(companyName),
-  ...generatePolicyReviewGroupModal(
-    (result as CreatePolicyReviewGroupResult).policyReviewGroup.groupId,
-  ),
+  ...generatePolicyReviewGroupModal(groupId),
 });
 
 const redirectToCompanyOverview = (
-  result: unknown,
+  groupId: string,
   draft: Record<string, unknown>,
 ): { pathname: string; state: unknown } =>
   companyOverviewWithPolicyReviewGroupOf(
     draft[DATA_KEY_COMPANY_NAME] as string,
-    result,
+    groupId,
   );
 
 const TypeForm = ({
@@ -138,7 +136,7 @@ const TypeForm = ({
 
   const onSubmit = useCallback(
     async (draft: Record<string, unknown>) => {
-      const result = await dispatch(
+      const { policyReviewGroup } = ((await dispatch(
         createPolicyReviewGroup({
           company: { query: draft[DATA_KEY_COMPANY_NAME] as string },
           jobTitle: draft[DATA_KEY_JOB_TITLE] as string,
@@ -147,8 +145,8 @@ const TypeForm = ({
             toPolicyReviewInput,
           ),
         }),
-      );
-      return result;
+      )) as unknown) as CreatePolicyReviewGroupResult;
+      return policyReviewGroup.groupId;
     },
     [dispatch],
   );
