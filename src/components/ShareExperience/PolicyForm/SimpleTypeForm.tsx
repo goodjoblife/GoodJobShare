@@ -4,7 +4,10 @@ import { useDispatch } from 'react-redux';
 import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
 import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
 
-import { companyOverviewPathnameOf, toPolicyReviewInput } from './TypeForm';
+import {
+  companyOverviewWithPolicyReviewGroupOf,
+  toPolicyReviewInput,
+} from './TypeForm';
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import { CompanyJobTitleHeader } from '../common/TypeFormHeader';
 import {
@@ -43,7 +46,8 @@ const SimpleTypeForm = ({
   const dispatch = useDispatch();
 
   const redirectPathnameOnSuccess = useCallback(
-    () => companyOverviewPathnameOf(companyName),
+    (result: unknown) =>
+      companyOverviewWithPolicyReviewGroupOf(companyName, result),
     [companyName],
   );
 

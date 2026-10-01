@@ -2,7 +2,11 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
-import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
+import {
+  CreatePolicyReviewGroupResult,
+  PolicyReviewInput,
+} from 'apis/createPolicyReviewGroup';
+import { generatePolicyReviewGroupModal } from 'common/ShareExpSection/shareLinkTo';
 import { generatePageURL, PageType } from 'constants/companyJobTitle';
 import {
   Policy,
@@ -101,13 +105,27 @@ export const toPolicyReviewInput = ([
   };
 };
 
-export const companyOverviewPathnameOf = (companyName: string): string =>
+const companyOverviewPathnameOf = (companyName: string): string =>
   generatePageURL({ pageType: PageType.COMPANY, pageName: companyName });
 
+export const companyOverviewWithPolicyReviewGroupOf = (
+  companyName: string,
+  result: unknown,
+): { pathname: string; state: unknown } => ({
+  pathname: companyOverviewPathnameOf(companyName),
+  ...generatePolicyReviewGroupModal(
+    (result as CreatePolicyReviewGroupResult).policyReviewGroup.groupId,
+  ),
+});
+
 const redirectToCompanyOverview = (
-  _: unknown,
+  result: unknown,
   draft: Record<string, unknown>,
-): string => companyOverviewPathnameOf(draft[DATA_KEY_COMPANY_NAME] as string);
+): { pathname: string; state: unknown } =>
+  companyOverviewWithPolicyReviewGroupOf(
+    draft[DATA_KEY_COMPANY_NAME] as string,
+    result,
+  );
 
 const TypeForm = ({
   open,
