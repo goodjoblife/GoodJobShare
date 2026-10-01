@@ -35,7 +35,7 @@ const ReportList: React.FC<Props> = ({
         </div>
       )}
       {reports.length > 0 && (
-        <DividedList className={styles.reportItems}>
+        <DividedList>
           {reports.map(({ reasonCategory, reason }, i) => (
             <DividedListItem key={i} label={reasonCategory}>
               <P size="m" className={styles.reason}>

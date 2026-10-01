@@ -14,10 +14,8 @@
   color: #808080;
 }
 
-/* 標題與第一項制度之間的那一條線 */
 .policyReviews {
   margin-top: 16px;
-  border-top: 1px solid #d8d8d8;
 }
 
 .answer {

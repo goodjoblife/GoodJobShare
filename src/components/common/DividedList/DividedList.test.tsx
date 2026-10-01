@@ -25,10 +25,9 @@ describe('DividedList', () => {
     expect(screen.getByText('育嬰假 的內容')).toBeInTheDocument();
   });
 
-  it('keeps the items as adjacent siblings, so the between-item divider applies', () => {
+  it('holds nothing but the items, so every divider lines up with one', () => {
     const { container } = renderList(['生理假', '育嬰假', '家庭照顧假']);
 
-    // 分隔線是靠 .item + .item 畫的，項目之間不能被其他元素插隊
     const list = container.firstChild as HTMLElement;
 
     expect(list.children).toHaveLength(3);
@@ -39,7 +38,7 @@ describe('DividedList', () => {
     ).toEqual(['生理假', '育嬰假', '家庭照顧假']);
   });
 
-  it('passes the caller className through, for the leading or trailing rule', () => {
+  it('passes the caller className through', () => {
     const { container } = renderList(['生理假'], 'caller-edge-rule');
 
     const list = container.firstChild as HTMLElement;

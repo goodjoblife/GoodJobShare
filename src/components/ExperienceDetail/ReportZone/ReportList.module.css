@@ -11,11 +11,6 @@
   align-items: flex-start;
 }
 
-/* 最後一項與「我要回報」之間的那一條線 */
-.reportItems {
-  border-bottom: 1px solid #d8d8d8;
-}
-
 .noReport {
   display: flex;
   justify-content: center;

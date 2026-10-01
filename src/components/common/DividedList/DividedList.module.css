@@ -4,10 +4,6 @@
 
 .item {
   padding: 16px 0;
-  width: 100%;
-}
-
-/* 分隔線只畫在項目之間；最前面或最後面那一條由使用端自己在容器上補 */
-.item + .item {
   border-top: 1px solid #d8d8d8;
+  width: 100%;
 }

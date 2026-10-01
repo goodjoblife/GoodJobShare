@@ -89,8 +89,6 @@ describe('PolicyReviewGroupDetail', () => {
   it('puts the policy reviews in their own container', () => {
     renderDetail();
 
-    // 每一項制度都有上框線；它們自成一個容器，所以標題與第一項之間就有一條線，
-    // 而標題那幾行不會被畫到。
     const policyReviews = parentOf(parentOf(screen.getByText('生理假')));
 
     expect(policyReviews.children).toHaveLength(3);
