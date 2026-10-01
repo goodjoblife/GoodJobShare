@@ -5,6 +5,9 @@ const createPolicyReviewGroupGql = /* GraphQL */ `
   mutation CreatePolicyReviewGroup($input: CreatePolicyReviewGroupInput!) {
     createPolicyReviewGroup(input: $input) {
       success
+      policyReviewGroup {
+        groupId
+      }
     }
   }
 `;
@@ -12,6 +15,9 @@ const createPolicyReviewGroupGql = /* GraphQL */ `
 type CreatePolicyReviewGroupData = {
   createPolicyReviewGroup: {
     success: boolean;
+    policyReviewGroup: {
+      groupId: string;
+    };
   };
 };
 
@@ -22,6 +28,8 @@ export type PolicyReviewInput = {
   compliance?: YesNoOrUnknown;
   remoteWorkPolicy?: RemoteWorkPolicy;
 };
+
+export type CreatePolicyReviewGroupResult = CreatePolicyReviewGroupData['createPolicyReviewGroup'];
 
 const createPolicyReviewGroup = ({
   company,
@@ -35,7 +43,7 @@ const createPolicyReviewGroup = ({
   sector?: string;
   policyReviews: PolicyReviewInput[];
   token?: string;
-}): Promise<CreatePolicyReviewGroupData['createPolicyReviewGroup']> =>
+}): Promise<CreatePolicyReviewGroupResult> =>
   graphqlClient<CreatePolicyReviewGroupData>({
     query: createPolicyReviewGroupGql,
     variables: {
