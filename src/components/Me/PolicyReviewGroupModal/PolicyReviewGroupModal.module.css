@@ -14,14 +14,9 @@
   color: #808080;
 }
 
+/* 標題與第一項制度之間的那一條線 */
 .policyReviews {
   margin-top: 16px;
-  width: 100%;
-}
-
-/* 每一項都有上框線，標題與第一項之間自然就有一條分隔線 */
-.policyReview {
-  padding: 16px 0;
   border-top: 1px solid #d8d8d8;
 }
 

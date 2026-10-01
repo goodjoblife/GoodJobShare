@@ -3,6 +3,7 @@ import React from 'react';
 
 import { Heading, P } from 'common/base';
 import Button from 'common/button/Button';
+import DividedList, { DividedListItem } from 'common/DividedList';
 
 import styles from './ReportList.module.css';
 
@@ -19,16 +20,17 @@ const ReportList = ({ reports, reportCount, onShowReportForm }) => {
           <P className={styles.totalReport}>共 {reportCount} 個回報</P>
         </div>
       )}
-      {reports.map(({ reasonCategory, reason }, i) => (
-        <div key={i} className={styles.reportItem}>
-          <P size="m" bold>
-            {reasonCategory}
-          </P>
-          <P size="m" className={styles.reason}>
-            {reason}
-          </P>
-        </div>
-      ))}
+      {reports.length > 0 && (
+        <DividedList className={styles.reportItems}>
+          {reports.map(({ reasonCategory, reason }, i) => (
+            <DividedListItem key={i} label={reasonCategory}>
+              <P size="m" className={styles.reason}>
+                {reason}
+              </P>
+            </DividedListItem>
+          ))}
+        </DividedList>
+      )}
       <Button
         className={styles.reportButton}
         circleSize="md"
