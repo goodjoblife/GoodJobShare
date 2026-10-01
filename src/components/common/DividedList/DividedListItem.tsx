@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import { P } from 'common/base';
 
 import styles from './DividedList.module.css';
 
-const DividedListItem = ({ label, children }) => (
+type Props = {
+  label: React.ReactNode;
+  children: React.ReactNode;
+};
+
+const DividedListItem: React.FC<Props> = ({ label, children }) => (
   <div className={styles.item}>
     <P size="m" bold>
       {label}
@@ -13,10 +17,5 @@ const DividedListItem = ({ label, children }) => (
     {children}
   </div>
 );
-
-DividedListItem.propTypes = {
-  children: PropTypes.node,
-  label: PropTypes.node.isRequired,
-};
 
 export default DividedListItem;

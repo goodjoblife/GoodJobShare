@@ -2,11 +2,13 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 
-import { getFetched, getUnfetched, toFetching } from 'utils/fetchBox';
+import { PolicyReviewGroup } from 'apis/queryPolicyReviewGroup';
+import { Policy, RemoteWorkPolicy, YesNoOrUnknown } from 'constants/policy';
+import FetchBox, { getFetched, getUnfetched, toFetching } from 'utils/fetchBox';
 
 import PolicyReviewGroupModal from './index';
 
-const group = {
+const group: PolicyReviewGroup = {
   groupId: 'group-1',
   company: { name: '好工作股份有限公司' },
   jobTitle: '前端工程師',
@@ -14,31 +16,40 @@ const group = {
   createdAt: '2026-01-02T00:00:00.000Z',
   policyReviews: [
     {
-      policy: 'MENSTRUAL_LEAVE',
-      hasPolicy: 'yes',
-      compliance: 'yes',
+      policy: Policy.MENSTRUAL_LEAVE,
+      hasPolicy: YesNoOrUnknown.yes,
+      compliance: YesNoOrUnknown.yes,
       remoteWorkPolicy: null,
       review: '每月一天，跟主管口頭說一聲就可以請，不用附證明。',
     },
     {
-      policy: 'FAMILY_CARE_LEAVE',
-      hasPolicy: 'unknown',
+      policy: Policy.FAMILY_CARE_LEAVE,
+      hasPolicy: YesNoOrUnknown.unknown,
       compliance: null,
       remoteWorkPolicy: null,
       review: null,
     },
     {
-      policy: 'REMOTE_WORK',
-      hasPolicy: 'yes',
+      policy: Policy.REMOTE_WORK,
+      hasPolicy: YesNoOrUnknown.yes,
       compliance: null,
-      remoteWorkPolicy: 'TWO_DAYS_PER_WEEK',
+      remoteWorkPolicy: RemoteWorkPolicy.TWO_DAYS_PER_WEEK,
       review: null,
     },
   ],
 };
 
-const renderModal = (box = getFetched(group)) =>
-  render(<PolicyReviewGroupModal box={box} isOpen close={() => undefined} />);
+const renderModal = (
+  box: FetchBox<PolicyReviewGroup> = getFetched(group),
+): void => {
+  render(
+    <PolicyReviewGroupModal box={box} isOpen close={(): void => undefined} />,
+  );
+};
+
+// prettier 的 TypeScript parser 不吃 ?.，所以用 as 斷言往上走
+const parentOf = (element: HTMLElement): HTMLElement =>
+  element.parentElement as HTMLElement;
 
 describe('PolicyReviewGroupModal', () => {
   it('shows the company and job title of the group', () => {
@@ -82,8 +93,7 @@ describe('PolicyReviewGroupModal', () => {
 
     // 每一項制度都有上框線；它們自成一個容器，所以標題與第一項之間就有一條線，
     // 而標題那幾行不會被畫到。
-    const policyReviews = screen.getByText('生理假').parentElement
-      .parentElement;
+    const policyReviews = parentOf(parentOf(screen.getByText('生理假')));
 
     expect(policyReviews.children).toHaveLength(3);
     expect(policyReviews.contains(screen.getByText('台北總部'))).toBe(false);

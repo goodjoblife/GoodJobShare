@@ -44,14 +44,15 @@ InlineModal.propTypes = {
   size: PropTypes.string,
 };
 
+// 選填的 prop 給預設值，TypeScript 的使用端才不會被要求一定要傳
 const Modal = ({
   children,
-  isOpen,
+  isOpen = false,
   hasClose,
   close,
-  closableOnClickOutside,
+  closableOnClickOutside = false,
   size,
-  contentClassName,
+  contentClassName = undefined,
 }) => (
   <div
     className={cn(styles.modal, {

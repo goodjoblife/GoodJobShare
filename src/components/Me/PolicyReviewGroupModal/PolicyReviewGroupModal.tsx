@@ -1,21 +1,27 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
+import { PolicyReviewGroup } from 'apis/queryPolicyReviewGroup';
 import { Heading, P } from 'common/base';
 import DividedList, { DividedListItem } from 'common/DividedList';
 import Modal from 'common/Modal';
 import BoxRenderer from 'common/StatusRenderer';
 import { policyAnswerOf, policyTranslation } from 'constants/policy';
 import { formatSimpleDate } from 'utils/dateUtil';
-import { fetchBoxPropType } from 'utils/fetchBox';
+import FetchBox from 'utils/fetchBox';
 
 import styles from './PolicyReviewGroupModal.module.css';
 
-const PolicyReviewGroupModal = ({ box, isOpen, close }) => (
+type Props = {
+  box: FetchBox<PolicyReviewGroup>;
+  isOpen: boolean;
+  close: () => void;
+};
+
+const PolicyReviewGroupModal: React.FC<Props> = ({ box, isOpen, close }) => (
   <Modal isOpen={isOpen} close={close} size="m" closableOnClickOutside>
     <BoxRenderer
       box={box}
-      render={group => (
+      render={(group: PolicyReviewGroup): React.ReactElement => (
         <div className={styles.group}>
           <Heading size="sl" Tag="h3">
             {group.company.name} － {group.jobTitle}
@@ -50,11 +56,5 @@ const PolicyReviewGroupModal = ({ box, isOpen, close }) => (
     />
   </Modal>
 );
-
-PolicyReviewGroupModal.propTypes = {
-  box: fetchBoxPropType.isRequired,
-  close: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool,
-};
 
 export default PolicyReviewGroupModal;

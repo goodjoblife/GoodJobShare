@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { render, RenderResult, screen } from '@testing-library/react';
 import React from 'react';
 
 import DividedList, { DividedListItem } from './index';
 
-const renderList = (labels, className) =>
+const renderList = (labels: string[], className?: string): RenderResult =>
   render(
     <DividedList className={className}>
       {labels.map(label => (
@@ -26,22 +26,24 @@ describe('DividedList', () => {
   });
 
   it('keeps the items as adjacent siblings, so the between-item divider applies', () => {
-    renderList(['生理假', '育嬰假', '家庭照顧假']);
+    const { container } = renderList(['生理假', '育嬰假', '家庭照顧假']);
 
     // 分隔線是靠 .item + .item 畫的，項目之間不能被其他元素插隊
-    const list = screen.getByText('生理假').parentElement.parentElement;
+    const list = container.firstChild as HTMLElement;
 
     expect(list.children).toHaveLength(3);
-    expect([...list.children].map(item => item.firstChild.textContent)).toEqual(
-      ['生理假', '育嬰假', '家庭照顧假'],
-    );
+    expect(
+      Array.from(list.children).map(
+        item => (item.firstChild as HTMLElement).textContent,
+      ),
+    ).toEqual(['生理假', '育嬰假', '家庭照顧假']);
   });
 
   it('passes the caller className through, for the leading or trailing rule', () => {
     const { container } = renderList(['生理假'], 'caller-edge-rule');
 
-    expect(container.firstChild.className).toEqual(
-      expect.stringContaining('caller-edge-rule'),
-    );
+    const list = container.firstChild as HTMLElement;
+
+    expect(list.className).toEqual(expect.stringContaining('caller-edge-rule'));
   });
 });
