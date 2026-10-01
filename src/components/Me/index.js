@@ -12,6 +12,7 @@ import PolicyReviewGroupModal from './PolicyReviewGroupModal';
 import ShareBlockElement from './ShareBlockElement';
 import {
   useFetchMyPublishesBox,
+  useFetchPolicyReviewGroupBox,
   useToggleExperienceStatus,
   useTogglePolicyReviewGroupStatus,
   useToggleReplyStatus,
@@ -24,7 +25,12 @@ const Me = () => {
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
   const togglePolicyReviewGroupStatus = useTogglePolicyReviewGroupStatus();
   const toggleReplyStatus = useToggleReplyStatus();
-  const [openedPolicyReviewGroup, setOpenedPolicyReviewGroup] = useState(null);
+  const [isPolicyReviewGroupOpen, setPolicyReviewGroupOpen] = useState(false);
+  const [
+    policyReviewGroupBox,
+    fetchPolicyReviewGroup,
+    clearPolicyReviewGroup,
+  ] = useFetchPolicyReviewGroupBox();
 
   useEffect(() => {
     fetchMyPublishes();
@@ -95,7 +101,10 @@ const Me = () => {
                           type="制度"
                           heading={o.company.name}
                           position={o.jobTitle}
-                          onTitleClick={() => setOpenedPolicyReviewGroup(o)}
+                          onTitleClick={() => {
+                            setPolicyReviewGroupOpen(true);
+                            fetchPolicyReviewGroup(o.groupId);
+                          }}
                           disabled={
                             o.status === 'hidden' ||
                             (o.archive && o.archive.is_archived)
@@ -133,9 +142,12 @@ const Me = () => {
         </AuthMask>
       </Wrapper>
       <PolicyReviewGroupModal
-        group={openedPolicyReviewGroup}
-        isOpen={openedPolicyReviewGroup !== null}
-        close={() => setOpenedPolicyReviewGroup(null)}
+        box={policyReviewGroupBox}
+        isOpen={isPolicyReviewGroupOpen}
+        close={() => {
+          setPolicyReviewGroupOpen(false);
+          clearPolicyReviewGroup();
+        }}
       />
     </Section>
   );

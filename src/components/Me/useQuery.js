@@ -4,6 +4,7 @@ import changeExperienceStatus from 'apis/changeExperienceStatus';
 import changePolicyReviewGroupStatus from 'apis/changePolicyReviewGroupStatus';
 import changeReplyStatus from 'apis/changeReplyStatus';
 import { queryMyPublishesApi } from 'apis/me';
+import queryPolicyReviewGroup from 'apis/queryPolicyReviewGroup';
 import { changeSalaryWorkTimeStatus } from 'apis/timeAndSalaryApi';
 import { useToken } from 'hooks/auth';
 import { getError, getFetched, getUnfetched, toFetching } from 'utils/fetchBox';
@@ -24,6 +25,29 @@ export const useFetchMyPublishesBox = () => {
   }, [token]);
 
   return [box, callback];
+};
+
+// 清單只拿得到整組共用的欄位，組內每一項制度等使用者點開才查
+export const useFetchPolicyReviewGroupBox = () => {
+  const token = useToken();
+
+  const [box, setBox] = useState(getUnfetched());
+
+  const fetchPolicyReviewGroup = useCallback(
+    async groupId => {
+      setBox(toFetching());
+      try {
+        setBox(getFetched(await queryPolicyReviewGroup({ groupId, token })));
+      } catch (error) {
+        setBox(getError(error));
+      }
+    },
+    [token],
+  );
+
+  const clearPolicyReviewGroup = useCallback(() => setBox(getUnfetched()), []);
+
+  return [box, fetchPolicyReviewGroup, clearPolicyReviewGroup];
 };
 
 export const useToggleExperienceStatus = () => {

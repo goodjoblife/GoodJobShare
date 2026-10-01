@@ -4,7 +4,31 @@
   align-items: flex-start;
 }
 
-.sharedAt {
+.caption {
   margin-top: 8px;
   color: #808080;
+}
+
+.policyReview {
+  padding: 16px 0;
+  border-bottom: 1px solid #d8d8d8;
+  width: 100%;
+
+  &:first-of-type {
+    margin-top: 8px;
+    border-top: 1px solid #d8d8d8;
+  }
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.answer {
+  margin-top: 8px;
+}
+
+.review {
+  margin-top: 8px;
+  color: #333;
 }
