@@ -51,8 +51,6 @@ export const remoteWorkPolicyTranslation: Record<RemoteWorkPolicy, string> = {
   [RemoteWorkPolicy.NO_LIMIT]: '不限天數',
 };
 
-// 表單的選項文字就是上面那幾張對照表的值，所以反查表直接從它們產生，
-// 中文字串只會有一份。見 ShareExperience/questionCreators 的 label / elseOptions。
 const inverse = <T extends string>(
   translation: Record<T, string>,
 ): Record<string, T> => R.invertObj(translation) as Record<string, T>;
