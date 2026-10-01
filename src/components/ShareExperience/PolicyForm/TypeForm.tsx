@@ -51,8 +51,6 @@ const questions = [
   createSubmitQuestion({ label: '制度' }),
 ];
 
-// 多個選項會收斂成同一個答案，不是 hasPolicyTranslation / complianceTranslation
-// 的反函數，所以這兩張表只能自己列
 const hasPolicyMap: Record<string, YesNoOrUnknown> = {
   是: YesNoOrUnknown.yes,
   有: YesNoOrUnknown.yes,
