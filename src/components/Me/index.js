@@ -3,13 +3,16 @@ import React, { Fragment, useEffect } from 'react';
 import { Heading, Section, Wrapper } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Comment2 from 'common/icons/Comment2';
+import { generatePolicyReviewGroupModal } from 'common/ShareExpSection/shareLinkTo';
 import BoxRenderer from 'common/StatusRenderer';
+import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 
 import AuthMask from './AuthMask';
 import ShareBlockElement from './ShareBlockElement';
 import {
   useFetchMyPublishesBox,
   useToggleExperienceStatus,
+  useTogglePolicyReviewGroupStatus,
   useToggleReplyStatus,
   useToggleSalaryWorkTimeStatus,
 } from './useQuery';
@@ -18,6 +21,7 @@ const Me = () => {
   const [myPublishesBox, fetchMyPublishes] = useFetchMyPublishesBox();
   const toggleExperienceStatus = useToggleExperienceStatus();
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
+  const togglePolicyReviewGroupStatus = useTogglePolicyReviewGroupStatus();
   const toggleReplyStatus = useToggleReplyStatus();
 
   useEffect(() => {
@@ -66,13 +70,37 @@ const Me = () => {
                           type="薪時"
                           heading={o.company.name}
                           position={o.job_title.name}
-                          to={o.company.name}
+                          to={generateTabURL({
+                            pageType: PageType.COMPANY,
+                            pageName: o.company.name,
+                            tabType: TabType.TIME_AND_SALARY,
+                          })}
+                          linkTitle="檢視薪時"
                           disabled={
                             o.status === 'hidden' ||
                             (o.archive && o.archive.is_archived)
                           }
                           publishHandler={async () => {
                             await toggleSalaryWorkTimeStatus(o);
+                            await fetchMyPublishes();
+                          }}
+                          archive={o.archive}
+                        />
+                      ))}
+                      {me.policyReviewGroupList.map(o => (
+                        <ShareBlockElement
+                          key={o.groupId}
+                          type="制度"
+                          heading={o.company.name}
+                          position={o.jobTitle}
+                          to={generatePolicyReviewGroupModal(o.groupId)}
+                          linkTitle="檢視制度"
+                          disabled={
+                            o.status === 'hidden' ||
+                            (o.archive && o.archive.is_archived)
+                          }
+                          publishHandler={async () => {
+                            await togglePolicyReviewGroupStatus(o);
                             await fetchMyPublishes();
                           }}
                           archive={o.archive}

@@ -1,3 +1,4 @@
+import { Policy, RemoteWorkPolicy, YesNoOrUnknown } from 'constants/policy';
 import graphqlClient from 'utils/graphqlClient';
 
 const createPolicyReviewGroupGql = /* GraphQL */ `
@@ -15,11 +16,11 @@ type CreatePolicyReviewGroupData = {
 };
 
 export type PolicyReviewInput = {
-  policy: string;
+  policy: Policy;
   review?: string;
-  hasPolicy: string;
-  compliance?: string;
-  remoteWorkPolicy?: string;
+  hasPolicy: YesNoOrUnknown;
+  compliance?: YesNoOrUnknown;
+  remoteWorkPolicy?: RemoteWorkPolicy;
 };
 
 const createPolicyReviewGroup = ({
