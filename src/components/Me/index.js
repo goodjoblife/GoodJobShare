@@ -1,18 +1,16 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 
 import { Heading, Section, Wrapper } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Comment2 from 'common/icons/Comment2';
+import { generatePolicyReviewGroupModal } from 'common/ShareExpSection/shareLinkTo';
 import BoxRenderer from 'common/StatusRenderer';
 import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 
 import AuthMask from './AuthMask';
-import { byPolicyReviewGroup } from './byPolicyReviewGroup';
-import PolicyReviewGroupModal from './PolicyReviewGroupModal';
 import ShareBlockElement from './ShareBlockElement';
 import {
   useFetchMyPublishesBox,
-  useFetchPolicyReviewGroupBox,
   useToggleExperienceStatus,
   useTogglePolicyReviewGroupStatus,
   useToggleReplyStatus,
@@ -25,12 +23,6 @@ const Me = () => {
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
   const togglePolicyReviewGroupStatus = useTogglePolicyReviewGroupStatus();
   const toggleReplyStatus = useToggleReplyStatus();
-  const [isPolicyReviewGroupOpen, setPolicyReviewGroupOpen] = useState(false);
-  const [
-    policyReviewGroupBox,
-    fetchPolicyReviewGroup,
-    clearPolicyReviewGroup,
-  ] = useFetchPolicyReviewGroupBox();
 
   useEffect(() => {
     fetchMyPublishes();
@@ -95,16 +87,14 @@ const Me = () => {
                           archive={o.archive}
                         />
                       ))}
-                      {byPolicyReviewGroup(me.policyReviewGroupList).map(o => (
+                      {me.policyReviewGroupList.map(o => (
                         <ShareBlockElement
                           key={o.groupId}
                           type="制度"
                           heading={o.company.name}
                           position={o.jobTitle}
-                          onTitleClick={() => {
-                            setPolicyReviewGroupOpen(true);
-                            fetchPolicyReviewGroup(o.groupId);
-                          }}
+                          to={generatePolicyReviewGroupModal(o.groupId)}
+                          linkTitle="檢視制度"
                           disabled={
                             o.status === 'hidden' ||
                             (o.archive && o.archive.is_archived)
@@ -141,14 +131,6 @@ const Me = () => {
           </div>
         </AuthMask>
       </Wrapper>
-      <PolicyReviewGroupModal
-        box={policyReviewGroupBox}
-        isOpen={isPolicyReviewGroupOpen}
-        close={() => {
-          setPolicyReviewGroupOpen(false);
-          clearPolicyReviewGroup();
-        }}
-      />
     </Section>
   );
 };

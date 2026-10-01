@@ -1,23 +1,5 @@
 @value main-yellow, border-gray, link-blue, white-light from "../../common/variables.module.css";
 
-/* 看起來要跟同一排的連結一樣，只是點了是開彈窗而不是換頁 */
-.titleButton {
-  padding: 0;
-  border: none;
-  background: none;
-  font: inherit;
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: color 0.3s;
-
-  @media (min-width: 1025px) {
-    &:hover {
-      color: link-blue;
-    }
-  }
-}
-
 .badge {
   border-radius: 3px;
   border: 1px solid #ddd;

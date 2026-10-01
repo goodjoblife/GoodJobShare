@@ -9,32 +9,12 @@ import Modal from 'common/Modal';
 
 import styles from './ShareBlockElement.module.css';
 
-// 有的資料點了是換頁，有的是原地開彈窗，兩者外觀一致
-const HeadingTitle = ({ to, title, onClick, children }) =>
-  onClick ? (
-    <button type="button" className={styles.titleButton} onClick={onClick}>
-      {children}
-    </button>
-  ) : (
-    <Link to={to} title={title} className="hoverBlue">
-      {children}
-    </Link>
-  );
-
-HeadingTitle.propTypes = {
-  children: PropTypes.node,
-  onClick: PropTypes.func,
-  title: PropTypes.string,
-  to: PropTypes.string,
-};
-
 const ShareBlock = ({
   options,
   type,
   heading,
   to,
   linkTitle = '檢視文章',
-  onTitleClick,
   position,
   comment,
   disabled,
@@ -72,10 +52,10 @@ const ShareBlock = ({
         </div>
       ) : (
         <Heading size="sl" Tag="h3">
-          <HeadingTitle to={to} title={linkTitle} onClick={onTitleClick}>
+          <Link to={to} title={linkTitle} className="hoverBlue">
             {heading}
             {position && <span> - {position}</span>}
-          </HeadingTitle>
+          </Link>
           {archive && archive.is_archived && (
             <span className={cn(styles.badge, styles.archive)}>已封存</span>
           )}
@@ -117,12 +97,11 @@ ShareBlock.propTypes = {
   heading: PropTypes.string.isRequired,
   isArchiveModalOpen: PropTypes.bool.isRequired,
   linkTitle: PropTypes.string,
-  onTitleClick: PropTypes.func,
   options: PropTypes.object,
   position: PropTypes.string,
   publishHandler: PropTypes.func.isRequired,
   setArchiveModalOpen: PropTypes.func.isRequired,
-  to: PropTypes.string,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   type: PropTypes.string.isRequired,
 };
 

@@ -4,6 +4,7 @@ export const STATE_SHARE = {
   SALARY_WORK_TIME: 'salary-work-times',
   SALARY_WORK_TIME_NO_PROGRESS_BAR: 'salary-work-times-no-progress-bar',
   POLICY: 'policy',
+  POLICY_REVIEW_GROUP: 'policy-review-group',
 };
 
 // please follow the convention: () => To (react-router)
@@ -24,4 +25,7 @@ export const generateShareWork = () => ({
 });
 export const generateSharePolicyForm = () => ({
   state: { share: STATE_SHARE.POLICY },
+});
+export const generatePolicyReviewGroupModal = policyReviewGroupId => ({
+  state: { share: STATE_SHARE.POLICY_REVIEW_GROUP, policyReviewGroupId },
 });
