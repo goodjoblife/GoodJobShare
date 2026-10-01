@@ -5,7 +5,6 @@ import { Heading, P } from 'common/base';
 import Modal from 'common/Modal';
 import BoxRenderer from 'common/StatusRenderer';
 import { policyAnswerOf, policyTranslation } from 'constants/policy';
-import { formatSimpleDate } from 'utils/dateUtil';
 import { fetchBoxPropType } from 'utils/fetchBox';
 
 import styles from './PolicyReviewGroupModal.module.css';
@@ -19,14 +18,11 @@ const PolicyReviewGroupModal = ({ box, isOpen, close }) => (
           <Heading size="sl" Tag="h3">
             {group.company.name} － {group.jobTitle}
           </Heading>
-          <P size="s" className={styles.caption}>
-            {[
-              group.sector,
-              `分享於 ${formatSimpleDate(new Date(group.createdAt))}`,
-            ]
-              .filter(Boolean)
-              .join('・')}
-          </P>
+          {group.sector && (
+            <P size="s" className={styles.sector}>
+              {group.sector}
+            </P>
+          )}
           {group.policyReviews.map(policyReview => (
             <div key={policyReview.policy} className={styles.policyReview}>
               <P size="m" bold>

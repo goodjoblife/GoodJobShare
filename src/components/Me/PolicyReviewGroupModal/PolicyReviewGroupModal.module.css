@@ -4,7 +4,7 @@
   align-items: flex-start;
 }
 
-.caption {
+.sector {
   margin-top: 8px;
   color: #808080;
 }
@@ -15,7 +15,7 @@
   width: 100%;
 
   &:first-of-type {
-    margin-top: 8px;
+    margin-top: 16px;
     border-top: 1px solid #d8d8d8;
   }
 
@@ -25,10 +25,10 @@
 }
 
 .answer {
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .review {
-  margin-top: 8px;
+  margin-top: 10px;
   color: #333;
 }

@@ -11,7 +11,6 @@ const group = {
   company: { name: '好工作股份有限公司' },
   jobTitle: '前端工程師',
   sector: '台北總部',
-  createdAt: '2026-01-02T00:00:00.000Z',
   policyReviews: [
     {
       policy: 'MENSTRUAL_LEAVE',
@@ -49,16 +48,19 @@ describe('PolicyReviewGroupModal', () => {
     ).toBeInTheDocument();
   });
 
-  it('shows the sector and when the group was shared', () => {
+  it('shows the sector of the group', () => {
     renderModal();
 
-    expect(screen.getByText('台北總部・分享於 2026.1.2')).toBeInTheDocument();
+    expect(screen.getByText('台北總部')).toBeInTheDocument();
   });
 
-  it('shows only the date when the group has no sector', () => {
+  it('omits the sector line when the group has none', () => {
     renderModal(getFetched({ ...group, sector: null }));
 
-    expect(screen.getByText('分享於 2026.1.2')).toBeInTheDocument();
+    expect(screen.queryByText('台北總部')).not.toBeInTheDocument();
+    expect(
+      screen.getByText('好工作股份有限公司 － 前端工程師'),
+    ).toBeInTheDocument();
   });
 
   it('lists every policy review in the group', () => {
