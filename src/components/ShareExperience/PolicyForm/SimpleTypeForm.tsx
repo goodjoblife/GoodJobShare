@@ -35,7 +35,7 @@ type Props = {
   companyName: string;
   jobTitle: string;
   sector?: string;
-  redirectPathnameOnQuit: string | (() => string);
+  redirectLocationOnQuit: string | (() => string);
 };
 
 const SimpleTypeForm = ({
@@ -44,11 +44,11 @@ const SimpleTypeForm = ({
   companyName,
   jobTitle,
   sector,
-  redirectPathnameOnQuit,
+  redirectLocationOnQuit,
 }: Props): React.ReactElement => {
   const dispatch = useDispatch();
 
-  const redirectPathnameOnSuccess = useCallback(
+  const redirectLocationOnSuccess = useCallback(
     (groupId: string) =>
       companyOverviewWithPolicyReviewGroupOf(companyName, groupId),
     [companyName],
@@ -87,8 +87,8 @@ const SimpleTypeForm = ({
       onSubmitError={onSubmitError}
       onClose={onClose}
       hideProgressBar={false}
-      redirectPathnameOnSuccess={redirectPathnameOnSuccess}
-      redirectPathnameOnQuit={redirectPathnameOnQuit}
+      redirectLocationOnSuccess={redirectLocationOnSuccess}
+      redirectLocationOnQuit={redirectLocationOnQuit}
     />
   );
 };

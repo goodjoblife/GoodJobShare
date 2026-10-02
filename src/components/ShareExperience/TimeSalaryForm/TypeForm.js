@@ -215,7 +215,7 @@ const SalaryTypeForm = ({
       onSubmit={onSubmit}
       onSubmitError={onSubmitError}
       onClose={onClose}
-      redirectPathnameOnSuccess={redirectToSalaryTab}
+      redirectLocationOnSuccess={redirectToSalaryTab}
       hideProgressBar={hideProgressBar}
       successSubtitle="你已解鎖全站資訊 14 天囉！"
       successDescription={successDescription}
@@ -259,7 +259,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
         companyName={policyDraft?.companyName || ''}
         jobTitle={policyDraft?.jobTitle || ''}
         sector={policyDraft?.sector || ''}
-        redirectPathnameOnQuit={policyFormQuitPathname}
+        redirectLocationOnQuit={policyFormQuitPathname}
       />
     </Fragment>
   );

@@ -163,7 +163,7 @@ const TypeForm = ({
       onSubmitError={onSubmitError}
       onClose={onClose}
       hideProgressBar={false}
-      redirectPathnameOnSuccess={redirectToCompanyOverview}
+      redirectLocationOnSuccess={redirectToCompanyOverview}
     />
   );
 };

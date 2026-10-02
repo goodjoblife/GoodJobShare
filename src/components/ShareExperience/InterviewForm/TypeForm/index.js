@@ -184,7 +184,7 @@ const TypeForm = ({ open, onClose }) => {
       onSubmit={onSubmit}
       onSubmitError={onSubmitError}
       onClose={onClose}
-      redirectPathnameOnSuccess={({ experience: { id } }) =>
+      redirectLocationOnSuccess={({ experience: { id } }) =>
         `/experiences/${id}`
       }
     />

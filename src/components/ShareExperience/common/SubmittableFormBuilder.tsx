@@ -51,10 +51,10 @@ type Props<Result> = {
   onSubmit: (draft: Draft) => Result | Promise<Result>;
   onSubmitError: (error: unknown) => void | Promise<void>;
   onClose: () => void;
-  redirectPathnameOnSuccess:
+  redirectLocationOnSuccess:
     | RedirectLocation
     | ((result: Result, draft: Draft) => RedirectLocation);
-  redirectPathnameOnQuit?: RedirectLocation | (() => RedirectLocation) | null;
+  redirectLocationOnQuit?: RedirectLocation | (() => RedirectLocation) | null;
   hideProgressBar?: boolean;
   successSubtitle?: string;
   successDescription?: string;
@@ -68,8 +68,8 @@ const SubmittableTypeForm = <Result,>({
   onSubmit,
   onSubmitError,
   onClose,
-  redirectPathnameOnSuccess,
-  redirectPathnameOnQuit = null,
+  redirectLocationOnSuccess,
+  redirectLocationOnQuit = null,
   hideProgressBar,
   successSubtitle = '你已解鎖全站資訊囉！',
   successDescription = '感謝你分享你的資訊，台灣的職場因為有你而變得更好！',
@@ -112,13 +112,13 @@ const SubmittableTypeForm = <Result,>({
   const onSuccessClose = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
-    if (!redirectPathnameOnSuccess || !submission) return;
+    if (!redirectLocationOnSuccess || !submission) return;
     replaceLocation(
-      typeof redirectPathnameOnSuccess === 'function'
-        ? redirectPathnameOnSuccess(submission.result, submission.draft)
-        : redirectPathnameOnSuccess,
+      typeof redirectLocationOnSuccess === 'function'
+        ? redirectLocationOnSuccess(submission.result, submission.draft)
+        : redirectLocationOnSuccess,
     );
-  }, [onClose, redirectPathnameOnSuccess, submission]);
+  }, [onClose, redirectLocationOnSuccess, submission]);
 
   const onSuccessContinueClick = useCallback(() => {
     setSubmitStatus('unsubmitted');
@@ -134,13 +134,13 @@ const SubmittableTypeForm = <Result,>({
   const onQuit = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
-    if (!redirectPathnameOnQuit) return;
+    if (!redirectLocationOnQuit) return;
     replaceLocation(
-      typeof redirectPathnameOnQuit === 'function'
-        ? redirectPathnameOnQuit()
-        : redirectPathnameOnQuit,
+      typeof redirectLocationOnQuit === 'function'
+        ? redirectLocationOnQuit()
+        : redirectLocationOnQuit,
     );
-  }, [onClose, redirectPathnameOnQuit]);
+  }, [onClose, redirectLocationOnQuit]);
 
   const onGoToShare = useCallback(() => {
     setSubmitStatus('unsubmitted');
