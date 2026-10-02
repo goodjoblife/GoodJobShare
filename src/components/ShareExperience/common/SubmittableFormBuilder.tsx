@@ -1,3 +1,4 @@
+import { LocationDescriptor } from 'history';
 import React, { Fragment, useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
 
@@ -18,21 +19,7 @@ type SubmitStatus =
   | 'error'
   | 'quitting';
 
-type RedirectLocation = string | { pathname: string; state?: unknown };
-
 type Submission<Result> = { result: Result; draft: Draft };
-
-const replaceLocation = (location: RedirectLocation): void => {
-  if (typeof window === 'undefined') return;
-  if (typeof location === 'string') {
-    window.location.replace(location);
-    return;
-  }
-  // react-router's BrowserHistory restores location.state from
-  // window.history.state on load, so the state survives the reload
-  window.history.replaceState({ state: location.state }, '', location.pathname);
-  window.location.reload();
-};
 
 // TODO: replace with a proper Question type; the shape is still only described
 // by QuestionPropType in common/FormBuilder
@@ -52,9 +39,12 @@ type Props<Result> = {
   onSubmitError: (error: unknown) => void | Promise<void>;
   onClose: () => void;
   redirectLocationOnSuccess:
-    | RedirectLocation
-    | ((result: Result, draft: Draft) => RedirectLocation);
-  redirectLocationOnQuit?: RedirectLocation | (() => RedirectLocation) | null;
+    | LocationDescriptor
+    | ((result: Result, draft: Draft) => LocationDescriptor);
+  redirectLocationOnQuit?:
+    | LocationDescriptor
+    | (() => LocationDescriptor)
+    | null;
   hideProgressBar?: boolean;
   successSubtitle?: string;
   successDescription?: string;
@@ -78,6 +68,17 @@ const SubmittableTypeForm = <Result,>({
   const history = useHistory();
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('unsubmitted');
   const [submission, setSubmission] = useState<Submission<Result> | null>(null);
+
+  // reload so the redirected page fetches fresh data; react-router restores
+  // location.state from window.history.state on load
+  const replaceLocation = useCallback(
+    (location: LocationDescriptor) => {
+      if (typeof window === 'undefined') return;
+      history.replace(location);
+      window.location.reload();
+    },
+    [history],
+  );
   const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = useCallback(
     async (draft: Draft) => {
@@ -118,7 +119,7 @@ const SubmittableTypeForm = <Result,>({
         ? redirectLocationOnSuccess(submission.result, submission.draft)
         : redirectLocationOnSuccess,
     );
-  }, [onClose, redirectLocationOnSuccess, submission]);
+  }, [onClose, redirectLocationOnSuccess, replaceLocation, submission]);
 
   const onSuccessContinueClick = useCallback(() => {
     setSubmitStatus('unsubmitted');
@@ -140,7 +141,7 @@ const SubmittableTypeForm = <Result,>({
         ? redirectLocationOnQuit()
         : redirectLocationOnQuit,
     );
-  }, [onClose, redirectLocationOnQuit]);
+  }, [onClose, redirectLocationOnQuit, replaceLocation]);
 
   const onGoToShare = useCallback(() => {
     setSubmitStatus('unsubmitted');

@@ -1,3 +1,4 @@
+import { LocationDescriptor } from 'history';
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -111,7 +112,7 @@ const companyOverviewPathnameOf = (companyName: string): string =>
 export const companyOverviewWithPolicyReviewGroupOf = (
   companyName: string,
   groupId: string,
-): { pathname: string; state: unknown } => ({
+): LocationDescriptor => ({
   pathname: companyOverviewPathnameOf(companyName),
   ...generatePolicyReviewGroupModal(groupId),
 });
@@ -119,7 +120,7 @@ export const companyOverviewWithPolicyReviewGroupOf = (
 const redirectToCompanyOverview = (
   groupId: string,
   draft: Record<string, unknown>,
-): { pathname: string; state: unknown } =>
+): LocationDescriptor =>
   companyOverviewWithPolicyReviewGroupOf(
     draft[DATA_KEY_COMPANY_NAME] as string,
     groupId,

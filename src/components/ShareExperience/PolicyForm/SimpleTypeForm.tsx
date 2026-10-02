@@ -1,3 +1,4 @@
+import { LocationDescriptor } from 'history';
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -35,7 +36,7 @@ type Props = {
   companyName: string;
   jobTitle: string;
   sector?: string;
-  redirectLocationOnQuit: string | (() => string);
+  redirectLocationOnQuit: LocationDescriptor | (() => LocationDescriptor);
 };
 
 const SimpleTypeForm = ({
