@@ -3,21 +3,25 @@ import React, { Fragment, useEffect } from 'react';
 import { Heading, Section, Wrapper } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Comment2 from 'common/icons/Comment2';
-import Loader from 'common/Loader';
+import { generatePolicyReviewGroupModal } from 'common/ShareExpSection/shareLinkTo';
+import BoxRenderer from 'common/StatusRenderer';
+import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 
 import AuthMask from './AuthMask';
 import ShareBlockElement from './ShareBlockElement';
 import {
-  useFetchMyPublishes,
+  useFetchMyPublishesBox,
   useToggleExperienceStatus,
+  useTogglePolicyReviewGroupStatus,
   useToggleReplyStatus,
   useToggleSalaryWorkTimeStatus,
 } from './useQuery';
 
 const Me = () => {
-  const [myPublishesState, fetchMyPublishes] = useFetchMyPublishes();
+  const [myPublishesBox, fetchMyPublishes] = useFetchMyPublishesBox();
   const toggleExperienceStatus = useToggleExperienceStatus();
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
+  const togglePolicyReviewGroupStatus = useTogglePolicyReviewGroupStatus();
   const toggleReplyStatus = useToggleReplyStatus();
 
   useEffect(() => {
@@ -39,12 +43,11 @@ const Me = () => {
               noPadding
             >
               <div>
-                {myPublishesState.loading && <Loader size="s" />}
-                {!myPublishesState.loading &&
-                  !myPublishesState.error &&
-                  myPublishesState.value && (
+                <BoxRenderer
+                  box={myPublishesBox}
+                  render={({ me }) => (
                     <Fragment>
-                      {myPublishesState.value.me.experiences.map(o => (
+                      {me.experiences.map(o => (
                         <ShareBlockElement
                           key={o.id}
                           type={o.type === 'work' ? '工作' : '面試'}
@@ -61,13 +64,18 @@ const Me = () => {
                           archive={o.archive}
                         />
                       ))}
-                      {myPublishesState.value.me.salary_work_times.map(o => (
+                      {me.salary_work_times.map(o => (
                         <ShareBlockElement
                           key={o.id}
                           type="薪時"
                           heading={o.company.name}
                           position={o.job_title.name}
-                          to={o.company.name}
+                          to={generateTabURL({
+                            pageType: PageType.COMPANY,
+                            pageName: o.company.name,
+                            tabType: TabType.TIME_AND_SALARY,
+                          })}
+                          linkTitle="檢視薪時"
                           disabled={
                             o.status === 'hidden' ||
                             (o.archive && o.archive.is_archived)
@@ -79,7 +87,26 @@ const Me = () => {
                           archive={o.archive}
                         />
                       ))}
-                      {(myPublishesState.value.me.replies || []).map(o => (
+                      {me.policyReviewGroupList.map(o => (
+                        <ShareBlockElement
+                          key={o.groupId}
+                          type="制度"
+                          heading={o.company.name}
+                          position={o.jobTitle}
+                          to={generatePolicyReviewGroupModal(o.groupId)}
+                          linkTitle="檢視制度"
+                          disabled={
+                            o.status === 'hidden' ||
+                            (o.archive && o.archive.is_archived)
+                          }
+                          publishHandler={async () => {
+                            await togglePolicyReviewGroupStatus(o);
+                            await fetchMyPublishes();
+                          }}
+                          archive={o.archive}
+                        />
+                      ))}
+                      {(me.replies || []).map(o => (
                         <ShareBlockElement
                           key={o.id}
                           type="留言"
@@ -98,6 +125,7 @@ const Me = () => {
                       ))}
                     </Fragment>
                   )}
+                />
               </div>
             </IconHeadingBlock>
           </div>

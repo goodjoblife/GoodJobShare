@@ -68,29 +68,6 @@ export const workExperiencesPartialGql = ({
   jobLevel
 `;
 
-export const queryExperienceLikeGql = /* GraphQL */ `
-  query($id: ID!) {
-    experience(id: $id) {
-      liked
-    }
-  }
-`;
-
-export const queryExperienceRepliesGql = /* GraphQL */ `
-  query($id: ID!) {
-    experience(id: $id) {
-      replies {
-        id
-        content
-        like_count
-        floor
-        created_at
-        liked
-      }
-    }
-  }
-`;
-
 export const createInterviewExperienceWithRating = /* GraphQL */ `
   mutation($input: CreateInterviewExperienceWithRatingInput!) {
     createInterviewExperienceWithRating(input: $input) {
@@ -111,31 +88,3 @@ mutation CreateWorkExperienceWithRating($input: CreateWorkExperienceWithRatingIn
     }
   }
 }`;
-
-export const createExperienceLikeGql = /* GraphQL */ `
-  mutation($input: CreateExperienceLikeInput!) {
-    createExperienceLike(input: $input) {
-      experienceLike {
-        id
-      }
-    }
-  }
-`;
-
-export const deleteExpereinceLikeGql = /* GraphQL */ `
-  mutation($input: DeleteExperienceLikeInput!) {
-    deleteExperienceLike(input: $input) {
-      deletedExperienceId
-    }
-  }
-`;
-
-export const changeExperienceStatusGql = /* GraphQL */ `
-  mutation($input: ChangeExperienceStatusInput!) {
-    changeExperienceStatus(input: $input) {
-      experience {
-        id
-      }
-    }
-  }
-`;

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { queryRatingStatistics } from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
 import LeavePolicySection, {
-  LeavePolicyRecord,
+  FilterOption,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
 import { LeaveSection } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
@@ -14,6 +14,8 @@ import { ServerSideRender } from 'types/serverSideRender';
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
+import useCompanyPolicyReviewsBox from './useCompanyPolicyReviewsBox';
+import useHasPolicyFilter from './useHasPolicyFilter';
 
 const SECTION: LeaveSection = {
   dataCount: 100,
@@ -27,29 +29,10 @@ const SECTION: LeaveSection = {
   },
 };
 
-const FILTER_OPTIONS = [
-  { value: '是', label: '有彈性上下班時間' },
-  { value: '否', label: '沒有彈性上下班時間' },
-  { value: '不知道', label: '不知道' },
-];
-
-const RECORDS: LeavePolicyRecord[] = [
-  {
-    id: '1',
-    jobTitle: 'Software Engineer',
-    region: 'RD',
-    availability: '是',
-    experience: '可以彈性調整上下班時間，只要工作完成即可，非常自由',
-    sharedAt: '2025.09.05',
-  },
-  {
-    id: '2',
-    jobTitle: 'Operations',
-    region: '營運',
-    availability: '否',
-    experience: '固定九點上班，沒有彈性，主管很重視打卡時間',
-    sharedAt: '2025.07.20',
-  },
+const FILTER_OPTIONS: FilterOption[] = [
+  { value: 'yes', label: '有彈性上下班時間' },
+  { value: 'no', label: '沒有彈性上下班時間' },
+  { value: 'unknown', label: '不知道' },
 ];
 
 type Params = { companyName: string };
@@ -59,6 +42,14 @@ const CompanyFamilyChildcareFlexibleHoursProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
+  const [selectedHasPolicy, toggleHasPolicy] = useHasPolicyFilter();
+  const reviewsBox = useCompanyPolicyReviewsBox({
+    companyName,
+    policy: 'FLEXIBLE_WORKING_HOUR',
+    hasPolicy: selectedHasPolicy,
+    start: (page - 1) * PAGE_SIZE,
+    limit: PAGE_SIZE,
+  });
 
   useEffect(() => {
     dispatch(queryRatingStatistics(companyName));
@@ -74,7 +65,9 @@ const CompanyFamilyChildcareFlexibleHoursProvider: React.FC &
       section={SECTION}
       availabilityColumnTitle="是否有彈性上下班時間制度"
       filterOptions={FILTER_OPTIONS}
-      records={RECORDS}
+      selectedHasPolicy={selectedHasPolicy}
+      onToggleHasPolicy={toggleHasPolicy}
+      reviewsBox={reviewsBox}
       page={page}
       pageSize={PAGE_SIZE}
     />

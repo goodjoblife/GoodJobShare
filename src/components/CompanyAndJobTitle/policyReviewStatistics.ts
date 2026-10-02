@@ -3,11 +3,7 @@ import {
   RemoteWorkPolicyCount,
 } from 'apis/queryCompanyPolicyReviewStatistics';
 import { YesNoOrUnknownCount } from 'apis/salaryWorkTime';
-import {
-  Policy,
-  RemoteWorkPolicy,
-  remoteWorkPolicyTranslation,
-} from 'constants/policy';
+import { Policy, RemoteWorkPolicy } from 'constants/policy';
 
 import { LeaveSection } from './LeaveSectionBlock';
 import { PolicyDistribution } from './PolicyBarChart';
@@ -29,6 +25,15 @@ const COMPLIANCE_LABELS: YesNoOrUnknownLabels = {
   unknown: '不知道',
 };
 
+// FOUR_DAYS_PER_WEEK 與 NO_LIMIT 都歸到「大於3天」這一欄。
+const REMOTE_WORK_LABELS_BY_POLICY: Record<RemoteWorkPolicy, string> = {
+  [RemoteWorkPolicy.ONE_DAY_PER_WEEK]: '1天',
+  [RemoteWorkPolicy.TWO_DAYS_PER_WEEK]: '2天',
+  [RemoteWorkPolicy.THREE_DAYS_PER_WEEK]: '3天',
+  [RemoteWorkPolicy.FOUR_DAYS_PER_WEEK]: '大於3天',
+  [RemoteWorkPolicy.NO_LIMIT]: '大於3天',
+};
+
 const REMOTE_WORK_POLICY_ORDER: RemoteWorkPolicy[] = [
   RemoteWorkPolicy.ONE_DAY_PER_WEEK,
   RemoteWorkPolicy.TWO_DAYS_PER_WEEK,
@@ -38,7 +43,7 @@ const REMOTE_WORK_POLICY_ORDER: RemoteWorkPolicy[] = [
 ];
 
 const REMOTE_WORK_LABELS: string[] = REMOTE_WORK_POLICY_ORDER.map(
-  policy => remoteWorkPolicyTranslation[policy],
+  policy => REMOTE_WORK_LABELS_BY_POLICY[policy],
 ).filter((label, index, labels) => labels.indexOf(label) === index);
 
 const toPercentage = (count: number, total: number): number =>
@@ -68,7 +73,7 @@ const toRemoteWorkDistribution = (
   const dataCount = counts.reduce((sum, { count }) => sum + count, 0);
   const countByLabel = counts.reduce<Record<string, number>>(
     (acc, { remoteWorkPolicy, count }) => {
-      const label = remoteWorkPolicyTranslation[remoteWorkPolicy];
+      const label = REMOTE_WORK_LABELS_BY_POLICY[remoteWorkPolicy];
       return { ...acc, [label]: (acc[label] || 0) + count };
     },
     {},

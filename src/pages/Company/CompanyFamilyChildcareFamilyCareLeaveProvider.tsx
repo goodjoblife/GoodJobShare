@@ -6,7 +6,7 @@ import Glike from 'common/icons/Glike';
 import { paramsSelector } from 'common/routing/selectors';
 import familyCareLeaveIcon from 'components/CompanyAndJobTitle/familyCareLeaveIcon.svg';
 import LeavePolicySection, {
-  LeavePolicyRecord,
+  FilterOption,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
 import {
   LeaveBulletByLabel,
@@ -19,6 +19,8 @@ import { ServerSideRender } from 'types/serverSideRender';
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
+import useCompanyPolicyReviewsBox from './useCompanyPolicyReviewsBox';
+import useHasPolicyFilter from './useHasPolicyFilter';
 
 const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
   是: { text: '請得到家庭照顧假', icon: <Glike /> },
@@ -54,31 +56,10 @@ const SECTION: LeaveSection = {
   },
 };
 
-const FILTER_OPTIONS = [
-  { value: '是', label: '請得到家庭照顧假' },
-  { value: '否', label: '請不到家庭照顧假' },
-  { value: '不知道', label: '不知道' },
-];
-
-const RECORDS: LeavePolicyRecord[] = [
-  {
-    id: '1',
-    jobTitle: 'Product Manager',
-    region: '產品部',
-    availability: '否',
-    compliance: '不符合',
-    experience: '主管說這個假不好請，建議用年假代替',
-    sharedAt: '2025.08.20',
-  },
-  {
-    id: '2',
-    jobTitle: 'Designer',
-    region: '設計部',
-    availability: '不知道',
-    compliance: '不知道',
-    experience: '不確定公司是否有這個假，從來沒聽同事提過',
-    sharedAt: '2025.07.05',
-  },
+const FILTER_OPTIONS: FilterOption[] = [
+  { value: 'yes', label: '請得到家庭照顧假' },
+  { value: 'no', label: '請不到家庭照顧假' },
+  { value: 'unknown', label: '不知道' },
 ];
 
 type Params = { companyName: string };
@@ -88,6 +69,14 @@ const CompanyFamilyChildcareFamilyCareLeaveProvider: React.FC &
   const dispatch = useDispatch();
   const companyName = useCompanyNameParam();
   const page = usePage();
+  const [selectedHasPolicy, toggleHasPolicy] = useHasPolicyFilter();
+  const reviewsBox = useCompanyPolicyReviewsBox({
+    companyName,
+    policy: 'FAMILY_CARE_LEAVE',
+    hasPolicy: selectedHasPolicy,
+    start: (page - 1) * PAGE_SIZE,
+    limit: PAGE_SIZE,
+  });
 
   useEffect(() => {
     dispatch(queryRatingStatistics(companyName));
@@ -108,7 +97,9 @@ const CompanyFamilyChildcareFamilyCareLeaveProvider: React.FC &
       availabilityColumnTitle="是否請得到家庭照顧假"
       complianceColumnTitle="勞基法符合度"
       filterOptions={FILTER_OPTIONS}
-      records={RECORDS}
+      selectedHasPolicy={selectedHasPolicy}
+      onToggleHasPolicy={toggleHasPolicy}
+      reviewsBox={reviewsBox}
       page={page}
       pageSize={PAGE_SIZE}
     />
