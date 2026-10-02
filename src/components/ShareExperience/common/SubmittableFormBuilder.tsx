@@ -22,17 +22,15 @@ type RedirectLocation = string | { pathname: string; state?: unknown };
 
 type Submission<Result> = { result: Result; draft: Draft };
 
-const replaceLocation = (location: RedirectLocation): void => {
-  if (typeof window === 'undefined') return;
-  if (typeof location === 'string') {
-    window.location.replace(location);
-    return;
-  }
-  // react-router's BrowserHistory restores location.state from
-  // window.history.state on load, so the state survives the reload
-  window.history.replaceState({ state: location.state }, '', location.pathname);
-  window.location.reload();
-};
+const replaceLocation = useCallback(
+  (location: RedirectLocation): void => {
+    if (typeof window === 'undefined') return;
+
+    history.replace(location);
+    window.location.reload();
+  },
+  [history],
+);
 
 // TODO: replace with a proper Question type; the shape is still only described
 // by QuestionPropType in common/FormBuilder
