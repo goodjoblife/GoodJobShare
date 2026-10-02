@@ -28,13 +28,11 @@ const queryCompanyPolicyReviewStatisticsGql = /* GraphQL */ `
   }
 `;
 
-// Must be the same as graphql schema (RemoteWorkPolicyCount)
 export type RemoteWorkPolicyCount = {
   remoteWorkPolicy: RemoteWorkPolicy;
   count: number;
 };
 
-// Must be the same as graphql schema (CompanyPolicyReviewStatistics)
 export type PolicyReviewStatistics = {
   policy: Policy;
   hasPolicyCount: YesNoOrUnknownCount;
