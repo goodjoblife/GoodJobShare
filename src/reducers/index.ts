@@ -1,6 +1,8 @@
+import { History } from 'history';
 import { Action, AnyAction, combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 import { PERSIST_KEY } from '../config';
 import auth from './auth';
@@ -49,6 +51,22 @@ const rootReducer = combineReducers({
 export default persistReducer(persistConfig, rootReducer);
 
 export type RootState = ReturnType<typeof rootReducer>;
+
+// Must be the same as thunk.withExtraArgument() in src/store/configureStore.*.js
+type ThunkExtraArgument = { history: History };
+
+export type AppDispatch = ThunkDispatch<
+  RootState,
+  ThunkExtraArgument,
+  AnyAction
+>;
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  ThunkExtraArgument,
+  AnyAction
+>;
 
 export interface Thunk<A extends Action = AnyAction> {
   (dispatch: Dispatch<A>, getState: GetState): unknown;
