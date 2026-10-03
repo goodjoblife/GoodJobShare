@@ -23,7 +23,7 @@ export const useFetchMyPublishesBox = (): readonly [
 
 export const useToggleExperienceStatus = (): ((
   o: Publishable,
-) => Promise<unknown>) => {
+) => Promise<void>) => {
   const token = useToken();
   return useCallback(
     (o: Publishable) => {
@@ -39,7 +39,7 @@ export const useToggleExperienceStatus = (): ((
 
 export const useToggleSalaryWorkTimeStatus = (): ((
   o: Publishable,
-) => Promise<unknown>) => {
+) => Promise<void>) => {
   const token = useToken();
   return useCallback(
     (o: Publishable) => {
@@ -53,9 +53,7 @@ export const useToggleSalaryWorkTimeStatus = (): ((
   );
 };
 
-export const useToggleReplyStatus = (): ((
-  o: Publishable,
-) => Promise<unknown>) => {
+export const useToggleReplyStatus = (): ((o: Publishable) => Promise<void>) => {
   const token = useToken();
   return useCallback(
     (o: Publishable) => {

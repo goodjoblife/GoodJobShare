@@ -22,11 +22,11 @@ const changeSalaryWorkTimeStatus = ({
   id: string;
   status: 'published' | 'hidden';
   token?: string;
-}): Promise<ChangeSalaryWorkTimeStatusData['changeSalaryWorkTimeStatus']> =>
+}): Promise<void> =>
   graphqlClient<ChangeSalaryWorkTimeStatusData>({
     query: changeSalaryWorkTimeStatusGql,
     variables: { input: { id, status } },
     token,
-  }).then(data => data.changeSalaryWorkTimeStatus);
+  }).then(() => undefined);
 
 export default changeSalaryWorkTimeStatus;

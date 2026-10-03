@@ -22,11 +22,11 @@ const changeExperienceStatus = ({
   id: string;
   status: 'published' | 'hidden';
   token?: string;
-}): Promise<ChangeExperienceStatusData['changeExperienceStatus']> =>
+}): Promise<void> =>
   graphqlClient<ChangeExperienceStatusData>({
     query: changeExperienceStatusGql,
     variables: { input: { id, status } },
     token,
-  }).then(data => data.changeExperienceStatus);
+  }).then(() => undefined);
 
 export default changeExperienceStatus;
