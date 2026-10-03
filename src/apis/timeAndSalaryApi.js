@@ -1,5 +1,4 @@
 import {
-  changeSalaryWorkTimeStatusGql,
   getSearchCompanyQuery,
   getSearchJobTitleQuery,
 } from 'graphql/timeAndSalary';
@@ -22,10 +21,3 @@ export const fetchSearchJobTitle = ({ jobTitle }) =>
 
 export const postWorkings = ({ body, token }) =>
   fetchUtil(endpoint).post({ body, token });
-
-export const changeSalaryWorkTimeStatus = ({ id, status, token }) =>
-  graphqlClient({
-    query: changeSalaryWorkTimeStatusGql,
-    variables: { input: { id, status } },
-    token,
-  });

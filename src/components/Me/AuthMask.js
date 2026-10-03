@@ -6,7 +6,7 @@ import { useLogin } from 'hooks/login';
 
 import styles from './Me.module.css';
 
-const AuthMask = ({ children, title }) => {
+const AuthMask = ({ children, title = '' }) => {
   const [isLoggedIn, login] = useLogin();
 
   if (!isLoggedIn) {

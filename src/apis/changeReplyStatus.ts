@@ -23,11 +23,11 @@ const changeReplyStatus = ({
   id: string;
   status: PublishStatus;
   token?: string;
-}): Promise<ChangeReplyStatusData['changeReplyStatus']> =>
+}): Promise<void> =>
   graphqlClient<ChangeReplyStatusData>({
     query: changeReplyStatusGql,
     variables: { input: { id, status } },
     token,
-  }).then(data => data.changeReplyStatus);
+  }).then(() => undefined);
 
 export default changeReplyStatus;

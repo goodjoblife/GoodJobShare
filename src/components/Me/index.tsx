@@ -5,6 +5,7 @@ import IconHeadingBlock from 'common/IconHeadingBlock';
 import Comment2 from 'common/icons/Comment2';
 import BoxRenderer from 'common/StatusRenderer';
 import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
+import { PublishStatus } from 'constants/publishStatus';
 
 import AuthMask from './AuthMask';
 import ShareBlockElement from './ShareBlockElement';
@@ -16,7 +17,7 @@ import {
   useToggleSalaryWorkTimeStatus,
 } from './useQuery';
 
-const Me = () => {
+const Me: React.FC = () => {
   const [myPublishesBox, fetchMyPublishes] = useFetchMyPublishesBox();
   const toggleExperienceStatus = useToggleExperienceStatus();
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
@@ -43,7 +44,7 @@ const Me = () => {
               <div>
                 <BoxRenderer
                   box={myPublishesBox}
-                  render={({ me }) => (
+                  render={({ me }): React.ReactElement => (
                     <Fragment>
                       {sortByCreatedAtDesc([
                         ...me.experiences.map(o => ({
@@ -55,10 +56,10 @@ const Me = () => {
                               heading={o.title}
                               to={`/experiences/${o.id}?backable=true`}
                               disabled={
-                                o.status === 'hidden' ||
+                                o.status === PublishStatus.HIDDEN ||
                                 (o.archive && o.archive.is_archived)
                               }
-                              publishHandler={async () => {
+                              publishHandler={async (): Promise<void> => {
                                 await toggleExperienceStatus(o);
                                 await fetchMyPublishes();
                               }}
@@ -81,10 +82,10 @@ const Me = () => {
                               })}
                               linkTitle="檢視薪時"
                               disabled={
-                                o.status === 'hidden' ||
+                                o.status === PublishStatus.HIDDEN ||
                                 (o.archive && o.archive.is_archived)
                               }
-                              publishHandler={async () => {
+                              publishHandler={async (): Promise<void> => {
                                 await toggleSalaryWorkTimeStatus(o);
                                 await fetchMyPublishes();
                               }}
@@ -103,8 +104,8 @@ const Me = () => {
                               to={`/experiences/${
                                 o.experience ? o.experience.id : ''
                               }`}
-                              disabled={o.status === 'hidden'}
-                              publishHandler={async () => {
+                              disabled={o.status === PublishStatus.HIDDEN}
+                              publishHandler={async (): Promise<void> => {
                                 await toggleReplyStatus(o);
                                 await fetchMyPublishes();
                               }}
