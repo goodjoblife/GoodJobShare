@@ -29,8 +29,9 @@ For API-specific rules see [apis.md](apis.md).
 
 Declare types right after the imports and before any logic (constants, functions, components):
 
+Preferred:
+
 ```ts
-// ✓
 import React from 'react';
 import { Company } from 'apis/company';
 
@@ -39,8 +40,11 @@ type Props = { company: Company };
 const MAX_COUNT = 10;
 
 const CompanyCard = ({ company }: Props) => { ... };
+```
 
-// ✗ type declared between logic
+Avoid declaring types after logic has begun:
+
+```ts
 const MAX_COUNT = 10;
 
 type Props = { company: Company };
