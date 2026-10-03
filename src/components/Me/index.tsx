@@ -4,6 +4,7 @@ import { Heading, Section, Wrapper } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Comment2 from 'common/icons/Comment2';
 import BoxRenderer from 'common/StatusRenderer';
+import { PublishStatus } from 'constants/publishStatus';
 
 import AuthMask from './AuthMask';
 import ShareBlockElement from './ShareBlockElement';
@@ -54,7 +55,7 @@ const Me: React.FC = () => {
                               heading={o.title}
                               to={`/experiences/${o.id}?backable=true`}
                               disabled={
-                                o.status === 'hidden' ||
+                                o.status === PublishStatus.HIDDEN ||
                                 (o.archive && o.archive.is_archived)
                               }
                               publishHandler={async (): Promise<void> => {
@@ -75,7 +76,7 @@ const Me: React.FC = () => {
                               position={o.job_title.name}
                               to={o.company.name}
                               disabled={
-                                o.status === 'hidden' ||
+                                o.status === PublishStatus.HIDDEN ||
                                 (o.archive && o.archive.is_archived)
                               }
                               publishHandler={async (): Promise<void> => {
@@ -97,7 +98,7 @@ const Me: React.FC = () => {
                               to={`/experiences/${
                                 o.experience ? o.experience.id : ''
                               }`}
-                              disabled={o.status === 'hidden'}
+                              disabled={o.status === PublishStatus.HIDDEN}
                               publishHandler={async (): Promise<void> => {
                                 await toggleReplyStatus(o);
                                 await fetchMyPublishes();

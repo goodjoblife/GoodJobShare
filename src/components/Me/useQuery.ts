@@ -4,13 +4,14 @@ import changeExperienceStatus from 'apis/changeExperienceStatus';
 import changeReplyStatus from 'apis/changeReplyStatus';
 import changeSalaryWorkTimeStatus from 'apis/changeSalaryWorkTimeStatus';
 import queryMyPublishes from 'apis/queryMyPublishes';
+import { PublishStatus } from 'constants/publishStatus';
 import { useToken } from 'hooks/auth';
 import useAsyncBoxFn from 'hooks/useAsyncBoxFn';
 import FetchBox from 'utils/fetchBox';
 
 type MyPublishes = Awaited<ReturnType<typeof queryMyPublishes>>;
 
-type Publishable = { id: string; status: 'published' | 'hidden' };
+type Publishable = { id: string; status: PublishStatus };
 
 export const useFetchMyPublishesBox = (): readonly [
   FetchBox<MyPublishes>,
@@ -29,7 +30,10 @@ export const useToggleExperienceStatus = (): ((
     (o: Publishable) => {
       return changeExperienceStatus({
         id: o.id,
-        status: o.status === 'published' ? 'hidden' : 'published',
+        status:
+          o.status === PublishStatus.PUBLISHED
+            ? PublishStatus.HIDDEN
+            : PublishStatus.PUBLISHED,
         token,
       });
     },
@@ -45,7 +49,10 @@ export const useToggleSalaryWorkTimeStatus = (): ((
     (o: Publishable) => {
       return changeSalaryWorkTimeStatus({
         id: o.id,
-        status: o.status === 'published' ? 'hidden' : 'published',
+        status:
+          o.status === PublishStatus.PUBLISHED
+            ? PublishStatus.HIDDEN
+            : PublishStatus.PUBLISHED,
         token,
       });
     },
@@ -59,7 +66,10 @@ export const useToggleReplyStatus = (): ((o: Publishable) => Promise<void>) => {
     (o: Publishable) => {
       return changeReplyStatus({
         id: o.id,
-        status: o.status === 'published' ? 'hidden' : 'published',
+        status:
+          o.status === PublishStatus.PUBLISHED
+            ? PublishStatus.HIDDEN
+            : PublishStatus.PUBLISHED,
         token,
       });
     },

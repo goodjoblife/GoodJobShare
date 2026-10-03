@@ -1,3 +1,4 @@
+import { PublishStatus } from 'constants/publishStatus';
 import graphqlClient from 'utils/graphqlClient';
 
 const queryMyPublishesGql = /* GraphQL */ `
@@ -45,8 +46,6 @@ const queryMyPublishesGql = /* GraphQL */ `
   }
 `;
 
-type Status = 'published' | 'hidden';
-
 type Archive = {
   is_archived: boolean;
   reason: string;
@@ -58,7 +57,7 @@ type QueryMyPublishesData = {
       id: string;
       type: 'work' | 'interview' | 'intern';
       title: string | null;
-      status: Status;
+      status: PublishStatus;
       created_at: string;
       archive: Archive;
     }[];
@@ -66,14 +65,14 @@ type QueryMyPublishesData = {
       id: string;
       content: string;
       experience: { id: string; title: string | null } | null;
-      status: Status;
+      status: PublishStatus;
       created_at: string;
     }[];
     salary_work_times: {
       id: string;
       company: { name: string };
       job_title: { name: string };
-      status: Status;
+      status: PublishStatus;
       created_at: string;
       archive: Archive;
     }[];

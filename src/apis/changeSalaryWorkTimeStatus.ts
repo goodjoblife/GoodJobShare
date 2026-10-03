@@ -1,3 +1,4 @@
+import { PublishStatus } from 'constants/publishStatus';
 import graphqlClient from 'utils/graphqlClient';
 
 const changeSalaryWorkTimeStatusGql = /* GraphQL */ `
@@ -20,7 +21,7 @@ const changeSalaryWorkTimeStatus = ({
   token,
 }: {
   id: string;
-  status: 'published' | 'hidden';
+  status: PublishStatus;
   token?: string;
 }): Promise<void> =>
   graphqlClient<ChangeSalaryWorkTimeStatusData>({
