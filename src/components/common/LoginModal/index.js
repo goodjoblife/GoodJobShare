@@ -4,7 +4,7 @@ import React, { useCallback, useContext, useEffect } from 'react';
 import { P } from 'common/base';
 import FacebookLoginButton from 'common/Login/FacebookLoginButton';
 import GoogleLoginButton from 'common/Login/GoogleLoginButton';
-import Modal, { InlineModal } from 'common/Modal.js';
+import Modal, { InlineModal } from 'common/Modal';
 import LoginModalContext from 'contexts/LoginModalContext';
 import { useIsLoggedIn } from 'hooks/auth';
 

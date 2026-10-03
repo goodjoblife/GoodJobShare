@@ -1,0 +1,75 @@
+@value below-tablet, main-yellow, link-blue from "../common/variables.module.css";
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 21px;
+  margin-bottom: 22px;
+
+  @media (max-width: below-tablet) {
+    flex-direction: column;
+  }
+}
+
+.summaryCard {
+  width: 265px;
+  height: 265px;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: below-tablet) {
+    width: 100%;
+  }
+}
+
+.icon {
+  display: block;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 12px;
+}
+
+.summaryTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.bullets li {
+  display: flex;
+  align-items: flex-start;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.8;
+}
+
+.dash {
+  margin-right: 6px;
+}
+
+.likeIcon {
+  width: 14px;
+  height: 14px;
+  margin-top: 5px;
+  margin-right: 6px;
+  fill: main-yellow;
+  flex-shrink: 0;
+}
+
+.link {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: right;
+  color: link-blue;
+  margin-top: 12px;
+}

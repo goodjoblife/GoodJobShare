@@ -17,8 +17,9 @@ const RadioElseRadio = ({
   elseOptionValue,
   elseOptions,
   placeholder,
+  footnote,
 }) => (
-  <Wrapper warning={warning}>
+  <Wrapper warning={warning} footnote={footnote}>
     <BlockSelectElseRadio
       dataKey={dataKey}
       required={required}
@@ -37,6 +38,7 @@ RadioElseRadio.propTypes = {
   dataKey: PropTypes.string.isRequired,
   elseOptionValue: ValuePropType.isRequired,
   elseOptions: PropTypes.arrayOf(OptionPropType).isRequired,
+  footnote: PropTypes.node,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
