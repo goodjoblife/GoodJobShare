@@ -4,6 +4,7 @@ import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import rootReducer from '../reducers';
+import { createThunkExtraArgument } from './thunkExtraArgument';
 
 const logger = createLogger({
   level: 'info',
@@ -18,7 +19,10 @@ const configureStore = (preloadedState, history) => {
     rootReducer,
     preloadedState,
     composeEnhancers(
-      applyMiddleware(thunk.withExtraArgument({ history }), logger),
+      applyMiddleware(
+        thunk.withExtraArgument(createThunkExtraArgument(history)),
+        logger,
+      ),
     ),
   );
 
