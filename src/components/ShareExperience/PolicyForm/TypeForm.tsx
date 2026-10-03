@@ -1,8 +1,13 @@
+import { LocationDescriptor } from 'history';
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
-import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
+import {
+  CreatePolicyReviewGroupResult,
+  PolicyReviewInput,
+} from 'apis/createPolicyReviewGroup';
+import { generatePolicyReviewGroupModal } from 'common/ShareExpSection/shareLinkTo';
 import { generatePageURL, PageType } from 'constants/companyJobTitle';
 import {
   Policy,
@@ -101,13 +106,25 @@ export const toPolicyReviewInput = ([
   };
 };
 
-export const companyOverviewPathnameOf = (companyName: string): string =>
+const companyOverviewPathnameOf = (companyName: string): string =>
   generatePageURL({ pageType: PageType.COMPANY, pageName: companyName });
 
+export const companyOverviewWithPolicyReviewGroupOf = (
+  companyName: string,
+  groupId: string,
+): LocationDescriptor => ({
+  pathname: companyOverviewPathnameOf(companyName),
+  ...generatePolicyReviewGroupModal(groupId),
+});
+
 const redirectToCompanyOverview = (
-  _: unknown,
+  groupId: string,
   draft: Record<string, unknown>,
-): string => companyOverviewPathnameOf(draft[DATA_KEY_COMPANY_NAME] as string);
+): LocationDescriptor =>
+  companyOverviewWithPolicyReviewGroupOf(
+    draft[DATA_KEY_COMPANY_NAME] as string,
+    groupId,
+  );
 
 const TypeForm = ({
   open,
@@ -120,7 +137,7 @@ const TypeForm = ({
 
   const onSubmit = useCallback(
     async (draft: Record<string, unknown>) => {
-      const result = await dispatch(
+      const { policyReviewGroup } = ((await dispatch(
         createPolicyReviewGroup({
           company: { query: draft[DATA_KEY_COMPANY_NAME] as string },
           jobTitle: draft[DATA_KEY_JOB_TITLE] as string,
@@ -129,8 +146,8 @@ const TypeForm = ({
             toPolicyReviewInput,
           ),
         }),
-      );
-      return result;
+      )) as unknown) as CreatePolicyReviewGroupResult;
+      return policyReviewGroup.groupId;
     },
     [dispatch],
   );
@@ -147,7 +164,7 @@ const TypeForm = ({
       onSubmitError={onSubmitError}
       onClose={onClose}
       hideProgressBar={false}
-      redirectPathnameOnSuccess={redirectToCompanyOverview}
+      redirectLocationOnSuccess={redirectToCompanyOverview}
     />
   );
 };

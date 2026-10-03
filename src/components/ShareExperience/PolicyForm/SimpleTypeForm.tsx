@@ -1,10 +1,17 @@
+import { LocationDescriptor } from 'history';
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
-import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
+import {
+  CreatePolicyReviewGroupResult,
+  PolicyReviewInput,
+} from 'apis/createPolicyReviewGroup';
 
-import { companyOverviewPathnameOf, toPolicyReviewInput } from './TypeForm';
+import {
+  companyOverviewWithPolicyReviewGroupOf,
+  toPolicyReviewInput,
+} from './TypeForm';
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import { CompanyJobTitleHeader } from '../common/TypeFormHeader';
 import {
@@ -29,7 +36,7 @@ type Props = {
   companyName: string;
   jobTitle: string;
   sector?: string;
-  redirectPathnameOnQuit: string | (() => string);
+  redirectLocationOnQuit: LocationDescriptor | (() => LocationDescriptor);
 };
 
 const SimpleTypeForm = ({
@@ -38,25 +45,28 @@ const SimpleTypeForm = ({
   companyName,
   jobTitle,
   sector,
-  redirectPathnameOnQuit,
+  redirectLocationOnQuit,
 }: Props): React.ReactElement => {
   const dispatch = useDispatch();
 
-  const redirectPathnameOnSuccess = useCallback(
-    () => companyOverviewPathnameOf(companyName),
+  const redirectLocationOnSuccess = useCallback(
+    (groupId: string) =>
+      companyOverviewWithPolicyReviewGroupOf(companyName, groupId),
     [companyName],
   );
 
   const onSubmit = useCallback(
-    (draft: Record<string, unknown>) =>
-      dispatch(
+    async (draft: Record<string, unknown>) => {
+      const { policyReviewGroup } = ((await dispatch(
         createPolicyReviewGroup({
           company: { query: companyName },
           jobTitle,
           sector: sector || undefined,
           policyReviews: toPolicyReviews(draft),
         }),
-      ),
+      )) as unknown) as CreatePolicyReviewGroupResult;
+      return policyReviewGroup.groupId;
+    },
     [companyName, dispatch, jobTitle, sector],
   );
 
@@ -78,8 +88,8 @@ const SimpleTypeForm = ({
       onSubmitError={onSubmitError}
       onClose={onClose}
       hideProgressBar={false}
-      redirectPathnameOnSuccess={redirectPathnameOnSuccess}
-      redirectPathnameOnQuit={redirectPathnameOnQuit}
+      redirectLocationOnSuccess={redirectLocationOnSuccess}
+      redirectLocationOnQuit={redirectLocationOnQuit}
     />
   );
 };

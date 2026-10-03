@@ -1,3 +1,4 @@
+import { PublishStatus } from 'constants/publishStatus';
 import graphqlClient from 'utils/graphqlClient';
 
 const changeExperienceStatusGql = /* GraphQL */ `
@@ -20,13 +21,13 @@ const changeExperienceStatus = ({
   token,
 }: {
   id: string;
-  status: 'published' | 'hidden';
+  status: PublishStatus;
   token?: string;
-}): Promise<ChangeExperienceStatusData['changeExperienceStatus']> =>
+}): Promise<void> =>
   graphqlClient<ChangeExperienceStatusData>({
     query: changeExperienceStatusGql,
     variables: { input: { id, status } },
     token,
-  }).then(data => data.changeExperienceStatus);
+  }).then(() => undefined);
 
 export default changeExperienceStatus;
