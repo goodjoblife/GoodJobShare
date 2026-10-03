@@ -29,6 +29,7 @@ export const queryMyPublishesGql = /* GraphQL */ `
         type
         title
         status
+        created_at
         archive {
           is_archived
           reason
@@ -43,6 +44,7 @@ export const queryMyPublishesGql = /* GraphQL */ `
           title
         }
         status
+        created_at
       }
 
       salary_work_times {
@@ -54,6 +56,7 @@ export const queryMyPublishesGql = /* GraphQL */ `
           name
         }
         status
+        created_at
         archive {
           is_archived
           reason
