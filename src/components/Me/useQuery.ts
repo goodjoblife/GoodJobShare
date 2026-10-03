@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import changeExperienceStatus from 'apis/changeExperienceStatus';
 import changePolicyReviewGroupStatus, {
@@ -8,36 +8,20 @@ import changeReplyStatus from 'apis/changeReplyStatus';
 import { queryMyPublishesApi } from 'apis/me';
 import { changeSalaryWorkTimeStatus } from 'apis/timeAndSalaryApi';
 import { useToken } from 'hooks/auth';
-import FetchBox, {
-  getError,
-  getFetched,
-  getUnfetched,
-  toFetching,
-} from 'utils/fetchBox';
+import useAsyncBoxFn from 'hooks/useAsyncBoxFn';
+import FetchBox from 'utils/fetchBox';
 
 type PublishItem = { id: string; status: PublishStatus };
 
 type Toggle = (o: PublishItem) => Promise<unknown>;
 
-export const useFetchMyPublishesBox = (): [
+export const useFetchMyPublishesBox = (): readonly [
   FetchBox<unknown>,
   () => Promise<void>,
 ] => {
   const token = useToken();
 
-  const [box, setBox] = useState<FetchBox<unknown>>(getUnfetched());
-
-  const callback = useCallback(async () => {
-    setBox(prevBox => toFetching(prevBox));
-    try {
-      const data = await queryMyPublishesApi({ token });
-      setBox(getFetched(data));
-    } catch (error) {
-      setBox(getError(error));
-    }
-  }, [token]);
-
-  return [box, callback];
+  return useAsyncBoxFn(() => queryMyPublishesApi({ token }), [token]);
 };
 
 export const useToggleExperienceStatus = (): Toggle => {
