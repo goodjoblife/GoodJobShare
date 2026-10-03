@@ -25,6 +25,27 @@ Listed by priority — prefer the first location that fits:
 
 For API-specific rules see [apis.md](apis.md).
 
+## Placement within a file
+
+Declare types right after the imports and before any logic (constants, functions, components):
+
+```ts
+// ✓
+import React from 'react';
+import { Company } from 'apis/company';
+
+type Props = { company: Company };
+
+const MAX_COUNT = 10;
+
+const CompanyCard = ({ company }: Props) => { ... };
+
+// ✗ type declared between logic
+const MAX_COUNT = 10;
+
+type Props = { company: Company };
+```
+
 ## Enums
 
 Use for discrete string-valued constant groups that need to be used as both values and types. Always a named export (never `export default`); keys are `SCREAMING_SNAKE_CASE` regardless of the source's original casing, values are left as-is:

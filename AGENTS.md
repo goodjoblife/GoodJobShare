@@ -36,7 +36,7 @@ For component naming, file naming, and `index.ts` usage conventions, see [docs/c
 
 ### TypeScript Types
 
-For type definition conventions (`type` vs `interface`, where types live, nullable fields, enums, `unknown` placeholders), see [docs/typescript-types.md](docs/typescript-types.md).
+For type definition conventions (`type` vs `interface`, where types live, placement within a file, nullable fields, enums, `unknown` placeholders), see [docs/typescript-types.md](docs/typescript-types.md).
 
 ### TypeForm 與 Question
 
