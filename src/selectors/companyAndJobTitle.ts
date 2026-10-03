@@ -1,6 +1,7 @@
 import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { CompanyInIndex } from 'apis/queryCompanies';
 import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
+import { PolicyReviewStatistics } from 'apis/queryCompanyPolicyReviewStatistics';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import { JobTitleInIndex } from 'apis/queryJobTitles';
@@ -38,6 +39,12 @@ export const companyRatingStatisticsBoxSelectorByName = (
   companyName: string,
 ) => (state: RootState): FetchBox<RatingStatistics | null> =>
   state.companyIndex.ratingStatisticsByName[companyName] || getUnfetched();
+
+export const companyPolicyReviewStatisticsBoxSelectorByName = (
+  companyName: string,
+) => (state: RootState): FetchBox<PolicyReviewStatistics[] | null> =>
+  state.companyIndex.policyReviewStatisticsByName[companyName] ||
+  getUnfetched();
 
 export const companyOverviewBoxSelectorByName = (companyName: string) => (
   state: RootState,
