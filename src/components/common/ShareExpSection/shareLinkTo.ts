@@ -6,22 +6,31 @@ export const STATE_SHARE = {
   POLICY: 'policy',
 };
 
+type ShareLinkTo = {
+  state: {
+    share: string;
+    companyName?: string;
+  };
+};
+
 // please follow the convention: () => To (react-router)
-export const generateShareInterviewTypeForm = ({ companyName } = {}) => {
+export const generateShareInterviewTypeForm = ({
+  companyName,
+}: { companyName?: string } = {}): ShareLinkTo => {
   if (companyName) {
     return { state: { share: STATE_SHARE.INTERVIEW, companyName } };
   }
   return { state: { share: STATE_SHARE.INTERVIEW } };
 };
-export const generateShareTimeSalaryTypeForm = () => ({
+export const generateShareTimeSalaryTypeForm = (): ShareLinkTo => ({
   state: { share: STATE_SHARE.SALARY_WORK_TIME },
 });
-export const generateShareTimeSalaryTypeFormHideProgressBar = () => ({
+export const generateShareTimeSalaryTypeFormHideProgressBar = (): ShareLinkTo => ({
   state: { share: STATE_SHARE.SALARY_WORK_TIME_NO_PROGRESS_BAR },
 });
-export const generateShareWork = () => ({
+export const generateShareWork = (): ShareLinkTo => ({
   state: { share: STATE_SHARE.WORK_EXPERIENCE },
 });
-export const generateSharePolicyForm = () => ({
+export const generateSharePolicyForm = (): ShareLinkTo => ({
   state: { share: STATE_SHARE.POLICY },
 });
