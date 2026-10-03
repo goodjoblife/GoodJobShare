@@ -46,14 +46,14 @@ type Status = 'published' | 'hidden';
 
 type Archive = {
   is_archived: boolean;
-  reason: string | null;
+  reason: string;
 };
 
 type QueryMyPublishesData = {
   me: {
     experiences: {
       id: string;
-      type: string;
+      type: 'work' | 'interview' | 'intern';
       title: string | null;
       status: Status;
       archive: Archive;
@@ -61,7 +61,7 @@ type QueryMyPublishesData = {
     replies: {
       id: string;
       content: string;
-      experience: { id: string; title: string | null };
+      experience: { id: string; title: string | null } | null;
       status: Status;
     }[];
     salary_work_times: {
