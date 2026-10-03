@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import changeExperienceStatus from 'apis/changeExperienceStatus';
 import changeReplyStatus from 'apis/changeReplyStatus';
-import { queryMyPublishesApi } from 'apis/me';
+import queryMyPublishes from 'apis/queryMyPublishes';
 import { changeSalaryWorkTimeStatus } from 'apis/timeAndSalaryApi';
 import { useToken } from 'hooks/auth';
 import { getError, getFetched, getUnfetched, toFetching } from 'utils/fetchBox';
@@ -15,7 +15,7 @@ export const useFetchMyPublishesBox = () => {
   const callback = useCallback(async () => {
     setBox(prevBox => toFetching(prevBox));
     try {
-      const data = await queryMyPublishesApi({ token });
+      const data = await queryMyPublishes({ token });
       setBox(getFetched(data));
     } catch (error) {
       setBox(getError(error));
