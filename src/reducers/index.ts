@@ -22,6 +22,33 @@ import search from './search';
 import toastNotification from './toastNotification';
 import { ThunkExtraArgument } from '../store/thunkExtraArgument';
 
+export type RootState = ReturnType<typeof rootReducer>;
+
+export type AppDispatch = ThunkDispatch<
+  RootState,
+  ThunkExtraArgument,
+  AnyAction
+>;
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  ThunkExtraArgument,
+  AnyAction
+>;
+
+export interface Thunk<A extends Action = AnyAction> {
+  (dispatch: Dispatch<A>, getState: GetState): unknown;
+}
+
+export interface Dispatch<A extends Action = AnyAction> {
+  <T extends A>(action: T | Thunk<T>): T;
+}
+
+export interface GetState {
+  (): RootState;
+}
+
 const persistConfig = {
   key: PERSIST_KEY,
   storage,
@@ -49,29 +76,3 @@ const rootReducer = combineReducers({
 });
 
 export default persistReducer(persistConfig, rootReducer);
-
-export type RootState = ReturnType<typeof rootReducer>;
-
-export type AppDispatch = ThunkDispatch<
-  RootState,
-  ThunkExtraArgument,
-  AnyAction
->;
-
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  ThunkExtraArgument,
-  AnyAction
->;
-
-export interface Thunk<A extends Action = AnyAction> {
-  (dispatch: Dispatch<A>, getState: GetState): unknown;
-}
-
-export interface Dispatch<A extends Action = AnyAction> {
-  <T extends A>(action: T | Thunk<T>): T;
-}
-export interface GetState {
-  (): RootState;
-}
