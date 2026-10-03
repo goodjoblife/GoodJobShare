@@ -1,3 +1,4 @@
+import { PublishStatus } from 'constants/publishStatus';
 import graphqlClient from 'utils/graphqlClient';
 
 const changePolicyReviewGroupStatusGql = /* GraphQL */ `
@@ -16,8 +17,6 @@ type ChangePolicyReviewGroupStatusData = {
   };
 };
 
-export type PublishStatus = 'published' | 'hidden';
-
 const changePolicyReviewGroupStatus = ({
   groupId,
   status,
@@ -26,13 +25,11 @@ const changePolicyReviewGroupStatus = ({
   groupId: string;
   status: PublishStatus;
   token?: string;
-}): Promise<
-  ChangePolicyReviewGroupStatusData['changePolicyReviewGroupStatus']
-> =>
+}): Promise<void> =>
   graphqlClient<ChangePolicyReviewGroupStatusData>({
     query: changePolicyReviewGroupStatusGql,
     variables: { input: { groupId, status } },
     token,
-  }).then(data => data.changePolicyReviewGroupStatus);
+  }).then(() => undefined);
 
 export default changePolicyReviewGroupStatus;

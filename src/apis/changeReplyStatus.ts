@@ -1,3 +1,4 @@
+import { PublishStatus } from 'constants/publishStatus';
 import graphqlClient from 'utils/graphqlClient';
 
 const changeReplyStatusGql = /* GraphQL */ `
@@ -20,13 +21,13 @@ const changeReplyStatus = ({
   token,
 }: {
   id: string;
-  status: 'published' | 'hidden';
+  status: PublishStatus;
   token?: string;
-}): Promise<ChangeReplyStatusData['changeReplyStatus']> =>
+}): Promise<void> =>
   graphqlClient<ChangeReplyStatusData>({
     query: changeReplyStatusGql,
     variables: { input: { id, status } },
     token,
-  }).then(data => data.changeReplyStatus);
+  }).then(() => undefined);
 
 export default changeReplyStatus;

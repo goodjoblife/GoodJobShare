@@ -1,36 +1,40 @@
 import { useCallback } from 'react';
 
 import changeExperienceStatus from 'apis/changeExperienceStatus';
-import changePolicyReviewGroupStatus, {
-  PublishStatus,
-} from 'apis/changePolicyReviewGroupStatus';
+import changePolicyReviewGroupStatus from 'apis/changePolicyReviewGroupStatus';
 import changeReplyStatus from 'apis/changeReplyStatus';
-import { queryMyPublishesApi } from 'apis/me';
-import { changeSalaryWorkTimeStatus } from 'apis/timeAndSalaryApi';
+import changeSalaryWorkTimeStatus from 'apis/changeSalaryWorkTimeStatus';
+import queryMyPublishes from 'apis/queryMyPublishes';
+import { PublishStatus } from 'constants/publishStatus';
 import { useToken } from 'hooks/auth';
 import useAsyncBoxFn from 'hooks/useAsyncBoxFn';
 import FetchBox from 'utils/fetchBox';
 
-type PublishItem = { id: string; status: PublishStatus };
+type MyPublishes = Awaited<ReturnType<typeof queryMyPublishes>>;
 
-type Toggle = (o: PublishItem) => Promise<unknown>;
+type Publishable = { id: string; status: PublishStatus };
 
 export const useFetchMyPublishesBox = (): readonly [
-  FetchBox<unknown>,
+  FetchBox<MyPublishes>,
   () => Promise<void>,
 ] => {
   const token = useToken();
 
-  return useAsyncBoxFn(() => queryMyPublishesApi({ token }), [token]);
+  return useAsyncBoxFn(() => queryMyPublishes({ token }), [token]);
 };
 
-export const useToggleExperienceStatus = (): Toggle => {
+export const useToggleExperienceStatus = (): ((
+  o: Publishable,
+) => Promise<void>) => {
   const token = useToken();
   return useCallback(
-    (o: PublishItem) => {
+    (o: Publishable) => {
       return changeExperienceStatus({
         id: o.id,
-        status: o.status === 'published' ? 'hidden' : 'published',
+        status:
+          o.status === PublishStatus.PUBLISHED
+            ? PublishStatus.HIDDEN
+            : PublishStatus.PUBLISHED,
         token,
       });
     },
@@ -38,13 +42,18 @@ export const useToggleExperienceStatus = (): Toggle => {
   );
 };
 
-export const useToggleSalaryWorkTimeStatus = (): Toggle => {
+export const useToggleSalaryWorkTimeStatus = (): ((
+  o: Publishable,
+) => Promise<void>) => {
   const token = useToken();
   return useCallback(
-    (o: PublishItem) => {
+    (o: Publishable) => {
       return changeSalaryWorkTimeStatus({
         id: o.id,
-        status: o.status === 'published' ? 'hidden' : 'published',
+        status:
+          o.status === PublishStatus.PUBLISHED
+            ? PublishStatus.HIDDEN
+            : PublishStatus.PUBLISHED,
         token,
       });
     },
@@ -55,13 +64,16 @@ export const useToggleSalaryWorkTimeStatus = (): Toggle => {
 export const useTogglePolicyReviewGroupStatus = (): ((o: {
   groupId: string;
   status: PublishStatus;
-}) => Promise<unknown>) => {
+}) => Promise<void>) => {
   const token = useToken();
   return useCallback(
     ({ groupId, status }: { groupId: string; status: PublishStatus }) => {
       return changePolicyReviewGroupStatus({
         groupId,
-        status: status === 'published' ? 'hidden' : 'published',
+        status:
+          status === PublishStatus.PUBLISHED
+            ? PublishStatus.HIDDEN
+            : PublishStatus.PUBLISHED,
         token,
       });
     },
@@ -69,13 +81,16 @@ export const useTogglePolicyReviewGroupStatus = (): ((o: {
   );
 };
 
-export const useToggleReplyStatus = (): Toggle => {
+export const useToggleReplyStatus = (): ((o: Publishable) => Promise<void>) => {
   const token = useToken();
   return useCallback(
-    (o: PublishItem) => {
+    (o: Publishable) => {
       return changeReplyStatus({
         id: o.id,
-        status: o.status === 'published' ? 'hidden' : 'published',
+        status:
+          o.status === PublishStatus.PUBLISHED
+            ? PublishStatus.HIDDEN
+            : PublishStatus.PUBLISHED,
         token,
       });
     },

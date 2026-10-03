@@ -1,4 +1,4 @@
-import { queryMyPublishesGql, queryMyPublishIdsGql } from 'graphql/me';
+import { queryMyPublishIdsGql } from 'graphql/me';
 import graphqlClient from 'utils/graphqlClient';
 
 export const queryMyPublishIdsApi = ({ token }) =>
@@ -6,6 +6,3 @@ export const queryMyPublishIdsApi = ({ token }) =>
     ...data.me.experiences.map(({ id }) => id),
     ...data.me.salary_work_times.map(({ id }) => id),
   ]);
-
-export const queryMyPublishesApi = ({ token }) =>
-  graphqlClient({ query: queryMyPublishesGql, token });
