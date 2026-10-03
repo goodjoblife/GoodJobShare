@@ -15,7 +15,7 @@ import {
   useToggleSalaryWorkTimeStatus,
 } from './useQuery';
 
-const Me = () => {
+const Me: React.FC = () => {
   const [myPublishesBox, fetchMyPublishes] = useFetchMyPublishesBox();
   const toggleExperienceStatus = useToggleExperienceStatus();
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
@@ -42,7 +42,7 @@ const Me = () => {
               <div>
                 <BoxRenderer
                   box={myPublishesBox}
-                  render={({ me }) => (
+                  render={({ me }): React.ReactElement => (
                     <Fragment>
                       {sortByCreatedAtDesc([
                         ...me.experiences.map(o => ({
@@ -57,7 +57,7 @@ const Me = () => {
                                 o.status === 'hidden' ||
                                 (o.archive && o.archive.is_archived)
                               }
-                              publishHandler={async () => {
+                              publishHandler={async (): Promise<void> => {
                                 await toggleExperienceStatus(o);
                                 await fetchMyPublishes();
                               }}
@@ -78,7 +78,7 @@ const Me = () => {
                                 o.status === 'hidden' ||
                                 (o.archive && o.archive.is_archived)
                               }
-                              publishHandler={async () => {
+                              publishHandler={async (): Promise<void> => {
                                 await toggleSalaryWorkTimeStatus(o);
                                 await fetchMyPublishes();
                               }}
@@ -98,7 +98,7 @@ const Me = () => {
                                 o.experience ? o.experience.id : ''
                               }`}
                               disabled={o.status === 'hidden'}
-                              publishHandler={async () => {
+                              publishHandler={async (): Promise<void> => {
                                 await toggleReplyStatus(o);
                                 await fetchMyPublishes();
                               }}
