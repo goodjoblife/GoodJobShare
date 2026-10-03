@@ -16,13 +16,3 @@ export const getSearchJobTitleQuery = /* GraphQL */ `
     }
   }
 `;
-
-export const changeSalaryWorkTimeStatusGql = /* GraphQL */ `
-  mutation($input: ChangeSalaryWorkTimeStatusInput!) {
-    changeSalaryWorkTimeStatus(input: $input) {
-      salary_work_time {
-        id
-      }
-    }
-  }
-`;
