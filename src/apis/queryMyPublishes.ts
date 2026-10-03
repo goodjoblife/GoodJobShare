@@ -8,6 +8,7 @@ const queryMyPublishesGql = /* GraphQL */ `
         type
         title
         status
+        created_at
         archive {
           is_archived
           reason
@@ -22,6 +23,7 @@ const queryMyPublishesGql = /* GraphQL */ `
           title
         }
         status
+        created_at
       }
 
       salary_work_times {
@@ -33,6 +35,7 @@ const queryMyPublishesGql = /* GraphQL */ `
           name
         }
         status
+        created_at
         archive {
           is_archived
           reason
@@ -56,6 +59,7 @@ type QueryMyPublishesData = {
       type: 'work' | 'interview' | 'intern';
       title: string | null;
       status: Status;
+      created_at: string;
       archive: Archive;
     }[];
     replies: {
@@ -63,12 +67,14 @@ type QueryMyPublishesData = {
       content: string;
       experience: { id: string; title: string | null } | null;
       status: Status;
+      created_at: string;
     }[];
     salary_work_times: {
       id: string;
       company: { name: string };
       job_title: { name: string };
       status: Status;
+      created_at: string;
       archive: Archive;
     }[];
   };
