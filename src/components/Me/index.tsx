@@ -4,6 +4,7 @@ import { Heading, Section, Wrapper } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Comment2 from 'common/icons/Comment2';
 import BoxRenderer from 'common/StatusRenderer';
+import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 import { PublishStatus } from 'constants/publishStatus';
 
 import AuthMask from './AuthMask';
@@ -74,7 +75,12 @@ const Me: React.FC = () => {
                               type="薪時"
                               heading={o.company.name}
                               position={o.job_title.name}
-                              to={o.company.name}
+                              to={generateTabURL({
+                                pageType: PageType.COMPANY,
+                                pageName: o.company.name,
+                                tabType: TabType.TIME_AND_SALARY,
+                              })}
+                              linkTitle="檢視薪時"
                               disabled={
                                 o.status === PublishStatus.HIDDEN ||
                                 (o.archive && o.archive.is_archived)
