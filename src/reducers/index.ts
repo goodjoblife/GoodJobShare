@@ -1,4 +1,3 @@
-import { History } from 'history';
 import { Action, AnyAction, combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -21,6 +20,7 @@ import questionnaireExpandedModal from './questionnaireExpandedModal';
 import salaryWorkTime from './salaryWorkTime';
 import search from './search';
 import toastNotification from './toastNotification';
+import { ThunkExtraArgument } from '../store/thunkExtraArgument';
 
 const persistConfig = {
   key: PERSIST_KEY,
@@ -51,9 +51,6 @@ const rootReducer = combineReducers({
 export default persistReducer(persistConfig, rootReducer);
 
 export type RootState = ReturnType<typeof rootReducer>;
-
-// Must be the same as thunk.withExtraArgument() in src/store/configureStore.*.js
-type ThunkExtraArgument = { history: History };
 
 export type AppDispatch = ThunkDispatch<
   RootState,
