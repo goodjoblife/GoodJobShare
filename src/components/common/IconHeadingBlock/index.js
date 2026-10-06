@@ -11,7 +11,7 @@ const IconHeadingBlock = ({
   Icon,
   marginTop,
   noPadding,
-  requiredText,
+  requiredText = false,
   children,
 }) => (
   <section
