@@ -1,21 +1,16 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import ReactGA from 'react-ga4';
-import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 
-import {
-  loadMoreRelatedExperiences,
-  queryRelatedExperiencesOnExperience,
-} from 'actions/experience';
 import { Heading } from 'common/base';
 import Button from 'common/button/Button';
 import { PageType } from 'constants/companyJobTitle';
 import { GA_ACTION, GA_CATEGORY } from 'constants/gaConstants';
 import usePermission from 'hooks/usePermission';
-import { relatedExperiencesStateSelector } from 'selectors/experienceSelector';
 
 import styles from './MoreExperiencesBlock.module.css';
+import useRelatedExperiences from './useRelatedExperiences';
 import InterviewExperienceEntry from '../../CompanyAndJobTitle/InterviewExperiences/ExperienceEntry';
 import WorkExperienceEntry from '../../CompanyAndJobTitle/WorkExperiences/ExperienceEntry';
 
@@ -46,32 +41,20 @@ const LoadMoreButton = ({ ...props }) => (
 );
 
 const MoreExperiencesBlock = ({ experience }) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(queryRelatedExperiencesOnExperience(experience.id));
-  }, [dispatch, experience.id]);
-
-  const relatedExperiencesState = useSelector(relatedExperiencesStateSelector);
+  const [relatedExperiencesBox, handleLoadMore] = useRelatedExperiences(
+    experience.id,
+  );
 
   const location = useLocation();
   const { state: { pageType = PageType.COMPANY } = {} } = location;
   const [, , canViewPublishId] = usePermission();
-  const handleLoadMore = useCallback(
-    () => dispatch(loadMoreRelatedExperiences()),
-    [dispatch],
-  );
 
   // we still want to show data even when Fetching
-  if (
-    !relatedExperiencesState.data ||
-    !relatedExperiencesState.data.relatedExperiences
-  ) {
+  if (!relatedExperiencesBox.data) {
     return null;
   }
 
-  const experiences = relatedExperiencesState.data.relatedExperiences;
-  const hasMore = relatedExperiencesState.data.hasMore;
+  const { experiences, hasMore } = relatedExperiencesBox.data;
 
   if (experiences.length === 0) {
     return null;
