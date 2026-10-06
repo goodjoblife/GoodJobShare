@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   queryCompanyEsgSalaryData,
+  queryCompanyPolicyReviewStatistics,
   queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
@@ -10,8 +11,14 @@ import { paramsSelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import GenderFriendly from 'components/CompanyAndJobTitle/GenderFriendly';
 import { GenderFriendlyData } from 'components/CompanyAndJobTitle/GenderFriendly/GenderFriendly';
+import { GenderPayComparisonData } from 'components/CompanyAndJobTitle/GenderFriendly/GenderPayComparisonCard';
+import { toLeaveSection } from 'components/CompanyAndJobTitle/policyReviewStatistics';
 import { PageType, TabType } from 'constants/companyJobTitle';
-import { companyEsgSalaryDataBoxSelectorByName } from 'selectors/companyAndJobTitle';
+import { Policy } from 'constants/policy';
+import {
+  companyEsgSalaryDataBoxSelectorByName,
+  companyPolicyReviewStatisticsBoxSelectorByName,
+} from 'selectors/companyAndJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
 import { EsgYearStatistics } from 'utils/esgYearUtils';
 import { isFetched } from 'utils/fetchBox';
@@ -20,36 +27,15 @@ import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
 
-const HARDCODED_DATA: GenderFriendlyData = {
-  menstrualLeave: {
-    dataCount: 100,
-    availability: {
-      dataCount: 100,
-      items: [
-        { label: '是', percentage: 15 },
-        { label: '否', percentage: 60 },
-        { label: '不知道', percentage: 25 },
-      ],
-    },
-    compliance: {
-      dataCount: 100,
-      items: [
-        { label: '符合勞基法', percentage: 5 },
-        { label: '優於勞基法', percentage: 5 },
-        { label: '不符合勞基法', percentage: 65 },
-        { label: '不知道', percentage: 25 },
-      ],
-    },
-  },
-  genderPayComparison: {
-    jobTitlePayItems: [
-      { jobTitle: '設備 (33職等)', femaleAvg: 85000, maleAvg: 90000 },
-      { jobTitle: 'RD (33職等)', femaleAvg: 110000, maleAvg: 115000 },
-      { jobTitle: 'IT (33職等)', femaleAvg: 105000, maleAvg: 110000 },
-      { jobTitle: '人資 (32職等)', femaleAvg: 75000, maleAvg: 80000 },
-      { jobTitle: '供應鏈 (32職等)', femaleAvg: 80000, maleAvg: 85000 },
-    ],
-  },
+// 男女薪資比較尚無對應 API，暫時沿用假資料。
+const HARDCODED_GENDER_PAY_COMPARISON: GenderPayComparisonData = {
+  jobTitlePayItems: [
+    { jobTitle: '設備 (33職等)', femaleAvg: 85000, maleAvg: 90000 },
+    { jobTitle: 'RD (33職等)', femaleAvg: 110000, maleAvg: 115000 },
+    { jobTitle: 'IT (33職等)', femaleAvg: 105000, maleAvg: 110000 },
+    { jobTitle: '人資 (32職等)', femaleAvg: 75000, maleAvg: 80000 },
+    { jobTitle: '供應鏈 (32職等)', femaleAvg: 80000, maleAvg: 85000 },
+  ],
 };
 
 type Params = { companyName: string };
@@ -71,6 +57,10 @@ const CompanyGenderFriendlyProvider: React.FC &
     dispatch(queryRatingStatistics(companyName));
   }, [dispatch, companyName]);
 
+  useEffect(() => {
+    dispatch(queryCompanyPolicyReviewStatistics(companyName));
+  }, [dispatch, companyName]);
+
   const esgSalaryDataBox = useSelector(
     companyEsgSalaryDataBoxSelectorByName(companyName),
   );
@@ -85,6 +75,21 @@ const CompanyGenderFriendlyProvider: React.FC &
       ? esgYearStatisticsList[0].femaleManagerStatisticsItem
       : null;
 
+  const policyReviewStatisticsBox = useSelector(
+    companyPolicyReviewStatisticsBoxSelectorByName(companyName),
+  );
+  const policyReviewStatistics = isFetched(policyReviewStatisticsBox)
+    ? policyReviewStatisticsBox.data
+    : null;
+
+  const data: GenderFriendlyData = {
+    menstrualLeave: toLeaveSection(
+      policyReviewStatistics,
+      Policy.MENSTRUAL_LEAVE,
+    ),
+    genderPayComparison: HARDCODED_GENDER_PAY_COMPARISON,
+  };
+
   return (
     <CompanyAndJobTitleWrapper
       pageType={PageType.COMPANY}
@@ -92,7 +97,7 @@ const CompanyGenderFriendlyProvider: React.FC &
       tabType={TabType.GENDER_FRIENDLY}
     >
       <GenderFriendly
-        data={HARDCODED_DATA}
+        data={data}
         femaleManagerStatisticsItem={femaleManagerStatisticsItem}
       />
     </CompanyAndJobTitleWrapper>
@@ -109,6 +114,7 @@ CompanyGenderFriendlyProvider.fetchData = async ({
     dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName })),
     dispatch(queryCompanyEsgSalaryData({ companyName })),
     dispatch(queryRatingStatistics(companyName)),
+    dispatch(queryCompanyPolicyReviewStatistics(companyName)),
   ]);
 };
 
