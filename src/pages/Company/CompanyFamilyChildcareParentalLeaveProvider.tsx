@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { queryRatingStatistics } from 'actions/company';
+import {
+  queryCompanyPolicyReviewStatistics,
+  queryRatingStatistics,
+} from 'actions/company';
 import Glike from 'common/icons/Glike';
 import { paramsSelector } from 'common/routing/selectors';
 import LeavePolicySection, {
   FilterOption,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
-import {
-  LeaveBulletByLabel,
-  LeaveSection,
-} from 'components/CompanyAndJobTitle/LeaveSectionBlock';
+import { LeaveBulletByLabel } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
 import parentalLeaveIcon from 'components/CompanyAndJobTitle/parentalLeaveIcon.svg';
+import { toLeaveSection } from 'components/CompanyAndJobTitle/policyReviewStatistics';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
+import { Policy } from 'constants/policy';
 import { usePage } from 'hooks/routing/page';
 import { ServerSideRender } from 'types/serverSideRender';
 
@@ -20,6 +22,7 @@ import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
 import useCompanyPolicyReviewsBox from './useCompanyPolicyReviewsBox';
+import useCompanyPolicyReviewStatistics from './useCompanyPolicyReviewStatistics';
 import useHasPolicyFilter from './useHasPolicyFilter';
 
 const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
@@ -33,27 +36,6 @@ const COMPLIANCE_BULLET_BY_LABEL: LeaveBulletByLabel = {
   優於勞基法: { text: '育嬰假優於勞基法', icon: <Glike /> },
   不符合勞基法: '育嬰假不符合勞基法',
   不知道: '不確定育嬰假是否符合勞基法',
-};
-
-const SECTION: LeaveSection = {
-  dataCount: 200,
-  availability: {
-    dataCount: 100,
-    items: [
-      { label: '是', percentage: 15 },
-      { label: '否', percentage: 60 },
-      { label: '不知道', percentage: 25 },
-    ],
-  },
-  compliance: {
-    dataCount: 100,
-    items: [
-      { label: '符合勞基法', percentage: 5 },
-      { label: '優於勞基法', percentage: 5 },
-      { label: '不符合勞基法', percentage: 65 },
-      { label: '不知道', percentage: 25 },
-    ],
-  },
 };
 
 const FILTER_OPTIONS: FilterOption[] = [
@@ -82,6 +64,9 @@ const CompanyFamilyChildcareParentalLeaveProvider: React.FC &
     dispatch(queryRatingStatistics(companyName));
   }, [dispatch, companyName]);
 
+  const policyReviewStatistics = useCompanyPolicyReviewStatistics(companyName);
+  const section = toLeaveSection(policyReviewStatistics, Policy.PARENTAL_LEAVE);
+
   return (
     <LeavePolicySection
       pageType={PageType.COMPANY}
@@ -93,7 +78,7 @@ const CompanyFamilyChildcareParentalLeaveProvider: React.FC &
       availabilityBulletByLabel={AVAILABILITY_BULLET_BY_LABEL}
       complianceTitle="育嬰假法規符合度"
       complianceBulletByLabel={COMPLIANCE_BULLET_BY_LABEL}
-      section={SECTION}
+      section={section}
       availabilityColumnTitle="是否請得到育嬰假"
       complianceColumnTitle="勞基法符合度"
       filterOptions={FILTER_OPTIONS}
@@ -112,7 +97,10 @@ CompanyFamilyChildcareParentalLeaveProvider.fetchData = async ({
 }): Promise<unknown> => {
   const params = paramsSelector<Params>(props);
   const companyName = companyNameSelector(params);
-  return dispatch(queryRatingStatistics(companyName));
+  return Promise.all([
+    dispatch(queryRatingStatistics(companyName)),
+    dispatch(queryCompanyPolicyReviewStatistics(companyName)),
+  ]);
 };
 
 export default CompanyFamilyChildcareParentalLeaveProvider;

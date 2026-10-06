@@ -15,10 +15,7 @@ import { GenderPayComparisonData } from 'components/CompanyAndJobTitle/GenderFri
 import { toLeaveSection } from 'components/CompanyAndJobTitle/policyReviewStatistics';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { Policy } from 'constants/policy';
-import {
-  companyEsgSalaryDataBoxSelectorByName,
-  companyPolicyReviewStatisticsBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import { companyEsgSalaryDataBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
 import { EsgYearStatistics } from 'utils/esgYearUtils';
 import { isFetched } from 'utils/fetchBox';
@@ -26,6 +23,7 @@ import { isFetched } from 'utils/fetchBox';
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
+import useCompanyPolicyReviewStatistics from './useCompanyPolicyReviewStatistics';
 
 // 男女薪資比較尚無對應 API，暫時沿用假資料。
 const HARDCODED_GENDER_PAY_COMPARISON: GenderPayComparisonData = {
@@ -57,10 +55,6 @@ const CompanyGenderFriendlyProvider: React.FC &
     dispatch(queryRatingStatistics(companyName));
   }, [dispatch, companyName]);
 
-  useEffect(() => {
-    dispatch(queryCompanyPolicyReviewStatistics(companyName));
-  }, [dispatch, companyName]);
-
   const esgSalaryDataBox = useSelector(
     companyEsgSalaryDataBoxSelectorByName(companyName),
   );
@@ -75,12 +69,7 @@ const CompanyGenderFriendlyProvider: React.FC &
       ? esgYearStatisticsList[0].femaleManagerStatisticsItem
       : null;
 
-  const policyReviewStatisticsBox = useSelector(
-    companyPolicyReviewStatisticsBoxSelectorByName(companyName),
-  );
-  const policyReviewStatistics = isFetched(policyReviewStatisticsBox)
-    ? policyReviewStatisticsBox.data
-    : null;
+  const policyReviewStatistics = useCompanyPolicyReviewStatistics(companyName);
 
   const data: GenderFriendlyData = {
     menstrualLeave: toLeaveSection(

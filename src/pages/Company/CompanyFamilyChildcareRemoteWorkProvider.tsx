@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { queryRatingStatistics } from 'actions/company';
+import {
+  queryCompanyPolicyReviewStatistics,
+  queryRatingStatistics,
+} from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
 import LeavePolicySection, {
   FilterOption,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
-import {
-  LeaveBulletByLabel,
-  LeaveSection,
-} from 'components/CompanyAndJobTitle/LeaveSectionBlock';
+import { LeaveBulletByLabel } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
+import { toLeaveSection } from 'components/CompanyAndJobTitle/policyReviewStatistics';
 import remoteWorkIcon from 'components/CompanyAndJobTitle/remoteWorkIcon.svg';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
+import { Policy } from 'constants/policy';
 import { usePage } from 'hooks/routing/page';
 import { ServerSideRender } from 'types/serverSideRender';
 
@@ -19,6 +21,7 @@ import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
 import useCompanyPolicyReviewsBox from './useCompanyPolicyReviewsBox';
+import useCompanyPolicyReviewStatistics from './useCompanyPolicyReviewStatistics';
 import useHasPolicyFilter from './useHasPolicyFilter';
 
 const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
@@ -32,27 +35,6 @@ const COMPLIANCE_BULLET_BY_LABEL: LeaveBulletByLabel = {
   '2天': '每週遠端工作 2 天',
   '3天': '每週遠端工作 3 天',
   大於3天: '每週遠端工作超過 3 天',
-};
-
-const SECTION: LeaveSection = {
-  dataCount: 150,
-  availability: {
-    dataCount: 100,
-    items: [
-      { label: '是', percentage: 15 },
-      { label: '否', percentage: 60 },
-      { label: '不知道', percentage: 25 },
-    ],
-  },
-  compliance: {
-    dataCount: 100,
-    items: [
-      { label: '1天', percentage: 5 },
-      { label: '2天', percentage: 5 },
-      { label: '3天', percentage: 65 },
-      { label: '大於3天', percentage: 25 },
-    ],
-  },
 };
 
 const FILTER_OPTIONS: FilterOption[] = [
@@ -81,6 +63,9 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
     dispatch(queryRatingStatistics(companyName));
   }, [dispatch, companyName]);
 
+  const policyReviewStatistics = useCompanyPolicyReviewStatistics(companyName);
+  const section = toLeaveSection(policyReviewStatistics, Policy.REMOTE_WORK);
+
   return (
     <LeavePolicySection
       pageType={PageType.COMPANY}
@@ -92,7 +77,7 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
       availabilityBulletByLabel={AVAILABILITY_BULLET_BY_LABEL}
       complianceTitle="遠端工作每週天數？"
       complianceBulletByLabel={COMPLIANCE_BULLET_BY_LABEL}
-      section={SECTION}
+      section={section}
       availabilityColumnTitle="是否可以遠端工作"
       complianceColumnTitle="每週遠端工作天數"
       filterOptions={FILTER_OPTIONS}
@@ -111,7 +96,10 @@ CompanyFamilyChildcareRemoteWorkProvider.fetchData = async ({
 }): Promise<unknown> => {
   const params = paramsSelector<Params>(props);
   const companyName = companyNameSelector(params);
-  return dispatch(queryRatingStatistics(companyName));
+  return Promise.all([
+    dispatch(queryRatingStatistics(companyName)),
+    dispatch(queryCompanyPolicyReviewStatistics(companyName)),
+  ]);
 };
 
 export default CompanyFamilyChildcareRemoteWorkProvider;
