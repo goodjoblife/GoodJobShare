@@ -1,13 +1,18 @@
 import { ExperienceType } from 'apis/experience';
 import graphqlClient from 'utils/graphqlClient';
 
+export enum AlgoId {
+  ERNIE_TWO_TOWER_V1 = 'ERNIE_TWO_TOWER_V1',
+  LATEST_EXPERIENCE_OF_SAME_COMPANY_OR_JOB_TITLE = 'LatestExperienceOfSameCompanyOrJobTitle',
+}
+
 const queryExperienceRecommendationGql = /* GraphQL */ `
-  query($experienceId: ID!, $start: Int!, $limit: Int!) {
+  query($experienceId: ID!, $start: Int!, $limit: Int!, $algoId: AlgoIdEnum!) {
     experienceRecommendation(
       experienceId: $experienceId
       start: $start
       limit: $limit
-      algoId: LatestExperienceOfSameCompanyOrJobTitle
+      algoId: $algoId
     ) {
       experiences {
         id
@@ -148,10 +153,12 @@ const queryExperienceRecommendation = ({
   id,
   start,
   limit,
+  algoId,
 }: {
   id: string;
   start: number;
   limit: number;
+  algoId: AlgoId;
 }): Promise<
   (
     | WorkExperienceInRelatedExperiences
@@ -159,7 +166,7 @@ const queryExperienceRecommendation = ({
 > =>
   graphqlClient<QueryExperienceRecommendationData>({
     query: queryExperienceRecommendationGql,
-    variables: { experienceId: id, start, limit },
+    variables: { experienceId: id, start, limit, algoId },
   }).then(({ experienceRecommendation: { experiences } }) => {
     if (experiences === null) {
       return [];

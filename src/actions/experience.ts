@@ -3,7 +3,9 @@ import { AnyAction } from 'redux';
 
 import { InterviewExperience, WorkExperience } from 'apis/experience';
 import queryExperienceApi from 'apis/queryExperience';
-import queryExperienceRecommendationApi from 'apis/queryExperienceRecommendation';
+import queryExperienceRecommendationApi, {
+  AlgoId,
+} from 'apis/queryExperienceRecommendation';
 import queryPopularExperiencesApi, {
   PopularExperience,
 } from 'apis/queryPopularExperiences';
@@ -101,6 +103,7 @@ export const queryRelatedExperiencesOnExperience = (
       id: experienceId,
       start: page * 5,
       limit: 5,
+      algoId: AlgoId.LATEST_EXPERIENCE_OF_SAME_COMPANY_OR_JOB_TITLE,
     });
 
     const prev = relatedExperiencesCabinSelector(getState());
@@ -145,6 +148,7 @@ export const loadMoreRelatedExperiences = (): Thunk => async (
       id: experienceId,
       start: page * 5,
       limit: 5,
+      algoId: AlgoId.LATEST_EXPERIENCE_OF_SAME_COMPANY_OR_JOB_TITLE,
     });
 
     const prev = relatedExperiencesCabinSelector(getState());
