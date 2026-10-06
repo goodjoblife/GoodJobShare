@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import {
   queryCompanyPolicyReviewStatistics,
@@ -16,13 +16,12 @@ import {
 } from 'components/CompanyAndJobTitle/policyReviewStatistics';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { Policy } from 'constants/policy';
-import { companyPolicyReviewStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
-import { isFetched } from 'utils/fetchBox';
 
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
+import useCompanyPolicyReviewStatistics from './useCompanyPolicyReviewStatistics';
 
 type Params = { companyName: string };
 
@@ -39,16 +38,7 @@ const CompanyFamilyChildcareProvider: React.FC &
     dispatch(queryRatingStatistics(companyName));
   }, [dispatch, companyName]);
 
-  useEffect(() => {
-    dispatch(queryCompanyPolicyReviewStatistics(companyName));
-  }, [dispatch, companyName]);
-
-  const policyReviewStatisticsBox = useSelector(
-    companyPolicyReviewStatisticsBoxSelectorByName(companyName),
-  );
-  const policyReviewStatistics = isFetched(policyReviewStatisticsBox)
-    ? policyReviewStatisticsBox.data
-    : null;
+  const policyReviewStatistics = useCompanyPolicyReviewStatistics(companyName);
 
   const data: FamilyChildcareData = {
     parentalLeave: toLeaveSection(
