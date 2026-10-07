@@ -11,7 +11,6 @@ import { paramsSelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import GenderFriendly from 'components/CompanyAndJobTitle/GenderFriendly';
 import { GenderFriendlyData } from 'components/CompanyAndJobTitle/GenderFriendly/GenderFriendly';
-import { GenderPayComparisonData } from 'components/CompanyAndJobTitle/GenderFriendly/GenderPayComparisonCard';
 import { toLeaveSection } from 'components/CompanyAndJobTitle/policyReviewStatistics';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { Policy } from 'constants/policy';
@@ -24,17 +23,6 @@ import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
 import useCompanyPolicyReviewStatistics from './useCompanyPolicyReviewStatistics';
-
-// 男女薪資比較尚無對應 API，暫時沿用假資料。
-const HARDCODED_GENDER_PAY_COMPARISON: GenderPayComparisonData = {
-  jobTitlePayItems: [
-    { jobTitle: '設備 (33職等)', femaleAvg: 85000, maleAvg: 90000 },
-    { jobTitle: 'RD (33職等)', femaleAvg: 110000, maleAvg: 115000 },
-    { jobTitle: 'IT (33職等)', femaleAvg: 105000, maleAvg: 110000 },
-    { jobTitle: '人資 (32職等)', femaleAvg: 75000, maleAvg: 80000 },
-    { jobTitle: '供應鏈 (32職等)', femaleAvg: 80000, maleAvg: 85000 },
-  ],
-};
 
 type Params = { companyName: string };
 
@@ -76,7 +64,6 @@ const CompanyGenderFriendlyProvider: React.FC &
       policyReviewStatistics,
       Policy.MENSTRUAL_LEAVE,
     ),
-    genderPayComparison: HARDCODED_GENDER_PAY_COMPARISON,
   };
 
   return (
