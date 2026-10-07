@@ -49,7 +49,7 @@ const aspectAPIMap: Record<Aspect, string> = {
 |---|---|---|
 | `generateAspectURL({ pageName, aspect })` | 產生連結，與 `generateTabURL` 對齊 | 型別保證，不會發生 |
 | `aspectFromURL(slug)` | route param → `Aspect` | 回傳 `undefined`，由呼叫端決定 redirect 或 404 |
-| `aspectFromAPI(wire)` | API 回應 → `Aspect` | 回傳 `undefined`，捨棄該筆 |
+| `aspectFromAPIValue(wire)` | API 回應 → `Aspect` | 回傳 `undefined`，捨棄該筆 |
 
 ---
 
@@ -90,8 +90,8 @@ slug 一旦上線就是對外契約，改動要再留一組 redirect。命名有
 
 | 位置 | 現在 | 改成 |
 |---|---|---|
-| `actions/company.ts:712` | `aspectFilter: { aspect }` | `aspectFilter: { aspect: aspectAPIMap[aspect] }` |
-| `actions/company.ts:657-660` | 直接把 API 回應存進 redux | 存之前用 `aspectFromAPI` 正規化 `companyAspectRatingStatistics[].aspect`，查不到的項目捨棄 |
+| `actions/company.ts:712` | `aspectFilter: { aspect }` | `aspectFilter: { aspect: aspectToAPIValue(aspect) }` |
+| `actions/company.ts:657-660` | 直接把 API 回應存進 redux | 存之前用 `aspectFromAPIValue` 正規化 `companyAspectRatingStatistics[].aspect`，查不到的項目捨棄 |
 | `apis/aspectRatingStatistics.ts:23` | `aspect: string` | 不動 —— 這是 wire 型別，本來就該是 string |
 
 `actions/company.ts:657` 是 aspect 統計進 redux 的**唯一入口**，在這裡正規化，下游全部拿到 `Aspect`。
@@ -111,8 +111,8 @@ slug 一旦上線就是對外契約，改動要再留一組 redirect。命名有
 
 | 位置 | 動作 |
 |---|---|
-| `pages/Company/useAspect.tsx` | 用 `aspectFromURL` 反查；順便更名 `useAspectParam`（與 `useCompanyNameParam` / `useJobTitleParam` 對齊） |
-| 同上 | 移除 `(aspect ? decodeURIComponent(aspect) : '') as Aspect` —— param 缺少或非法時不再產生假值 |
+| `pages/Company/useAspect.tsx` | 改名 `useAspectParam.ts`（與 `useCompanyNameParam` / `useJobTitleParam` 對齊），提供 `useAspectSlugParam`（原始 slug）與 `aspectSelector`（SSR 的 `fetchData` 用，用 `aspectFromURL` 反查）。Provider 先看 slug 才決定渲染、redirect 或 NotFound，所以不提供直接回傳 `Aspect` 的 hook |
+| 同上 | 移除 `(aspect ? decodeURIComponent(aspect) : '') as Aspect` —— param 缺少時丟錯；壞掉的百分號編碼退回原字串（查不到，走 NotFound），不丟 `URIError` |
 | `pages/Company/CompanyWorkExperiencesAspectProvider.tsx:30,71,129` | 更新 import 與呼叫 |
 | `components/…/Overview/AspectScoreCard.tsx:56` | `generatePath(...)` 改用 `generateAspectURL` |
 
@@ -138,10 +138,10 @@ slug 是合法的舊中文值           → 301 導到英文 slug
 
 1. `feat(company-job-title): Aspect 新增顯示／URL／API 三張對照表` —— 純新增，無行為變更
 2. `refactor(company-job-title): Aspect enum 值改為內部識別` —— 只改 enum 與 `Aspects`
-3. `refactor(company-job-title): aspect 在 API 邊界轉換 wire 值` —— 送出查 `aspectAPIMap`、收回用 `aspectFromAPI` 正規化
+3. `refactor(company-job-title): aspect 在 API 邊界轉換 wire 值` —— 送出用 `aspectToAPIValue`、收回用 `aspectFromAPIValue` 正規化
 4. `refactor(company-job-title): 顯示點改查 aspectTranslation`
 5. `feat(company-job-title): aspect 網址改用英文 slug` —— 含舊網址 redirect
-6. `refactor(company): useAspect 更名 useAspectParam 並驗證合法值`
+6. `refactor(company): useAspect 更名 useAspectParam，改回傳原始 slug`
 
 第 2～4 步是同一件事的三個面向，**中間狀態 `tsc` 不會過**（enum 值改了但邊界還沒轉）。這在 squash merge 下沒有代價：CI 跑的是 PR head，master 拿到的是壓平後的單一 commit，`git bisect` 也只會看到那一個。
 
@@ -163,5 +163,5 @@ slug 是合法的舊中文值           → 301 導到英文 slug
 ## 範圍外
 
 - **`aspect` 要不要進 context** —— 獨立議題。目前 UI 層只有 `AspectSection` 一個消費者，不值得開 context；等第二個消費者出現再談。
-- **experience section 的 aspect** —— `apis/experience.ts:20` 的 `SectionWithRating.aspect` 是同一套詞彙，但目前不與 `Aspect` enum 交叉比對，本次不動。日後若要比對，用同一張 `aspectFromAPI`。
+- **experience section 的 aspect** —— `apis/experience.ts:20` 的 `SectionWithRating.aspect` 是同一套詞彙，但目前不與 `Aspect` enum 交叉比對，本次不動。日後若要比對，用同一張 `aspectFromAPIValue`。
 - **後端改用英文 enum** —— 真的要做時，只需改 `aspectAPIMap` 一張表。本計畫的目的就是把成本壓到這裡。
