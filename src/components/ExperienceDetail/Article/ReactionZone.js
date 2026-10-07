@@ -10,7 +10,7 @@ import Like from 'common/icons/Like';
 
 import styles from './ReactionZone.module.css';
 import useLoginFlow from '../hooks/useLoginFlow';
-import useQueryLike from '../hooks/useQueryLike';
+import useQueryLiked from '../hooks/useQueryLiked';
 import useToggleLike from '../hooks/useToggleLike';
 import ReportZone from '../ReportZone';
 import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
@@ -45,7 +45,7 @@ const ReactionZone = ({
   // use state to quick response to toggle
   const [liked, setLiked] = useState(false);
 
-  const [likeState, queryLike] = useQueryLike(experienceId);
+  const [likeState, queryLike] = useQueryLiked(experienceId);
   const dispatch = useDispatch();
 
   const toggleLike = useToggleLike(experienceId);

@@ -4,9 +4,7 @@ import { AnyAction } from 'redux';
 import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import queryCompaniesApi, { CompanyInIndex } from 'apis/queryCompanies';
 import queryCompanyAspectRatingStatisticsApi from 'apis/queryCompanyAspectRatingStatistics';
-import queryCompanyEsgSalaryDataApi, {
-  ESGSalaryData,
-} from 'apis/queryCompanyEsgSalaryData';
+import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
 import queryCompanyInterviewExperiencesApi from 'apis/queryCompanyInterviewExperiences';
 import queryCompanyIsSubscribedApi, {
   CompanyIsSubscribed,
@@ -62,6 +60,7 @@ import {
   companyWorkExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { isGraphqlError } from 'utils/errors';
+import { EsgYearStatistics, toEsgYearStatisticsList } from 'utils/esgYearUtils';
 import FetchBox, {
   getError,
   getFetched,
@@ -422,7 +421,7 @@ export const queryCompanySalaryWorkTimeStatistics = ({
 
 const setEsgSalaryData = (
   companyName: string,
-  box: FetchBox<ESGSalaryData | null>,
+  box: FetchBox<EsgYearStatistics[] | null>,
 ): AnyAction => ({
   type: SET_COMPANY_ESG_SALARY_DATA,
   companyName,
@@ -452,7 +451,9 @@ export const queryCompanyEsgSalaryData = ({
       return dispatch(setEsgSalaryData(companyName, getFetched(null)));
     }
 
-    dispatch(setEsgSalaryData(companyName, getFetched(data)));
+    dispatch(
+      setEsgSalaryData(companyName, getFetched(toEsgYearStatisticsList(data))),
+    );
   } catch (error) {
     dispatch(setEsgSalaryData(companyName, getError(error)));
   }

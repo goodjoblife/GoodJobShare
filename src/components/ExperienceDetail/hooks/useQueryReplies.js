@@ -1,6 +1,6 @@
 import { useAsyncFn } from 'react-use';
 
-import { queryExperienceReplies } from 'apis/experiencesApi';
+import queryExperienceReplies from 'apis/queryExperienceReplies';
 import { useToken } from 'hooks/auth';
 
 const useQueryReplies = experienceId => {

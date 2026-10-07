@@ -1,3 +1,5 @@
+import variables from 'common/variables.module.css';
+
 export const fields = {
   number: {
     element: '#card-number',
@@ -16,9 +18,8 @@ export const fields = {
 export const styles = {
   input: {
     color: 'gray',
-  },
-  'input.ccv': {
-    'font-size': '15px',
+    // TapPay renders these in iframes, so there is no parent size to inherit
+    'font-size': variables.MIN_TOUCH_FONT_SIZE,
   },
   ':focus': {
     color: 'black',

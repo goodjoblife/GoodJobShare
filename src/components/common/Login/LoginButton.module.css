@@ -9,4 +9,9 @@
     color: #4267b2;
     text-align: center;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+  }
 }

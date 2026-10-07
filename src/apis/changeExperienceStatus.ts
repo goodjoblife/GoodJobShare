@@ -1,0 +1,33 @@
+import { PublishStatus } from 'constants/publishStatus';
+import graphqlClient from 'utils/graphqlClient';
+
+const changeExperienceStatusGql = /* GraphQL */ `
+  mutation($input: ChangeExperienceStatusInput!) {
+    changeExperienceStatus(input: $input) {
+      experience {
+        id
+      }
+    }
+  }
+`;
+
+type ChangeExperienceStatusData = {
+  changeExperienceStatus: { experience: { id: string } };
+};
+
+const changeExperienceStatus = ({
+  id,
+  status,
+  token,
+}: {
+  id: string;
+  status: PublishStatus;
+  token?: string;
+}): Promise<void> =>
+  graphqlClient<ChangeExperienceStatusData>({
+    query: changeExperienceStatusGql,
+    variables: { input: { id, status } },
+    token,
+  }).then(() => undefined);
+
+export default changeExperienceStatus;
