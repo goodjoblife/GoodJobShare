@@ -132,34 +132,6 @@ slug 是合法的舊中文值           → 301 導到英文 slug
 
 ---
 
-## 建議的 commit 切法
-
-本專案用 **squash merge**，master 上只會留下一個 commit。PR 裡的 commit 因此純粹是給 reviewer 的閱讀單位 —— 切法的標準是「好不好讀」，不是「能不能跑」。
-
-1. `feat(company-job-title): Aspect 新增顯示／URL／API 三張對照表` —— 純新增，無行為變更
-2. `refactor(company-job-title): Aspect enum 值改為內部識別` —— 只改 enum 與 `Aspects`
-3. `refactor(company-job-title): aspect 在 API 邊界轉換 wire 值` —— 送出用 `aspectToAPIValue`、收回用 `aspectFromAPIValue` 正規化
-4. `refactor(company-job-title): 顯示點改查 aspectTranslation`
-5. `feat(company-job-title): aspect 網址改用英文 slug` —— 含舊網址 redirect
-6. `refactor(company): useAspect 更名 useAspectParam，改回傳原始 slug`
-
-第 2～4 步是同一件事的三個面向，**中間狀態 `tsc` 不會過**（enum 值改了但邊界還沒轉）。這在 squash merge 下沒有代價：CI 跑的是 PR head，master 拿到的是壓平後的單一 commit，`git bisect` 也只會看到那一個。
-
-唯一的取捨是 reviewer 沒辦法 checkout 中間某個 commit 直接跑起來 —— 要跑就 checkout PR head。如果你偏好每個 commit 都能跑，把 2～4 合併成一個即可，但那是為了 reviewer 的手感，不是為了 master 的歷史。
-
----
-
-## 驗證
-
-- `tsc --noEmit` —— enum 值改動後，任何殘留的字串比對都會現形
-- 九個 aspect 各開一次子頁，確認標題、評分、列表正常；特別確認 `公司/團隊文化`（含斜線）
-- 公司總覽的性別友善區塊、評價分頁的評分卡連結
-- 舊中文網址 redirect 到英文 slug
-- 亂寫的 aspect 網址走 NotFound
-- SSR：直接輸入網址載入，確認 `fetchData` 路徑的 `aspectSelector` 與 client 行為一致
-
----
-
 ## 範圍外
 
 - **`aspect` 要不要進 context** —— 獨立議題。目前 UI 層只有 `AspectSection` 一個消費者，不值得開 context；等第二個消費者出現再談。
