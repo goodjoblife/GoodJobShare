@@ -6,11 +6,21 @@ import {
   queryCompanyWorkExperiencesAspectStatistics,
 } from 'actions/company';
 import { ExperienceType, WorkExperience } from 'apis/experience';
+import Redirect from 'common/routing/Redirect';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import NotFound from 'components/common/NotFound';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import WorkExperiencesAspect from 'components/CompanyAndJobTitle/WorkExperiences/Aspects';
 import useRating from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/useRating';
-import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
+import {
+  Aspect,
+  aspectFromAPIValue,
+  aspectFromURL,
+  generateAspectURL,
+  PAGE_SIZE,
+  PageType,
+  TabType,
+} from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
 import usePermission from 'hooks/usePermission';
 import { RootState } from 'reducers';
@@ -27,7 +37,7 @@ import {
 import { ServerSideRender } from 'types/serverSideRender';
 import FetchBox, { getFetched, isFetched } from 'utils/fetchBox';
 
-import useAspect, { aspectSelector } from './useAspect';
+import { aspectSelector, useAspectSlugParam } from './useAspectParam';
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
@@ -65,12 +75,12 @@ type Params = {
   aspect: string;
 };
 
-const CompanyWorkExperiencesAspectProvider: React.FC &
-  ServerSideRender<Params> = () => {
+const CompanyWorkExperiencesAspectPage: React.FC<{ aspect: Aspect }> = ({
+  aspect,
+}) => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
   const companyName = useCompanyNameParam();
-  const aspect = useAspect();
   const [rating] = useRating();
   const page = usePage();
   const start = ((page as number) - 1) * PAGE_SIZE;
@@ -122,6 +132,30 @@ const CompanyWorkExperiencesAspectProvider: React.FC &
   );
 };
 
+// 網址上的 aspect 由使用者輸入，三種結果分開處理：合法 slug 正常渲染、
+// 舊的中文網址導到英文 slug、其餘走 NotFound
+const CompanyWorkExperiencesAspectProvider: React.FC &
+  ServerSideRender<Params> = () => {
+  const companyName = useCompanyNameParam();
+  const slug = useAspectSlugParam();
+
+  const aspect = aspectFromURL(slug);
+  if (aspect !== undefined) {
+    return <CompanyWorkExperiencesAspectPage aspect={aspect} />;
+  }
+
+  const legacyAspect = aspectFromAPIValue(slug);
+  if (legacyAspect !== undefined) {
+    return (
+      <Redirect
+        to={generateAspectURL({ pageName: companyName, aspect: legacyAspect })}
+      />
+    );
+  }
+
+  return <NotFound />;
+};
+
 CompanyWorkExperiencesAspectProvider.fetchData = async ({
   store: { dispatch },
   ...props
@@ -129,6 +163,8 @@ CompanyWorkExperiencesAspectProvider.fetchData = async ({
   const params = paramsSelector<Params>(props);
   const companyName = companyNameSelector(params);
   const aspect = aspectSelector(params);
+  // 不合法的 aspect 由 component 端 redirect 或 NotFound，這裡不必查
+  if (aspect === undefined) return Promise.resolve();
 
   const query = querySelector(props);
   const rating = ratingFromQuerySelector(query);

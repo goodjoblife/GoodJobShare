@@ -51,10 +51,7 @@ const GenderAspectSnippetBlock: React.FC = () => {
   return (
     <SnippetBlock title="性別友善" pageName={companyName}>
       {aspectModels.map(aspectModel => (
-        <AspectScoreCard
-          key={aspectModel.aspect}
-          aspect={aspectModel.aspect as Aspect}
-        />
+        <AspectScoreCard key={aspectModel.aspect} aspect={aspectModel.aspect} />
       ))}
     </SnippetBlock>
   );
