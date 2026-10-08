@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { Heading, Link, Wrapper } from 'common/base';
@@ -6,12 +7,12 @@ import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import { Aspect, generateTabURL } from 'constants/companyJobTitle';
 import { RootState } from 'reducers';
 import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
-import FetchBox from 'utils/fetchBox';
+import FetchBox, { isFetched } from 'utils/fetchBox';
 
 import PageBoxRenderer from '../../PageBoxRenderer';
 import { usePageContext } from '../../PageContextProvider';
-import Helmet from '../Helmet';
 import WorkExperiencesSection from '../WorkExperiences';
+import Helmet from './Helmet';
 import RatingFilter from './RatingFilter';
 import styles from './styles.module.css';
 import Summary from './Summary';
@@ -38,9 +39,22 @@ const AspectSection: React.FC<AspectProps> = ({
   const { pageType, pageName, tabType } = usePageContext();
   const parentPath = generateTabURL({ pageType, pageName, tabType });
   const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
+  const statisticsBox = useSelector(statisticsBoxSelector);
+  const statistics =
+    isFetched(statisticsBox) && statisticsBox.data
+      ? statisticsBox.data.companyAspectRatingStatistics.find(
+          item => item.aspect === aspect,
+        )
+      : undefined;
 
   return (
     <>
+      <Helmet
+        companyName={pageName}
+        aspect={aspect}
+        page={page}
+        statistics={statistics}
+      />
       <Wrapper size="l">
         <Link to={parentPath}>&lt;&lt;回到評價分頁</Link>
         <Heading className={styles.title}>{aspect}</Heading>
@@ -77,24 +91,16 @@ const AspectSection: React.FC<AspectProps> = ({
             workExperiences,
             workExperiencesCount: totalCount,
           }: CompanyAspectExperienceResult): React.ReactNode => (
-            <>
-              <Helmet
-                pageType={pageType}
-                pageName={pageName}
-                totalCount={totalCount}
-                page={page}
-              />
-              <WorkExperiencesSection
-                pageType={pageType}
-                pageName={pageName}
-                tabType={tabType}
-                data={workExperiences}
-                page={page}
-                pageSize={pageSize}
-                totalCount={totalCount}
-                createPageLinkTo={createPageLinkTo}
-              />
-            </>
+            <WorkExperiencesSection
+              pageType={pageType}
+              pageName={pageName}
+              tabType={tabType}
+              data={workExperiences}
+              page={page}
+              pageSize={pageSize}
+              totalCount={totalCount}
+              createPageLinkTo={createPageLinkTo}
+            />
           )}
         />
       </Wrapper>

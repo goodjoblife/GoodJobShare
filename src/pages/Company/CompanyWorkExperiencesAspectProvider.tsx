@@ -136,15 +136,18 @@ CompanyWorkExperiencesAspectProvider.fetchData = async ({
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
 
-  return dispatch(
-    queryCompanyWorkExperiencesAspectExperiences({
-      companyName,
-      aspect,
-      rating,
-      start,
-      limit,
-    }),
-  );
+  return Promise.all([
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName })),
+    dispatch(
+      queryCompanyWorkExperiencesAspectExperiences({
+        companyName,
+        aspect,
+        rating,
+        start,
+        limit,
+      }),
+    ),
+  ]);
 };
 
 export default CompanyWorkExperiencesAspectProvider;
