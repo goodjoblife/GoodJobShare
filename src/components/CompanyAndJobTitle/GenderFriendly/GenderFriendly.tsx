@@ -9,16 +9,12 @@ import { Aspect } from 'constants/companyJobTitle';
 import { LeaveBulletByLabel, LeaveSection } from '../LeaveSectionBlock';
 import menstrualLeaveIcon from '../menstrualLeaveIcon.svg';
 import styles from './GenderFriendly.module.css';
-import GenderPayComparisonCard, {
-  GenderPayComparisonData,
-} from './GenderPayComparisonCard';
 import AspectScoreCard from '../AspectScoreCard';
 import PolicySection from '../PolicySection';
 import { EsgItemBlock } from '../SalaryWorkTime/EsgBlock/EsgBlock';
 
 export type GenderFriendlyData = {
   menstrualLeave: LeaveSection;
-  genderPayComparison: GenderPayComparisonData;
 };
 
 export type FemaleManagerItem = ESGSalaryData['femaleManagerStatistics'][number];
@@ -79,12 +75,6 @@ const GenderFriendly: React.FC<GenderFriendlyProps> = ({
       section={data.menstrualLeave}
       linkTo={menstrualLeaveLinkTo}
     />
-    <div className={styles.section}>
-      <Heading className={styles.sectionTitle} Tag="h2">
-        同職位男女薪資比較
-      </Heading>
-      <GenderPayComparisonCard data={data.genderPayComparison} />
-    </div>
   </Section>
 );
 
