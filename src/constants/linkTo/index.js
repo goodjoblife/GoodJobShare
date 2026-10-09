@@ -14,6 +14,27 @@ export const companySalaryWorkTimesPath =
 export const companyWorkExperiencesAspectPath =
   '/companies/:companyName/work-experiences/:aspect';
 
+export const companyFamilyChildcarePath =
+  '/companies/:companyName/family-childcare';
+
+export const companyFamilyChildcareParentalLeavePath =
+  '/companies/:companyName/family-childcare/parental-leave';
+
+export const companyFamilyChildcareFamilyCareLeave =
+  '/companies/:companyName/family-childcare/family-care-leave';
+
+export const companyFamilyChildcareFlexibleHoursPath =
+  '/companies/:companyName/family-childcare/flexible-hours';
+
+export const companyFamilyChildcareRemoteWorkPath =
+  '/companies/:companyName/family-childcare/remote-work';
+
+export const companyGenderFriendlyPath =
+  '/companies/:companyName/gender-friendly';
+
+export const companyGenderFriendlyMenstrualLeavePath =
+  '/companies/:companyName/gender-friendly/menstrual-leave';
+
 export const jobTitleOverviewPath = '/job-titles/:jobTitle';
 
 export const jobTitleOverviewLegacyPath = '/job-titles/:jobTitle/overview';

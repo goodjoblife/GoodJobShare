@@ -16,6 +16,7 @@ import Footer from './Footer';
 import Header from './Header';
 import TabBar from './TabBar';
 import routes from '../../routes';
+import PolicyReviewGroupModal from '../PolicyReviewGroupModal';
 import tabBarStyles from './TabBar/TabBar.module.css';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 import SharePolicyModal from '../ShareExperience/PolicyForm/TypeForm';
@@ -32,11 +33,11 @@ const useShare = () => {
     () => history.push({ state: omit(['share'], state) }),
     [history, state],
   );
-  return [share, exitShare];
+  return [share, exitShare, state];
 };
 
 const App = () => {
-  const [share, exitShare] = useShare();
+  const [share, exitShare, shareState] = useShare();
   const searchInputRef = useRef(null);
 
   const focusSearch = useCallback(() => {
@@ -82,6 +83,11 @@ const App = () => {
       />
       <SharePolicyModal
         open={share === STATE_SHARE.POLICY}
+        onClose={exitShare}
+      />
+      <PolicyReviewGroupModal
+        open={share === STATE_SHARE.POLICY_REVIEW_GROUP}
+        groupId={shareState.policyReviewGroupId}
         onClose={exitShare}
       />
       <LoginModal />

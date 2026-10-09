@@ -1,8 +1,20 @@
+import { LocationDescriptor } from 'history';
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
-import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
+import {
+  CreatePolicyReviewGroupResult,
+  PolicyReviewInput,
+} from 'apis/createPolicyReviewGroup';
+import { generatePolicyReviewGroupModal } from 'common/ShareExpSection/shareLinkTo';
+import { generatePageURL, PageType } from 'constants/companyJobTitle';
+import {
+  Policy,
+  policyByLabel,
+  remoteWorkPolicyByLabel,
+  YesNoOrUnknown,
+} from 'constants/policy';
 
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
@@ -44,59 +56,43 @@ const questions = [
   createSubmitQuestion({ label: '制度' }),
 ];
 
-const policyEnumMap: Record<string, string> = {
-  生理假: 'MENSTRUAL_LEAVE',
-  育嬰假: 'PARENTAL_LEAVE',
-  家庭照顧假: 'FAMILY_CARE_LEAVE',
-  彈性上下班時間: 'FLEXIBLE_WORKING_HOUR',
-  遠端工作: 'REMOTE_WORK',
+const hasPolicyMap: Record<string, YesNoOrUnknown> = {
+  是: YesNoOrUnknown.yes,
+  有: YesNoOrUnknown.yes,
+  否: YesNoOrUnknown.no,
+  沒有: YesNoOrUnknown.no,
+  不知道: YesNoOrUnknown.unknown,
 };
 
-const hasPolicyMap: Record<string, string> = {
-  是: 'yes',
-  有: 'yes',
-  否: 'no',
-  沒有: 'no',
-  不知道: 'unknown',
+const complianceMap: Record<string, YesNoOrUnknown> = {
+  '有，優於性別平等工作法': YesNoOrUnknown.yes,
+  '有，符合性別平等工作法': YesNoOrUnknown.yes,
+  '有，不符合性別平等工作法': YesNoOrUnknown.no,
+  '有，不清楚是否符合性別平等工作法': YesNoOrUnknown.unknown,
 };
 
-const complianceMap: Record<string, string> = {
-  '有，優於性別平等工作法': 'yes',
-  '有，符合性別平等工作法': 'yes',
-  '有，不符合性別平等工作法': 'no',
-  '有，不清楚是否符合性別平等工作法': 'unknown',
-};
-
-const remoteWorkPolicyMap: Record<string, string> = {
-  每週一天: 'ONE_DAY_PER_WEEK',
-  每週兩天: 'TWO_DAYS_PER_WEEK',
-  每週三天: 'THREE_DAYS_PER_WEEK',
-  每週四天: 'FOUR_DAYS_PER_WEEK',
-  不限天數: 'NO_LIMIT',
-};
-
-const toPolicyReviewInput = ([
+export const toPolicyReviewInput = ([
   optionValue,
   radioValue,
   elseOptionValue,
   textValue,
 ]: unknown[]): PolicyReviewInput => {
-  const policy = policyEnumMap[optionValue as string];
+  const policy = policyByLabel[optionValue as string];
   const hasPolicy = hasPolicyMap[radioValue as string];
   const review = (textValue as string) || undefined;
 
-  if (policy === 'REMOTE_WORK') {
+  if (policy === Policy.REMOTE_WORK) {
     return {
       policy,
       hasPolicy,
       review,
       remoteWorkPolicy: elseOptionValue
-        ? remoteWorkPolicyMap[elseOptionValue as string]
+        ? remoteWorkPolicyByLabel[elseOptionValue as string]
         : undefined,
     };
   }
 
-  if (policy === 'FLEXIBLE_WORKING_HOUR') {
+  if (policy === Policy.FLEXIBLE_WORKING_HOUR) {
     return { policy, hasPolicy, review };
   }
 
@@ -110,6 +106,26 @@ const toPolicyReviewInput = ([
   };
 };
 
+const companyOverviewPathnameOf = (companyName: string): string =>
+  generatePageURL({ pageType: PageType.COMPANY, pageName: companyName });
+
+export const companyOverviewWithPolicyReviewGroupOf = (
+  companyName: string,
+  groupId: string,
+): LocationDescriptor => ({
+  pathname: companyOverviewPathnameOf(companyName),
+  ...generatePolicyReviewGroupModal(groupId),
+});
+
+const redirectToCompanyOverview = (
+  groupId: string,
+  draft: Record<string, unknown>,
+): LocationDescriptor =>
+  companyOverviewWithPolicyReviewGroupOf(
+    draft[DATA_KEY_COMPANY_NAME] as string,
+    groupId,
+  );
+
 const TypeForm = ({
   open,
   onClose,
@@ -121,7 +137,7 @@ const TypeForm = ({
 
   const onSubmit = useCallback(
     async (draft: Record<string, unknown>) => {
-      const result = await dispatch(
+      const { policyReviewGroup } = ((await dispatch(
         createPolicyReviewGroup({
           company: { query: draft[DATA_KEY_COMPANY_NAME] as string },
           jobTitle: draft[DATA_KEY_JOB_TITLE] as string,
@@ -130,8 +146,8 @@ const TypeForm = ({
             toPolicyReviewInput,
           ),
         }),
-      );
-      return result;
+      )) as unknown) as CreatePolicyReviewGroupResult;
+      return policyReviewGroup.groupId;
     },
     [dispatch],
   );
@@ -148,7 +164,7 @@ const TypeForm = ({
       onSubmitError={onSubmitError}
       onClose={onClose}
       hideProgressBar={false}
-      redirectPathnameOnSuccess={(): string => '/'}
+      redirectLocationOnSuccess={redirectToCompanyOverview}
     />
   );
 };
