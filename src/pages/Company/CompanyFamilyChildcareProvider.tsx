@@ -9,7 +9,7 @@ import {
 import { paramsSelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import FamilyChildcare from 'components/CompanyAndJobTitle/FamilyChildcare';
-import toFamilyChildcareData from 'components/CompanyAndJobTitle/FamilyChildcare/toFamilyChildcareData';
+import { toFamilyChildcareData } from 'components/CompanyAndJobTitle/policyReviewStatistics';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
 

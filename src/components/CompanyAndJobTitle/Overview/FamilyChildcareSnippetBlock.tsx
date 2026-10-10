@@ -25,10 +25,10 @@ import {
   REMOTE_WORK_FREQUENCY_BULLET_BY_LABEL,
 } from '../constants';
 import familyCareLeaveIcon from '../familyCareLeaveIcon.svg';
-import toFamilyChildcareData from '../FamilyChildcare/toFamilyChildcareData';
 import flexibleHoursIcon from '../flexibleHoursIcon.svg';
 import { useCompanyName } from '../PageContextProvider';
 import parentalLeaveIcon from '../parentalLeaveIcon.svg';
+import { toFamilyChildcareData } from '../policyReviewStatistics';
 import PolicySummaryCard from '../PolicySummaryCard';
 import remoteWorkIcon from '../remoteWorkIcon.svg';
 import SnippetBlock from '../SnippetBlock';

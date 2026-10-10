@@ -17,10 +17,10 @@ import {
   MENSTRUAL_LEAVE_AVAILABILITY_BULLET_BY_LABEL,
   MENSTRUAL_LEAVE_COMPLIANCE_BULLET_BY_LABEL,
 } from '../constants';
-import toGenderFriendlyData from '../GenderFriendly/toGenderFriendlyData';
 import useFemaleManagerStatisticsItem from '../GenderFriendly/useFemaleManagerStatisticsItem';
 import menstrualLeaveIcon from '../menstrualLeaveIcon.svg';
 import { useCompanyName } from '../PageContextProvider';
+import { toGenderFriendlyData } from '../policyReviewStatistics';
 import PolicySummaryCard from '../PolicySummaryCard';
 import styles from './PolicySnippetBlock.module.css';
 import { EsgItemBlock } from '../SalaryWorkTime/EsgBlock/EsgBlock';

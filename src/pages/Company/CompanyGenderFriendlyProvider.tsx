@@ -10,8 +10,8 @@ import {
 import { paramsSelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import GenderFriendly from 'components/CompanyAndJobTitle/GenderFriendly';
-import toGenderFriendlyData from 'components/CompanyAndJobTitle/GenderFriendly/toGenderFriendlyData';
 import useFemaleManagerStatisticsItem from 'components/CompanyAndJobTitle/GenderFriendly/useFemaleManagerStatisticsItem';
+import { toGenderFriendlyData } from 'components/CompanyAndJobTitle/policyReviewStatistics';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
 
