@@ -8,12 +8,14 @@ import AspectScoreCard from '../AspectScoreCard';
 import {
   FAMILY_CARE_LEAVE_AVAILABILITY_BULLET_BY_LABEL,
   FAMILY_CARE_LEAVE_COMPLIANCE_BULLET_BY_LABEL,
+  FLEXIBLE_HOURS_AVAILABILITY_BULLET_BY_LABEL,
   PARENTAL_LEAVE_AVAILABILITY_BULLET_BY_LABEL,
   PARENTAL_LEAVE_COMPLIANCE_BULLET_BY_LABEL,
   REMOTE_WORK_AVAILABILITY_BULLET_BY_LABEL,
   REMOTE_WORK_FREQUENCY_BULLET_BY_LABEL,
 } from '../constants';
 import familyCareLeaveIcon from '../familyCareLeaveIcon.svg';
+import flexibleHoursIcon from '../flexibleHoursIcon.svg';
 import { LeaveSection } from '../LeaveSectionBlock';
 import parentalLeaveIcon from '../parentalLeaveIcon.svg';
 import { PolicyDistribution } from '../PolicyBarChart';
@@ -81,7 +83,9 @@ const FamilyChildcareSection: React.FC<Props> = ({
     <PolicySection
       className={styles.section}
       title="彈性上下班時間制度"
+      icon={flexibleHoursIcon}
       availabilityTitle="是否有彈性上下班時間制度？"
+      availabilityBulletByLabel={FLEXIBLE_HOURS_AVAILABILITY_BULLET_BY_LABEL}
       section={{
         dataCount: data.flexibleHours.dataCount,
         availability: data.flexibleHours,
