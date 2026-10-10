@@ -13,18 +13,18 @@ import { companyPolicyReviewStatisticsBoxSelectorByName } from 'selectors/compan
 import { isFetched } from 'utils/fetchBox';
 
 import AspectScoreCard from '../AspectScoreCard';
+import {
+  MENSTRUAL_LEAVE_AVAILABILITY_BULLET_BY_LABEL,
+  MENSTRUAL_LEAVE_COMPLIANCE_BULLET_BY_LABEL,
+} from '../constants';
 import toGenderFriendlyData from '../GenderFriendly/toGenderFriendlyData';
 import useFemaleManagerStatisticsItem from '../GenderFriendly/useFemaleManagerStatisticsItem';
 import menstrualLeaveIcon from '../menstrualLeaveIcon.svg';
 import { useCompanyName } from '../PageContextProvider';
-import {
-  menstrualLeaveAvailabilityBulletByLabel,
-  menstrualLeaveComplianceBulletByLabel,
-} from '../policyBulletByLabel';
 import PolicySummaryCard from '../PolicySummaryCard';
+import styles from './PolicySnippetBlock.module.css';
 import { EsgItemBlock } from '../SalaryWorkTime/EsgBlock/EsgBlock';
 import SnippetBlock from '../SnippetBlock';
-import styles from './PolicySnippetBlock.module.css';
 
 const GenderFriendlySnippetBlock: React.FC = () => {
   const companyName = useCompanyName();
@@ -61,8 +61,10 @@ const GenderFriendlySnippetBlock: React.FC = () => {
           <PolicySummaryCard
             title="生理假"
             icon={menstrualLeaveIcon}
-            availabilityBulletByLabel={menstrualLeaveAvailabilityBulletByLabel}
-            complianceBulletByLabel={menstrualLeaveComplianceBulletByLabel}
+            availabilityBulletByLabel={
+              MENSTRUAL_LEAVE_AVAILABILITY_BULLET_BY_LABEL
+            }
+            complianceBulletByLabel={MENSTRUAL_LEAVE_COMPLIANCE_BULLET_BY_LABEL}
             section={menstrualLeave}
             linkTo={generatePath(companyGenderFriendlyMenstrualLeavePath, {
               companyName,

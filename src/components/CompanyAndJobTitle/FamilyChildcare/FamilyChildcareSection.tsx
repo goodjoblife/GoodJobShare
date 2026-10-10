@@ -5,18 +5,18 @@ import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
 import { Aspect } from 'constants/companyJobTitle';
 
 import AspectScoreCard from '../AspectScoreCard';
+import {
+  FAMILY_CARE_LEAVE_AVAILABILITY_BULLET_BY_LABEL,
+  FAMILY_CARE_LEAVE_COMPLIANCE_BULLET_BY_LABEL,
+  PARENTAL_LEAVE_AVAILABILITY_BULLET_BY_LABEL,
+  PARENTAL_LEAVE_COMPLIANCE_BULLET_BY_LABEL,
+  REMOTE_WORK_AVAILABILITY_BULLET_BY_LABEL,
+  REMOTE_WORK_FREQUENCY_BULLET_BY_LABEL,
+} from '../constants';
 import familyCareLeaveIcon from '../familyCareLeaveIcon.svg';
 import { LeaveSection } from '../LeaveSectionBlock';
 import parentalLeaveIcon from '../parentalLeaveIcon.svg';
 import { PolicyDistribution } from '../PolicyBarChart';
-import {
-  familyCareLeaveAvailabilityBulletByLabel,
-  familyCareLeaveComplianceBulletByLabel,
-  parentalLeaveAvailabilityBulletByLabel,
-  parentalLeaveComplianceBulletByLabel,
-  remoteWorkAvailabilityBulletByLabel,
-  remoteWorkFrequencyBulletByLabel,
-} from '../policyBulletByLabel';
 import PolicySection from '../PolicySection';
 import remoteWorkIcon from '../remoteWorkIcon.svg';
 import styles from './FamilyChildcareSection.module.css';
@@ -61,9 +61,9 @@ const FamilyChildcareSection: React.FC<Props> = ({
       title="育嬰假(育嬰留職停薪)"
       icon={parentalLeaveIcon}
       availabilityTitle="是否請得到育嬰假?"
-      availabilityBulletByLabel={parentalLeaveAvailabilityBulletByLabel}
+      availabilityBulletByLabel={PARENTAL_LEAVE_AVAILABILITY_BULLET_BY_LABEL}
       complianceTitle="育嬰假法規符合度"
-      complianceBulletByLabel={parentalLeaveComplianceBulletByLabel}
+      complianceBulletByLabel={PARENTAL_LEAVE_COMPLIANCE_BULLET_BY_LABEL}
       section={data.parentalLeave}
       linkTo={parentalLeaveLinkTo}
     />
@@ -72,9 +72,9 @@ const FamilyChildcareSection: React.FC<Props> = ({
       title="家庭照顧假"
       icon={familyCareLeaveIcon}
       availabilityTitle="是否請得到家庭照顧假？"
-      availabilityBulletByLabel={familyCareLeaveAvailabilityBulletByLabel}
+      availabilityBulletByLabel={FAMILY_CARE_LEAVE_AVAILABILITY_BULLET_BY_LABEL}
       complianceTitle="家庭照顧假法規符合度"
-      complianceBulletByLabel={familyCareLeaveComplianceBulletByLabel}
+      complianceBulletByLabel={FAMILY_CARE_LEAVE_COMPLIANCE_BULLET_BY_LABEL}
       section={data.familyCareLeave}
       linkTo={familyCareLeaveLinkTo}
     />
@@ -93,9 +93,9 @@ const FamilyChildcareSection: React.FC<Props> = ({
       title="遠端工作制度"
       icon={remoteWorkIcon}
       availabilityTitle="是否可以遠端工作？"
-      availabilityBulletByLabel={remoteWorkAvailabilityBulletByLabel}
+      availabilityBulletByLabel={REMOTE_WORK_AVAILABILITY_BULLET_BY_LABEL}
       complianceTitle="遠端工作每週天數？"
-      complianceBulletByLabel={remoteWorkFrequencyBulletByLabel}
+      complianceBulletByLabel={REMOTE_WORK_FREQUENCY_BULLET_BY_LABEL}
       section={data.remoteWork}
       linkTo={remoteWorkLinkTo}
     />

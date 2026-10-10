@@ -10,9 +10,9 @@ import menstrualLeaveIcon from '../menstrualLeaveIcon.svg';
 import styles from './GenderFriendly.module.css';
 import AspectScoreCard from '../AspectScoreCard';
 import {
-  menstrualLeaveAvailabilityBulletByLabel,
-  menstrualLeaveComplianceBulletByLabel,
-} from '../policyBulletByLabel';
+  MENSTRUAL_LEAVE_AVAILABILITY_BULLET_BY_LABEL,
+  MENSTRUAL_LEAVE_COMPLIANCE_BULLET_BY_LABEL,
+} from '../constants';
 import PolicySection from '../PolicySection';
 import { EsgItemBlock } from '../SalaryWorkTime/EsgBlock/EsgBlock';
 
@@ -59,9 +59,9 @@ const GenderFriendly: React.FC<GenderFriendlyProps> = ({
       title="生理假"
       icon={menstrualLeaveIcon}
       availabilityTitle="是否請得到生理假"
-      availabilityBulletByLabel={menstrualLeaveAvailabilityBulletByLabel}
+      availabilityBulletByLabel={MENSTRUAL_LEAVE_AVAILABILITY_BULLET_BY_LABEL}
       complianceTitle="生理假法規符合度"
-      complianceBulletByLabel={menstrualLeaveComplianceBulletByLabel}
+      complianceBulletByLabel={MENSTRUAL_LEAVE_COMPLIANCE_BULLET_BY_LABEL}
       section={data.menstrualLeave}
       linkTo={menstrualLeaveLinkTo}
     />
