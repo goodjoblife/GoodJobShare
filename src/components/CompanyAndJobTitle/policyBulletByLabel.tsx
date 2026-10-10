@@ -30,6 +30,12 @@ export const familyCareLeaveComplianceBulletByLabel: LeaveBulletByLabel = {
   不知道: '不確定家庭照顧假是否符合勞基法',
 };
 
+export const flexibleHoursAvailabilityBulletByLabel: LeaveBulletByLabel = {
+  是: '有彈性上下班時間制度',
+  否: '無彈性上下班時間制度',
+  不知道: '不確定是否有彈性上下班時間制度',
+};
+
 export const remoteWorkAvailabilityBulletByLabel: LeaveBulletByLabel = {
   是: '有遠端工作制度',
   否: '無遠端工作制度',
