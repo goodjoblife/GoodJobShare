@@ -17,6 +17,7 @@ import { isFetched } from 'utils/fetchBox';
 
 import familyCareLeaveIcon from '../familyCareLeaveIcon.svg';
 import toFamilyChildcareData from '../FamilyChildcare/toFamilyChildcareData';
+import flexibleHoursIcon from '../flexibleHoursIcon.svg';
 import { useCompanyName } from '../PageContextProvider';
 import parentalLeaveIcon from '../parentalLeaveIcon.svg';
 import {
@@ -95,6 +96,7 @@ const FamilyChildcareSnippetBlock: React.FC = () => {
           <PolicySummaryCard
             className={styles.card}
             title="彈性上下班時間制度"
+            icon={flexibleHoursIcon}
             availabilityBulletByLabel={flexibleHoursAvailabilityBulletByLabel}
             section={flexibleHoursSection}
             linkTo={generatePath(companyFamilyChildcareFlexibleHoursPath, {
