@@ -2,14 +2,17 @@ import React from 'react';
 
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { Heading, Section } from 'common/base';
-import Glike from 'common/icons/Glike';
 import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
 import { Aspect } from 'constants/companyJobTitle';
 
-import { LeaveBulletByLabel, LeaveSection } from '../LeaveSectionBlock';
+import { LeaveSection } from '../LeaveSectionBlock';
 import menstrualLeaveIcon from '../menstrualLeaveIcon.svg';
 import styles from './GenderFriendly.module.css';
 import AspectScoreCard from '../AspectScoreCard';
+import {
+  menstrualLeaveAvailabilityBulletByLabel,
+  menstrualLeaveComplianceBulletByLabel,
+} from '../policyBulletByLabel';
 import PolicySection from '../PolicySection';
 import { EsgItemBlock } from '../SalaryWorkTime/EsgBlock/EsgBlock';
 
@@ -23,19 +26,6 @@ type GenderFriendlyProps = {
   data: GenderFriendlyData;
   femaleManagerStatisticsItem: FemaleManagerItem | null;
   menstrualLeaveLinkTo?: string;
-};
-
-const menstrualLeaveAvailabilityBulletByLabel: LeaveBulletByLabel = {
-  是: { text: '請得到生理假', icon: <Glike /> },
-  否: '請不到生理假',
-  不知道: '不確定是否請得到生理假',
-};
-
-const menstrualLeaveComplianceBulletByLabel: LeaveBulletByLabel = {
-  符合勞基法: { text: '生理假符合勞基法', icon: <Glike /> },
-  優於勞基法: { text: '生理假優於勞基法', icon: <Glike /> },
-  不符合勞基法: '生理假不符合勞基法',
-  不知道: '不確定生理假是否符合勞基法',
 };
 
 const GenderFriendly: React.FC<GenderFriendlyProps> = ({
