@@ -1,13 +1,22 @@
 import React from 'react';
 
 import { Section } from 'common/base';
-import Glike from 'common/icons/Glike';
 import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
 import { Aspect } from 'constants/companyJobTitle';
 
 import AspectScoreCard from '../AspectScoreCard';
+import {
+  FAMILY_CARE_LEAVE_AVAILABILITY_BULLET_BY_LABEL,
+  FAMILY_CARE_LEAVE_COMPLIANCE_BULLET_BY_LABEL,
+  FLEXIBLE_HOURS_AVAILABILITY_BULLET_BY_LABEL,
+  PARENTAL_LEAVE_AVAILABILITY_BULLET_BY_LABEL,
+  PARENTAL_LEAVE_COMPLIANCE_BULLET_BY_LABEL,
+  REMOTE_WORK_AVAILABILITY_BULLET_BY_LABEL,
+  REMOTE_WORK_FREQUENCY_BULLET_BY_LABEL,
+} from '../constants';
 import familyCareLeaveIcon from '../familyCareLeaveIcon.svg';
-import { LeaveBulletByLabel, LeaveSection } from '../LeaveSectionBlock';
+import flexibleHoursIcon from '../flexibleHoursIcon.svg';
+import { LeaveSection } from '../LeaveSectionBlock';
 import parentalLeaveIcon from '../parentalLeaveIcon.svg';
 import { PolicyDistribution } from '../PolicyBarChart';
 import PolicySection from '../PolicySection';
@@ -27,45 +36,6 @@ type Props = {
   familyCareLeaveLinkTo?: string;
   flexibleHoursLinkTo?: string;
   remoteWorkLinkTo?: string;
-};
-
-const parentalLeaveAvailabilityBulletByLabel: LeaveBulletByLabel = {
-  是: { text: '請得到育嬰假', icon: <Glike /> },
-  否: '請不到育嬰假',
-  不知道: '不確定是否請得到育嬰假',
-};
-
-const parentalLeaveComplianceBulletByLabel: LeaveBulletByLabel = {
-  符合勞基法: { text: '育嬰假符合勞基法', icon: <Glike /> },
-  優於勞基法: { text: '育嬰假優於勞基法', icon: <Glike /> },
-  不符合勞基法: '育嬰假不符合勞基法',
-  不知道: '不確定育嬰假是否符合勞基法',
-};
-
-const familyCareLeaveAvailabilityBulletByLabel: LeaveBulletByLabel = {
-  是: { text: '請得到家庭照顧假', icon: <Glike /> },
-  否: '請不到家庭照顧假',
-  不知道: '不確定是否請得到家庭照顧假',
-};
-
-const familyCareLeaveComplianceBulletByLabel: LeaveBulletByLabel = {
-  符合勞基法: { text: '家庭照顧假符合勞基法', icon: <Glike /> },
-  優於勞基法: { text: '家庭照顧假優於勞基法', icon: <Glike /> },
-  不符合勞基法: '家庭照顧假不符合勞基法',
-  不知道: '不確定家庭照顧假是否符合勞基法',
-};
-
-const remoteWorkAvailabilityBulletByLabel: LeaveBulletByLabel = {
-  是: '有遠端工作制度',
-  否: '無遠端工作制度',
-  不知道: '不確定是否有遠端工作制度',
-};
-
-const remoteWorkFrequencyBulletByLabel: LeaveBulletByLabel = {
-  '1天': '每週遠端工作 1 天',
-  '2天': '每週遠端工作 2 天',
-  '3天': '每週遠端工作 3 天',
-  大於3天: '每週遠端工作超過 3 天',
 };
 
 const FamilyChildcareSection: React.FC<Props> = ({
@@ -93,9 +63,9 @@ const FamilyChildcareSection: React.FC<Props> = ({
       title="育嬰假(育嬰留職停薪)"
       icon={parentalLeaveIcon}
       availabilityTitle="是否請得到育嬰假?"
-      availabilityBulletByLabel={parentalLeaveAvailabilityBulletByLabel}
+      availabilityBulletByLabel={PARENTAL_LEAVE_AVAILABILITY_BULLET_BY_LABEL}
       complianceTitle="育嬰假法規符合度"
-      complianceBulletByLabel={parentalLeaveComplianceBulletByLabel}
+      complianceBulletByLabel={PARENTAL_LEAVE_COMPLIANCE_BULLET_BY_LABEL}
       section={data.parentalLeave}
       linkTo={parentalLeaveLinkTo}
     />
@@ -104,16 +74,18 @@ const FamilyChildcareSection: React.FC<Props> = ({
       title="家庭照顧假"
       icon={familyCareLeaveIcon}
       availabilityTitle="是否請得到家庭照顧假？"
-      availabilityBulletByLabel={familyCareLeaveAvailabilityBulletByLabel}
+      availabilityBulletByLabel={FAMILY_CARE_LEAVE_AVAILABILITY_BULLET_BY_LABEL}
       complianceTitle="家庭照顧假法規符合度"
-      complianceBulletByLabel={familyCareLeaveComplianceBulletByLabel}
+      complianceBulletByLabel={FAMILY_CARE_LEAVE_COMPLIANCE_BULLET_BY_LABEL}
       section={data.familyCareLeave}
       linkTo={familyCareLeaveLinkTo}
     />
     <PolicySection
       className={styles.section}
       title="彈性上下班時間制度"
+      icon={flexibleHoursIcon}
       availabilityTitle="是否有彈性上下班時間制度？"
+      availabilityBulletByLabel={FLEXIBLE_HOURS_AVAILABILITY_BULLET_BY_LABEL}
       section={{
         dataCount: data.flexibleHours.dataCount,
         availability: data.flexibleHours,
@@ -125,9 +97,9 @@ const FamilyChildcareSection: React.FC<Props> = ({
       title="遠端工作制度"
       icon={remoteWorkIcon}
       availabilityTitle="是否可以遠端工作？"
-      availabilityBulletByLabel={remoteWorkAvailabilityBulletByLabel}
+      availabilityBulletByLabel={REMOTE_WORK_AVAILABILITY_BULLET_BY_LABEL}
       complianceTitle="遠端工作每週天數？"
-      complianceBulletByLabel={remoteWorkFrequencyBulletByLabel}
+      complianceBulletByLabel={REMOTE_WORK_FREQUENCY_BULLET_BY_LABEL}
       section={data.remoteWork}
       linkTo={remoteWorkLinkTo}
     />

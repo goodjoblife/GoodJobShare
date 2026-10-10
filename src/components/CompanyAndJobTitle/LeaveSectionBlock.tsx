@@ -1,14 +1,12 @@
 import React from 'react';
 
-import { Link } from 'common/base';
-import Card from 'common/Card';
-
 import styles from './LeaveSectionBlock.module.css';
 import { PolicyDistribution } from './PolicyBarChart';
 import PolicyChartCard from './PolicyChartCard';
+import PolicySummaryCard from './PolicySummaryCard';
 
 type SummaryBulletIcon = React.ReactElement<{ className?: string }> | null;
-type SummaryBullet = { text: string; icon: SummaryBulletIcon };
+export type SummaryBullet = { text: string; icon: SummaryBulletIcon };
 
 export type LeaveBullet = string | SummaryBullet;
 export type LeaveBulletByLabel = Record<string, LeaveBullet>;
@@ -30,22 +28,6 @@ type LeaveSectionBlockProps = {
   linkTo?: string;
 };
 
-const majorityBullet = (
-  distribution: PolicyDistribution,
-  bulletByLabel: LeaveBulletByLabel,
-): SummaryBullet => {
-  const majority = distribution.items.reduce((max, item) =>
-    item.percentage > max.percentage ? item : max,
-  );
-  const count = Math.round(
-    (distribution.dataCount * majority.percentage) / 100,
-  );
-  const bullet = bulletByLabel[majority.label];
-  const text = typeof bullet === 'string' ? bullet : bullet.text;
-  const icon = typeof bullet === 'string' ? null : bullet.icon;
-  return { text: `${text} (${count}筆)`, icon };
-};
-
 const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
   title,
   icon,
@@ -55,60 +37,31 @@ const LeaveSectionBlock: React.FC<LeaveSectionBlockProps> = ({
   complianceBulletByLabel,
   section,
   linkTo,
-}) => {
-  const summaryBullets: SummaryBullet[] = [];
-
-  if (availabilityBulletByLabel) {
-    summaryBullets.push(
-      majorityBullet(section.availability, availabilityBulletByLabel),
-    );
-  }
-
-  if (section.compliance && complianceBulletByLabel) {
-    summaryBullets.push(
-      majorityBullet(section.compliance, complianceBulletByLabel),
-    );
-  }
-
-  return (
-    <div className={styles.row}>
-      {availabilityBulletByLabel && (
-        <Card className={styles.summaryCard}>
-          {icon && <img className={styles.icon} src={icon} alt="" />}
-          <div className={styles.summaryTitle}>{title}</div>
-          <ul className={styles.bullets}>
-            {summaryBullets.map(({ text, icon }) => (
-              <li key={text}>
-                {icon ? (
-                  React.cloneElement(icon, { className: styles.likeIcon })
-                ) : (
-                  <span className={styles.dash}>–</span>
-                )}
-                {text}
-              </li>
-            ))}
-          </ul>
-          {linkTo && (
-            <Link to={linkTo} className={styles.link}>
-              查看 {section.dataCount} 筆資料 &gt;&gt;
-            </Link>
-          )}
-        </Card>
-      )}
-      <PolicyChartCard
-        title={availabilityTitle}
-        distribution={section.availability}
+}) => (
+  <div className={styles.row}>
+    {availabilityBulletByLabel && (
+      <PolicySummaryCard
+        title={title}
+        icon={icon}
+        availabilityBulletByLabel={availabilityBulletByLabel}
+        complianceBulletByLabel={complianceBulletByLabel}
+        section={section}
         linkTo={linkTo}
       />
-      {section.compliance && complianceTitle && (
-        <PolicyChartCard
-          title={complianceTitle}
-          distribution={section.compliance}
-          linkTo={linkTo}
-        />
-      )}
-    </div>
-  );
-};
+    )}
+    <PolicyChartCard
+      title={availabilityTitle}
+      distribution={section.availability}
+      linkTo={linkTo}
+    />
+    {section.compliance && complianceTitle && (
+      <PolicyChartCard
+        title={complianceTitle}
+        distribution={section.compliance}
+        linkTo={linkTo}
+      />
+    )}
+  </div>
+);
 
 export default LeaveSectionBlock;

@@ -7,7 +7,6 @@ import {
 import { Section } from 'common/base';
 import BoxRenderer from 'common/StatusRenderer';
 import {
-  Aspect,
   generateTabURL,
   PageType,
   TabType,
@@ -18,11 +17,11 @@ import { CompanyOverviewStatistics } from 'reducers/companyIndex';
 import { JobTitleOverviewStatistics } from 'reducers/jobTitleIndex';
 import FetchBox from 'utils/fetchBox';
 
-import AspectScoreCard, { useAspectsData } from '../AspectScoreCard';
 import SnippetBlock from '../SnippetBlock';
+import FamilyChildcareSnippetBlock from './FamilyChildcareSnippetBlock';
+import GenderFriendlySnippetBlock from './GenderFriendlySnippetBlock';
 import SummaryBlock from './SummaryBlock';
 import InterviewExperienceEntryJS from '../InterviewExperiences/ExperienceEntry';
-import { useCompanyName } from '../PageContextProvider';
 import WorkExperienceEntryJS from '../WorkExperiences/ExperienceEntry';
 
 type ExperienceEntryProps<Data> = {
@@ -40,25 +39,6 @@ const WorkExperienceEntry = (WorkExperienceEntryJS as unknown) as React.FC<
 const InterviewExperienceEntry = (InterviewExperienceEntryJS as unknown) as React.FC<
   ExperienceEntryProps<InterviewExperienceInOverview>
 >;
-
-// 面向評分只有公司才有，抽成獨立元件讓 useAspectsData 與 useCompanyName
-// 只在公司頁執行
-const GenderAspectSnippetBlock: React.FC = () => {
-  const companyName = useCompanyName();
-  const aspectModels = useAspectsData(companyName, [Aspect.GENDER]);
-  if (aspectModels.length === 0) return null;
-
-  return (
-    <SnippetBlock title="性別友善" pageName={companyName}>
-      {aspectModels.map(aspectModel => (
-        <AspectScoreCard
-          key={aspectModel.aspect}
-          aspect={aspectModel.aspect as Aspect}
-        />
-      ))}
-    </SnippetBlock>
-  );
-};
 
 type OverviewSectionProps = {
   pageType: PageType;
@@ -106,7 +86,12 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({
           }
         />
       </SnippetBlock>
-      {pageType === PageType.COMPANY && <GenderAspectSnippetBlock />}
+      {pageType === PageType.COMPANY && (
+        <>
+          <FamilyChildcareSnippetBlock />
+          <GenderFriendlySnippetBlock />
+        </>
+      )}
       <SnippetBlock
         title={TAB_TYPE_DETAIL_TRANSLATION[TabType.WORK_EXPERIENCE]}
         linkText={`查看 ${workExperiencesCount} 篇完整的 ${

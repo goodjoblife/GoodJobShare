@@ -5,6 +5,8 @@ import {
 import { YesNoOrUnknownCount } from 'apis/salaryWorkTime';
 import { Policy, RemoteWorkPolicy } from 'constants/policy';
 
+import { FamilyChildcareData } from './FamilyChildcare/FamilyChildcareSection';
+import { GenderFriendlyData } from './GenderFriendly/GenderFriendly';
 import { LeaveSection } from './LeaveSectionBlock';
 import { PolicyDistribution } from './PolicyBarChart';
 
@@ -134,3 +136,21 @@ export const toLeaveSection = (
     compliance: statistics ? toComplianceDistribution(statistics) : undefined,
   };
 };
+
+export const toFamilyChildcareData = (
+  statisticsList: PolicyReviewStatistics[] | null,
+): FamilyChildcareData => ({
+  parentalLeave: toLeaveSection(statisticsList, Policy.PARENTAL_LEAVE),
+  familyCareLeave: toLeaveSection(statisticsList, Policy.FAMILY_CARE_LEAVE),
+  flexibleHours: toAvailabilityDistribution(
+    statisticsList,
+    Policy.FLEXIBLE_WORKING_HOUR,
+  ),
+  remoteWork: toLeaveSection(statisticsList, Policy.REMOTE_WORK),
+});
+
+export const toGenderFriendlyData = (
+  statisticsList: PolicyReviewStatistics[] | null,
+): GenderFriendlyData => ({
+  menstrualLeave: toLeaveSection(statisticsList, Policy.MENSTRUAL_LEAVE),
+});

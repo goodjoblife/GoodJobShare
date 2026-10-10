@@ -9,13 +9,8 @@ import {
 import { paramsSelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import FamilyChildcare from 'components/CompanyAndJobTitle/FamilyChildcare';
-import { FamilyChildcareData } from 'components/CompanyAndJobTitle/FamilyChildcare/FamilyChildcareSection';
-import {
-  toAvailabilityDistribution,
-  toLeaveSection,
-} from 'components/CompanyAndJobTitle/policyReviewStatistics';
+import { toFamilyChildcareData } from 'components/CompanyAndJobTitle/policyReviewStatistics';
 import { PageType, TabType } from 'constants/companyJobTitle';
-import { Policy } from 'constants/policy';
 import { ServerSideRender } from 'types/serverSideRender';
 
 import useCompanyNameParam, {
@@ -40,21 +35,7 @@ const CompanyFamilyChildcareProvider: React.FC &
 
   const policyReviewStatistics = useCompanyPolicyReviewStatistics(companyName);
 
-  const data: FamilyChildcareData = {
-    parentalLeave: toLeaveSection(
-      policyReviewStatistics,
-      Policy.PARENTAL_LEAVE,
-    ),
-    familyCareLeave: toLeaveSection(
-      policyReviewStatistics,
-      Policy.FAMILY_CARE_LEAVE,
-    ),
-    flexibleHours: toAvailabilityDistribution(
-      policyReviewStatistics,
-      Policy.FLEXIBLE_WORKING_HOUR,
-    ),
-    remoteWork: toLeaveSection(policyReviewStatistics, Policy.REMOTE_WORK),
-  };
+  const data = toFamilyChildcareData(policyReviewStatistics);
 
   return (
     <CompanyAndJobTitleWrapper
