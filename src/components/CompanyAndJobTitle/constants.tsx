@@ -2,7 +2,7 @@ import React from 'react';
 
 import Glike from 'common/icons/Glike';
 
-import { LeaveBulletByLabel } from './LeaveSectionBlock';
+import { LeaveBulletByLabel } from './policyTypes';
 
 export const PARENTAL_LEAVE_AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
   是: { text: '請得到育嬰假', icon: <Glike /> },

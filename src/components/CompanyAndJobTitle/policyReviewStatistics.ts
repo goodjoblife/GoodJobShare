@@ -7,8 +7,7 @@ import { Policy, RemoteWorkPolicy } from 'constants/policy';
 
 import { FamilyChildcareData } from './FamilyChildcare/FamilyChildcareSection';
 import { GenderFriendlyData } from './GenderFriendly/GenderFriendly';
-import { LeaveSection } from './LeaveSectionBlock';
-import { PolicyDistribution } from './PolicyBarChart';
+import { LeaveSection, PolicyDistribution } from './policyTypes';
 
 type YesNoOrUnknownLabels = Record<keyof YesNoOrUnknownCount, string>;
 

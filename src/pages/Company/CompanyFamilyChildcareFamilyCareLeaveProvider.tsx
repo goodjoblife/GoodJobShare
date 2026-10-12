@@ -11,8 +11,8 @@ import familyCareLeaveIcon from 'components/CompanyAndJobTitle/familyCareLeaveIc
 import LeavePolicySection, {
   FilterOption,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
-import { LeaveBulletByLabel } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
 import { toLeaveSection } from 'components/CompanyAndJobTitle/policyReviewStatistics';
+import { LeaveBulletByLabel } from 'components/CompanyAndJobTitle/policyTypes';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { Policy } from 'constants/policy';
 import { usePage } from 'hooks/routing/page';

@@ -4,8 +4,9 @@ import React from 'react';
 import { Link } from 'common/base';
 import Card from 'common/Card';
 
-import PolicyBarChart, { PolicyDistribution } from './PolicyBarChart';
+import PolicyBarChart from './PolicyBarChart';
 import styles from './PolicyChartCard.module.css';
+import { PolicyDistribution } from './policyTypes';
 
 type Props = {
   title: string;

@@ -5,8 +5,8 @@ import { Heading, Section } from 'common/base';
 import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
 import { Aspect } from 'constants/companyJobTitle';
 
-import { LeaveSection } from '../LeaveSectionBlock';
 import menstrualLeaveIcon from '../menstrualLeaveIcon.svg';
+import { LeaveSection } from '../policyTypes';
 import styles from './GenderFriendly.module.css';
 import AspectScoreCard from '../AspectScoreCard';
 import {

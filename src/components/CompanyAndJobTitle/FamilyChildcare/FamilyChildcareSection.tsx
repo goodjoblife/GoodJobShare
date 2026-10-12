@@ -16,10 +16,9 @@ import {
 } from '../constants';
 import familyCareLeaveIcon from '../familyCareLeaveIcon.svg';
 import flexibleHoursIcon from '../flexibleHoursIcon.svg';
-import { LeaveSection } from '../LeaveSectionBlock';
 import parentalLeaveIcon from '../parentalLeaveIcon.svg';
-import { PolicyDistribution } from '../PolicyBarChart';
 import PolicySection from '../PolicySection';
+import { LeaveSection, PolicyDistribution } from '../policyTypes';
 import remoteWorkIcon from '../remoteWorkIcon.svg';
 import styles from './FamilyChildcareSection.module.css';
 

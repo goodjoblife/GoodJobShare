@@ -4,13 +4,13 @@ import React from 'react';
 import { Link } from 'common/base';
 import Card from 'common/Card';
 
+import styles from './PolicySummaryCard.module.css';
 import {
   LeaveBulletByLabel,
   LeaveSection,
+  PolicyDistribution,
   SummaryBullet,
-} from './LeaveSectionBlock';
-import { PolicyDistribution } from './PolicyBarChart';
-import styles from './PolicySummaryCard.module.css';
+} from './policyTypes';
 
 type Props = {
   className?: string;

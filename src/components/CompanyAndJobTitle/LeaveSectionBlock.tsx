@@ -1,21 +1,9 @@
 import React from 'react';
 
 import styles from './LeaveSectionBlock.module.css';
-import { PolicyDistribution } from './PolicyBarChart';
 import PolicyChartCard from './PolicyChartCard';
 import PolicySummaryCard from './PolicySummaryCard';
-
-type SummaryBulletIcon = React.ReactElement<{ className?: string }> | null;
-export type SummaryBullet = { text: string; icon: SummaryBulletIcon };
-
-export type LeaveBullet = string | SummaryBullet;
-export type LeaveBulletByLabel = Record<string, LeaveBullet>;
-
-export type LeaveSection = {
-  dataCount: number;
-  availability: PolicyDistribution;
-  compliance?: PolicyDistribution;
-};
+import { LeaveBulletByLabel, LeaveSection } from './policyTypes';
 
 type LeaveSectionBlockProps = {
   title: string;
