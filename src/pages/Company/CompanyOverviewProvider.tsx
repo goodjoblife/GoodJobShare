@@ -2,8 +2,10 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
+  queryCompanyEsgSalaryData,
   queryCompanyOverview,
   queryCompanyOverviewStatistics,
+  queryCompanyPolicyReviewStatistics,
   queryCompanyTopNJobTitles,
   queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
@@ -82,6 +84,14 @@ const CompanyOverviewProvider: React.FC & ServerSideRender<Params> = () => {
     dispatch(queryCompanyOverviewStatistics(companyName));
   }, [dispatch, companyName]);
 
+  useEffect(() => {
+    dispatch(queryCompanyPolicyReviewStatistics(companyName));
+  }, [dispatch, companyName]);
+
+  useEffect(() => {
+    dispatch(queryCompanyEsgSalaryData({ companyName }));
+  }, [dispatch, companyName]);
+
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
@@ -111,6 +121,8 @@ CompanyOverviewProvider.fetchData = ({
     dispatch(queryCompanyOverviewStatistics(companyName)),
     dispatch(queryRatingStatistics(companyName)),
     dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName })),
+    dispatch(queryCompanyPolicyReviewStatistics(companyName)),
+    dispatch(queryCompanyEsgSalaryData({ companyName })),
     // helmet use
     dispatch(queryCompanyTopNJobTitles({ companyName })),
   ]);

@@ -9,16 +9,7 @@ import {
 } from 'recharts';
 
 import styles from './PolicyBarChart.module.css';
-
-export type PolicyItem = {
-  label: string;
-  percentage: number;
-};
-
-export type PolicyDistribution = {
-  dataCount: number;
-  items: PolicyItem[];
-};
+import { PolicyDistribution, PolicyItem } from './policyTypes';
 
 const BAR_SIZE = 20;
 const BAR_CATEGORY_GAP = 6;

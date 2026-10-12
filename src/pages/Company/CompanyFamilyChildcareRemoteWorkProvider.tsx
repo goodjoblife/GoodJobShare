@@ -9,8 +9,8 @@ import { paramsSelector } from 'common/routing/selectors';
 import LeavePolicySection, {
   FilterOption,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
-import { LeaveBulletByLabel } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
 import { toLeaveSection } from 'components/CompanyAndJobTitle/policyReviewStatistics';
+import { LeaveBulletByLabel } from 'components/CompanyAndJobTitle/policyTypes';
 import remoteWorkIcon from 'components/CompanyAndJobTitle/remoteWorkIcon.svg';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { Policy } from 'constants/policy';

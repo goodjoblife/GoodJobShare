@@ -15,10 +15,8 @@ import {
 import FetchBox from 'utils/fetchBox';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import LeaveSectionBlock, {
-  LeaveBulletByLabel,
-  LeaveSection,
-} from '../LeaveSectionBlock';
+import LeaveSectionBlock from '../LeaveSectionBlock';
+import { LeaveBulletByLabel, LeaveSection } from '../policyTypes';
 import FilterToggleButton from './FilterToggleButton';
 import styles from './styles.module.css';
 
