@@ -1,12 +1,9 @@
 import { LocationDescriptor } from 'history';
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
-import {
-  CreatePolicyReviewGroupResult,
-  PolicyReviewInput,
-} from 'apis/createPolicyReviewGroup';
+import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
+import useAppDispatch from 'hooks/useAppDispatch';
 
 import {
   companyOverviewWithPolicyReviewGroupOf,
@@ -47,7 +44,7 @@ const SimpleTypeForm = ({
   sector,
   redirectLocationOnQuit,
 }: Props): React.ReactElement => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const redirectLocationOnSuccess = useCallback(
     (groupId: string) =>
@@ -57,14 +54,14 @@ const SimpleTypeForm = ({
 
   const onSubmit = useCallback(
     async (draft: Record<string, unknown>) => {
-      const { policyReviewGroup } = ((await dispatch(
+      const { policyReviewGroup } = await dispatch(
         createPolicyReviewGroup({
           company: { query: companyName },
           jobTitle,
           sector: sector || undefined,
           policyReviews: toPolicyReviews(draft),
         }),
-      )) as unknown) as CreatePolicyReviewGroupResult;
+      );
       return policyReviewGroup.groupId;
     },
     [companyName, dispatch, jobTitle, sector],

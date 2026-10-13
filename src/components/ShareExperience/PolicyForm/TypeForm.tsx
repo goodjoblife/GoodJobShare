@@ -1,12 +1,8 @@
 import { LocationDescriptor } from 'history';
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
-import {
-  CreatePolicyReviewGroupResult,
-  PolicyReviewInput,
-} from 'apis/createPolicyReviewGroup';
+import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
 import { generatePolicyReviewGroupModal } from 'common/ShareExpSection/shareLinkTo';
 import { generatePageURL, PageType } from 'constants/companyJobTitle';
 import {
@@ -15,6 +11,7 @@ import {
   remoteWorkPolicyByLabel,
   YesNoOrUnknown,
 } from 'constants/policy';
+import useAppDispatch from 'hooks/useAppDispatch';
 
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
@@ -133,11 +130,11 @@ const TypeForm = ({
   open: boolean;
   onClose: () => void;
 }): React.ReactElement => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onSubmit = useCallback(
     async (draft: Record<string, unknown>) => {
-      const { policyReviewGroup } = ((await dispatch(
+      const { policyReviewGroup } = await dispatch(
         createPolicyReviewGroup({
           company: { query: draft[DATA_KEY_COMPANY_NAME] as string },
           jobTitle: draft[DATA_KEY_JOB_TITLE] as string,
@@ -146,7 +143,7 @@ const TypeForm = ({
             toPolicyReviewInput,
           ),
         }),
-      )) as unknown) as CreatePolicyReviewGroupResult;
+      );
       return policyReviewGroup.groupId;
     },
     [dispatch],
