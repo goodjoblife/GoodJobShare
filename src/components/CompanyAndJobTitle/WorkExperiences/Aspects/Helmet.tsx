@@ -1,11 +1,13 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { generatePath } from 'react-router';
 
-import { AspectRatingStatistics } from 'apis/aspectRatingStatistics';
-import { Aspect } from 'constants/companyJobTitle';
+import {
+  Aspect,
+  aspectTranslation,
+  generateAspectURL,
+} from 'constants/companyJobTitle';
 import { SITE_NAME } from 'constants/helmetData';
-import { companyWorkExperiencesAspectPath } from 'constants/linkTo';
+import { AspectRatingStatisticsInIndex } from 'reducers/companyIndex';
 import { formatCanonicalPath, formatTitle } from 'utils/helmetHelper';
 
 // 各面向的延伸關鍵字，會接在公司名稱後面
@@ -22,7 +24,7 @@ const aspectKeywords: Record<Aspect, string[]> = {
 };
 
 const formatKeywords = (companyName: string, aspect: Aspect): string =>
-  [aspect, ...(aspectKeywords[aspect] || []), '評價']
+  [aspectTranslation[aspect], ...(aspectKeywords[aspect] || []), '評價']
     .map(keyword => `${companyName}${keyword}`)
     .join(', ');
 
@@ -30,28 +32,26 @@ type CompanyWorkExperiencesAspectHelmetProps = {
   companyName: string;
   aspect: Aspect;
   page: number;
-  statistics?: AspectRatingStatistics;
+  statistics?: AspectRatingStatisticsInIndex;
 };
 
 const CompanyWorkExperiencesAspectHelmet: React.FC<
   CompanyWorkExperiencesAspectHelmetProps
 > = ({ companyName, aspect, page, statistics }) => {
+  const aspectName = aspectTranslation[aspect];
   const title =
     page === 1
-      ? `${companyName} ${aspect}`
-      : `${companyName} ${aspect} - 第${page}頁`;
+      ? `${companyName} ${aspectName}`
+      : `${companyName} ${aspectName} - 第${page}頁`;
 
-  let description = `${companyName} ${aspect}如何？由${companyName}員工分享的${aspect}一次看。`;
+  let description = `${companyName} ${aspectName}如何？由${companyName}員工分享的${aspectName}一次看。`;
   if (statistics && statistics.ratingCount > 0) {
     const { averageRating, ratingCount } = statistics;
     const rating = averageRating.toFixed(1);
     description += `共 ${ratingCount} 筆評價，平均 ${rating} 分。`;
   }
 
-  const path = generatePath(companyWorkExperiencesAspectPath, {
-    companyName,
-    aspect,
-  });
+  const path = generateAspectURL({ pageName: companyName, aspect });
   const url = formatCanonicalPath(path);
 
   return (
