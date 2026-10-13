@@ -15,7 +15,10 @@ import {
   SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES,
   SET_WORK_EXPERIENCES_ASPECT_STATISTICS,
 } from 'actions/company';
-import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
+import {
+  AspectRatingStatistics,
+  AspectStatisticsData,
+} from 'apis/aspectRatingStatistics';
 import { InterviewExperience, WorkExperience } from 'apis/experience';
 import {
   InterviewExperienceInOverview,
@@ -90,6 +93,22 @@ export type CompanyWorkExperienceResult = {
   workExperiencesCount: number;
 };
 
+// API 的 aspect 是 wire 值（中文），進 store 前由 actions/company.ts 正規化成
+// Aspect，因此 store 裡的形狀與 apis/aspectRatingStatistics 的不同
+export type AspectRatingStatisticsInIndex = Omit<
+  AspectRatingStatistics,
+  'aspect'
+> & {
+  aspect: Aspect;
+};
+
+export type AspectStatisticsDataInIndex = Omit<
+  AspectStatisticsData,
+  'companyAspectRatingStatistics'
+> & {
+  companyAspectRatingStatistics: AspectRatingStatisticsInIndex[];
+};
+
 // Flattened from QueryCompanyWorkExperiencesData, so a type is defined here
 export type CompanyAspectExperienceResult = {
   name: string;
@@ -125,7 +144,7 @@ type State = {
   >;
   workExperiencesAspectStatisticsByName: Record<
     string,
-    FetchBox<AspectStatisticsData | null>
+    FetchBox<AspectStatisticsDataInIndex | null>
   >;
   workExperiencesAspectExperiencesByName: Record<
     string,
@@ -321,7 +340,7 @@ const reducer = createReducer(preloadedState, {
       box,
     }: {
       companyName: string;
-      box: FetchBox<AspectStatisticsData | null>;
+      box: FetchBox<AspectStatisticsDataInIndex | null>;
     },
   ) => {
     return {

@@ -30,9 +30,15 @@ import {
 } from 'apis/salaryWorkTime';
 import subscribeCompanyApi from 'apis/subscribeCompany';
 import unsubscribeCompanyApi from 'apis/unsubscribeCompany';
-import { Aspect } from 'constants/companyJobTitle';
-import { Thunk } from 'reducers';
 import {
+  Aspect,
+  aspectFromAPIValue,
+  aspectToAPIValue,
+} from 'constants/companyJobTitle';
+import { AppThunk, Thunk } from 'reducers';
+import {
+  AspectRatingStatisticsInIndex,
+  AspectStatisticsDataInIndex,
   CompanyAspectExperienceResult,
   CompanyInterviewExperienceResult,
   CompanyOverview,
@@ -666,9 +672,25 @@ export const queryCompanyWorkExperiences = ({
   }
 };
 
+// 後端的 aspect 是 wire 值（中文）。在此正規化成 Aspect，store 之後一律是 enum；
+// 未知的值捨棄，不讓它冒充 Aspect
+const normalizeAspectStatistics = (
+  data: AspectStatisticsData | null,
+): AspectStatisticsDataInIndex | null => {
+  if (data === null) return null;
+  const companyAspectRatingStatistics = data.companyAspectRatingStatistics.reduce(
+    (acc: AspectRatingStatisticsInIndex[], stat) => {
+      const aspect = aspectFromAPIValue(stat.aspect);
+      return aspect === undefined ? acc : [...acc, { ...stat, aspect }];
+    },
+    [],
+  );
+  return { ...data, companyAspectRatingStatistics };
+};
+
 const setWorkExperiencesAspectStatistics = (
   companyName: string,
-  box: FetchBox<AspectStatisticsData | null>,
+  box: FetchBox<AspectStatisticsDataInIndex | null>,
 ): AnyAction => ({
   type: SET_WORK_EXPERIENCES_ASPECT_STATISTICS,
   companyName,
@@ -694,7 +716,12 @@ export const queryCompanyWorkExperiencesAspectStatistics = ({
     const data = await queryCompanyAspectRatingStatisticsApi({
       companyName,
     });
-    dispatch(setWorkExperiencesAspectStatistics(companyName, getFetched(data)));
+    dispatch(
+      setWorkExperiencesAspectStatistics(
+        companyName,
+        getFetched(normalizeAspectStatistics(data)),
+      ),
+    );
   } catch (error) {
     dispatch(setWorkExperiencesAspectStatistics(companyName, getError(error)));
   }
@@ -747,7 +774,7 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
       start,
       limit,
       aspectFilter: {
-        aspect,
+        aspect: aspectToAPIValue(aspect),
         rating: rating === null ? undefined : rating,
       },
     });
@@ -793,7 +820,7 @@ const subscribeCompany = ({
   companyName,
 }: {
   companyName: string;
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
+}): AppThunk<Promise<void>> => async (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
@@ -849,7 +876,7 @@ const unsubscribeCompany = ({
   companyName,
 }: {
   companyName: string;
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
+}): AppThunk<Promise<void>> => async (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
@@ -905,7 +932,7 @@ export const toggleSubscribeCompany = ({
   companyName,
 }: {
   companyName: string;
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
+}): AppThunk<Promise<void>> => async (dispatch, getState) => {
   const state = getState();
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
   if (!isFetched(box) || !box.data) {
@@ -924,7 +951,7 @@ export const queryCompanyIsSubscribed = ({
   companyName,
 }: {
   companyName: string;
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
+}): AppThunk<Promise<void>> => async (dispatch, getState) => {
   const box = companyIsSubscribedBoxSelectorByName(companyName)(getState());
   if (isFetching(box) || isFetched(box)) {
     return;

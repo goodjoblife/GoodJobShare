@@ -3,10 +3,12 @@ import { AnyAction } from 'redux';
 
 import { InterviewExperience, WorkExperience } from 'apis/experience';
 import queryExperienceApi from 'apis/queryExperience';
+import queryExperienceRecommendationApi, {
+  AlgoId,
+} from 'apis/queryExperienceRecommendation';
 import queryPopularExperiencesApi, {
   PopularExperience,
 } from 'apis/queryPopularExperiences';
-import queryRelatedExperiencesApi from 'apis/queryRelatedExperiences';
 import { Thunk } from 'reducers';
 import { RelatedExperiencesState } from 'reducers/experience';
 import { tokenSelector } from 'selectors/authSelector';
@@ -97,10 +99,11 @@ export const queryRelatedExperiencesOnExperience = (
   dispatch(setRelatedExperiences(experienceId, page, toFetching()));
 
   try {
-    const relatedExperiences = await queryRelatedExperiencesApi({
+    const relatedExperiences = await queryExperienceRecommendationApi({
       id: experienceId,
       start: page * 5,
       limit: 5,
+      algoId: AlgoId.LATEST_EXPERIENCE_OF_SAME_COMPANY_OR_JOB_TITLE,
     });
 
     const prev = relatedExperiencesCabinSelector(getState());
@@ -141,10 +144,11 @@ export const loadMoreRelatedExperiences = (): Thunk => async (
   dispatch(setRelatedExperiences(experienceId, page, toFetching(state)));
 
   try {
-    const relatedExperiences = await queryRelatedExperiencesApi({
+    const relatedExperiences = await queryExperienceRecommendationApi({
       id: experienceId,
       start: page * 5,
       limit: 5,
+      algoId: AlgoId.LATEST_EXPERIENCE_OF_SAME_COMPANY_OR_JOB_TITLE,
     });
 
     const prev = relatedExperiencesCabinSelector(getState());
