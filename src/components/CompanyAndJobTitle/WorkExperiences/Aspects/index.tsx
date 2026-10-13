@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import { Heading, Link, Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
@@ -13,7 +12,7 @@ import {
   AspectStatisticsDataInIndex,
   CompanyAspectExperienceResult,
 } from 'reducers/companyIndex';
-import FetchBox, { isFetched } from 'utils/fetchBox';
+import FetchBox from 'utils/fetchBox';
 
 import PageBoxRenderer from '../../PageBoxRenderer';
 import { usePageContext } from '../../PageContextProvider';
@@ -45,22 +44,9 @@ const AspectSection: React.FC<AspectProps> = ({
   const { pageType, pageName, tabType } = usePageContext();
   const parentPath = generateTabURL({ pageType, pageName, tabType });
   const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
-  const statisticsBox = useSelector(statisticsBoxSelector);
-  const statistics =
-    isFetched(statisticsBox) && statisticsBox.data
-      ? statisticsBox.data.companyAspectRatingStatistics.find(
-          item => item.aspect === aspect,
-        )
-      : undefined;
 
   return (
     <>
-      <Helmet
-        companyName={pageName}
-        aspect={aspect}
-        page={page}
-        statistics={statistics}
-      />
       <Wrapper size="l">
         <Link to={parentPath}>&lt;&lt;回到評價分頁</Link>
         <Heading className={styles.title}>{aspectTranslation[aspect]}</Heading>
@@ -72,16 +58,23 @@ const AspectSection: React.FC<AspectProps> = ({
           render={(data: AspectStatisticsDataInIndex): React.ReactNode => {
             const items = data.companyAspectRatingStatistics;
             const item = items.find(item => item.aspect === aspect);
-            if (!item) return null;
-
-            const { averageRating, ratingDistribution, ratingCount } = item;
 
             return (
-              <Summary
-                averageRating={averageRating}
-                ratingDistribution={ratingDistribution}
-                ratingCount={ratingCount}
-              />
+              <>
+                <Helmet
+                  companyName={pageName}
+                  aspect={aspect}
+                  page={page}
+                  statistics={item}
+                />
+                {item && (
+                  <Summary
+                    averageRating={item.averageRating}
+                    ratingDistribution={item.ratingDistribution}
+                    ratingCount={item.ratingCount}
+                  />
+                )}
+              </>
             );
           }}
         />
