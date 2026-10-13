@@ -1,11 +1,17 @@
 import React from 'react';
 
-import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { Heading, Link, Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
-import { Aspect, generateTabURL } from 'constants/companyJobTitle';
+import {
+  Aspect,
+  aspectTranslation,
+  generateTabURL,
+} from 'constants/companyJobTitle';
 import { RootState } from 'reducers';
-import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
+import {
+  AspectStatisticsDataInIndex,
+  CompanyAspectExperienceResult,
+} from 'reducers/companyIndex';
 import FetchBox from 'utils/fetchBox';
 
 import PageBoxRenderer from '../../PageBoxRenderer';
@@ -20,7 +26,7 @@ export type AspectProps = {
   aspect: Aspect;
   statisticsBoxSelector: (
     state: RootState,
-  ) => FetchBox<AspectStatisticsData | null>;
+  ) => FetchBox<AspectStatisticsDataInIndex | null>;
   experiencesBoxSelector: (
     state: RootState,
   ) => FetchBox<CompanyAspectExperienceResult | null>;
@@ -43,13 +49,13 @@ const AspectSection: React.FC<AspectProps> = ({
     <>
       <Wrapper size="l">
         <Link to={parentPath}>&lt;&lt;回到評價分頁</Link>
-        <Heading className={styles.title}>{aspect}</Heading>
+        <Heading className={styles.title}>{aspectTranslation[aspect]}</Heading>
         <PageBoxRenderer
           pageType={pageType}
           pageName={pageName}
           tabType={tabType}
           boxSelector={statisticsBoxSelector}
-          render={(data: AspectStatisticsData): React.ReactNode => {
+          render={(data: AspectStatisticsDataInIndex): React.ReactNode => {
             const items = data.companyAspectRatingStatistics;
             const item = items.find(item => item.aspect === aspect);
             if (!item) return null;

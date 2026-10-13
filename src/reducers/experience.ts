@@ -4,11 +4,11 @@ import {
   SET_RELATED_EXPERIENCES,
 } from 'actions/experience';
 import { InterviewExperience, WorkExperience } from 'apis/experience';
-import { PopularExperience } from 'apis/queryPopularExperiences';
 import {
   InterviewExperienceInRelatedExperiences,
   WorkExperienceInRelatedExperiences,
-} from 'apis/queryRelatedExperiences';
+} from 'apis/queryExperienceRecommendation';
+import { PopularExperience } from 'apis/queryPopularExperiences';
 import createReducer from 'utils/createReducer';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
 
