@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import {
   queryCompanyIsSubscribed,
@@ -11,6 +11,7 @@ import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
 import BellBlackImage from 'common/icons/bellBlack.svg';
 import BellWhiteImage from 'common/icons/bellWhite.svg';
 import useLoginFlow from 'components/ExperienceDetail/hooks/useLoginFlow';
+import useAppDispatch from 'hooks/useAppDispatch';
 import { companyIsSubscribedBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import FetchBox, { isFetched } from 'utils/fetchBox';
 
@@ -33,7 +34,7 @@ type SubscribeNotificationButtonProps = {
 const SubscribeNotificationButton: React.FC<
   SubscribeNotificationButtonProps
 > = ({ companyName }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const box = useCompanyIsSubscribedBox(companyName);
 
   const handleToggleSubscribeCompany = useCallback(async () => {

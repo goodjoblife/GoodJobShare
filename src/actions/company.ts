@@ -32,7 +32,7 @@ import {
   aspectFromAPIValue,
   aspectToAPIValue,
 } from 'constants/companyJobTitle';
-import { Thunk } from 'reducers';
+import { AppThunk, Thunk } from 'reducers';
 import {
   AspectRatingStatisticsInIndex,
   AspectStatisticsDataInIndex,
@@ -784,7 +784,7 @@ const subscribeCompany = ({
   companyName,
 }: {
   companyName: string;
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
+}): AppThunk<Promise<void>> => async (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
@@ -840,7 +840,7 @@ const unsubscribeCompany = ({
   companyName,
 }: {
   companyName: string;
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
+}): AppThunk<Promise<void>> => async (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
@@ -896,7 +896,7 @@ export const toggleSubscribeCompany = ({
   companyName,
 }: {
   companyName: string;
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
+}): AppThunk<Promise<void>> => async (dispatch, getState) => {
   const state = getState();
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
   if (!isFetched(box) || !box.data) {
@@ -915,7 +915,7 @@ export const queryCompanyIsSubscribed = ({
   companyName,
 }: {
   companyName: string;
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
+}): AppThunk<Promise<void>> => async (dispatch, getState) => {
   const box = companyIsSubscribedBoxSelectorByName(companyName)(getState());
   if (isFetching(box) || isFetched(box)) {
     return;
