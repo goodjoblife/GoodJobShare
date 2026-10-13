@@ -11,7 +11,9 @@ export type CompanyOverview = { ... };
 
 // ✓ interface when extension is the intent
 export interface ServerSideRender<Params> { fetchData: ... }
-export interface Thunk<A extends Action> { ... }
+
+// ✓ function types
+export type Thunk<A extends Action> = (dispatch: Dispatch<A>, getState: GetState) => unknown;
 ```
 
 ## Where types live
