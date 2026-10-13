@@ -25,9 +25,9 @@
   position: relative;
   overflow: hidden;
   flex: 1 1 calc(100% / 3);
-  margin-left: 40px;
-  margin-right: 40px;
-  padding: 40px;
+  margin-left: 16px;
+  margin-right: 16px;
+  padding: 24px;
   text-align: center;
   transition-property: background, box-shadow;
   transition-duration: 0.3s;
@@ -49,11 +49,6 @@
         opacity: 1;
       }
     }
-  }
-
-  @media (max-width: 1024px) {
-    margin-left: 16px;
-    margin-right: 16px;
   }
 
   @media (max-width: 850px) {
