@@ -1,10 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { generatePath } from 'react-router';
 
-import { AspectRatingStatistics } from 'apis/aspectRatingStatistics';
-import { Aspect } from 'constants/companyJobTitle';
-import { companyWorkExperiencesAspectPath } from 'constants/linkTo';
+import {
+  Aspect,
+  aspectTranslation,
+  generateAspectURL,
+} from 'constants/companyJobTitle';
+import { AspectRatingStatisticsInIndex } from 'reducers/companyIndex';
 import { companyWorkExperiencesAspectStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { isFetched } from 'utils/fetchBox';
 
@@ -13,7 +15,7 @@ import ScoreCard from './ScoreCard';
 
 const useAllAspectRatingStatistics = (
   companyName: string,
-): AspectRatingStatistics[] => {
+): AspectRatingStatisticsInIndex[] => {
   const box = useSelector(
     companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
   );
@@ -27,7 +29,7 @@ const useAspectData = ({
 }: {
   companyName: string;
   aspect: Aspect;
-}): AspectRatingStatistics | undefined => {
+}): AspectRatingStatisticsInIndex | undefined => {
   const stats = useAllAspectRatingStatistics(companyName);
   return stats.find(item => item.aspect === aspect);
 };
@@ -35,10 +37,10 @@ const useAspectData = ({
 export const useAspectsData = (
   companyName: string,
   aspects: Aspect[],
-): AspectRatingStatistics[] => {
+): AspectRatingStatisticsInIndex[] => {
   const stats = useAllAspectRatingStatistics(companyName);
   return stats.filter(
-    stat => aspects.includes(stat.aspect as Aspect) && stat.ratingCount > 0,
+    stat => aspects.includes(stat.aspect) && stat.ratingCount > 0,
   );
 };
 
@@ -50,10 +52,7 @@ interface AspectScoreCardProps {
 
 const AspectScoreCard: React.FC<AspectScoreCardProps> = ({ aspect }) => {
   const companyName = useCompanyName();
-  const path = generatePath(companyWorkExperiencesAspectPath, {
-    companyName,
-    aspect,
-  });
+  const path = generateAspectURL({ pageName: companyName, aspect });
 
   const data = useAspectData({ companyName, aspect });
   if (!data) return null;
@@ -61,7 +60,7 @@ const AspectScoreCard: React.FC<AspectScoreCardProps> = ({ aspect }) => {
   const { averageRating, ratingCount } = data;
   return (
     <ScoreCard
-      title={aspect}
+      title={aspectTranslation[aspect]}
       value={averageRating}
       maxValue={5}
       linkTo={path}
