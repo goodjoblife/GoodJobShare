@@ -88,7 +88,7 @@ export const aspectTranslation: Record<Aspect, string> = {
   [Aspect.PROMOTION]: '升遷制度',
 };
 
-const aspectURLMap: Record<Aspect, string> = {
+const aspectPathComponentMap: Record<Aspect, string> = {
   [Aspect.GENDER]: 'gender-friendly',
   [Aspect.WORK_LIFE_BALANCE]: 'work-life-balance',
   [Aspect.COMPENSATION]: 'compensation',
@@ -119,7 +119,7 @@ const invert = (map: Record<Aspect, string>): Record<string, Aspect> =>
     {},
   );
 
-const aspectByURL = invert(aspectURLMap);
+const aspectByPathComponent = invert(aspectPathComponentMap);
 const aspectByAPIValue = invert(aspectAPIMap);
 
 export const aspectToAPIValue = (aspect: Aspect): string =>
@@ -127,8 +127,8 @@ export const aspectToAPIValue = (aspect: Aspect): string =>
 
 // 網址上的值由使用者輸入，查不到是合法情況（拼錯、舊網址），
 // 由呼叫端決定要 redirect 還是 NotFound
-export const aspectFromURL = (slug: string): Aspect | undefined =>
-  aspectByURL[slug];
+export const aspectFromPathComponent = (slug: string): Aspect | undefined =>
+  aspectByPathComponent[slug];
 
 // 後端回傳未知的 aspect 時捨棄該筆，不讓未知字串冒充 Aspect
 export const aspectFromAPIValue = (value: string): Aspect | undefined =>
@@ -174,7 +174,7 @@ export const generateAspectURL = ({
 }): string =>
   generatePath(companyWorkExperiencesAspectPath, {
     companyName: pageName,
-    aspect: aspectURLMap[aspect],
+    aspect: aspectPathComponentMap[aspect],
   });
 
 export const generateIndexURL = ({

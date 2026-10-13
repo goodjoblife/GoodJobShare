@@ -15,7 +15,7 @@ import useRating from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/use
 import {
   Aspect,
   aspectFromAPIValue,
-  aspectFromURL,
+  aspectFromPathComponent,
   generateAspectURL,
   PAGE_SIZE,
   PageType,
@@ -139,7 +139,7 @@ const CompanyWorkExperiencesAspectProvider: React.FC &
   const companyName = useCompanyNameParam();
   const slug = useAspectSlugParam();
 
-  const aspect = aspectFromURL(slug);
+  const aspect = aspectFromPathComponent(slug);
   if (aspect !== undefined) {
     return <CompanyWorkExperiencesAspectPage aspect={aspect} />;
   }

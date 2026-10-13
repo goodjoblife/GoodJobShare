@@ -32,7 +32,7 @@ export const aspectTranslation: Record<Aspect, string> = {
   [Aspect.GENDER]: '性別友善度',   // 只給人看
 };
 
-const aspectURLMap: Record<Aspect, string> = {
+const aspectPathComponentMap: Record<Aspect, string> = {
   [Aspect.GENDER]: 'gender-friendly',   // 只給 URL，完整清單見下一節
 };
 
@@ -48,7 +48,7 @@ const aspectAPIMap: Record<Aspect, string> = {
 | 函式 | 用途 | 查不到時 |
 |---|---|---|
 | `generateAspectURL({ pageName, aspect })` | 產生連結，與 `generateTabURL` 對齊 | 型別保證，不會發生 |
-| `aspectFromURL(slug)` | route param → `Aspect` | 回傳 `undefined`，由呼叫端決定 redirect 或 404 |
+| `aspectFromPathComponent(slug)` | route param → `Aspect` | 回傳 `undefined`，由呼叫端決定 redirect 或 404 |
 | `aspectFromAPIValue(wire)` | API 回應 → `Aspect` | 回傳 `undefined`，捨棄該筆 |
 
 ---
@@ -111,7 +111,7 @@ slug 一旦上線就是對外契約，改動要再留一組 redirect。命名有
 
 | 位置 | 動作 |
 |---|---|
-| `pages/Company/useAspect.tsx` | 改名 `useAspectParam.ts`（與 `useCompanyNameParam` / `useJobTitleParam` 對齊），提供 `useAspectSlugParam`（原始 slug）與 `aspectSelector`（SSR 的 `fetchData` 用，用 `aspectFromURL` 反查）。Provider 先看 slug 才決定渲染、redirect 或 NotFound，所以不提供直接回傳 `Aspect` 的 hook |
+| `pages/Company/useAspect.tsx` | 改名 `useAspectParam.ts`（與 `useCompanyNameParam` / `useJobTitleParam` 對齊），提供 `useAspectSlugParam`（原始 slug）與 `aspectSelector`（SSR 的 `fetchData` 用，用 `aspectFromPathComponent` 反查）。Provider 先看 slug 才決定渲染、redirect 或 NotFound，所以不提供直接回傳 `Aspect` 的 hook |
 | 同上 | 移除 `(aspect ? decodeURIComponent(aspect) : '') as Aspect` —— param 缺少時丟錯；壞掉的百分號編碼退回原字串（查不到，走 NotFound），不丟 `URIError` |
 | `pages/Company/CompanyWorkExperiencesAspectProvider.tsx:30,71,129` | 更新 import 與呼叫 |
 | `components/…/Overview/AspectScoreCard.tsx:56` | `generatePath(...)` 改用 `generateAspectURL` |
@@ -123,7 +123,7 @@ slug 一旦上線就是對外契約，改動要再留一組 redirect。命名有
 中文網址已在外流傳（分享連結、搜尋結果），不能直接失效。`routes.js` 已有 `companyOverviewLegacyPath` 的 redirect 先例，比照處理：
 
 ```
-aspectFromURL(slug) 命中        → 正常渲染
+aspectFromPathComponent(slug) 命中        → 正常渲染
 slug 是合法的舊中文值           → 301 導到英文 slug
 兩者皆非                        → NotFound
 ```

@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import { Aspect, aspectFromURL } from 'constants/companyJobTitle';
+import { Aspect, aspectFromPathComponent } from 'constants/companyJobTitle';
 
 // Matches the React Router route params for the aspect sub page.
 // aspect 標成 optional：useParams 在沒有這個 param 的路由一樣會回傳物件
@@ -27,7 +27,7 @@ const aspectSlugSelector = (params: Params): string =>
 
 // undefined 代表網址上的值不是合法 slug —— 使用者拼錯或舊網址，不是程式錯誤
 export const aspectSelector = (params: Params): Aspect | undefined =>
-  aspectFromURL(aspectSlugSelector(params));
+  aspectFromPathComponent(aspectSlugSelector(params));
 
 // 名字帶 Param 的理由見 pages/Company/useCompanyNameParam
 export const useAspectSlugParam = (): string =>
