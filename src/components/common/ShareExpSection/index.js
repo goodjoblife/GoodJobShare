@@ -7,6 +7,7 @@ import { Heading, P, Section, Wrapper } from 'common/base';
 import SalaryWorkTimeImg from './share-1.png';
 import InterviewImg from './share-2.png';
 import WorkExperienceImg from './share-3.png';
+import PolicyImg from './share-4.png';
 import styles from './ShareExpSection.module.css';
 import {
   generateShareInterviewTypeForm,
@@ -75,11 +76,7 @@ const ShareExpSection = ({ heading, Subheading }) => {
             </P>
           </Link>
           <Link to={generateSharePolicyForm()} className={styles.item}>
-            <img
-              src={SalaryWorkTimeImg}
-              alt="分享公司制度"
-              className={styles.image}
-            />
+            <img src={PolicyImg} alt="分享公司制度" className={styles.image} />
             <P size="l" Tag="h3" bold className={styles.button}>
               制度
             </P>
