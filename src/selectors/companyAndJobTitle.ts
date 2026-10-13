@@ -1,4 +1,3 @@
-import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { CompanyInIndex } from 'apis/queryCompanies';
 import { CompanyIsSubscribed } from 'apis/queryCompanyIsSubscribed';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
@@ -7,6 +6,7 @@ import { JobTitleInIndex } from 'apis/queryJobTitles';
 import { OvertimeStats } from 'apis/salaryWorkTime';
 import { RootState } from 'reducers';
 import {
+  AspectStatisticsDataInIndex,
   CompanyAspectExperienceResult,
   CompanyInterviewExperienceResult,
   CompanyOverview,
@@ -82,7 +82,7 @@ export const companyWorkExperiencesBoxSelectorByName = (
 
 export const companyWorkExperiencesAspectStatisticsBoxSelectorByName = (
   companyName: string,
-) => (state: RootState): FetchBox<AspectStatisticsData | null> =>
+) => (state: RootState): FetchBox<AspectStatisticsDataInIndex | null> =>
   state.companyIndex.workExperiencesAspectStatisticsByName[companyName] ||
   getUnfetched();
 

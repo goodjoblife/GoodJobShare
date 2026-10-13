@@ -1,11 +1,20 @@
 import { ExperienceType } from 'apis/experience';
 import graphqlClient from 'utils/graphqlClient';
 
-const queryRelatedExperiencesGql = /* GraphQL */ `
-  query($id: ID!, $start: Int!, $limit: Int!) {
-    experience(id: $id) {
-      id
-      relatedExperiences(start: $start, limit: $limit) {
+export enum AlgoId {
+  ERNIE_TWO_TOWER_V1 = 'ERNIE_TWO_TOWER_V1',
+  LATEST_EXPERIENCE_OF_SAME_COMPANY_OR_JOB_TITLE = 'LatestExperienceOfSameCompanyOrJobTitle',
+}
+
+const queryExperienceRecommendationGql = /* GraphQL */ `
+  query($experienceId: ID!, $start: Int!, $limit: Int!, $algoId: AlgoIdEnum!) {
+    experienceRecommendation(
+      experienceId: $experienceId
+      start: $start
+      limit: $limit
+      algoId: $algoId
+    ) {
+      experiences {
         id
         type
         originalCompanyName
@@ -108,10 +117,10 @@ type RawInterviewExperience = Omit<
   sections: { interview_subtitle: string; content: string }[];
 };
 
-type QueryRelatedExperiencesData = {
-  experience: {
-    relatedExperiences: (RawWorkExperience | RawInterviewExperience)[];
-  } | null;
+type QueryExperienceRecommendationData = {
+  experienceRecommendation: {
+    experiences: (RawWorkExperience | RawInterviewExperience)[] | null;
+  };
 };
 
 const resolveWorkExperience = (
@@ -140,32 +149,34 @@ const resolveInterviewExperience = (
   };
 };
 
-const queryRelatedExperiences = ({
+const queryExperienceRecommendation = ({
   id,
   start,
   limit,
+  algoId,
 }: {
   id: string;
   start: number;
   limit: number;
+  algoId: AlgoId;
 }): Promise<
   (
     | WorkExperienceInRelatedExperiences
     | InterviewExperienceInRelatedExperiences)[]
 > =>
-  graphqlClient<QueryRelatedExperiencesData>({
-    query: queryRelatedExperiencesGql,
-    variables: { id, start, limit },
-  }).then(({ experience }) => {
-    if (experience === null) {
+  graphqlClient<QueryExperienceRecommendationData>({
+    query: queryExperienceRecommendationGql,
+    variables: { experienceId: id, start, limit, algoId },
+  }).then(({ experienceRecommendation: { experiences } }) => {
+    if (experiences === null) {
       return [];
     }
 
-    return experience.relatedExperiences.map(raw =>
+    return experiences.map(raw =>
       raw.__typename === 'WorkExperience'
         ? resolveWorkExperience(raw)
         : resolveInterviewExperience(raw),
     );
   });
 
-export default queryRelatedExperiences;
+export default queryExperienceRecommendation;
