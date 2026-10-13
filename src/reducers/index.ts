@@ -37,17 +37,16 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   AnyAction
 >;
 
-export interface Thunk<A extends Action = AnyAction> {
-  (dispatch: Dispatch<A>, getState: GetState): unknown;
-}
+export type Thunk<A extends Action = AnyAction> = (
+  dispatch: Dispatch<A>,
+  getState: GetState,
+) => unknown;
 
-export interface Dispatch<A extends Action = AnyAction> {
-  <T extends A>(action: T | Thunk<T>): T;
-}
+export type Dispatch<A extends Action = AnyAction> = <T extends A>(
+  action: T | Thunk<T>,
+) => T;
 
-export interface GetState {
-  (): RootState;
-}
+export type GetState = () => RootState;
 
 const persistConfig = {
   key: PERSIST_KEY,
