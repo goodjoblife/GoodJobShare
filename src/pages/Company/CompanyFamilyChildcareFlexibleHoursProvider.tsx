@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { queryRatingStatistics } from 'actions/company';
+import {
+  queryCompanyPolicyReviewStatistics,
+  queryRatingStatistics,
+} from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
+import { FLEXIBLE_HOURS_AVAILABILITY_BULLET_BY_LABEL } from 'components/CompanyAndJobTitle/constants';
+import flexibleHoursIcon from 'components/CompanyAndJobTitle/flexibleHoursIcon.svg';
 import LeavePolicySection, {
   FilterOption,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
-import { LeaveSection } from 'components/CompanyAndJobTitle/LeaveSectionBlock';
+import { toLeaveSection } from 'components/CompanyAndJobTitle/policyReviewStatistics';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
+import { Policy } from 'constants/policy';
 import { usePage } from 'hooks/routing/page';
 import { ServerSideRender } from 'types/serverSideRender';
 
@@ -15,19 +21,8 @@ import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
 import useCompanyPolicyReviewsBox from './useCompanyPolicyReviewsBox';
+import useCompanyPolicyReviewStatistics from './useCompanyPolicyReviewStatistics';
 import useHasPolicyFilter from './useHasPolicyFilter';
-
-const SECTION: LeaveSection = {
-  dataCount: 100,
-  availability: {
-    dataCount: 100,
-    items: [
-      { label: '是', percentage: 15 },
-      { label: '否', percentage: 60 },
-      { label: '不知道', percentage: 25 },
-    ],
-  },
-};
 
 const FILTER_OPTIONS: FilterOption[] = [
   { value: 'yes', label: '有彈性上下班時間' },
@@ -55,14 +50,22 @@ const CompanyFamilyChildcareFlexibleHoursProvider: React.FC &
     dispatch(queryRatingStatistics(companyName));
   }, [dispatch, companyName]);
 
+  const policyReviewStatistics = useCompanyPolicyReviewStatistics(companyName);
+  const section = toLeaveSection(
+    policyReviewStatistics,
+    Policy.FLEXIBLE_WORKING_HOUR,
+  );
+
   return (
     <LeavePolicySection
       pageType={PageType.COMPANY}
       pageName={companyName}
       tabType={TabType.FAMILY_CHILDCARE}
       title="彈性上下班時間制度"
+      icon={flexibleHoursIcon}
       availabilityTitle="是否有彈性上下班時間制度？"
-      section={SECTION}
+      availabilityBulletByLabel={FLEXIBLE_HOURS_AVAILABILITY_BULLET_BY_LABEL}
+      section={section}
       availabilityColumnTitle="是否有彈性上下班時間制度"
       filterOptions={FILTER_OPTIONS}
       selectedHasPolicy={selectedHasPolicy}
@@ -80,7 +83,10 @@ CompanyFamilyChildcareFlexibleHoursProvider.fetchData = async ({
 }): Promise<unknown> => {
   const params = paramsSelector<Params>(props);
   const companyName = companyNameSelector(params);
-  return dispatch(queryRatingStatistics(companyName));
+  return Promise.all([
+    dispatch(queryRatingStatistics(companyName)),
+    dispatch(queryCompanyPolicyReviewStatistics(companyName)),
+  ]);
 };
 
 export default CompanyFamilyChildcareFlexibleHoursProvider;

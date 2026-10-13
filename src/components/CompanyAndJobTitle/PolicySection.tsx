@@ -2,11 +2,9 @@ import React from 'react';
 
 import { Heading } from 'common/base';
 
-import LeaveSectionBlock, {
-  LeaveBulletByLabel,
-  LeaveSection,
-} from './LeaveSectionBlock';
+import LeaveSectionBlock from './LeaveSectionBlock';
 import styles from './PolicySection.module.css';
+import { LeaveBulletByLabel, LeaveSection } from './policyTypes';
 
 type Props = {
   className?: string;
