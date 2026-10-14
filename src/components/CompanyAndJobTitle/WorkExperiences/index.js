@@ -4,6 +4,7 @@ import React, { Fragment } from 'react';
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import { Aspects, PageType } from 'constants/companyJobTitle';
+import { fetchBoxPropType } from 'utils/fetchBox';
 
 import PageBoxRenderer from '../PageBoxRenderer';
 import { useCompanyName, usePageContext } from '../PageContextProvider';
@@ -35,7 +36,7 @@ const AspectScoreCards = () => {
   );
 };
 
-const WorkExperiences = ({ boxSelector, page, pageSize }) => {
+const WorkExperiences = ({ workExperiencesBox, page, pageSize }) => {
   const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
   const { pageType, pageName, tabType } = usePageContext();
 
@@ -53,7 +54,7 @@ const WorkExperiences = ({ boxSelector, page, pageSize }) => {
           pageType={pageType}
           pageName={pageName}
           tabType={tabType}
-          boxSelector={boxSelector}
+          box={workExperiencesBox}
           render={({ workExperiences, workExperiencesCount: totalCount }) => {
             return (
               <Fragment>
@@ -83,9 +84,9 @@ const WorkExperiences = ({ boxSelector, page, pageSize }) => {
 };
 
 WorkExperiences.propTypes = {
-  boxSelector: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   pageSize: PropTypes.number.isRequired,
+  workExperiencesBox: fetchBoxPropType.isRequired,
 };
 
 export default WorkExperiences;

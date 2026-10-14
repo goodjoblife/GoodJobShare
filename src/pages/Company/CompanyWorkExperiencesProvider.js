@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   queryCompanyWorkExperiences,
@@ -16,38 +16,23 @@ import {
 import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
+import useBoxWithLatestExperiences from 'hooks/useBoxWithLatestExperiences';
 import usePermission from 'hooks/usePermission';
 import { companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import {
   pageFromQuerySelector,
   queryFromQuerySelector,
 } from 'selectors/routing';
-import { getFetched, isFetched } from 'utils/fetchBox';
 
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
 
-const useWorkExperiencesBoxSelector = pageName => {
-  return useCallback(
-    state => {
-      const box = workExperiencesBoxSelectorByName(pageName)(state);
-      if (isFetched(box) && box.data) {
-        // Get experience data from state.experiences, which serves
-        // as the source of truth of experiences.
-        const data = {
-          ...box.data,
-          workExperiences: box.data.workExperiences.map(
-            e => experienceBoxSelectorAtId(e.id)(state).data || e,
-          ),
-        };
-        return getFetched(data);
-      }
-      return box;
-    },
-    [pageName],
-  );
+const useWorkExperiencesBox = pageName => {
+  const selector = useMemo(() => workExperiencesBoxSelectorByName(pageName), [
+    pageName,
+  ]);
+  return useBoxWithLatestExperiences(useSelector(selector), 'workExperiences');
 };
 
 const CompanyWorkExperiencesProvider = () => {
@@ -85,7 +70,7 @@ const CompanyWorkExperiencesProvider = () => {
     fetchPermission();
   }, [pageType, companyName, fetchPermission]);
 
-  const boxSelector = useWorkExperiencesBoxSelector(companyName);
+  const workExperiencesBox = useWorkExperiencesBox(companyName);
 
   return (
     <CompanyAndJobTitleWrapper
@@ -96,7 +81,7 @@ const CompanyWorkExperiencesProvider = () => {
       <WorkExperiences
         page={page}
         pageSize={PAGE_SIZE}
-        boxSelector={boxSelector}
+        workExperiencesBox={workExperiencesBox}
       />
     </CompanyAndJobTitleWrapper>
   );
