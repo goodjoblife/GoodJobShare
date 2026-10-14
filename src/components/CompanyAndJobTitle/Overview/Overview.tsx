@@ -12,18 +12,19 @@ import {
 } from 'reducers/jobTitleIndex';
 import FetchBox from 'utils/fetchBox';
 
-import PageBoxRenderer, { BoxSource } from '../PageBoxRenderer';
+import PageBoxRenderer from '../PageBoxRenderer';
 import { usePageContext } from '../PageContextProvider';
 import { CompanyOverviewHelmet, JobTitleOverviewHelmet } from './Helmet';
 import OverviewSection from './OverviewSection';
 
-type OverviewProps = BoxSource<CompanyOverview | JobTitleOverview> & {
+type OverviewProps = {
+  box: FetchBox<CompanyOverview | JobTitleOverview | null>;
   statisticsBox: FetchBox<
     CompanyOverviewStatistics | JobTitleOverviewStatistics | null
   >;
 };
 
-const Overview: React.FC<OverviewProps> = ({ statisticsBox, ...boxSource }) => {
+const Overview: React.FC<OverviewProps> = ({ box, statisticsBox }) => {
   const { pageType, pageName, tabType } = usePageContext();
 
   return (
@@ -32,7 +33,7 @@ const Overview: React.FC<OverviewProps> = ({ statisticsBox, ...boxSource }) => {
         pageType={pageType}
         pageName={pageName}
         tabType={tabType}
-        {...boxSource}
+        box={box}
         render={(data): React.ReactNode => (
           <>
             {pageType === PageType.COMPANY ? (
