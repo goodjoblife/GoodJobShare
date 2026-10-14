@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import {
   queryCompanyWorkExperiencesAspectExperiences,
   queryCompanyWorkExperiencesAspectStatistics,
 } from 'actions/company';
+import { ExperienceType, WorkExperience } from 'apis/experience';
 import Redirect from 'common/routing/Redirect';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import NotFound from 'components/common/NotFound';
@@ -21,13 +22,14 @@ import {
   TabType,
 } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
-import useBoxWithLatestExperiences from 'hooks/useBoxWithLatestExperiences';
 import usePermission from 'hooks/usePermission';
+import { RootState } from 'reducers';
 import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
 import {
   companyWorkExperiencesAspectExperiencesBoxSelectorByName as workExperiencesAspectExperiencesBoxSelectorByName,
   companyWorkExperiencesAspectStatisticsBoxSelectorByName as workExperiencesAspectStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
+import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import {
   pageFromQuerySelector,
   ratingFromQuerySelector,
@@ -47,7 +49,35 @@ const useWorkExperiencesAspectExperiencesBox = (
     () => workExperiencesAspectExperiencesBoxSelectorByName(pageName),
     [pageName],
   );
-  return useBoxWithLatestExperiences(useSelector(selector), 'workExperiences');
+  const box = useSelector(selector);
+  const workExperiences = box.data ? box.data.workExperiences : null;
+
+  // Get experience data from state.experiences, which serves as the source of
+  // truth of experiences. shallowEqual keeps the array stable unless one of
+  // the experiences actually changed.
+  const latestWorkExperiences = useSelector(
+    (state: RootState): WorkExperience[] | null =>
+      workExperiences
+        ? workExperiences.map((e: WorkExperience) => {
+            const cached = experienceBoxSelectorAtId(e.id)(state).data;
+            // experienceById is keyed across all experience types, so narrow
+            // back to WorkExperience before using the cached copy.
+            return cached && cached.type === ExperienceType.WORK ? cached : e;
+          })
+        : null,
+    shallowEqual,
+  );
+
+  return useMemo(
+    () =>
+      box.data && latestWorkExperiences
+        ? {
+            ...box,
+            data: { ...box.data, workExperiences: latestWorkExperiences },
+          }
+        : box,
+    [box, latestWorkExperiences],
+  );
 };
 
 type Params = {

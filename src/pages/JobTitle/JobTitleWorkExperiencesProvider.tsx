@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { queryJobTitleWorkExperiences } from 'actions/jobTitle';
+import { ExperienceType, WorkExperience } from 'apis/experience';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
@@ -12,10 +13,11 @@ import {
 import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
-import useBoxWithLatestExperiences from 'hooks/useBoxWithLatestExperiences';
 import usePermission from 'hooks/usePermission';
+import { RootState } from 'reducers';
 import { JobTitleWorkExperienceResult } from 'reducers/jobTitleIndex';
 import { jobTitleWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
+import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import {
   pageFromQuerySelector,
   queryFromQuerySelector,
@@ -31,7 +33,35 @@ const useWorkExperiencesBox = (
   const selector = useMemo(() => workExperiencesBoxSelectorByName(pageName), [
     pageName,
   ]);
-  return useBoxWithLatestExperiences(useSelector(selector), 'workExperiences');
+  const box = useSelector(selector);
+  const workExperiences = box.data ? box.data.workExperiences : null;
+
+  // Get experience data from state.experiences, which serves as the source of
+  // truth of experiences. shallowEqual keeps the array stable unless one of
+  // the experiences actually changed.
+  const latestWorkExperiences = useSelector(
+    (state: RootState): WorkExperience[] | null =>
+      workExperiences
+        ? workExperiences.map((e: WorkExperience) => {
+            const cached = experienceBoxSelectorAtId(e.id)(state).data;
+            // experienceById is keyed across all experience types, so narrow
+            // back to WorkExperience before using the cached copy.
+            return cached && cached.type === ExperienceType.WORK ? cached : e;
+          })
+        : null,
+    shallowEqual,
+  );
+
+  return useMemo(
+    () =>
+      box.data && latestWorkExperiences
+        ? {
+            ...box,
+            data: { ...box.data, workExperiences: latestWorkExperiences },
+          }
+        : box,
+    [box, latestWorkExperiences],
+  );
 };
 
 // Matches the React Router route params for JobTitle pages
