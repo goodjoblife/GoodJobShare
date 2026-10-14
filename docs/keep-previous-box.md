@@ -36,7 +36,22 @@ const box = useKeepPreviousBox(useSelector(selector), 'CompanyIndex');
 return <IndexList indexesBox={box} ... />;
 ```
 
-`scope` 要選到「換掉就不該再看到舊內容」的粒度。例如公司頁用 `companyName`：換公司時不能顯示別間公司的資料（`PageBoxRenderer` 會因 `data.name !== pageName` 而 redirect）。
+## `scope`
+
+`scope` 回答的問題是：這次沒有資料的 box，跟上一次有資料的 box，算不算同一份內容？算才沿用舊資料。
+
+- hook 用 `ref` 記住最後一次有資料的 `{ scope, data }`。box 有 data 時更新並原樣回傳（不比對 scope）；沒有 data 時，只在 `previous.scope === scope`（字串全等）才補舊 data。
+- 選到「換掉就不該再看到舊內容」的粒度：在這個粒度內換 box（換頁、換篩選）可沿用舊畫面，跨過就不行。
+
+| 用在哪 | `scope` | 理由 |
+| --- | --- | --- |
+| 公司、職稱列表 | 固定字串（`'CompanyIndex'`、`'JobTitleIndex'`） | 換頁都是同一份列表 |
+| 公司的薪資、面試、工作經驗（日後套用時） | `companyName` | 換查詢條件可沿用，換公司不行 |
+| 職稱的各分頁（日後套用時） | `jobTitle` | 同上 |
+
+- **換公司一定要換 `scope`**：路由參數改變時元件通常不會 unmount，ref 還在。`scope` 不變的話，新公司載入期間會顯示舊公司的列表，`PageBoxRenderer` 還會因 `data.name !== pageName` 誤 redirect。
+- **一個 box 一次 hook 呼叫**：`scope` 只是字串比對，不是 hook 的身份。同一個元件有兩個 box 要保留，要各呼叫一次，不要共用。
+- **粒度**：太粗（整個 app 用同一個常數）會把不相關的內容當同一份；太細（把頁碼放進 `scope`）則每次換頁都不補，等於沒用。
 
 ## 注意事項
 
