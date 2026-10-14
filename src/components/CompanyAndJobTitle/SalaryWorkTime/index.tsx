@@ -5,7 +5,6 @@ import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import BoxRenderer, { BoxesRenderer } from 'common/StatusRenderer';
 import { PageType } from 'constants/companyJobTitle';
-import { RootState } from 'reducers';
 import {
   CompanyOverviewStatistics,
   CompanySalaryWorkTimeResult,
@@ -18,7 +17,7 @@ import { EsgYearStatistics } from 'utils/esgYearUtils';
 import FetchBox from 'utils/fetchBox';
 
 import SummaryBlock from '../Overview/SummaryBlock';
-import PageBoxRenderer from '../PageBoxRenderer';
+import PageBoxRenderer, { BoxSource } from '../PageBoxRenderer';
 import { usePageContext } from '../PageContextProvider';
 import EsgBlock from './EsgBlock';
 import Helmet from './Helmet';
@@ -34,8 +33,7 @@ type SalaryWorkTimePageData = Pick<
   'name' | 'salaryWorkTimes' | 'salaryWorkTimesCount'
 >;
 
-type Props = {
-  boxSelector: (state: RootState) => FetchBox<SalaryWorkTimePageData | null>;
+type Props = BoxSource<SalaryWorkTimePageData> & {
   statisticsBox: FetchBox<
     CompanyOverviewStatistics | JobTitleOverviewStatistics | null
   >;
@@ -48,7 +46,6 @@ type Props = {
 };
 
 const SalaryWorkTime: React.FC<Props> = ({
-  boxSelector,
   statisticsBox,
   salaryWorkTimeStatisticsBox,
   page,
@@ -56,6 +53,7 @@ const SalaryWorkTime: React.FC<Props> = ({
   topNJobTitles,
   onCloseReport,
   esgSalaryDataBox,
+  ...boxSource
 }) => {
   const [createPageLinkTo, handleSectionRef, sectionY] = useCreatePageLinkTo();
   const { pageType, pageName, tabType } = usePageContext();
@@ -110,7 +108,7 @@ const SalaryWorkTime: React.FC<Props> = ({
           pageType={pageType}
           pageName={pageName}
           tabType={tabType}
-          boxSelector={boxSelector}
+          {...boxSource}
           render={({
             salaryWorkTimes,
             salaryWorkTimesCount: totalCount,
