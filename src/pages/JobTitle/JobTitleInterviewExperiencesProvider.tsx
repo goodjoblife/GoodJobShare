@@ -1,39 +1,56 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { queryJobTitleWorkExperiences } from 'actions/jobTitle';
+import { queryJobTitleInterviewExperiences } from 'actions/jobTitle';
+import { ExperienceType, InterviewExperience } from 'apis/experience';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
+import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 import {
   sortByFromQuerySelector,
   useSortByFromQuery,
 } from 'components/CompanyAndJobTitle/Sorter';
-import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
 import usePermission from 'hooks/usePermission';
-import { jobTitleWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
+import { RootState } from 'reducers';
+import { JobTitleInterviewExperienceResult } from 'reducers/jobTitleIndex';
+import { jobTitleInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import {
   pageFromQuerySelector,
   queryFromQuerySelector,
 } from 'selectors/routing';
-import { getFetched, isFetched } from 'utils/fetchBox';
+import { ServerSideRender } from 'types/serverSideRender';
+import FetchBox, { getFetched, isFetched } from 'utils/fetchBox';
 
 import useJobTitleParam, { jobTitleSelector } from './useJobTitleParam';
 
-const useWorkExperiencesBoxSelector = pageName => {
+const useInterviewExperiencesBoxSelector = (
+  pageName: string,
+): ((
+  state: RootState,
+) => FetchBox<JobTitleInterviewExperienceResult | null>) => {
   return useCallback(
-    state => {
-      const box = workExperiencesBoxSelectorByName(pageName)(state);
+    (state: RootState): FetchBox<JobTitleInterviewExperienceResult | null> => {
+      const box = jobTitleInterviewExperiencesBoxSelectorByName(pageName)(
+        state,
+      );
       if (isFetched(box) && box.data) {
         // Get experience data from state.experiences, which serves
         // as the source of truth of experiences.
-        const data = {
+        const data: JobTitleInterviewExperienceResult = {
           ...box.data,
-          workExperiences: box.data.workExperiences.map(
-            e => experienceBoxSelectorAtId(e.id)(state).data || e,
+          interviewExperiences: box.data.interviewExperiences.map(
+            (e: InterviewExperience) => {
+              const cached = experienceBoxSelectorAtId(e.id)(state).data;
+              // experienceById is keyed across all experience types, so narrow
+              // back to InterviewExperience before using the cached copy.
+              return cached && cached.type === ExperienceType.INTERVIEW
+                ? cached
+                : e;
+            },
           ),
         };
         return getFetched(data);
@@ -44,7 +61,11 @@ const useWorkExperiencesBoxSelector = pageName => {
   );
 };
 
-const JobTitleWorkExperiencesProvider = () => {
+// Matches the React Router route params for JobTitle pages
+type Params = { jobTitle: string };
+
+const JobTitleInterviewExperiencesProvider: React.FC &
+  ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
   const pageType = PageType.JOB_TITLE;
   const jobTitle = useJobTitleParam();
@@ -56,7 +77,7 @@ const JobTitleWorkExperiencesProvider = () => {
 
   useEffect(() => {
     dispatch(
-      queryJobTitleWorkExperiences({
+      queryJobTitleInterviewExperiences({
         jobTitle,
         companyName: companyName || undefined,
         start,
@@ -71,15 +92,15 @@ const JobTitleWorkExperiencesProvider = () => {
     fetchPermission();
   }, [pageType, jobTitle, fetchPermission]);
 
-  const boxSelector = useWorkExperiencesBoxSelector(jobTitle);
+  const boxSelector = useInterviewExperiencesBoxSelector(jobTitle);
 
   return (
     <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={jobTitle}
-      tabType={TabType.WORK_EXPERIENCE}
+      tabType={TabType.INTERVIEW_EXPERIENCE}
     >
-      <WorkExperiences
+      <InterviewExperiences
         page={page}
         pageSize={PAGE_SIZE}
         boxSelector={boxSelector}
@@ -88,11 +109,11 @@ const JobTitleWorkExperiencesProvider = () => {
   );
 };
 
-JobTitleWorkExperiencesProvider.fetchData = ({
+JobTitleInterviewExperiencesProvider.fetchData = async ({
   store: { dispatch },
   ...props
-}) => {
-  const params = paramsSelector(props);
+}): Promise<unknown> => {
+  const params = paramsSelector<Params>(props);
   const jobTitle = jobTitleSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
@@ -101,7 +122,7 @@ JobTitleWorkExperiencesProvider.fetchData = ({
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   return dispatch(
-    queryJobTitleWorkExperiences({
+    queryJobTitleInterviewExperiences({
       jobTitle,
       companyName,
       start,
@@ -111,4 +132,4 @@ JobTitleWorkExperiencesProvider.fetchData = ({
   );
 };
 
-export default JobTitleWorkExperiencesProvider;
+export default JobTitleInterviewExperiencesProvider;
