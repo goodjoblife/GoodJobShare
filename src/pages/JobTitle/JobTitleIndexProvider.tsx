@@ -7,6 +7,7 @@ import { querySelector } from 'common/routing/selectors';
 import IndexList from 'components/CompanyAndJobTitle/IndexList';
 import usePagination from 'components/CompanyAndJobTitle/IndexList/usePagination';
 import { PAGE_SIZE, PageType } from 'constants/companyJobTitle';
+import usePreviousBox from 'hooks/usePreviousBox';
 import {
   jobTitleIndexesBoxSelectorAtPage,
   jobTitlesCountSelector,
@@ -19,7 +20,11 @@ const JobTitleIndexProvider: React.FC & ServerSideRender = () => {
   const selector = useMemo(() => jobTitleIndexesBoxSelectorAtPage(page), [
     page,
   ]);
-  const jobTitleIndexesBox = useSelector(selector);
+  // 換頁時新頁尚未載入，先沿用上一頁的資料避免閃 Loader
+  const jobTitleIndexesBox = usePreviousBox(
+    useSelector(selector),
+    'JobTitleIndex',
+  );
   const totalCount = useSelector(jobTitlesCountSelector);
 
   const dispatch = useDispatch();
