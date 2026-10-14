@@ -6,6 +6,7 @@ import {
   queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
+import { ExperienceType, WorkExperience } from 'apis/experience';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
@@ -17,30 +18,38 @@ import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
 import usePermission from 'hooks/usePermission';
+import { RootState } from 'reducers';
+import { CompanyWorkExperienceResult } from 'reducers/companyIndex';
 import { companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import {
   pageFromQuerySelector,
   queryFromQuerySelector,
 } from 'selectors/routing';
-import { getFetched, isFetched } from 'utils/fetchBox';
+import { ServerSideRender } from 'types/serverSideRender';
+import FetchBox, { getFetched, isFetched } from 'utils/fetchBox';
 
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
 
-const useWorkExperiencesBoxSelector = pageName => {
+const useWorkExperiencesBoxSelector = (
+  pageName: string,
+): ((state: RootState) => FetchBox<CompanyWorkExperienceResult | null>) => {
   return useCallback(
-    state => {
+    (state: RootState): FetchBox<CompanyWorkExperienceResult | null> => {
       const box = workExperiencesBoxSelectorByName(pageName)(state);
       if (isFetched(box) && box.data) {
         // Get experience data from state.experiences, which serves
         // as the source of truth of experiences.
-        const data = {
+        const data: CompanyWorkExperienceResult = {
           ...box.data,
-          workExperiences: box.data.workExperiences.map(
-            e => experienceBoxSelectorAtId(e.id)(state).data || e,
-          ),
+          workExperiences: box.data.workExperiences.map((e: WorkExperience) => {
+            const cached = experienceBoxSelectorAtId(e.id)(state).data;
+            // experienceById is keyed across all experience types, so narrow
+            // back to WorkExperience before using the cached copy.
+            return cached && cached.type === ExperienceType.WORK ? cached : e;
+          }),
         };
         return getFetched(data);
       }
@@ -50,7 +59,11 @@ const useWorkExperiencesBoxSelector = pageName => {
   );
 };
 
-const CompanyWorkExperiencesProvider = () => {
+// Matches the React Router route params for Company pages
+type Params = { companyName: string };
+
+const CompanyWorkExperiencesProvider: React.FC &
+  ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
   const companyName = useCompanyNameParam();
@@ -105,8 +118,8 @@ const CompanyWorkExperiencesProvider = () => {
 CompanyWorkExperiencesProvider.fetchData = ({
   store: { dispatch },
   ...props
-}) => {
-  const params = paramsSelector(props);
+}): Promise<unknown> => {
+  const params = paramsSelector<Params>(props);
   const companyName = companyNameSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
