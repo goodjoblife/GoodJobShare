@@ -17,7 +17,7 @@ import { EsgYearStatistics } from 'utils/esgYearUtils';
 import FetchBox from 'utils/fetchBox';
 
 import SummaryBlock from '../Overview/SummaryBlock';
-import PageBoxRenderer, { BoxSource } from '../PageBoxRenderer';
+import PageBoxRenderer from '../PageBoxRenderer';
 import { usePageContext } from '../PageContextProvider';
 import EsgBlock from './EsgBlock';
 import Helmet from './Helmet';
@@ -33,7 +33,8 @@ type SalaryWorkTimePageData = Pick<
   'name' | 'salaryWorkTimes' | 'salaryWorkTimesCount'
 >;
 
-type Props = BoxSource<SalaryWorkTimePageData> & {
+type Props = {
+  box: FetchBox<SalaryWorkTimePageData | null>;
   statisticsBox: FetchBox<
     CompanyOverviewStatistics | JobTitleOverviewStatistics | null
   >;
@@ -46,6 +47,7 @@ type Props = BoxSource<SalaryWorkTimePageData> & {
 };
 
 const SalaryWorkTime: React.FC<Props> = ({
+  box,
   statisticsBox,
   salaryWorkTimeStatisticsBox,
   page,
@@ -53,7 +55,6 @@ const SalaryWorkTime: React.FC<Props> = ({
   topNJobTitles,
   onCloseReport,
   esgSalaryDataBox,
-  ...boxSource
 }) => {
   const [createPageLinkTo, handleSectionRef, sectionY] = useCreatePageLinkTo();
   const { pageType, pageName, tabType } = usePageContext();
@@ -108,7 +109,7 @@ const SalaryWorkTime: React.FC<Props> = ({
           pageType={pageType}
           pageName={pageName}
           tabType={tabType}
-          {...boxSource}
+          box={box}
           render={({
             salaryWorkTimes,
             salaryWorkTimesCount: totalCount,
