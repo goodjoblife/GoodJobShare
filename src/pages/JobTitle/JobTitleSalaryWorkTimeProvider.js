@@ -53,14 +53,12 @@ const useSalaryWorkTimeStatisticsBox = pageName => {
   return useSelector(selector);
 };
 
-const useSalaryWorkTimeBoxSelector = pageName => {
-  return useCallback(
-    state => {
-      const jobTitle = jobTitleSalaryWorktimeBoxSelectorByName(pageName)(state);
-      return jobTitle;
-    },
+const useSalaryWorkTimeBox = pageName => {
+  const selector = useMemo(
+    () => jobTitleSalaryWorktimeBoxSelectorByName(pageName),
     [pageName],
   );
+  return useSelector(selector);
 };
 
 const JobTitleSalaryWorkTimeProvider = () => {
@@ -135,7 +133,7 @@ const JobTitleSalaryWorkTimeProvider = () => {
     fetchPermission();
   }, [pageType, jobTitle, fetchPermission]);
 
-  const boxSelector = useSalaryWorkTimeBoxSelector(jobTitle);
+  const salaryWorkTimeBox = useSalaryWorkTimeBox(jobTitle);
 
   const statisticsBox = useOverviewStatisticsBox(jobTitle);
   const salaryWorkTimeStatisticsBox = useSalaryWorkTimeStatisticsBox(jobTitle);
@@ -150,7 +148,7 @@ const JobTitleSalaryWorkTimeProvider = () => {
         page={page}
         pageSize={PAGE_SIZE}
         salaryWorkTimeStatisticsBox={salaryWorkTimeStatisticsBox}
-        boxSelector={boxSelector}
+        box={salaryWorkTimeBox}
         statisticsBox={statisticsBox}
         onCloseReport={() => handleQueryJobTitleSalaryWorkTime({ force: true })}
       />

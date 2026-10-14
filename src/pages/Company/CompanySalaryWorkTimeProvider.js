@@ -60,16 +60,12 @@ const useSalaryWorkTimeStatisticsBox = pageName => {
   return useSelector(selector);
 };
 
-const useSalaryWorkTimeBoxSelector = companyName => {
-  return useCallback(
-    state => {
-      const company = companySalaryWorkTimeBoxSelectorByName(companyName)(
-        state,
-      );
-      return company;
-    },
+const useSalaryWorkTimeBox = companyName => {
+  const selector = useMemo(
+    () => companySalaryWorkTimeBoxSelectorByName(companyName),
     [companyName],
   );
+  return useSelector(selector);
 };
 
 const useEsgSalaryDataBox = companyName => {
@@ -180,7 +176,7 @@ const CompanySalaryWorkTimeProvider = () => {
   const topNJobTitles = useTopNJobTitles(companyName);
   const esgSalaryDataBox = useEsgSalaryDataBox(companyName);
 
-  const boxSelector = useSalaryWorkTimeBoxSelector(companyName);
+  const salaryWorkTimeBox = useSalaryWorkTimeBox(companyName);
 
   return (
     <CompanyAndJobTitleWrapper
@@ -194,7 +190,7 @@ const CompanySalaryWorkTimeProvider = () => {
         topNJobTitles={topNJobTitles.salary}
         esgSalaryDataBox={esgSalaryDataBox}
         salaryWorkTimeStatisticsBox={salaryWorkTimeStatisticsBox}
-        boxSelector={boxSelector}
+        box={salaryWorkTimeBox}
         statisticsBox={statisticsBox}
         onCloseReport={() => handleQueryCompanySalaryWorkTime({ force: true })}
       />
