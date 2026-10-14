@@ -9,7 +9,7 @@ import EmptyView from '../EmptyView';
 import Experience from '../Experience';
 import styles from '../styles.module.css';
 
-const WorkExperiences = ({
+const InterviewExperiencesSection = ({
   pageType,
   pageName,
   tabType,
@@ -52,7 +52,7 @@ const WorkExperiences = ({
   );
 };
 
-WorkExperiences.propTypes = {
+InterviewExperiencesSection.propTypes = {
   createPageLinkTo: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
@@ -63,4 +63,4 @@ WorkExperiences.propTypes = {
   totalCount: PropTypes.number.isRequired,
 };
 
-export default WorkExperiences;
+export default InterviewExperiencesSection;

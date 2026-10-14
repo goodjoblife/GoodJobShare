@@ -8,7 +8,7 @@ import { Aspects, PageType } from 'constants/companyJobTitle';
 import PageBoxRenderer from '../PageBoxRenderer';
 import { useCompanyName, usePageContext } from '../PageContextProvider';
 import Helmet from './Helmet';
-import WorkExperiencesSection from './WorkExperiences';
+import WorkExperiencesSection from './WorkExperiencesSection';
 import AspectScoreCard, { useAspectsData } from '../AspectScoreCard';
 import SearchBar from '../SearchBar';
 import Sorter from '../Sorter';

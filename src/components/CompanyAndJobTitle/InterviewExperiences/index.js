@@ -7,7 +7,7 @@ import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import PageBoxRenderer from '../PageBoxRenderer';
 import { usePageContext } from '../PageContextProvider';
 import InterviewExperienceHelmet from './Helmet';
-import InterviewExperiencesSection from './InterviewExperiences';
+import InterviewExperiencesSection from './InterviewExperiencesSection';
 import SearchBar from '../SearchBar';
 import Sorter from '../Sorter';
 import styles from '../styles.module.css';
