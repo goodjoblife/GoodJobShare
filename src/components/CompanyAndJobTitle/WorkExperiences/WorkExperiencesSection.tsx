@@ -1,15 +1,28 @@
-import PropTypes from 'prop-types';
+import { LocationDescriptor } from 'history';
 import React from 'react';
 
+import { WorkExperience } from 'apis/experience';
 import { Section, Wrapper } from 'common/base';
 import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
+import { PageType, TabType } from 'constants/companyJobTitle';
 
 import EmptyView from '../EmptyView';
 import Experience from '../Experience';
 import styles from '../styles.module.css';
 
-const WorkExperiencesSection = ({
+type Props = {
+  pageType: PageType;
+  pageName: string;
+  tabType: TabType;
+  data: WorkExperience[];
+  page: number;
+  pageSize: number;
+  totalCount: number;
+  createPageLinkTo: (p: number) => LocationDescriptor;
+};
+
+const WorkExperiencesSection: React.FC<Props> = ({
   pageType,
   pageName,
   tabType,
@@ -50,17 +63,6 @@ const WorkExperiencesSection = ({
       </Wrapper>
     </Section>
   );
-};
-
-WorkExperiencesSection.propTypes = {
-  createPageLinkTo: PropTypes.func.isRequired,
-  data: PropTypes.arrayOf(PropTypes.object),
-  page: PropTypes.number.isRequired,
-  pageName: PropTypes.string.isRequired,
-  pageSize: PropTypes.number.isRequired,
-  pageType: PropTypes.string.isRequired,
-  tabType: PropTypes.string.isRequired,
-  totalCount: PropTypes.number.isRequired,
 };
 
 export default WorkExperiencesSection;
