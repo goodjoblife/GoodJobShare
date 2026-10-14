@@ -7,6 +7,7 @@ import { querySelector } from 'common/routing/selectors';
 import IndexList from 'components/CompanyAndJobTitle/IndexList';
 import usePagination from 'components/CompanyAndJobTitle/IndexList/usePagination';
 import { PAGE_SIZE, PageType } from 'constants/companyJobTitle';
+import useKeepPreviousBox from 'hooks/useKeepPreviousBox';
 import {
   companiesCountSelector,
   companyIndexesBoxSelectorAtPage,
@@ -17,7 +18,11 @@ import { ServerSideRender } from 'types/serverSideRender';
 const CompanyIndexProvider: React.FC & ServerSideRender = () => {
   const [page, getPageLink] = usePagination();
   const selector = useMemo(() => companyIndexesBoxSelectorAtPage(page), [page]);
-  const companyIndexesBox = useSelector(selector);
+  // 換頁時新頁尚未載入，先沿用上一頁的資料避免閃 Loader
+  const companyIndexesBox = useKeepPreviousBox(
+    useSelector(selector),
+    'CompanyIndex',
+  );
   const totalCount = useSelector(companiesCountSelector);
 
   const dispatch = useDispatch();
