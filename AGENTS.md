@@ -45,3 +45,7 @@ For type definition conventions (`type` vs `interface`, where types live, placem
 ### Server-Side Rendering (SSR) with `fetchData`
 
 Pages that need SSR data fetching attach a static `fetchData` method to the component. See [docs/ssr-fetch-data.md](docs/ssr-fetch-data.md).
+
+### 換頁／換條件時顯示上一筆資料
+
+列表換頁、換篩選時要保留舊內容而不是閃 Loader，見 [docs/keep-previous-box.md](docs/keep-previous-box.md)。
