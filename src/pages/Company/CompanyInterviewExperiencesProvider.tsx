@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   queryCompanyInterviewExperiences,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
-import { ExperienceType, InterviewExperience } from 'apis/experience';
+import { ExperienceType } from 'apis/experience';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
@@ -17,11 +17,10 @@ import {
 } from 'components/CompanyAndJobTitle/Sorter';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
+import useBoxWithLatestExperiences from 'hooks/useBoxWithLatestExperiences';
 import usePermission from 'hooks/usePermission';
-import { RootState } from 'reducers';
 import { CompanyInterviewExperienceResult } from 'reducers/companyIndex';
 import { companyInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import {
   pageFromQuerySelector,
   queryFromQuerySelector,
@@ -42,38 +41,10 @@ const useInterviewExperiencesBox = (
     [pageName],
   );
   const box = useSelector(selector);
-  const interviewExperiences = box.data ? box.data.interviewExperiences : null;
-
-  // Get experience data from state.experiences, which serves as the source of
-  // truth of experiences. shallowEqual keeps the array stable unless one of
-  // the experiences actually changed.
-  const latestInterviewExperiences = useSelector(
-    (state: RootState): InterviewExperience[] | null =>
-      interviewExperiences
-        ? interviewExperiences.map((e: InterviewExperience) => {
-            const cached = experienceBoxSelectorAtId(e.id)(state).data;
-            // experienceById is keyed across all experience types, so narrow
-            // back to InterviewExperience before using the cached copy.
-            return cached && cached.type === ExperienceType.INTERVIEW
-              ? cached
-              : e;
-          })
-        : null,
-    shallowEqual,
-  );
-
-  return useMemo(
-    () =>
-      box.data && latestInterviewExperiences
-        ? {
-            ...box,
-            data: {
-              ...box.data,
-              interviewExperiences: latestInterviewExperiences,
-            },
-          }
-        : box,
-    [box, latestInterviewExperiences],
+  return useBoxWithLatestExperiences(
+    box,
+    'interviewExperiences',
+    ExperienceType.INTERVIEW,
   );
 };
 
