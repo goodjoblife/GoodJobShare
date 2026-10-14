@@ -1,15 +1,16 @@
-import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import { Aspects, PageType } from 'constants/companyJobTitle';
-import { fetchBoxPropType } from 'utils/fetchBox';
+import { CompanyWorkExperienceResult } from 'reducers/companyIndex';
+import { JobTitleWorkExperienceResult } from 'reducers/jobTitleIndex';
+import FetchBox from 'utils/fetchBox';
 
 import PageBoxRenderer from '../PageBoxRenderer';
 import { useCompanyName, usePageContext } from '../PageContextProvider';
 import Helmet from './Helmet';
-import WorkExperiencesSection from './WorkExperiences';
+import WorkExperiencesSection from './WorkExperiencesSection';
 import AspectScoreCard, { useAspectsData } from '../AspectScoreCard';
 import SearchBar from '../SearchBar';
 import Sorter from '../Sorter';
@@ -17,7 +18,7 @@ import styles from '../styles.module.css';
 
 // 面向評分只有公司才有，抽成獨立元件讓 useAspectsData 與 useCompanyName
 // 只在公司頁執行
-const AspectScoreCards = () => {
+const AspectScoreCards: React.FC = () => {
   const companyName = useCompanyName();
   const aspectModels = useAspectsData(companyName, Aspects);
   if (aspectModels.length === 0) return null;
@@ -36,7 +37,19 @@ const AspectScoreCards = () => {
   );
 };
 
-const WorkExperiences = ({ workExperiencesBox, page, pageSize }) => {
+type Props = {
+  workExperiencesBox: FetchBox<
+    CompanyWorkExperienceResult | JobTitleWorkExperienceResult | null
+  >;
+  page: number;
+  pageSize: number;
+};
+
+const WorkExperiences: React.FC<Props> = ({
+  workExperiencesBox,
+  page,
+  pageSize,
+}) => {
   const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
   const { pageType, pageName, tabType } = usePageContext();
 
@@ -55,7 +68,10 @@ const WorkExperiences = ({ workExperiencesBox, page, pageSize }) => {
           pageName={pageName}
           tabType={tabType}
           box={workExperiencesBox}
-          render={({ workExperiences, workExperiencesCount: totalCount }) => {
+          render={({
+            workExperiences,
+            workExperiencesCount: totalCount,
+          }): React.ReactNode => {
             return (
               <Fragment>
                 <Helmet
@@ -81,12 +97,6 @@ const WorkExperiences = ({ workExperiencesBox, page, pageSize }) => {
       </Wrapper>
     </Fragment>
   );
-};
-
-WorkExperiences.propTypes = {
-  page: PropTypes.number.isRequired,
-  pageSize: PropTypes.number.isRequired,
-  workExperiencesBox: fetchBoxPropType.isRequired,
 };
 
 export default WorkExperiences;

@@ -1,19 +1,29 @@
-import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
-import { fetchBoxPropType } from 'utils/fetchBox';
+import { CompanyInterviewExperienceResult } from 'reducers/companyIndex';
+import { JobTitleInterviewExperienceResult } from 'reducers/jobTitleIndex';
+import FetchBox from 'utils/fetchBox';
 
 import PageBoxRenderer from '../PageBoxRenderer';
 import { usePageContext } from '../PageContextProvider';
 import InterviewExperienceHelmet from './Helmet';
-import InterviewExperiencesSection from './InterviewExperiences';
+import InterviewExperiencesSection from './InterviewExperiencesSection';
 import SearchBar from '../SearchBar';
 import Sorter from '../Sorter';
 import styles from '../styles.module.css';
 
-const InterviewExperiences = ({
+type Props = {
+  interviewExperiencesBox: FetchBox<
+    CompanyInterviewExperienceResult | JobTitleInterviewExperienceResult | null
+  >;
+  page: number;
+  pageSize: number;
+  topNJobTitles?: { name: string }[];
+};
+
+const InterviewExperiences: React.FC<Props> = ({
   interviewExperiencesBox,
   page,
   pageSize,
@@ -39,7 +49,7 @@ const InterviewExperiences = ({
           render={({
             interviewExperiences,
             interviewExperiencesCount: totalCount,
-          }) => {
+          }): React.ReactNode => {
             return (
               <Fragment>
                 <InterviewExperienceHelmet
@@ -66,17 +76,6 @@ const InterviewExperiences = ({
       </Wrapper>
     </Fragment>
   );
-};
-
-InterviewExperiences.propTypes = {
-  interviewExperiencesBox: fetchBoxPropType.isRequired,
-  page: PropTypes.number.isRequired,
-  pageSize: PropTypes.number.isRequired,
-  topNJobTitles: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }),
-  ),
 };
 
 export default InterviewExperiences;
