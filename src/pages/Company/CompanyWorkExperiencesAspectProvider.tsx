@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   queryCompanyWorkExperiencesAspectExperiences,
   queryCompanyWorkExperiencesAspectStatistics,
 } from 'actions/company';
-import { ExperienceType, WorkExperience } from 'apis/experience';
 import Redirect from 'common/routing/Redirect';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import NotFound from 'components/common/NotFound';
@@ -22,52 +21,33 @@ import {
   TabType,
 } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
+import useBoxWithLatestExperiences from 'hooks/useBoxWithLatestExperiences';
 import usePermission from 'hooks/usePermission';
-import { RootState } from 'reducers';
 import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
 import {
   companyWorkExperiencesAspectExperiencesBoxSelectorByName as workExperiencesAspectExperiencesBoxSelectorByName,
   companyWorkExperiencesAspectStatisticsBoxSelectorByName as workExperiencesAspectStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
-import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import {
   pageFromQuerySelector,
   ratingFromQuerySelector,
 } from 'selectors/routing';
 import { ServerSideRender } from 'types/serverSideRender';
-import FetchBox, { getFetched, isFetched } from 'utils/fetchBox';
+import FetchBox from 'utils/fetchBox';
 
 import { aspectSelector, useAspectSlugParam } from './useAspectParam';
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
 
-const useWorkExperiencesAspectExperiencesBoxSelector = (
+const useWorkExperiencesAspectExperiencesBox = (
   pageName: string,
-): ((state: RootState) => FetchBox<CompanyAspectExperienceResult | null>) => {
-  return useCallback(
-    (state: RootState): FetchBox<CompanyAspectExperienceResult | null> => {
-      const box = workExperiencesAspectExperiencesBoxSelectorByName(pageName)(
-        state,
-      );
-      if (isFetched(box) && box.data) {
-        // Get experience data from state.experiences, which serves
-        // as the source of truth of experiences.
-        const data: CompanyAspectExperienceResult = {
-          ...box.data,
-          workExperiences: box.data.workExperiences.map((e: WorkExperience) => {
-            const cached = experienceBoxSelectorAtId(e.id)(state).data;
-            // experienceById is keyed across all experience types, so narrow
-            // back to WorkExperience before using the cached copy.
-            return cached && cached.type === ExperienceType.WORK ? cached : e;
-          }),
-        };
-        return getFetched(data);
-      }
-      return box;
-    },
+): FetchBox<CompanyAspectExperienceResult | null> => {
+  const selector = useMemo(
+    () => workExperiencesAspectExperiencesBoxSelectorByName(pageName),
     [pageName],
   );
+  return useBoxWithLatestExperiences(useSelector(selector), 'workExperiences');
 };
 
 type Params = {
@@ -107,13 +87,13 @@ const CompanyWorkExperiencesAspectPage: React.FC<{ aspect: Aspect }> = ({
     (fetchPermission as () => Promise<void>)();
   }, [pageType, companyName, fetchPermission]);
 
-  const statisticsBoxSelector = workExperiencesAspectStatisticsBoxSelectorByName(
-    companyName,
+  const statisticsSelector = useMemo(
+    () => workExperiencesAspectStatisticsBoxSelectorByName(companyName),
+    [companyName],
   );
+  const statisticsBox = useSelector(statisticsSelector);
 
-  const experiencesBoxSelector = useWorkExperiencesAspectExperiencesBoxSelector(
-    companyName,
-  );
+  const experiencesBox = useWorkExperiencesAspectExperiencesBox(companyName);
 
   return (
     <CompanyAndJobTitleWrapper
@@ -125,8 +105,8 @@ const CompanyWorkExperiencesAspectPage: React.FC<{ aspect: Aspect }> = ({
         aspect={aspect}
         page={page as number}
         pageSize={PAGE_SIZE}
-        statisticsBoxSelector={statisticsBoxSelector}
-        experiencesBoxSelector={experiencesBoxSelector}
+        statisticsBox={statisticsBox}
+        experiencesBox={experiencesBox}
       />
     </CompanyAndJobTitleWrapper>
   );

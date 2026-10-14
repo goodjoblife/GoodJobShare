@@ -3,6 +3,7 @@ import React, { Fragment } from 'react';
 
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
+import { fetchBoxPropType } from 'utils/fetchBox';
 
 import PageBoxRenderer from '../PageBoxRenderer';
 import { usePageContext } from '../PageContextProvider';
@@ -13,7 +14,7 @@ import Sorter from '../Sorter';
 import styles from '../styles.module.css';
 
 const InterviewExperiences = ({
-  boxSelector,
+  interviewExperiencesBox,
   page,
   pageSize,
   topNJobTitles,
@@ -34,7 +35,7 @@ const InterviewExperiences = ({
           pageType={pageType}
           pageName={pageName}
           tabType={tabType}
-          boxSelector={boxSelector}
+          box={interviewExperiencesBox}
           render={({
             interviewExperiences,
             interviewExperiencesCount: totalCount,
@@ -68,7 +69,7 @@ const InterviewExperiences = ({
 };
 
 InterviewExperiences.propTypes = {
-  boxSelector: PropTypes.func.isRequired,
+  interviewExperiencesBox: fetchBoxPropType.isRequired,
   page: PropTypes.number.isRequired,
   pageSize: PropTypes.number.isRequired,
   topNJobTitles: PropTypes.arrayOf(
