@@ -7,6 +7,7 @@ import {
 } from 'actions/company';
 import Glike from 'common/icons/Glike';
 import { paramsSelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import familyCareLeaveIcon from 'components/CompanyAndJobTitle/familyCareLeaveIcon.svg';
 import LeavePolicySection, {
   FilterOption,
@@ -71,26 +72,29 @@ const CompanyFamilyChildcareFamilyCareLeaveProvider: React.FC &
   );
 
   return (
-    <LeavePolicySection
+    <CompanyAndJobTitleWrapper
       pageType={PageType.COMPANY}
       pageName={companyName}
       tabType={TabType.FAMILY_CHILDCARE}
-      title="家庭照顧假"
-      icon={familyCareLeaveIcon}
-      availabilityTitle="是否請得到家庭照顧假？"
-      availabilityBulletByLabel={AVAILABILITY_BULLET_BY_LABEL}
-      complianceTitle="家庭照顧假法規符合度"
-      complianceBulletByLabel={COMPLIANCE_BULLET_BY_LABEL}
-      section={section}
-      availabilityColumnTitle="是否請得到家庭照顧假"
-      complianceColumnTitle="勞基法符合度"
-      filterOptions={FILTER_OPTIONS}
-      selectedHasPolicy={selectedHasPolicy}
-      onToggleHasPolicy={toggleHasPolicy}
-      reviewsBox={reviewsBox}
-      page={page}
-      pageSize={PAGE_SIZE}
-    />
+    >
+      <LeavePolicySection
+        title="家庭照顧假"
+        icon={familyCareLeaveIcon}
+        availabilityTitle="是否請得到家庭照顧假？"
+        availabilityBulletByLabel={AVAILABILITY_BULLET_BY_LABEL}
+        complianceTitle="家庭照顧假法規符合度"
+        complianceBulletByLabel={COMPLIANCE_BULLET_BY_LABEL}
+        section={section}
+        availabilityColumnTitle="是否請得到家庭照顧假"
+        complianceColumnTitle="勞基法符合度"
+        filterOptions={FILTER_OPTIONS}
+        selectedHasPolicy={selectedHasPolicy}
+        onToggleHasPolicy={toggleHasPolicy}
+        reviewsBox={reviewsBox}
+        page={page}
+        pageSize={PAGE_SIZE}
+      />
+    </CompanyAndJobTitleWrapper>
   );
 };
 
