@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useWindowScroll, useWindowSize } from 'react-use';
 
+import { InterviewExperience, WorkExperience } from 'apis/experience';
 import { Heading, Wrapper } from 'common/base';
 import Article from 'components/ExperienceDetail/Article';
 import VISIBILITY from 'components/ExperienceDetail/Article/visibility';
@@ -18,10 +18,16 @@ import { formatSimpleDate } from 'utils/dateUtil';
 import styles from './Experience.module.css';
 import MessageBoard from '../ExperienceDetail/MessageBoard';
 
-const useTracePreviewRef = ({ experience }) => {
+type ExperienceProps = {
+  experience: WorkExperience | InterviewExperience;
+};
+
+const useTracePreviewRef = ({
+  experience,
+}: ExperienceProps): React.RefObject<HTMLDivElement | null> => {
   const { height: windowHeight } = useWindowSize();
   const { y: windowY } = useWindowScroll();
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const [hasTracedPreview, setTracedPreview] = useState(false);
   const trackPreview = useTrackEvent();
@@ -29,6 +35,7 @@ const useTracePreviewRef = ({ experience }) => {
   useEffect(() => {
     if (hasTracedPreview) return;
 
+    if (!ref.current) return;
     const elementBottom = ref.current.offsetTop + ref.current.scrollHeight;
     if (windowY > elementBottom - windowHeight) {
       trackPreview(ACTION.PREVIEW, experience.id, CONTENT_TYPE.EXPERIENCE);
@@ -46,14 +53,26 @@ const useTracePreviewRef = ({ experience }) => {
  * If in job title's work/interview experience listing page, only show "${company name} ${data type}"
  *  - For example, under 軟體工程師 面試經驗列表，title 僅會顯示 "台積電 面試經驗"
  */
-const useExperienceTitle = ({ experience, pageType, tabType }) =>
+const useExperienceTitle = ({
+  experience,
+  pageType,
+  tabType,
+}: ExperienceProps & { pageType: PageType; tabType: TabType }): string =>
   useMemo(() => {
     let str = '';
-    if (pageType === PageType.COMPANY && experience?.job_title?.name) {
+    if (
+      pageType === PageType.COMPANY &&
+      experience.job_title &&
+      experience.job_title.name
+    ) {
       str = experience.job_title.name;
-    } else if (pageType === PageType.JOB_TITLE && experience?.company?.name) {
+    } else if (
+      pageType === PageType.JOB_TITLE &&
+      experience.company &&
+      experience.company.name
+    ) {
       str = experience.company.name;
-    } else if (experience?.title) {
+    } else if (experience.title) {
       str = experience.title;
     }
     switch (tabType) {
@@ -65,7 +84,18 @@ const useExperienceTitle = ({ experience, pageType, tabType }) =>
     }
   }, [experience, pageType, tabType]);
 
-const Experience = ({ experience, pageType, tabType, subTitleTag }) => {
+type Props = ExperienceProps & {
+  pageType: PageType;
+  tabType: TabType;
+  subTitleTag?: string;
+};
+
+const Experience: React.FC<Props> = ({
+  experience,
+  pageType,
+  tabType,
+  subTitleTag,
+}) => {
   const [, , canViewPublishId] = usePermission();
   const [messageExpanded, setMessageExpanded] = useState(false);
   const ref = useTracePreviewRef({ experience });
@@ -87,7 +117,7 @@ const Experience = ({ experience, pageType, tabType, subTitleTag }) => {
             ? VISIBILITY.COLLAPSED
             : VISIBILITY.LOCKED
         }
-        onClickMsgButton={() => setMessageExpanded(expended => !expended)}
+        onClickMsgButton={(): void => setMessageExpanded(expended => !expended)}
         originalLink={`/experiences/${experience.id}`}
         subTitleTag={subTitleTag}
       />
@@ -99,13 +129,6 @@ const Experience = ({ experience, pageType, tabType, subTitleTag }) => {
       )}
     </div>
   );
-};
-
-Experience.propTypes = {
-  experience: PropTypes.object.isRequired,
-  pageType: PropTypes.string.isRequired,
-  subTitleTag: PropTypes.string,
-  tabType: PropTypes.string.isRequired,
 };
 
 export default Experience;

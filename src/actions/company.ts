@@ -32,7 +32,7 @@ import {
   aspectFromAPIValue,
   aspectToAPIValue,
 } from 'constants/companyJobTitle';
-import { Thunk } from 'reducers';
+import { AppThunk, Thunk } from 'reducers';
 import {
   AspectRatingStatisticsInIndex,
   AspectStatisticsDataInIndex,
@@ -118,7 +118,10 @@ export const fetchCompanyNames = ({
   }
 
   dispatch(setIndex(page, toFetching()));
-  dispatch(setIndexCount(toFetching()));
+  // 總數不隨頁碼變，抓過就沿用，不必每次換頁都標成 fetching
+  if (!isFetched(getState().companyIndex.indexCountBox)) {
+    dispatch(setIndexCount(toFetching()));
+  }
 
   try {
     const data = await queryCompaniesApi({
@@ -784,7 +787,7 @@ const subscribeCompany = ({
   companyName,
 }: {
   companyName: string;
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
+}): AppThunk<Promise<void>> => async (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
@@ -840,7 +843,7 @@ const unsubscribeCompany = ({
   companyName,
 }: {
   companyName: string;
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
+}): AppThunk<Promise<void>> => async (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
@@ -896,7 +899,7 @@ export const toggleSubscribeCompany = ({
   companyName,
 }: {
   companyName: string;
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
+}): AppThunk<Promise<void>> => async (dispatch, getState) => {
   const state = getState();
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
   if (!isFetched(box) || !box.data) {
@@ -915,7 +918,7 @@ export const queryCompanyIsSubscribed = ({
   companyName,
 }: {
   companyName: string;
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
+}): AppThunk<Promise<void>> => async (dispatch, getState) => {
   const box = companyIsSubscribedBoxSelectorByName(companyName)(getState());
   if (isFetching(box) || isFetched(box)) {
     return;

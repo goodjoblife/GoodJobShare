@@ -16,7 +16,7 @@ import FetchBox from 'utils/fetchBox';
 
 import PageBoxRenderer from '../../PageBoxRenderer';
 import { usePageContext } from '../../PageContextProvider';
-import WorkExperiencesSection from '../WorkExperiences';
+import WorkExperiencesSection from '../WorkExperiencesSection';
 import Helmet from './Helmet';
 import RatingFilter from './RatingFilter';
 import styles from './styles.module.css';
