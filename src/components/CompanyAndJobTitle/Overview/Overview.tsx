@@ -18,13 +18,13 @@ import { CompanyOverviewHelmet, JobTitleOverviewHelmet } from './Helmet';
 import OverviewSection from './OverviewSection';
 
 type OverviewProps = {
-  box: FetchBox<CompanyOverview | JobTitleOverview | null>;
+  overviewBox: FetchBox<CompanyOverview | JobTitleOverview | null>;
   statisticsBox: FetchBox<
     CompanyOverviewStatistics | JobTitleOverviewStatistics | null
   >;
 };
 
-const Overview: React.FC<OverviewProps> = ({ box, statisticsBox }) => {
+const Overview: React.FC<OverviewProps> = ({ overviewBox, statisticsBox }) => {
   const { pageType, pageName, tabType } = usePageContext();
 
   return (
@@ -33,7 +33,7 @@ const Overview: React.FC<OverviewProps> = ({ box, statisticsBox }) => {
         pageType={pageType}
         pageName={pageName}
         tabType={tabType}
-        box={box}
+        box={overviewBox}
         render={(data): React.ReactNode => (
           <>
             {pageType === PageType.COMPANY ? (

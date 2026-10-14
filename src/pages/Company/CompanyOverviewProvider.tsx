@@ -97,7 +97,7 @@ const CompanyOverviewProvider: React.FC & ServerSideRender<Params> = () => {
       pageName={companyName}
       tabType={TabType.OVERVIEW}
     >
-      <Overview box={overviewBox} statisticsBox={statisticsBox} />
+      <Overview overviewBox={overviewBox} statisticsBox={statisticsBox} />
     </CompanyAndJobTitleWrapper>
   );
 };

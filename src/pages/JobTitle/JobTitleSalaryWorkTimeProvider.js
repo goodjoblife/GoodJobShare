@@ -148,7 +148,7 @@ const JobTitleSalaryWorkTimeProvider = () => {
         page={page}
         pageSize={PAGE_SIZE}
         salaryWorkTimeStatisticsBox={salaryWorkTimeStatisticsBox}
-        box={salaryWorkTimeBox}
+        salaryWorkTimeBox={salaryWorkTimeBox}
         statisticsBox={statisticsBox}
         onCloseReport={() => handleQueryJobTitleSalaryWorkTime({ force: true })}
       />

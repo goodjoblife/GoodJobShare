@@ -190,7 +190,7 @@ const CompanySalaryWorkTimeProvider = () => {
         topNJobTitles={topNJobTitles.salary}
         esgSalaryDataBox={esgSalaryDataBox}
         salaryWorkTimeStatisticsBox={salaryWorkTimeStatisticsBox}
-        box={salaryWorkTimeBox}
+        salaryWorkTimeBox={salaryWorkTimeBox}
         statisticsBox={statisticsBox}
         onCloseReport={() => handleQueryCompanySalaryWorkTime({ force: true })}
       />

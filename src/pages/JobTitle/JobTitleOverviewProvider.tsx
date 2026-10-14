@@ -78,7 +78,7 @@ const JobTitleOverviewProvider: React.FC & ServerSideRender<Params> = () => {
       pageName={jobTitle}
       tabType={TabType.OVERVIEW}
     >
-      <Overview box={overviewBox} statisticsBox={statisticsBox} />
+      <Overview overviewBox={overviewBox} statisticsBox={statisticsBox} />
     </CompanyAndJobTitleWrapper>
   );
 };

@@ -34,7 +34,7 @@ type SalaryWorkTimePageData = Pick<
 >;
 
 type Props = {
-  box: FetchBox<SalaryWorkTimePageData | null>;
+  salaryWorkTimeBox: FetchBox<SalaryWorkTimePageData | null>;
   statisticsBox: FetchBox<
     CompanyOverviewStatistics | JobTitleOverviewStatistics | null
   >;
@@ -47,7 +47,7 @@ type Props = {
 };
 
 const SalaryWorkTime: React.FC<Props> = ({
-  box,
+  salaryWorkTimeBox,
   statisticsBox,
   salaryWorkTimeStatisticsBox,
   page,
@@ -109,7 +109,7 @@ const SalaryWorkTime: React.FC<Props> = ({
           pageType={pageType}
           pageName={pageName}
           tabType={tabType}
-          box={box}
+          box={salaryWorkTimeBox}
           render={({
             salaryWorkTimes,
             salaryWorkTimesCount: totalCount,
