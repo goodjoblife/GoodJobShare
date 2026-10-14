@@ -8,13 +8,13 @@ import FetchBox, {
   toFetching,
 } from 'utils/fetchBox';
 
-import useKeepPreviousBox from './useKeepPreviousBox';
+import usePreviousBox from './usePreviousBox';
 
 type Props = { box: FetchBox<string>; scope: string };
 
-describe('useKeepPreviousBox', () => {
+describe('usePreviousBox', () => {
   const setup = (initial: Props): RenderHookResult<Props, FetchBox<string>> =>
-    renderHook(({ box, scope }: Props) => useKeepPreviousBox(box, scope), {
+    renderHook(({ box, scope }: Props) => usePreviousBox(box, scope), {
       initialProps: initial,
     });
 

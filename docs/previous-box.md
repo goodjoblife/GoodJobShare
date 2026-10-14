@@ -1,10 +1,10 @@
-# 換頁／換條件時顯示上一筆資料（`useKeepPreviousBox` + `BoxRenderer`）
+# 換頁／換條件時顯示上一筆資料（`usePreviousBox` + `BoxRenderer`）
 
-列表換頁、換篩選時，新的那一組 box 還沒有資料。`useKeepPreviousBox` 在 render 時補上同一個 scope 最後一次的資料，搭配 `BoxRenderer` 顯示「舊內容 + 半透明 overlay + Loader」，而不是整塊變成 Loader。
+列表換頁、換篩選時，新的那一組 box 還沒有資料。`usePreviousBox` 在 render 時補上同一個 scope 最後一次的資料，搭配 `BoxRenderer` 顯示「舊內容 + 半透明 overlay + Loader」，而不是整塊變成 Loader。
 
 ## Key files
 
-- `src/hooks/useKeepPreviousBox.ts` — 補舊資料的 hook
+- `src/hooks/usePreviousBox.ts` — 補舊資料的 hook
 - `src/components/common/StatusRenderer/BoxesRenderer.tsx` — 依 box 狀態決定畫面
 
 ## 與 `BoxRenderer` 的搭配
@@ -19,7 +19,7 @@
 | fetched | 內容 |
 | error 且沒在 fetching | 不渲染 |
 
-所以只要讓 box 在換條件時「有 data 且 status 是 fetching」，就會走第三列。`useKeepPreviousBox` 做的就是這件事：
+所以只要讓 box 在換條件時「有 data 且 status 是 fetching」，就會走第三列。`usePreviousBox` 做的就是這件事：
 
 - box 已有 data → 原樣回傳，並記住這份 data。
 - box 沒有 data、且 `scope` 與上次相同 → 回傳「舊 data + 新 box 的 status」。
@@ -31,7 +31,7 @@
 ```tsx
 const selector = useMemo(() => companyIndexesBoxSelectorAtPage(page), [page]);
 // scope 代表「哪些 box 算同一份內容」
-const box = useKeepPreviousBox(useSelector(selector), 'CompanyIndex');
+const box = usePreviousBox(useSelector(selector), 'CompanyIndex');
 
 return <IndexList indexesBox={box} ... />;
 ```

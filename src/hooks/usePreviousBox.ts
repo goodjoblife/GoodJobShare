@@ -9,10 +9,7 @@ import FetchBox, { isUnfetched } from 'utils/fetchBox';
 // 新 key 在 action dispatch 之前是 unfetched，而 BoxesRenderer 對 unfetched 回傳 null，
 // 所以有舊資料時把 unfetched 視為 fetching，避免空白一幀。
 // scope 改變（例如換了公司）就丟掉舊資料，避免顯示別人的資料。
-const useKeepPreviousBox = <T>(
-  box: FetchBox<T>,
-  scope: string,
-): FetchBox<T> => {
+const usePreviousBox = <T>(box: FetchBox<T>, scope: string): FetchBox<T> => {
   const previousRef = useRef<{ scope: string; data: T } | null>(null);
 
   if (box.data !== undefined) {
@@ -31,4 +28,4 @@ const useKeepPreviousBox = <T>(
   return box;
 };
 
-export default useKeepPreviousBox;
+export default usePreviousBox;
