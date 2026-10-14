@@ -118,7 +118,10 @@ export const fetchCompanyNames = ({
   }
 
   dispatch(setIndex(page, toFetching()));
-  dispatch(setIndexCount(toFetching()));
+  // 總數不隨頁碼變，抓過就沿用，不必每次換頁都標成 fetching
+  if (!isFetched(getState().companyIndex.indexCountBox)) {
+    dispatch(setIndexCount(toFetching()));
+  }
 
   try {
     const data = await queryCompaniesApi({
