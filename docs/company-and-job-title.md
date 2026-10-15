@@ -24,7 +24,7 @@ Provider 的 render 因此讀得出整頁的組成：
   pageName={companyName}
   tabType={TabType.OVERVIEW}
 >
-  <Overview boxSelector={boxSelector} statisticsBox={statisticsBox} />
+  <Overview overviewBox={overviewBox} statisticsBox={statisticsBox} />
 </CompanyAndJobTitleWrapper>
 ```
 

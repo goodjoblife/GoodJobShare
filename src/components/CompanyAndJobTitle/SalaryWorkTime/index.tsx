@@ -5,7 +5,6 @@ import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import BoxRenderer, { BoxesRenderer } from 'common/StatusRenderer';
 import { PageType } from 'constants/companyJobTitle';
-import { RootState } from 'reducers';
 import {
   CompanyOverviewStatistics,
   CompanySalaryWorkTimeResult,
@@ -35,7 +34,7 @@ type SalaryWorkTimePageData = Pick<
 >;
 
 type Props = {
-  boxSelector: (state: RootState) => FetchBox<SalaryWorkTimePageData | null>;
+  salaryWorkTimeBox: FetchBox<SalaryWorkTimePageData | null>;
   statisticsBox: FetchBox<
     CompanyOverviewStatistics | JobTitleOverviewStatistics | null
   >;
@@ -48,7 +47,7 @@ type Props = {
 };
 
 const SalaryWorkTime: React.FC<Props> = ({
-  boxSelector,
+  salaryWorkTimeBox,
   statisticsBox,
   salaryWorkTimeStatisticsBox,
   page,
@@ -110,7 +109,7 @@ const SalaryWorkTime: React.FC<Props> = ({
           pageType={pageType}
           pageName={pageName}
           tabType={tabType}
-          boxSelector={boxSelector}
+          box={salaryWorkTimeBox}
           render={({
             salaryWorkTimes,
             salaryWorkTimesCount: totalCount,
