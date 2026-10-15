@@ -38,12 +38,10 @@
 
 .btn {
   height: 45px;
-  background-color: #000000;
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.86px;
   text-align: center;
-  color: #ffffff;
 
   & + & {
     margin-top: 8px;

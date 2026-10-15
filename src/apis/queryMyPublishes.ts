@@ -42,6 +42,20 @@ const queryMyPublishesGql = /* GraphQL */ `
           reason
         }
       }
+
+      policyReviewGroupList {
+        groupId
+        company {
+          name
+        }
+        jobTitle
+        status
+        archive {
+          is_archived
+          reason
+        }
+        createdAt
+      }
     }
   }
 `;
@@ -75,6 +89,14 @@ type QueryMyPublishesData = {
       status: PublishStatus;
       created_at: string;
       archive: Archive;
+    }[];
+    policyReviewGroupList: {
+      groupId: string;
+      company: { name: string };
+      jobTitle: string;
+      status: PublishStatus;
+      archive: Archive;
+      createdAt: string;
     }[];
   };
 };

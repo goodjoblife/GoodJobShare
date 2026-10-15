@@ -1,0 +1,42 @@
+@value below-desktop, below-tablet from "../../common/variables.module.css";
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 21px;
+  margin-bottom: 22px;
+
+  @media (max-width: below-desktop) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: below-tablet) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 四張卡並排放不下 PolicySummaryCard 預設的 265px，改由格線決定寬度 */
+.grid > .card {
+  width: auto;
+  height: auto;
+  min-height: 265px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 21px;
+  margin-bottom: 22px;
+
+  @media (max-width: below-tablet) {
+    flex-direction: column;
+  }
+}
+
+.fixedCard {
+  width: 265px;
+
+  @media (max-width: below-tablet) {
+    width: 100%;
+  }
+}

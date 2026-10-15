@@ -3,6 +3,13 @@ import { generatePath } from 'react-router';
 
 import Redirect from 'common/routing/Redirect';
 import {
+  companyFamilyChildcareFamilyCareLeave,
+  companyFamilyChildcareFlexibleHoursPath,
+  companyFamilyChildcareParentalLeavePath,
+  companyFamilyChildcarePath,
+  companyFamilyChildcareRemoteWorkPath,
+  companyGenderFriendlyMenstrualLeavePath,
+  companyGenderFriendlyPath,
   companyInterviewExperiencesPath,
   companyOverviewLegacyPath,
   companyOverviewPath,
@@ -15,6 +22,13 @@ import {
   jobTitleSalaryWorkTimesPath,
   jobTitleWorkExperiencesPath,
 } from 'constants/linkTo';
+import CompanyFamilyChildcareFamilyCareLeaveProvider from 'pages/Company/CompanyFamilyChildcareFamilyCareLeaveProvider';
+import CompanyFamilyChildcareFlexibleHoursProvider from 'pages/Company/CompanyFamilyChildcareFlexibleHoursProvider';
+import CompanyFamilyChildcareParentalLeaveProvider from 'pages/Company/CompanyFamilyChildcareParentalLeaveProvider';
+import CompanyFamilyChildcareProvider from 'pages/Company/CompanyFamilyChildcareProvider';
+import CompanyFamilyChildcareRemoteWorkProvider from 'pages/Company/CompanyFamilyChildcareRemoteWorkProvider';
+import CompanyGenderFriendlyMenstrualLeaveProvider from 'pages/Company/CompanyGenderFriendlyMenstrualLeaveProvider';
+import CompanyGenderFriendlyProvider from 'pages/Company/CompanyGenderFriendlyProvider';
 import CompanyIndexProvider from 'pages/Company/CompanyIndexProvider';
 import CompanyInterviewExperiencesProvider from 'pages/Company/CompanyInterviewExperiencesProvider';
 import CompanyOverviewProvider from 'pages/Company/CompanyOverviewProvider';
@@ -151,6 +165,41 @@ const routes = [
       {
         path: companyWorkExperiencesAspectPath,
         component: CompanyWorkExperiencesAspectProvider,
+        exact: true,
+      },
+      {
+        path: companyFamilyChildcarePath,
+        component: CompanyFamilyChildcareProvider,
+        exact: true,
+      },
+      {
+        path: companyFamilyChildcareParentalLeavePath,
+        component: CompanyFamilyChildcareParentalLeaveProvider,
+        exact: true,
+      },
+      {
+        path: companyFamilyChildcareFamilyCareLeave,
+        component: CompanyFamilyChildcareFamilyCareLeaveProvider,
+        exact: true,
+      },
+      {
+        path: companyFamilyChildcareFlexibleHoursPath,
+        component: CompanyFamilyChildcareFlexibleHoursProvider,
+        exact: true,
+      },
+      {
+        path: companyFamilyChildcareRemoteWorkPath,
+        component: CompanyFamilyChildcareRemoteWorkProvider,
+        exact: true,
+      },
+      {
+        path: companyGenderFriendlyPath,
+        component: CompanyGenderFriendlyProvider,
+        exact: true,
+      },
+      {
+        path: companyGenderFriendlyMenstrualLeavePath,
+        component: CompanyGenderFriendlyMenstrualLeaveProvider,
         exact: true,
       },
       {
