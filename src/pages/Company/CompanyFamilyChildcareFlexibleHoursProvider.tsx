@@ -6,6 +6,7 @@ import {
   queryRatingStatistics,
 } from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import { FLEXIBLE_HOURS_AVAILABILITY_BULLET_BY_LABEL } from 'components/CompanyAndJobTitle/constants';
 import flexibleHoursIcon from 'components/CompanyAndJobTitle/flexibleHoursIcon.svg';
 import LeavePolicySection, {
@@ -57,23 +58,26 @@ const CompanyFamilyChildcareFlexibleHoursProvider: React.FC &
   );
 
   return (
-    <LeavePolicySection
+    <CompanyAndJobTitleWrapper
       pageType={PageType.COMPANY}
       pageName={companyName}
       tabType={TabType.FAMILY_CHILDCARE}
-      title="彈性上下班時間制度"
-      icon={flexibleHoursIcon}
-      availabilityTitle="是否有彈性上下班時間制度？"
-      availabilityBulletByLabel={FLEXIBLE_HOURS_AVAILABILITY_BULLET_BY_LABEL}
-      section={section}
-      availabilityColumnTitle="是否有彈性上下班時間制度"
-      filterOptions={FILTER_OPTIONS}
-      selectedHasPolicy={selectedHasPolicy}
-      onToggleHasPolicy={toggleHasPolicy}
-      reviewsBox={reviewsBox}
-      page={page}
-      pageSize={PAGE_SIZE}
-    />
+    >
+      <LeavePolicySection
+        title="彈性上下班時間制度"
+        icon={flexibleHoursIcon}
+        availabilityTitle="是否有彈性上下班時間制度？"
+        availabilityBulletByLabel={FLEXIBLE_HOURS_AVAILABILITY_BULLET_BY_LABEL}
+        section={section}
+        availabilityColumnTitle="是否有彈性上下班時間制度"
+        filterOptions={FILTER_OPTIONS}
+        selectedHasPolicy={selectedHasPolicy}
+        onToggleHasPolicy={toggleHasPolicy}
+        reviewsBox={reviewsBox}
+        page={page}
+        pageSize={PAGE_SIZE}
+      />
+    </CompanyAndJobTitleWrapper>
   );
 };
 

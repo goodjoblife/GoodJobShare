@@ -6,16 +6,11 @@ import Pagination from 'common/Pagination';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import Table from 'common/table/Table';
 import BoxRenderer from 'components/common/StatusRenderer/BoxRenderer';
-import {
-  generateTabURL,
-  PageType,
-  TabType,
-  tabTypeTranslation,
-} from 'constants/companyJobTitle';
+import { generateTabURL, tabTypeTranslation } from 'constants/companyJobTitle';
 import FetchBox from 'utils/fetchBox';
 
-import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import LeaveSectionBlock from '../LeaveSectionBlock';
+import { usePageContext } from '../PageContextProvider';
 import { LeaveBulletByLabel, LeaveSection } from '../policyTypes';
 import FilterToggleButton from './FilterToggleButton';
 import styles from './styles.module.css';
@@ -46,9 +41,6 @@ type ColumnConfig = {
 const TableColumn = Table.Column as any;
 
 type Props = {
-  pageType: PageType;
-  pageName: string;
-  tabType: TabType;
   title: string;
   icon?: string;
   availabilityTitle: string;
@@ -67,9 +59,6 @@ type Props = {
 };
 
 const LeavePolicySection: React.FC<Props> = ({
-  pageType,
-  pageName,
-  tabType,
   title,
   icon,
   availabilityTitle,
@@ -86,6 +75,7 @@ const LeavePolicySection: React.FC<Props> = ({
   page,
   pageSize,
 }) => {
+  const { pageType, pageName, tabType } = usePageContext();
   const parentPath = generateTabURL({ pageType, pageName, tabType });
   const tabName = tabTypeTranslation[tabType];
   const [createPageLinkTo, handleSectionRef, sectionY] = useCreatePageLinkTo();
@@ -112,11 +102,7 @@ const LeavePolicySection: React.FC<Props> = ({
   ];
 
   return (
-    <CompanyAndJobTitleWrapper
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-    >
+    <>
       <Wrapper size="l">
         <Link to={parentPath}>&lt;&lt;回到{tabName}分頁</Link>
         <Heading className={styles.title}>{title}</Heading>
@@ -167,7 +153,7 @@ const LeavePolicySection: React.FC<Props> = ({
           )}
         />
       </Wrapper>
-    </CompanyAndJobTitleWrapper>
+    </>
   );
 };
 
