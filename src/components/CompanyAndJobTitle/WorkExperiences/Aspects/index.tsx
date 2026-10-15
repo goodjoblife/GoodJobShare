@@ -15,8 +15,8 @@ import FetchBox from 'utils/fetchBox';
 
 import PageBoxRenderer from '../../PageBoxRenderer';
 import { usePageContext } from '../../PageContextProvider';
-import Helmet from '../Helmet';
 import WorkExperiencesSection from '../WorkExperiencesSection';
+import Helmet from './Helmet';
 import RatingFilter from './RatingFilter';
 import styles from './styles.module.css';
 import Summary from './Summary';
@@ -53,16 +53,23 @@ const AspectSection: React.FC<AspectProps> = ({
           render={(data: AspectStatisticsDataInIndex): React.ReactNode => {
             const items = data.companyAspectRatingStatistics;
             const item = items.find(item => item.aspect === aspect);
-            if (!item) return null;
-
-            const { averageRating, ratingDistribution, ratingCount } = item;
 
             return (
-              <Summary
-                averageRating={averageRating}
-                ratingDistribution={ratingDistribution}
-                ratingCount={ratingCount}
-              />
+              <>
+                <Helmet
+                  companyName={pageName}
+                  aspect={aspect}
+                  page={page}
+                  statistics={item}
+                />
+                {item && (
+                  <Summary
+                    averageRating={item.averageRating}
+                    ratingDistribution={item.ratingDistribution}
+                    ratingCount={item.ratingCount}
+                  />
+                )}
+              </>
             );
           }}
         />
@@ -78,24 +85,16 @@ const AspectSection: React.FC<AspectProps> = ({
             workExperiences,
             workExperiencesCount: totalCount,
           }: CompanyAspectExperienceResult): React.ReactNode => (
-            <>
-              <Helmet
-                pageType={pageType}
-                pageName={pageName}
-                totalCount={totalCount}
-                page={page}
-              />
-              <WorkExperiencesSection
-                pageType={pageType}
-                pageName={pageName}
-                tabType={tabType}
-                data={workExperiences}
-                page={page}
-                pageSize={pageSize}
-                totalCount={totalCount}
-                createPageLinkTo={createPageLinkTo}
-              />
-            </>
+            <WorkExperiencesSection
+              pageType={pageType}
+              pageName={pageName}
+              tabType={tabType}
+              data={workExperiences}
+              page={page}
+              pageSize={pageSize}
+              totalCount={totalCount}
+              createPageLinkTo={createPageLinkTo}
+            />
           )}
         />
       </Wrapper>
