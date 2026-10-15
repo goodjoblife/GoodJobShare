@@ -12,7 +12,6 @@ import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJ
 import Overview from 'components/CompanyAndJobTitle/Overview';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import usePermission from 'hooks/usePermission';
-import { RootState } from 'reducers';
 import {
   CompanyOverview,
   CompanyOverviewStatistics,
@@ -31,10 +30,12 @@ import useCompanyNameParam, {
 // Matches the React Router route params for Company pages
 type Params = { companyName: string };
 
-const useOverviewBoxSelector = (
-  pageName: string,
-): ((state: RootState) => FetchBox<CompanyOverview | null>) =>
-  useMemo(() => overviewBoxSelectorByName(pageName), [pageName]);
+const useOverviewBox = (pageName: string): FetchBox<CompanyOverview | null> => {
+  const selector = useMemo(() => overviewBoxSelectorByName(pageName), [
+    pageName,
+  ]);
+  return useSelector(selector);
+};
 
 const useOverviewStatisticsBox = (
   pageName: string,
@@ -87,7 +88,7 @@ const CompanyOverviewProvider: React.FC & ServerSideRender<Params> = () => {
     fetchPermission();
   }, [pageType, companyName, fetchPermission]);
 
-  const boxSelector = useOverviewBoxSelector(companyName);
+  const overviewBox = useOverviewBox(companyName);
   const statisticsBox = useOverviewStatisticsBox(companyName);
 
   return (
@@ -96,7 +97,7 @@ const CompanyOverviewProvider: React.FC & ServerSideRender<Params> = () => {
       pageName={companyName}
       tabType={TabType.OVERVIEW}
     >
-      <Overview boxSelector={boxSelector} statisticsBox={statisticsBox} />
+      <Overview overviewBox={overviewBox} statisticsBox={statisticsBox} />
     </CompanyAndJobTitleWrapper>
   );
 };

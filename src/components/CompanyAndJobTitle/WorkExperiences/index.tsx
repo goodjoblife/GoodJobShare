@@ -3,7 +3,6 @@ import React, { Fragment } from 'react';
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import { Aspects, PageType } from 'constants/companyJobTitle';
-import { RootState } from 'reducers';
 import { CompanyWorkExperienceResult } from 'reducers/companyIndex';
 import { JobTitleWorkExperienceResult } from 'reducers/jobTitleIndex';
 import FetchBox from 'utils/fetchBox';
@@ -39,16 +38,18 @@ const AspectScoreCards: React.FC = () => {
 };
 
 type Props = {
-  boxSelector: (
-    state: RootState,
-  ) => FetchBox<
+  workExperiencesBox: FetchBox<
     CompanyWorkExperienceResult | JobTitleWorkExperienceResult | null
   >;
   page: number;
   pageSize: number;
 };
 
-const WorkExperiences: React.FC<Props> = ({ boxSelector, page, pageSize }) => {
+const WorkExperiences: React.FC<Props> = ({
+  workExperiencesBox,
+  page,
+  pageSize,
+}) => {
   const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
   const { pageType, pageName, tabType } = usePageContext();
 
@@ -66,7 +67,7 @@ const WorkExperiences: React.FC<Props> = ({ boxSelector, page, pageSize }) => {
           pageType={pageType}
           pageName={pageName}
           tabType={tabType}
-          boxSelector={boxSelector}
+          box={workExperiencesBox}
           render={({
             workExperiences,
             workExperiencesCount: totalCount,

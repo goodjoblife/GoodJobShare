@@ -1,11 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import NotFoundStatus from 'common/routing/NotFound';
 import Redirect from 'common/routing/Redirect';
 import BoxRenderer from 'common/StatusRenderer';
 import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
-import { RootState } from 'reducers';
 import FetchBox from 'utils/fetchBox';
 
 import EmptyView from './EmptyView';
@@ -19,7 +17,7 @@ interface PageBoxRendererProps<T extends PageData> {
   pageName: string;
   pageType: PageType;
   tabType: TabType;
-  boxSelector: (state: RootState) => FetchBox<T | null>;
+  box: FetchBox<T | null>;
   render: (data: T) => React.ReactNode;
 }
 
@@ -27,7 +25,7 @@ const PageBoxRenderer = <T extends PageData>({
   pageName,
   pageType,
   tabType,
-  boxSelector,
+  box,
   render,
 }: PageBoxRendererProps<T>): React.ReactNode => {
   /* 處理
@@ -37,7 +35,6 @@ const PageBoxRenderer = <T extends PageData>({
    * 4. 當 box.data.dataCount === 0   --> 應顯示 NotFoundStatus (後端無資料)
    * 5. 當 box.data.資料 === []       --> 應顯示 NotFoundStatus (通常是 pagination 超出範圍) (交給 render 處理)
    */
-  const box = useSelector(boxSelector);
   return (
     <BoxRenderer
       box={box}

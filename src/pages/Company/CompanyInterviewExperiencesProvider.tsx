@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   queryCompanyInterviewExperiences,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
-import { ExperienceType, InterviewExperience } from 'apis/experience';
+import { ExperienceType } from 'apis/experience';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
@@ -17,52 +17,34 @@ import {
 } from 'components/CompanyAndJobTitle/Sorter';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
+import useBoxWithLatestExperiences from 'hooks/useBoxWithLatestExperiences';
 import usePermission from 'hooks/usePermission';
-import { RootState } from 'reducers';
 import { CompanyInterviewExperienceResult } from 'reducers/companyIndex';
 import { companyInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import {
   pageFromQuerySelector,
   queryFromQuerySelector,
 } from 'selectors/routing';
 import { ServerSideRender } from 'types/serverSideRender';
-import FetchBox, { getFetched, isFetched } from 'utils/fetchBox';
+import FetchBox from 'utils/fetchBox';
 
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
 import { useTopNJobTitles } from './useTopNJobTitles';
 
-const useInterviewExperiencesBoxSelector = (
+const useInterviewExperiencesBox = (
   pageName: string,
-): ((
-  state: RootState,
-) => FetchBox<CompanyInterviewExperienceResult | null>) => {
-  return useCallback(
-    (state: RootState): FetchBox<CompanyInterviewExperienceResult | null> => {
-      const box = companyInterviewExperiencesBoxSelectorByName(pageName)(state);
-      if (isFetched(box) && box.data) {
-        // Get experience data from state.experiences, which serves
-        // as the source of truth of experiences.
-        const data: CompanyInterviewExperienceResult = {
-          ...box.data,
-          interviewExperiences: box.data.interviewExperiences.map(
-            (e: InterviewExperience) => {
-              const cached = experienceBoxSelectorAtId(e.id)(state).data;
-              // experienceById is keyed across all experience types, so narrow
-              // back to InterviewExperience before using the cached copy.
-              return cached && cached.type === ExperienceType.INTERVIEW
-                ? cached
-                : e;
-            },
-          ),
-        };
-        return getFetched(data);
-      }
-      return box;
-    },
+): FetchBox<CompanyInterviewExperienceResult | null> => {
+  const selector = useMemo(
+    () => companyInterviewExperiencesBoxSelectorByName(pageName),
     [pageName],
+  );
+  const box = useSelector(selector);
+  return useBoxWithLatestExperiences(
+    box,
+    'interviewExperiences',
+    ExperienceType.INTERVIEW,
   );
 };
 
@@ -105,7 +87,7 @@ const CompanyInterviewExperiencesProvider: React.FC &
     fetchPermission();
   }, [pageType, companyName, fetchPermission]);
 
-  const boxSelector = useInterviewExperiencesBoxSelector(companyName);
+  const interviewExperiencesBox = useInterviewExperiencesBox(companyName);
 
   const topNJobTitles = useTopNJobTitles(companyName);
 
@@ -119,7 +101,7 @@ const CompanyInterviewExperiencesProvider: React.FC &
         page={page}
         pageSize={PAGE_SIZE}
         topNJobTitles={topNJobTitles.interview}
-        boxSelector={boxSelector}
+        interviewExperiencesBox={interviewExperiencesBox}
       />
     </CompanyAndJobTitleWrapper>
   );

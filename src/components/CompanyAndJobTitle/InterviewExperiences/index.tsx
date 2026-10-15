@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
-import { RootState } from 'reducers';
 import { CompanyInterviewExperienceResult } from 'reducers/companyIndex';
 import { JobTitleInterviewExperienceResult } from 'reducers/jobTitleIndex';
 import FetchBox from 'utils/fetchBox';
@@ -16,9 +15,7 @@ import Sorter from '../Sorter';
 import styles from '../styles.module.css';
 
 type Props = {
-  boxSelector: (
-    state: RootState,
-  ) => FetchBox<
+  interviewExperiencesBox: FetchBox<
     CompanyInterviewExperienceResult | JobTitleInterviewExperienceResult | null
   >;
   page: number;
@@ -27,7 +24,7 @@ type Props = {
 };
 
 const InterviewExperiences: React.FC<Props> = ({
-  boxSelector,
+  interviewExperiencesBox,
   page,
   pageSize,
   topNJobTitles,
@@ -48,7 +45,7 @@ const InterviewExperiences: React.FC<Props> = ({
           pageType={pageType}
           pageName={pageName}
           tabType={tabType}
-          boxSelector={boxSelector}
+          box={interviewExperiencesBox}
           render={({
             interviewExperiences,
             interviewExperiencesCount: totalCount,
