@@ -1,29 +1,8 @@
-import {
-  SET_EXPERIENCE,
-  SET_POPULAR_EXPERIENCES,
-  SET_RELATED_EXPERIENCES,
-} from 'actions/experience';
+import { SET_EXPERIENCE, SET_POPULAR_EXPERIENCES } from 'actions/experience';
 import { InterviewExperience, WorkExperience } from 'apis/experience';
-import {
-  InterviewExperienceInRelatedExperiences,
-  WorkExperienceInRelatedExperiences,
-} from 'apis/queryExperienceRecommendation';
 import { PopularExperience } from 'apis/queryPopularExperiences';
 import createReducer from 'utils/createReducer';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
-
-type RelatedExperience =
-  | WorkExperienceInRelatedExperiences
-  | InterviewExperienceInRelatedExperiences;
-
-export type RelatedExperiencesState = {
-  experienceId: string | null;
-  page: number;
-  state: FetchBox<{
-    relatedExperiences: RelatedExperience[];
-    hasMore: boolean;
-  }>;
-};
 
 type State = {
   // id --> box
@@ -32,20 +11,11 @@ type State = {
     FetchBox<WorkExperience | InterviewExperience | null>
   >;
 
-  relatedExperiences: RelatedExperiencesState;
-
   popularExperiences: FetchBox<PopularExperience[]>;
 };
 
 const preloadedState: State = {
   experienceById: {},
-
-  relatedExperiences: {
-    experienceId: null,
-    page: 0,
-    // state is related to experienceId, page
-    state: getUnfetched(),
-  },
 
   popularExperiences: getUnfetched(),
 };
@@ -66,17 +36,6 @@ export default createReducer(preloadedState, {
       ...state.experienceById,
       [experienceId]: box,
     },
-  }),
-  [SET_RELATED_EXPERIENCES]: (
-    state,
-    {
-      relatedExperiences,
-    }: {
-      relatedExperiences: RelatedExperiencesState;
-    },
-  ) => ({
-    ...state,
-    relatedExperiences,
   }),
   [SET_POPULAR_EXPERIENCES]: (
     state,
