@@ -211,6 +211,7 @@ const useShowsHeader = () => {
   const isMobile = useMobile();
   const { y: scrollY } = useWindowScroll();
   const [showsHeader, setShowsHeader] = useRafState(true);
+  const [isFocused, setFocused] = useState(false);
   const lastScrollY = useRef(
     typeof window !== 'undefined' ? window.scrollY : 0,
   );
@@ -230,7 +231,15 @@ const useShowsHeader = () => {
     lastScrollY.current = scrollY;
   }, [isMobile, scrollY, setShowsHeader]);
 
-  return showsHeader;
+  const focusHandlers = useMemo(
+    () => ({
+      onFocus: () => setFocused(true),
+      onBlur: () => setFocused(false),
+    }),
+    [],
+  );
+
+  return [showsHeader || isFocused, focusHandlers];
 };
 
 const HamburgerButton = ({ isNavOpen, toggle }) => (
@@ -253,8 +262,7 @@ const Header = ({ searchInputRef }) => {
   const [isLoggedIn, login] = useLogin();
   const [, fetchPermission] = usePermission();
 
-  const showsHeader = useShowsHeader();
-  const [isFocused, setFocused] = useState(false);
+  const [showsHeader, focusHandlers] = useShowsHeader();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -273,10 +281,9 @@ const Header = ({ searchInputRef }) => {
       <HeaderTop />
       <header
         className={cn(styles.header, {
-          [styles.headerHidden]: !showsHeader && !isFocused,
+          [styles.headerHidden]: !showsHeader,
         })}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
+        {...focusHandlers}
       >
         <Wrapper size="l" className={styles.inner}>
           <HamburgerButton isNavOpen={isNavOpen} toggle={toggleNav} />
