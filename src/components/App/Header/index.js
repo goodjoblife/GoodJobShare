@@ -254,6 +254,7 @@ const Header = ({ searchInputRef }) => {
   const [, fetchPermission] = usePermission();
 
   const showsHeader = useShowsHeader();
+  const [isFocused, setFocused] = useState(false);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -272,8 +273,10 @@ const Header = ({ searchInputRef }) => {
       <HeaderTop />
       <header
         className={cn(styles.header, {
-          [styles.headerHidden]: !showsHeader,
+          [styles.headerHidden]: !showsHeader && !isFocused,
         })}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
       >
         <Wrapper size="l" className={styles.inner}>
           <HamburgerButton isNavOpen={isNavOpen} toggle={toggleNav} />
