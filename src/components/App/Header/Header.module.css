@@ -1,4 +1,4 @@
-@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small, below-small, yellow-bar from "../../common/variables.module.css";
+@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small, below-small, below-tablet, yellow-bar from "../../common/variables.module.css";
 
 .root {
   @media (max-width: 850px) {
@@ -78,7 +78,7 @@
   flex-basis: 170px;
   display: block;
 
-  @media (max-width: 850px) {
+  @media (max-width: below-tablet) {
     flex-basis: 50px;
   }
 
@@ -91,7 +91,7 @@
 .logoSm {
   display: none;
 
-  @media (max-width: 850px) {
+  @media (max-width: below-tablet) {
     display: block;
   }
 

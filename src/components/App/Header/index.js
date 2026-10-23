@@ -10,7 +10,7 @@ import React, {
 import ReactGA from 'react-ga4';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useRafState, useWindowScroll } from 'react-use';
+import { useMedia, useRafState, useWindowScroll } from 'react-use';
 
 import { fetchInbox } from 'actions/inbox';
 import { Wrapper } from 'common/base';
@@ -101,8 +101,8 @@ const NameButton = () => {
 };
 
 const Logo = ({ forceDesktop }) => {
-  const isMobile = useMobile();
-  const shouldUseMobile = !forceDesktop && isMobile;
+  const isPhone = useMedia('(max-width: 767px)');
+  const shouldUseMobile = !forceDesktop && isPhone;
 
   return (
     <Link
