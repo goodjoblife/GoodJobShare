@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   queryCompanyInterviewExperiences,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
+import { ExperienceType } from 'apis/experience';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
@@ -16,44 +17,42 @@ import {
 } from 'components/CompanyAndJobTitle/Sorter';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
+import useBoxWithLatestExperiences from 'hooks/useBoxWithLatestExperiences';
 import usePermission from 'hooks/usePermission';
+import { CompanyInterviewExperienceResult } from 'reducers/companyIndex';
 import { companyInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import {
   pageFromQuerySelector,
   queryFromQuerySelector,
 } from 'selectors/routing';
-import { getFetched, isFetched } from 'utils/fetchBox';
+import { ServerSideRender } from 'types/serverSideRender';
+import FetchBox from 'utils/fetchBox';
 
 import useCompanyNameParam, {
   companyNameSelector,
 } from './useCompanyNameParam';
 import { useTopNJobTitles } from './useTopNJobTitles';
 
-const useInterviewExperiencesBoxSelector = companyName => {
-  return useCallback(
-    state => {
-      const box = companyInterviewExperiencesBoxSelectorByName(companyName)(
-        state,
-      );
-      if (isFetched(box) && box.data) {
-        // Get experience data from state.experiences, which serves
-        // as the source of truth of experiences.
-        const data = {
-          ...box.data,
-          interviewExperiences: box.data.interviewExperiences.map(
-            e => experienceBoxSelectorAtId(e.id)(state).data || e,
-          ),
-        };
-        return getFetched(data);
-      }
-      return box;
-    },
-    [companyName],
+const useInterviewExperiencesBox = (
+  pageName: string,
+): FetchBox<CompanyInterviewExperienceResult | null> => {
+  const selector = useMemo(
+    () => companyInterviewExperiencesBoxSelectorByName(pageName),
+    [pageName],
+  );
+  const box = useSelector(selector);
+  return useBoxWithLatestExperiences(
+    box,
+    'interviewExperiences',
+    ExperienceType.INTERVIEW,
   );
 };
 
-const CompanyInterviewExperiencesProvider = () => {
+// Matches the React Router route params for Company pages
+type Params = { companyName: string };
+
+const CompanyInterviewExperiencesProvider: React.FC &
+  ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
   const companyName = useCompanyNameParam();
@@ -88,7 +87,7 @@ const CompanyInterviewExperiencesProvider = () => {
     fetchPermission();
   }, [pageType, companyName, fetchPermission]);
 
-  const boxSelector = useInterviewExperiencesBoxSelector(companyName);
+  const interviewExperiencesBox = useInterviewExperiencesBox(companyName);
 
   const topNJobTitles = useTopNJobTitles(companyName);
 
@@ -102,17 +101,17 @@ const CompanyInterviewExperiencesProvider = () => {
         page={page}
         pageSize={PAGE_SIZE}
         topNJobTitles={topNJobTitles.interview}
-        boxSelector={boxSelector}
+        interviewExperiencesBox={interviewExperiencesBox}
       />
     </CompanyAndJobTitleWrapper>
   );
 };
 
-CompanyInterviewExperiencesProvider.fetchData = ({
+CompanyInterviewExperiencesProvider.fetchData = async ({
   store: { dispatch },
   ...props
-}) => {
-  const params = paramsSelector(props);
+}): Promise<unknown> => {
+  const params = paramsSelector<Params>(props);
   const companyName = companyNameSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);

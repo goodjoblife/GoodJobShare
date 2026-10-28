@@ -18,6 +18,7 @@ import { queryFromQuerySelector } from 'selectors/routing';
 
 import styles from './SearchBar.module.css';
 
+/** @returns {[string | undefined, (nextSearchText: string) => void]} */
 export const useSearchTextFromQuery = () => {
   const history = useHistory();
   const query = useQuery();

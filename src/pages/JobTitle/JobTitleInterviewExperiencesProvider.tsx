@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { queryJobTitleInterviewExperiences } from 'actions/jobTitle';
+import { ExperienceType } from 'apis/experience';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
@@ -12,41 +13,39 @@ import {
 } from 'components/CompanyAndJobTitle/Sorter';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
+import useBoxWithLatestExperiences from 'hooks/useBoxWithLatestExperiences';
 import usePermission from 'hooks/usePermission';
+import { JobTitleInterviewExperienceResult } from 'reducers/jobTitleIndex';
 import { jobTitleInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import {
   pageFromQuerySelector,
   queryFromQuerySelector,
 } from 'selectors/routing';
-import { getFetched, isFetched } from 'utils/fetchBox';
+import { ServerSideRender } from 'types/serverSideRender';
+import FetchBox from 'utils/fetchBox';
 
 import useJobTitleParam, { jobTitleSelector } from './useJobTitleParam';
 
-const useInterviewExperiencesBoxSelector = jobTitle => {
-  return useCallback(
-    state => {
-      const box = jobTitleInterviewExperiencesBoxSelectorByName(jobTitle)(
-        state,
-      );
-      if (isFetched(box) && box.data) {
-        // Get experience data from state.experiences, which serves
-        // as the source of truth of experiences.
-        const data = {
-          ...box.data,
-          interviewExperiences: box.data.interviewExperiences.map(
-            e => experienceBoxSelectorAtId(e.id)(state).data || e,
-          ),
-        };
-        return getFetched(data);
-      }
-      return box;
-    },
-    [jobTitle],
+const useInterviewExperiencesBox = (
+  pageName: string,
+): FetchBox<JobTitleInterviewExperienceResult | null> => {
+  const selector = useMemo(
+    () => jobTitleInterviewExperiencesBoxSelectorByName(pageName),
+    [pageName],
+  );
+  const box = useSelector(selector);
+  return useBoxWithLatestExperiences(
+    box,
+    'interviewExperiences',
+    ExperienceType.INTERVIEW,
   );
 };
 
-const JobTitleInterviewExperiencesProvider = () => {
+// Matches the React Router route params for JobTitle pages
+type Params = { jobTitle: string };
+
+const JobTitleInterviewExperiencesProvider: React.FC &
+  ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
   const pageType = PageType.JOB_TITLE;
   const jobTitle = useJobTitleParam();
@@ -73,7 +72,7 @@ const JobTitleInterviewExperiencesProvider = () => {
     fetchPermission();
   }, [pageType, jobTitle, fetchPermission]);
 
-  const boxSelector = useInterviewExperiencesBoxSelector(jobTitle);
+  const interviewExperiencesBox = useInterviewExperiencesBox(jobTitle);
 
   return (
     <CompanyAndJobTitleWrapper
@@ -84,17 +83,17 @@ const JobTitleInterviewExperiencesProvider = () => {
       <InterviewExperiences
         page={page}
         pageSize={PAGE_SIZE}
-        boxSelector={boxSelector}
+        interviewExperiencesBox={interviewExperiencesBox}
       />
     </CompanyAndJobTitleWrapper>
   );
 };
 
-JobTitleInterviewExperiencesProvider.fetchData = ({
+JobTitleInterviewExperiencesProvider.fetchData = async ({
   store: { dispatch },
   ...props
-}) => {
-  const params = paramsSelector(props);
+}): Promise<unknown> => {
+  const params = paramsSelector<Params>(props);
   const jobTitle = jobTitleSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);

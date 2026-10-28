@@ -6,6 +6,7 @@ import {
   queryRatingStatistics,
 } from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
+import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
 import LeavePolicySection, {
   FilterOption,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
@@ -67,26 +68,29 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
   const section = toLeaveSection(policyReviewStatistics, Policy.REMOTE_WORK);
 
   return (
-    <LeavePolicySection
+    <CompanyAndJobTitleWrapper
       pageType={PageType.COMPANY}
       pageName={companyName}
       tabType={TabType.FAMILY_CHILDCARE}
-      title="遠端工作制度"
-      icon={remoteWorkIcon}
-      availabilityTitle="是否可以遠端工作？"
-      availabilityBulletByLabel={AVAILABILITY_BULLET_BY_LABEL}
-      complianceTitle="遠端工作每週天數？"
-      complianceBulletByLabel={COMPLIANCE_BULLET_BY_LABEL}
-      section={section}
-      availabilityColumnTitle="是否可以遠端工作"
-      complianceColumnTitle="每週遠端工作天數"
-      filterOptions={FILTER_OPTIONS}
-      selectedHasPolicy={selectedHasPolicy}
-      onToggleHasPolicy={toggleHasPolicy}
-      reviewsBox={reviewsBox}
-      page={page}
-      pageSize={PAGE_SIZE}
-    />
+    >
+      <LeavePolicySection
+        title="遠端工作制度"
+        icon={remoteWorkIcon}
+        availabilityTitle="是否可以遠端工作？"
+        availabilityBulletByLabel={AVAILABILITY_BULLET_BY_LABEL}
+        complianceTitle="遠端工作每週天數？"
+        complianceBulletByLabel={COMPLIANCE_BULLET_BY_LABEL}
+        section={section}
+        availabilityColumnTitle="是否可以遠端工作"
+        complianceColumnTitle="每週遠端工作天數"
+        filterOptions={FILTER_OPTIONS}
+        selectedHasPolicy={selectedHasPolicy}
+        onToggleHasPolicy={toggleHasPolicy}
+        reviewsBox={reviewsBox}
+        page={page}
+        pageSize={PAGE_SIZE}
+      />
+    </CompanyAndJobTitleWrapper>
   );
 };
 

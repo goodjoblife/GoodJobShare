@@ -592,8 +592,7 @@ export const createMenstrualLeaveQuestion = () => ({
   options: ['是', '否', '不知道'],
   elseOptionValue: '是',
   elseOptions: [
-    '有，優於性別平等工作法',
-    '有，符合性別平等工作法',
+    '有，優於或符合性別平等工作法',
     '有，不符合性別平等工作法',
     '有，不清楚是否符合性別平等工作法',
   ],
@@ -615,8 +614,7 @@ export const createParentalLeaveQuestion = () => ({
   options: ['是', '否', '不知道'],
   elseOptionValue: '是',
   elseOptions: [
-    '有，優於性別平等工作法',
-    '有，符合性別平等工作法',
+    '有，優於或符合性別平等工作法',
     '有，不符合性別平等工作法',
     '有，不清楚是否符合性別平等工作法',
   ],
@@ -640,8 +638,7 @@ export const createFamilyCareLeaveQuestion = () => ({
   options: ['是', '否', '不知道'],
   elseOptionValue: '是',
   elseOptions: [
-    '有，優於性別平等工作法',
-    '有，符合性別平等工作法',
+    '有，優於或符合性別平等工作法',
     '有，不符合性別平等工作法',
     '有，不清楚是否符合性別平等工作法',
   ],

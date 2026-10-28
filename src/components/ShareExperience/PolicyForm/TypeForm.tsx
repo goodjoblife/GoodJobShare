@@ -62,8 +62,7 @@ const hasPolicyMap: Record<string, YesNoOrUnknown> = {
 };
 
 const complianceMap: Record<string, YesNoOrUnknown> = {
-  '有，優於性別平等工作法': YesNoOrUnknown.yes,
-  '有，符合性別平等工作法': YesNoOrUnknown.yes,
+  '有，優於或符合性別平等工作法': YesNoOrUnknown.yes,
   '有，不符合性別平等工作法': YesNoOrUnknown.no,
   '有，不清楚是否符合性別平等工作法': YesNoOrUnknown.unknown,
 };

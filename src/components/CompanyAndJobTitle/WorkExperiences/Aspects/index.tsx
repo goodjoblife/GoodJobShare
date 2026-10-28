@@ -7,7 +7,6 @@ import {
   aspectTranslation,
   generateTabURL,
 } from 'constants/companyJobTitle';
-import { RootState } from 'reducers';
 import {
   AspectStatisticsDataInIndex,
   CompanyAspectExperienceResult,
@@ -17,27 +16,23 @@ import FetchBox from 'utils/fetchBox';
 import PageBoxRenderer from '../../PageBoxRenderer';
 import { usePageContext } from '../../PageContextProvider';
 import Helmet from '../Helmet';
-import WorkExperiencesSection from '../WorkExperiences';
+import WorkExperiencesSection from '../WorkExperiencesSection';
 import RatingFilter from './RatingFilter';
 import styles from './styles.module.css';
 import Summary from './Summary';
 
 export type AspectProps = {
   aspect: Aspect;
-  statisticsBoxSelector: (
-    state: RootState,
-  ) => FetchBox<AspectStatisticsDataInIndex | null>;
-  experiencesBoxSelector: (
-    state: RootState,
-  ) => FetchBox<CompanyAspectExperienceResult | null>;
+  statisticsBox: FetchBox<AspectStatisticsDataInIndex | null>;
+  experiencesBox: FetchBox<CompanyAspectExperienceResult | null>;
   page: number;
   pageSize: number;
 };
 
 const AspectSection: React.FC<AspectProps> = ({
   aspect,
-  statisticsBoxSelector,
-  experiencesBoxSelector,
+  statisticsBox,
+  experiencesBox,
   page,
   pageSize,
 }) => {
@@ -54,7 +49,7 @@ const AspectSection: React.FC<AspectProps> = ({
           pageType={pageType}
           pageName={pageName}
           tabType={tabType}
-          boxSelector={statisticsBoxSelector}
+          box={statisticsBox}
           render={(data: AspectStatisticsDataInIndex): React.ReactNode => {
             const items = data.companyAspectRatingStatistics;
             const item = items.find(item => item.aspect === aspect);
@@ -78,7 +73,7 @@ const AspectSection: React.FC<AspectProps> = ({
           pageType={pageType}
           pageName={pageName}
           tabType={tabType}
-          boxSelector={experiencesBoxSelector}
+          box={experiencesBox}
           render={({
             workExperiences,
             workExperiencesCount: totalCount,
