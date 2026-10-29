@@ -4,12 +4,14 @@ export const STATE_SHARE = {
   SALARY_WORK_TIME: 'salary-work-times',
   SALARY_WORK_TIME_NO_PROGRESS_BAR: 'salary-work-times-no-progress-bar',
   POLICY: 'policy',
+  POLICY_REVIEW_GROUP: 'policy-review-group',
 };
 
 type ShareLinkTo = {
   state: {
     share: string;
     companyName?: string;
+    policyReviewGroupId?: string;
   };
 };
 
@@ -33,4 +35,9 @@ export const generateShareWork = (): ShareLinkTo => ({
 });
 export const generateSharePolicyForm = (): ShareLinkTo => ({
   state: { share: STATE_SHARE.POLICY },
+});
+export const generatePolicyReviewGroupModal = (
+  policyReviewGroupId: string,
+): ShareLinkTo => ({
+  state: { share: STATE_SHARE.POLICY_REVIEW_GROUP, policyReviewGroupId },
 });
