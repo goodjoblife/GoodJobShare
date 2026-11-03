@@ -45,7 +45,7 @@ describe('FacebookLoginButton', () => {
     expect(loadFacebook).not.toHaveBeenCalled();
   });
 
-  it('starts a user-triggered load when the SDK is idle', () => {
+  it('stays disabled until the preloaded SDK is ready', () => {
     const { getByRole } = renderButton({
       FB: null,
       status: FacebookStatus.IDLE,
@@ -53,12 +53,13 @@ describe('FacebookLoginButton', () => {
       retryFacebook,
     });
 
-    fireEvent.click(getByRole('button'));
+    const button = getByRole('button');
 
-    expect(loadFacebook).toHaveBeenCalledWith({
-      reportError: true,
-      trigger: 'facebook-login',
-    });
+    expect(button.disabled).toBe(true);
+    fireEvent.click(button);
+
+    expect(loadFacebook).not.toHaveBeenCalled();
+    expect(retryFacebook).not.toHaveBeenCalled();
     expect(fbLogin).not.toHaveBeenCalled();
   });
 
@@ -76,7 +77,7 @@ describe('FacebookLoginButton', () => {
 
     expect(retryFacebook).toHaveBeenCalledWith({
       reportError: true,
-      trigger: 'facebook-login',
+      trigger: 'facebook-login-retry',
     });
   });
 

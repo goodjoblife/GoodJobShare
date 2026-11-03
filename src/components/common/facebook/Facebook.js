@@ -8,14 +8,12 @@ export default class Facebook {
   constructor(appId) {
     this.appId = appId;
     this.loadingPromise = null;
-    this.rejectLoading = null;
-    this.asyncInit = null;
-    this.loadId = 0;
+    this.facebookSdk = null;
   }
 
   init() {
-    if (window.FB) {
-      return Promise.resolve(window.FB);
+    if (this.facebookSdk) {
+      return Promise.resolve(this.facebookSdk);
     }
 
     // 第二次 init 時可以取用之前的結果
@@ -23,23 +21,26 @@ export default class Facebook {
       return this.loadingPromise;
     }
 
-    const loadId = ++this.loadId;
-    const loadingPromise = new Promise((resolve, reject) => {
-      const appId = this.appId;
+    const initialize = FB => {
+      FB.init({
+        appId: this.appId,
+        cookie: true,
+        xfbml: true,
+        version: 'v19.0',
+      });
+      this.facebookSdk = FB;
+      return FB;
+    };
 
+    if (window.FB) {
+      return Promise.resolve(initialize(window.FB));
+    }
+
+    this.loadingPromise = new Promise((resolve, reject) => {
       // FB SDK loading 後會觸發 window.fbAsyncInit
-      this.rejectLoading = reject;
-      this.asyncInit = () => {
-        window.FB.init({
-          appId,
-          cookie: true,
-          xfbml: true,
-          version: 'v19.0',
-        });
-
-        resolve(window.FB);
+      window.fbAsyncInit = () => {
+        resolve(initialize(window.FB));
       };
-      window.fbAsyncInit = this.asyncInit;
 
       // FB SDK
       // eslint-disable-next-line
@@ -57,43 +58,11 @@ export default class Facebook {
         };
         fjs.parentNode.insertBefore(js, fjs);
       })(document, 'script', 'facebook-jssdk');
-    })
-      .then(FB => {
-        if (loadId === this.loadId) {
-          this.rejectLoading = null;
-        }
-        return FB;
-      })
-      .catch(error => {
-        if (loadId === this.loadId) {
-          this.rejectLoading = null;
-          this.loadingPromise = null;
-        }
-        throw error;
-      });
-    this.loadingPromise = loadingPromise;
+    }).catch(error => {
+      this.loadingPromise = null;
+      throw error;
+    });
 
     return this.loadingPromise;
-  }
-
-  reset() {
-    this.loadId += 1;
-    const script = document.getElementById('facebook-jssdk');
-    if (script && script.parentNode) {
-      script.parentNode.removeChild(script);
-    }
-
-    if (window.fbAsyncInit === this.asyncInit) {
-      delete window.fbAsyncInit;
-    }
-
-    const rejectLoading = this.rejectLoading;
-    this.rejectLoading = null;
-    this.loadingPromise = null;
-    this.asyncInit = null;
-
-    if (rejectLoading) {
-      rejectLoading(new Error('Facebook SDK load was reset'));
-    }
   }
 }

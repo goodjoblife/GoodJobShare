@@ -56,22 +56,20 @@ describe('Facebook', () => {
     await expect(secondInitPromise).resolves.toBe(FB);
   });
 
-  it('keeps a retry in progress when resetting a pending load', async () => {
+  it('initializes an existing SDK before exposing it', async () => {
     const facebook = new Facebook('app-id');
-    const firstInitPromise = facebook.init();
-
-    facebook.reset();
-    const secondInitPromise = facebook.init();
-    await expect(firstInitPromise).rejects.toThrow(
-      'Facebook SDK load was reset',
-    );
-
-    expect(facebook.init()).toBe(secondInitPromise);
-
     const FB = { init: jest.fn() };
     window.FB = FB;
-    window.fbAsyncInit();
 
-    await expect(secondInitPromise).resolves.toBe(FB);
+    await expect(facebook.init()).resolves.toBe(FB);
+    await expect(facebook.init()).resolves.toBe(FB);
+
+    expect(FB.init).toHaveBeenCalledTimes(1);
+    expect(FB.init).toHaveBeenCalledWith({
+      appId: 'app-id',
+      cookie: true,
+      xfbml: true,
+      version: 'v19.0',
+    });
   });
 });

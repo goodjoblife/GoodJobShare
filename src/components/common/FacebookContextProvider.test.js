@@ -28,7 +28,10 @@ const FacebookStatus = () => {
       <button
         data-testid="user-retry"
         onClick={() =>
-          retryFacebook({ reportError: true, trigger: 'facebook-login' })
+          retryFacebook({
+            reportError: true,
+            trigger: 'facebook-login-retry',
+          })
         }
       />
     </div>
@@ -40,7 +43,6 @@ describe('FacebookContextProvider', () => {
   let rejectFacebook;
   let initPromise;
   let init;
-  let reset;
 
   const createInitPromise = () => {
     initPromise = new Promise((resolve, reject) => {
@@ -53,8 +55,7 @@ describe('FacebookContextProvider', () => {
     jest.useFakeTimers();
     createInitPromise();
     init = jest.fn(() => initPromise);
-    reset = jest.fn(() => undefined);
-    Facebook.mockImplementation(() => ({ init, reset }));
+    Facebook.mockImplementation(() => ({ init }));
   });
 
   afterEach(() => {
@@ -129,7 +130,7 @@ describe('FacebookContextProvider', () => {
     expect(rollbar.error).not.toHaveBeenCalled();
   });
 
-  it('reports a timeout after the user explicitly tries Facebook login', () => {
+  it('reports a timeout with the current user-triggered attempt', () => {
     const { getByTestId } = render(
       <FacebookContextProvider>
         <FacebookStatus />
@@ -177,7 +178,7 @@ describe('FacebookContextProvider', () => {
       getByTestId('user-retry').click();
     });
 
-    expect(reset).toHaveBeenCalledTimes(1);
+    expect(init).toHaveBeenCalledTimes(2);
     expect(getByTestId('facebook-status').textContent).toBe('loading');
 
     await act(async () => {
@@ -187,5 +188,76 @@ describe('FacebookContextProvider', () => {
 
     expect(getByTestId('facebook-status').textContent).toBe('ready');
     expect(rollbar.error).not.toHaveBeenCalled();
+  });
+
+  it('reuses a pending SDK request when retrying a timeout', () => {
+    const { getByTestId } = render(
+      <FacebookContextProvider>
+        <FacebookStatus />
+      </FacebookContextProvider>,
+    );
+
+    act(() => {
+      getByTestId('background-load').click();
+      jest.advanceTimersByTime(10000);
+    });
+    expect(getByTestId('facebook-status').textContent).toBe('timedOut');
+
+    act(() => {
+      getByTestId('user-retry').click();
+      jest.advanceTimersByTime(10000);
+    });
+
+    expect(init).toHaveBeenCalledTimes(1);
+    expect(rollbar.error).toHaveBeenCalledWith(
+      '[ER0022] FB SDK load timed out',
+      expect.objectContaining({
+        reason: 'timeout',
+        trigger: 'facebook-login-retry',
+      }),
+    );
+  });
+
+  it('reports an explicit retry load failure with a separate error code', async () => {
+    const { getByTestId } = render(
+      <FacebookContextProvider>
+        <FacebookStatus />
+      </FacebookContextProvider>,
+    );
+
+    act(() => {
+      getByTestId('user-load').click();
+    });
+
+    await act(async () => {
+      rejectFacebook(new Error('Facebook SDK failed to load'));
+      await initPromise.catch(() => undefined);
+    });
+
+    expect(rollbar.error).toHaveBeenCalledWith(
+      '[ER0023] FB SDK failed to load',
+      expect.objectContaining({
+        reason: 'failed',
+        trigger: 'facebook-login',
+      }),
+    );
+
+    createInitPromise();
+    act(() => {
+      getByTestId('user-retry').click();
+    });
+    await act(async () => {
+      rejectFacebook(new Error('Facebook SDK failed to load again'));
+      await initPromise.catch(() => undefined);
+    });
+
+    expect(rollbar.error).toHaveBeenCalledTimes(2);
+    expect(rollbar.error).toHaveBeenLastCalledWith(
+      '[ER0023] FB SDK failed to load',
+      expect.objectContaining({
+        reason: 'failed',
+        trigger: 'facebook-login-retry',
+      }),
+    );
   });
 });

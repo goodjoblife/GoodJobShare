@@ -10,7 +10,6 @@ import Thumbnails from 'common/icons/Thumbnails';
 import { formatCanonicalPath } from 'utils/helmetHelper';
 
 import styles from './Footer.module.css';
-import { FACEBOOK_APP_ID } from '../../config';
 
 const Pager = ({ className, id, title }) => (
   <Link to={`/labor-rights/${id}`} className={cn(styles.pager, className)}>
@@ -32,7 +31,7 @@ Pager.defaultProps = {
 const Footer = ({ id, prev, next }) => (
   <Wrapper size="m" className={styles.footer}>
     <div className={styles.share}>
-      <FacebookWrapper appId={FACEBOOK_APP_ID}>
+      <FacebookWrapper key={id}>
         <div
           className="fb-like"
           data-href={formatCanonicalPath(`/labor-rights/${id}`)}

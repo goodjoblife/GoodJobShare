@@ -23,24 +23,17 @@ const FacebookLoginButton = ({ preload }) => {
       return;
     }
 
-    const options = { reportError: true, trigger: 'facebook-login' };
     if (
       status === FacebookStatus.TIMED_OUT ||
       status === FacebookStatus.FAILED
     ) {
-      retryFacebook(options);
-    } else {
-      loadFacebook(options);
+      retryFacebook({ reportError: true, trigger: 'facebook-login-retry' });
     }
   };
 
-  const isLoading = status === FacebookStatus.LOADING;
-  const preloadFacebook = () => {
-    if (status === FacebookStatus.IDLE) {
-      loadFacebook({ trigger: 'facebook-login-prefetch' });
-    }
-  };
-  const buttonText = isLoading
+  const isUnavailable =
+    status === FacebookStatus.IDLE || status === FacebookStatus.LOADING;
+  const buttonText = isUnavailable
     ? 'Facebook 登入載入中'
     : status === FacebookStatus.TIMED_OUT || status === FacebookStatus.FAILED
     ? '重試 Facebook 登入'
@@ -50,9 +43,7 @@ const FacebookLoginButton = ({ preload }) => {
     <button
       className={cn(styles.btn, styles.btnFb)}
       onClick={handleClick}
-      onFocus={preloadFacebook}
-      onMouseEnter={preloadFacebook}
-      disabled={isLoading}
+      disabled={isUnavailable}
     >
       <pre>{buttonText}</pre>
     </button>

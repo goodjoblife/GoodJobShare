@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 
 import Facebook from 'common/facebook/Facebook';
-import { ER0022, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import { ER0022, ER0023, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import FacebookContext, { FacebookStatus } from 'contexts/FacebookContext';
 import rollbar from 'utils/rollbar';
 
@@ -20,11 +20,10 @@ const FacebookContextProvider = ({ children }) => {
   const [FB, setFB] = useState(null);
   const [status, setStatus] = useState(FacebookStatus.IDLE);
   const facebookRef = useRef(null);
-  const loadPromiseRef = useRef(null);
+  const sdkPromiseRef = useRef(null);
   const timeoutIdRef = useRef(null);
-  const attemptRef = useRef(0);
-  const reportContextRef = useRef(null);
-  const hasReportedErrorRef = useRef(false);
+  const currentAttemptRef = useRef(null);
+  const nextAttemptIdRef = useRef(0);
 
   if (!facebookRef.current) {
     facebookRef.current = new Facebook(FACEBOOK_APP_ID);
@@ -32,62 +31,49 @@ const FacebookContextProvider = ({ children }) => {
 
   useEffect(
     () => () => {
-      attemptRef.current += 1;
+      currentAttemptRef.current = null;
       clearTimeout(timeoutIdRef.current);
     },
     [],
   );
 
-  const reportLoadError = useCallback(reason => {
-    if (!reportContextRef.current || hasReportedErrorRef.current) return;
+  const reportLoadError = useCallback((attempt, reason) => {
+    if (!attempt.reportError || attempt.reported) return;
 
-    hasReportedErrorRef.current = true;
-    const errorCode = ER0022;
-    const message =
-      reason === 'timeout'
-        ? ERROR_CODE_MSG[errorCode].internal
-        : 'FB SDK load failed';
+    attempt.reported = true;
+    const errorCode = reason === 'timeout' ? ER0022 : ER0023;
 
-    rollbar.error(`[${errorCode}] ${message}`, {
+    rollbar.error(`[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal}`, {
       reason,
-      trigger: reportContextRef.current.trigger,
+      trigger: attempt.trigger,
       route: window.location.pathname,
       visibilityState: document.visibilityState,
       webdriver: navigator.webdriver,
     });
   }, []);
 
-  const startLoading = useCallback(
-    ({ reportError = false, trigger = 'unknown', retry = false } = {}) => {
-      if (reportError) {
-        reportContextRef.current = { trigger };
-      }
-
-      if (loadPromiseRef.current && !retry) {
-        return loadPromiseRef.current;
-      }
-
-      if (retry) {
-        attemptRef.current += 1;
-        clearTimeout(timeoutIdRef.current);
-        loadPromiseRef.current = null;
-        facebookRef.current.reset();
-      }
-
-      const attempt = ++attemptRef.current;
+  const monitorLoad = useCallback(
+    (sdkPromise, { reportError = false, trigger = 'unknown' } = {}) => {
+      const attempt = {
+        id: ++nextAttemptIdRef.current,
+        reportError,
+        reported: false,
+        trigger,
+      };
+      currentAttemptRef.current = attempt;
       setStatus(FacebookStatus.LOADING);
+      clearTimeout(timeoutIdRef.current);
 
       timeoutIdRef.current = setTimeout(() => {
-        if (attempt !== attemptRef.current) return;
+        if (attempt !== currentAttemptRef.current) return;
 
         setStatus(FacebookStatus.TIMED_OUT);
-        reportLoadError('timeout');
+        reportLoadError(attempt, 'timeout');
       }, LOAD_TIMEOUT_MS);
 
-      const loadPromise = facebookRef.current
-        .init()
+      return sdkPromise
         .then(facebookSdk => {
-          if (attempt !== attemptRef.current) return facebookSdk;
+          if (attempt !== currentAttemptRef.current) return facebookSdk;
 
           clearTimeout(timeoutIdRef.current);
           setFB(facebookSdk);
@@ -95,27 +81,37 @@ const FacebookContextProvider = ({ children }) => {
           return facebookSdk;
         })
         .catch(() => {
-          if (attempt !== attemptRef.current) return null;
+          if (attempt !== currentAttemptRef.current) return null;
 
           clearTimeout(timeoutIdRef.current);
-          loadPromiseRef.current = null;
+          if (sdkPromiseRef.current === sdkPromise) {
+            sdkPromiseRef.current = null;
+          }
           setStatus(FacebookStatus.FAILED);
-          reportLoadError('failed');
+          reportLoadError(attempt, 'failed');
           return null;
         });
-
-      loadPromiseRef.current = loadPromise;
-      return loadPromise;
     },
     [reportLoadError],
   );
 
-  const loadFacebook = useCallback(options => startLoading(options), [
-    startLoading,
-  ]);
+  const loadFacebook = useCallback(
+    options => {
+      if (sdkPromiseRef.current) return sdkPromiseRef.current;
+
+      const sdkPromise = facebookRef.current.init();
+      sdkPromiseRef.current = sdkPromise;
+      return monitorLoad(sdkPromise, options);
+    },
+    [monitorLoad],
+  );
   const retryFacebook = useCallback(
-    options => startLoading({ ...options, retry: true }),
-    [startLoading],
+    options => {
+      const sdkPromise = sdkPromiseRef.current || facebookRef.current.init();
+      sdkPromiseRef.current = sdkPromise;
+      return monitorLoad(sdkPromise, options);
+    },
+    [monitorLoad],
   );
 
   const contextValue = useMemo(

@@ -58,17 +58,16 @@ describe('FacebookWrapper', () => {
 
   it('parses the widget after the SDK becomes ready', () => {
     const parse = jest.fn();
+    const contextValue = {
+      FB: { XFBML: { parse } },
+      status: FacebookStatus.READY,
+      loadFacebook,
+      retryFacebook: jest.fn(),
+    };
 
-    render(
-      <FacebookContext.Provider
-        value={{
-          FB: { XFBML: { parse } },
-          status: FacebookStatus.READY,
-          loadFacebook,
-          retryFacebook: jest.fn(),
-        }}
-      >
-        <FacebookWrapper>
+    const { rerender } = render(
+      <FacebookContext.Provider value={contextValue}>
+        <FacebookWrapper key="first-entry">
           <div>Facebook widget</div>
         </FacebookWrapper>
       </FacebookContext.Provider>,
@@ -76,5 +75,15 @@ describe('FacebookWrapper', () => {
 
     expect(parse).toHaveBeenCalledTimes(1);
     expect(parse.mock.calls[0][0]).toBeInstanceOf(HTMLDivElement);
+
+    rerender(
+      <FacebookContext.Provider value={contextValue}>
+        <FacebookWrapper key="second-entry">
+          <div>Facebook widget</div>
+        </FacebookWrapper>
+      </FacebookContext.Provider>,
+    );
+
+    expect(parse).toHaveBeenCalledTimes(2);
   });
 });

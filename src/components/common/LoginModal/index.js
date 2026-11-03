@@ -32,8 +32,8 @@ const LoginModal = ({ onClose, inline }) => {
   }, [close, isLoggedIn, isOpen]);
 
   useEffect(() => {
-    if (isOpen) loadFacebook({ trigger: 'login-modal' });
-  }, [isOpen, loadFacebook]);
+    if (inline || isOpen) loadFacebook({ trigger: 'login-modal' });
+  }, [inline, isOpen, loadFacebook]);
 
   const ModalComponent = inline ? InlineModal : Modal;
 
