@@ -5,6 +5,7 @@ import { P } from 'common/base';
 import FacebookLoginButton from 'common/Login/FacebookLoginButton';
 import GoogleLoginButton from 'common/Login/GoogleLoginButton';
 import Modal, { InlineModal } from 'common/Modal';
+import FacebookContext from 'contexts/FacebookContext';
 import LoginModalContext from 'contexts/LoginModalContext';
 import { useIsLoggedIn } from 'hooks/auth';
 
@@ -14,6 +15,7 @@ const LoginModal = ({ onClose, inline }) => {
   const { isLoginModalDisplayed: isOpen, setLoginModalDisplayed } = useContext(
     LoginModalContext,
   );
+  const { loadFacebook } = useContext(FacebookContext);
 
   const close = useCallback(() => {
     setLoginModalDisplayed(false);
@@ -28,6 +30,10 @@ const LoginModal = ({ onClose, inline }) => {
       close();
     }
   }, [close, isLoggedIn, isOpen]);
+
+  useEffect(() => {
+    if (isOpen) loadFacebook({ trigger: 'login-modal' });
+  }, [isOpen, loadFacebook]);
 
   const ModalComponent = inline ? InlineModal : Modal;
 

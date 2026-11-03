@@ -13,7 +13,7 @@ const LoginSection = () => {
         登入後以信用卡付款
       </P>
       <div className={styles.loginBtnContainer}>
-        <FacebookLoginButton />
+        <FacebookLoginButton preload />
         <GoogleLoginButton />
       </div>
     </div>

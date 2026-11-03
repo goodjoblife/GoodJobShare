@@ -55,4 +55,23 @@ describe('Facebook', () => {
 
     await expect(secondInitPromise).resolves.toBe(FB);
   });
+
+  it('keeps a retry in progress when resetting a pending load', async () => {
+    const facebook = new Facebook('app-id');
+    const firstInitPromise = facebook.init();
+
+    facebook.reset();
+    const secondInitPromise = facebook.init();
+    await expect(firstInitPromise).rejects.toThrow(
+      'Facebook SDK load was reset',
+    );
+
+    expect(facebook.init()).toBe(secondInitPromise);
+
+    const FB = { init: jest.fn() };
+    window.FB = FB;
+    window.fbAsyncInit();
+
+    await expect(secondInitPromise).resolves.toBe(FB);
+  });
 });
