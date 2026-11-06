@@ -32,10 +32,6 @@
   cursor: pointer;
 }
 
-.filterButtonActive {
-  color: #333;
-}
-
 .filterIcon {
   width: 14px;
   font-size: 12px;
