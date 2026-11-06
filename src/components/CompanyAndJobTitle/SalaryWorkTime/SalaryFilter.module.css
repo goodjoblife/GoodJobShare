@@ -1,4 +1,4 @@
-@value below-small, modal-overlay-background from "../../common/variables.module.css";
+@value below-small, below-little, modal-overlay-background from "../../common/variables.module.css";
 
 .filterBar {
   display: flex;
@@ -8,6 +8,10 @@
   @media (max-width: below-small) {
     width: 100%;
     padding-bottom: 12px;
+  }
+
+  @media (max-width: below-little) {
+    flex-direction: column;
   }
 }
 
@@ -174,17 +178,22 @@
 
   @media (max-width: below-small) {
     flex: 1;
+    margin-left: 0;
     min-width: 0;
 
     .label {
-      font-weight: bold;
-      white-space: nowrap;
+      display: none;
     }
 
     .select {
       min-width: 0;
       flex: 1;
     }
+  }
+
+  @media (max-width: below-little) {
+    width: 100%;
+    flex: none;
   }
 }
 
