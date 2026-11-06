@@ -308,8 +308,8 @@ export const queryCompanySalaryWorkTime = (
     start,
     limit,
     dataTimeRange,
-    experienceInYearRange,
-    gender,
+    experienceInYearRanges,
+    genders,
     sortBy,
   }: {
     companyName: string;
@@ -317,8 +317,8 @@ export const queryCompanySalaryWorkTime = (
     start: number;
     limit: number;
     dataTimeRange?: DataTimeRange;
-    experienceInYearRange?: ExperienceInYearRange;
-    gender?: string;
+    experienceInYearRanges?: ExperienceInYearRange[];
+    genders?: string[];
     sortBy?: string;
   },
   { force = false }: { force?: boolean } = {},
@@ -334,8 +334,8 @@ export const queryCompanySalaryWorkTime = (
         box.data.start === start &&
         box.data.limit === limit &&
         R.equals(box.data.dataTimeRange, dataTimeRange) &&
-        R.equals(box.data.experienceInYearRange, experienceInYearRange) &&
-        box.data.gender === gender &&
+        R.equals(box.data.experienceInYearRanges, experienceInYearRanges) &&
+        R.equals(box.data.genders, genders) &&
         box.data.sortBy === sortBy))
   ) {
     return;
@@ -350,8 +350,8 @@ export const queryCompanySalaryWorkTime = (
       start,
       limit,
       dataTimeRange,
-      experienceInYearRange,
-      gender,
+      experienceInYearRanges,
+      genders,
       sortBy,
     });
 
@@ -366,8 +366,8 @@ export const queryCompanySalaryWorkTime = (
       start,
       limit,
       dataTimeRange,
-      experienceInYearRange,
-      gender,
+      experienceInYearRanges,
+      genders,
       sortBy,
       salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
       salaryWorkTimesCount: data.salaryWorkTimesResult.count,
