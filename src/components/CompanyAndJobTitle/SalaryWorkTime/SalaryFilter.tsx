@@ -326,17 +326,12 @@ const SalaryFilter = ({ y = null }: TSalaryFilterProps): React.ReactElement => {
     setIsOpen(false);
   };
 
-  const hasFilters =
-    dataTime !== undefined || experiences.length > 0 || genders.length > 0;
-
   return (
     <div className={styles.filterBar}>
       <div ref={filterRef} className={styles.filterControl}>
         <button
           type="button"
-          className={cn(styles.filterButton, {
-            [styles.filterButtonActive]: hasFilters,
-          })}
+          className={styles.filterButton}
           aria-expanded={isOpen}
           aria-haspopup="dialog"
           onClick={(): void => (isOpen ? setIsOpen(false) : openFilter())}
