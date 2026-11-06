@@ -60,6 +60,7 @@ type Option<T extends string> = { value: T; label: string };
 type TSalaryFilterSelectProps = {
   options: Option<string>[];
   defaultLabel: string;
+  ariaLabel: string;
   value: string | null | undefined;
   onChange: (value: string | null) => void;
 };
@@ -159,11 +160,13 @@ export const useSortByFromQuery = (
 const SalaryFilterSelect = ({
   options,
   defaultLabel,
+  ariaLabel,
   value,
   onChange,
 }: TSalaryFilterSelectProps): React.ReactElement => (
   <select
     className={styles.select}
+    aria-label={ariaLabel}
     value={value || ''}
     onChange={(event): void => onChange(event.target.value || null)}
   >
@@ -408,6 +411,7 @@ const SalaryFilter = ({ y = null }: TSalaryFilterProps): React.ReactElement => {
         <SalaryFilterSelect
           options={SORT_OPTIONS}
           defaultLabel="參考時間（新→舊）"
+          ariaLabel="排序"
           value={sortBy}
           onChange={setSortBy}
         />
