@@ -49,8 +49,8 @@ export type JobTitleSalaryWorkTimeResult = {
   start: number;
   limit: number;
   dataTimeRange: DataTimeRange | undefined;
-  experienceInYearRange: ExperienceInYearRange | undefined;
-  gender: string | undefined;
+  experienceInYearRanges: ExperienceInYearRange[] | undefined;
+  genders: string[] | undefined;
   sortBy: string | undefined;
   salaryWorkTimes: SalaryWorkTime[];
   salaryWorkTimesCount: number;
