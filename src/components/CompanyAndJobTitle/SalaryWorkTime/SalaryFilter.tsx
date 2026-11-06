@@ -345,54 +345,62 @@ const SalaryFilter = ({ y = null }: TSalaryFilterProps): React.ReactElement => {
           <span className={styles.chevron} aria-hidden="true" />
         </button>
         {isOpen && (
-          <div className={styles.panel} role="dialog" aria-label="薪資篩選">
-            <div className={styles.rows}>
-              <DataTimeFilterRow
-                value={draft.dataTime}
-                onChange={(value): void =>
-                  setDraft(current => ({ ...current, dataTime: value }))
-                }
-              />
-              <FilterRow
-                label="工作經歷"
-                options={EXPERIENCE_OPTIONS}
-                values={draft.experiences}
-                onChange={(values): void =>
-                  setDraft(current => ({ ...current, experiences: values }))
-                }
-              />
-              <FilterRow
-                label="性別"
-                options={GENDER_OPTIONS}
-                values={draft.genders}
-                onChange={(values): void =>
-                  setDraft(current => ({ ...current, genders: values }))
-                }
-              />
+          <>
+            <button
+              type="button"
+              className={styles.backdrop}
+              aria-label="關閉篩選"
+              onClick={(): void => setIsOpen(false)}
+            />
+            <div className={styles.panel} role="dialog" aria-label="薪資篩選">
+              <div className={styles.rows}>
+                <DataTimeFilterRow
+                  value={draft.dataTime}
+                  onChange={(value): void =>
+                    setDraft(current => ({ ...current, dataTime: value }))
+                  }
+                />
+                <FilterRow
+                  label="工作經歷"
+                  options={EXPERIENCE_OPTIONS}
+                  values={draft.experiences}
+                  onChange={(values): void =>
+                    setDraft(current => ({ ...current, experiences: values }))
+                  }
+                />
+                <FilterRow
+                  label="性別"
+                  options={GENDER_OPTIONS}
+                  values={draft.genders}
+                  onChange={(values): void =>
+                    setDraft(current => ({ ...current, genders: values }))
+                  }
+                />
+              </div>
+              <div className={styles.actions}>
+                <button
+                  type="button"
+                  className={styles.clearButton}
+                  onClick={(): void =>
+                    setDraft({
+                      dataTime: null,
+                      experiences: [],
+                      genders: [],
+                    })
+                  }
+                >
+                  清除全部
+                </button>
+                <button
+                  type="button"
+                  className={styles.applyButton}
+                  onClick={apply}
+                >
+                  套用
+                </button>
+              </div>
             </div>
-            <div className={styles.actions}>
-              <button
-                type="button"
-                className={styles.clearButton}
-                onClick={(): void =>
-                  setDraft({
-                    dataTime: null,
-                    experiences: [],
-                    genders: [],
-                  })
-                }
-              >
-                清除全部
-              </button>
-              <button
-                type="button"
-                className={styles.applyButton}
-                onClick={apply}
-              >
-                套用
-              </button>
-            </div>
-          </div>
+          </>
         )}
       </div>
       <div className={styles.sortGroup}>

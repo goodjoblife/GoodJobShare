@@ -62,7 +62,7 @@ describe('SalaryFilter', () => {
     fireEvent.click(screen.getByRole('button', { name: '篩選' }));
 
     fireEvent.click(screen.getByRole('button', { name: '過去一年' }));
-    fireEvent.click(screen.getByRole('button', { name: '0~3 年' }));
+    fireEvent.click(screen.getByRole('button', { name: '0 ~ 3 年' }));
     fireEvent.click(screen.getByRole('button', { name: '8 年以上' }));
     fireEvent.click(screen.getByRole('button', { name: '女性' }));
     fireEvent.click(screen.getByRole('button', { name: '套用' }));
@@ -130,5 +130,14 @@ describe('SalaryFilter', () => {
           .getAttribute('aria-pressed'),
       ).toBe('false');
     });
+  });
+
+  test('點擊小螢幕遮罩會關閉篩選器', () => {
+    renderFilter();
+    fireEvent.click(screen.getByRole('button', { name: '篩選' }));
+
+    fireEvent.click(screen.getByRole('button', { name: '關閉篩選' }));
+
+    expect(screen.queryByRole('dialog', { name: '薪資篩選' })).toBeNull();
   });
 });
