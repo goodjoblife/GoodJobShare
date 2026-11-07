@@ -66,7 +66,7 @@ type TSalaryFilterSelectProps = {
 };
 
 type FilterValues = {
-  dataTime: DataTime | null | undefined;
+  dataTime: DataTime | null;
   experiences: ExperienceInYears[];
   genders: Gender[];
 };
@@ -188,28 +188,26 @@ const DataTimeFilterRow = ({
   value,
   onChange,
 }: {
-  value: DataTime | null | undefined;
-  onChange: (value: DataTime | undefined) => void;
+  value: DataTime | null;
+  onChange: (value: DataTime | null) => void;
 }): React.ReactElement => (
   <fieldset className={styles.filterRow}>
     <legend>參考時間</legend>
     <div className={styles.options}>
-      {[...DATA_TIME_OPTIONS, { value: undefined, label: '不限時間' }].map(
-        option => {
-          const selected = value === option.value;
-          return (
-            <button
-              type="button"
-              key={option.value || 'unlimited'}
-              aria-pressed={selected}
-              className={cn(styles.option, { [styles.selected]: selected })}
-              onClick={(): void => onChange(option.value)}
-            >
-              {option.label}
-            </button>
-          );
-        },
-      )}
+      {[{ value: null, label: '不限' }, ...DATA_TIME_OPTIONS].map(option => {
+        const selected = value === option.value;
+        return (
+          <button
+            type="button"
+            key={option.value || 'unlimited'}
+            aria-pressed={selected}
+            className={cn(styles.option, { [styles.selected]: selected })}
+            onClick={(): void => onChange(option.value)}
+          >
+            {option.label}
+          </button>
+        );
+      })}
     </div>
   </fieldset>
 );
@@ -225,19 +223,20 @@ const FilterRow = <T extends string>({
   values: T[];
   onChange: (values: T[]) => void;
 }): React.ReactElement => {
-  const allSelected = values.length === options.length;
+  const unrestricted = values.length === 0;
   return (
     <fieldset className={styles.filterRow}>
       <legend>{label}</legend>
       <div className={styles.options}>
         <button
           type="button"
-          className={styles.option}
-          onClick={(): void =>
-            onChange(allSelected ? [] : options.map(option => option.value))
-          }
+          aria-pressed={unrestricted}
+          className={cn(styles.option, {
+            [styles.selected]: unrestricted,
+          })}
+          onClick={(): void => onChange([])}
         >
-          {allSelected ? '清除' : '全部'}
+          不限
         </button>
         {options.map(option => {
           const selected = values.includes(option.value);
@@ -387,7 +386,7 @@ const SalaryFilter = ({ y = null }: TSalaryFilterProps): React.ReactElement => {
                     })
                   }
                 >
-                  清除全部
+                  重設
                 </button>
                 <button
                   type="button"
