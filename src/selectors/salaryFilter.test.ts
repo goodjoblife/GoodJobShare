@@ -9,6 +9,9 @@ describe('salary filter query selectors', () => {
     expect(dataTimeFromQuerySelector({ data_time: 'past_month' })).toBe(
       'past_month',
     );
+    expect(dataTimeFromQuerySelector({ data_time: 'unlimited' })).toBe(
+      'unlimited',
+    );
   });
 
   test('保留多選參數並忽略未知值', () => {

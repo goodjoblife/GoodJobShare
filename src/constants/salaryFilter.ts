@@ -9,12 +9,14 @@ export enum DataTime {
   PAST_MONTH = 'past_month',
   PAST_YEAR = 'past_year',
   PAST_TWO_YEARS = 'past_two_years',
+  UNLIMITED = 'unlimited',
 }
 
 export const DATA_TIME_OPTIONS = [
   { value: DataTime.PAST_MONTH, label: '過去一個月' },
   { value: DataTime.PAST_YEAR, label: '過去一年' },
   { value: DataTime.PAST_TWO_YEARS, label: '過去兩年' },
+  { value: DataTime.UNLIMITED, label: '不限時間' },
 ];
 
 export enum ExperienceInYears {

@@ -66,7 +66,7 @@ type TSalaryFilterSelectProps = {
 };
 
 type FilterValues = {
-  dataTime: DataTime | null | undefined;
+  dataTime: DataTime | null;
   experiences: ExperienceInYears[];
   genders: Gender[];
 };
@@ -83,6 +83,8 @@ export const getDataTimeRange = (
   if (!dataTime) return undefined;
   const end = createYearMonth(now);
   switch (dataTime) {
+    case DataTime.UNLIMITED:
+      return undefined;
     case DataTime.PAST_MONTH:
       return { start: createYearMonth(subMonths(now, 1)), end };
     case DataTime.PAST_YEAR:
@@ -188,28 +190,26 @@ const DataTimeFilterRow = ({
   value,
   onChange,
 }: {
-  value: DataTime | null | undefined;
-  onChange: (value: DataTime | undefined) => void;
+  value: DataTime | null;
+  onChange: (value: DataTime) => void;
 }): React.ReactElement => (
   <fieldset className={styles.filterRow}>
     <legend>參考時間</legend>
     <div className={styles.options}>
-      {[...DATA_TIME_OPTIONS, { value: undefined, label: '不限時間' }].map(
-        option => {
-          const selected = value === option.value;
-          return (
-            <button
-              type="button"
-              key={option.value || 'unlimited'}
-              aria-pressed={selected}
-              className={cn(styles.option, { [styles.selected]: selected })}
-              onClick={(): void => onChange(option.value)}
-            >
-              {option.label}
-            </button>
-          );
-        },
-      )}
+      {DATA_TIME_OPTIONS.map(option => {
+        const selected = value === option.value;
+        return (
+          <button
+            type="button"
+            key={option.value}
+            aria-pressed={selected}
+            className={cn(styles.option, { [styles.selected]: selected })}
+            onClick={(): void => onChange(option.value)}
+          >
+            {option.label}
+          </button>
+        );
+      })}
     </div>
   </fieldset>
 );

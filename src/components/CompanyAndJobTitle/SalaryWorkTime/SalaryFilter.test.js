@@ -10,8 +10,9 @@ import SalaryFilter, {
 } from './SalaryFilter';
 
 describe('getDataTimeRange', () => {
-  test('不限時間時不送篩選條件', () => {
+  test('沒有時間條件或選擇不限時間時不送篩選條件', () => {
     expect(getDataTimeRange(undefined)).toBeUndefined();
+    expect(getDataTimeRange('unlimited')).toBeUndefined();
   });
 
   test('將參考時間轉為日期區間', () => {
@@ -105,16 +106,27 @@ describe('SalaryFilter', () => {
     ).toBe('false');
   });
 
-  test('使用者點選不限時間時才亮高', () => {
-    renderFilter();
+  test('套用不限時間後寫入 URL，重新開啟仍會亮高', () => {
+    const history = renderFilter();
     fireEvent.click(screen.getByRole('button', { name: '篩選' }));
     const unlimitedButton = within(
       screen.getByRole('group', { name: '參考時間' }),
     ).getByRole('button', { name: '不限時間' });
 
     fireEvent.click(unlimitedButton);
+    fireEvent.click(screen.getByRole('button', { name: '套用' }));
 
-    expect(unlimitedButton.getAttribute('aria-pressed')).toBe('true');
+    expect(
+      qs.parse(history.location.search, { ignoreQueryPrefix: true }),
+    ).toEqual({ data_time: 'unlimited' });
+
+    fireEvent.click(screen.getByRole('button', { name: '篩選' }));
+
+    expect(
+      within(screen.getByRole('group', { name: '參考時間' }))
+        .getByRole('button', { name: '不限時間' })
+        .getAttribute('aria-pressed'),
+    ).toBe('true');
   });
 
   test('清除全部後參考時間不亮高任何選項', () => {
