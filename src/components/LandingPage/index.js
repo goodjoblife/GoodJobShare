@@ -135,10 +135,13 @@ const LandingPage = () => {
   );
 };
 
+// SummarySection 位於首屏，若只在 client 抓資料，渲染後會把下方內容整段往下推（CLS）
 LandingPage.fetchData = ({ store: { dispatch } }) => {
   return Promise.all([
     dispatch(queryPopularExperiences()),
     dispatch(queryMenuIfUnfetched()),
+    dispatch(queryPopularCompanyAverageSalary()),
+    dispatch(queryPopularJobTitleSalaryDistribution()),
   ]);
 };
 

@@ -38,6 +38,8 @@ a {
 img {
   display: block;
   width: 100%;
+  /* 讓 <img> 的 width/height 屬性只用來算比例（預留空間），不鎖死高度 */
+  height: auto;
 }
 
 svg {
