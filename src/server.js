@@ -1,3 +1,4 @@
+import compression from 'compression';
 import Express from 'express';
 import { createMemoryHistory as createHistory } from 'history';
 import promClient from 'prom-client';
@@ -48,6 +49,7 @@ const wrap = fn => (req, res, next) => fn(req, res).catch(err => next(err));
 const server = Express();
 server
   .disable('x-powered-by')
+  .use(compression())
   .use(Express.static(process.env.RAZZLE_PUBLIC_DIR, { maxAge: '14d' }));
 
 server.get(

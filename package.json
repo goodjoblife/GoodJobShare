@@ -85,6 +85,7 @@
     "@loadable/component": "^5.16.4",
     "airbnb-prop-types": "^2.15.0",
     "classnames": "^2.5.1",
+    "compression": "^1.8.2",
     "date-fns": "^2.30.0",
     "express": "^4.22.2",
     "history": "^4.7.2",
