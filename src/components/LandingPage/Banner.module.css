@@ -3,7 +3,6 @@
 .banner {
   background-color: #fffae1;
   position: relative;
-  overflow: hidden;
   height: 297px;
   display: flex;
   justify-content: center;
