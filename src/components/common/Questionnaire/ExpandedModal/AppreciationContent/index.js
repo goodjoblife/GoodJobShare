@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-import aboutPeopleImage from 'images/about-people-colored.png';
+import aboutPeopleImage from 'images/about-people-colored.webp';
 
 import styles from './AppreciationContent.module.css';
 import flowerImage from './flower.png';
