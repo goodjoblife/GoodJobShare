@@ -12,6 +12,14 @@ const Banner = () => (
     <Helmet>
       <link rel="preload" as="image" href={heroImage} fetchpriority="high" />
     </Helmet>
+    <img
+      src={heroImage}
+      className={styles.heroImage}
+      width="521"
+      height="207"
+      alt=""
+      aria-hidden="true"
+    />
     <Wrapper size="l">
       <div className={styles.content}>
         <h1 className={styles.heading}>職場透明化運動</h1>

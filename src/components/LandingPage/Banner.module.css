@@ -1,17 +1,18 @@
 @value main-yellow, main-black from '../common/variables.module.css';
 
 .banner {
-  background-color: #fff;
+  background-color: #fffae1;
+  position: relative;
+  overflow: hidden;
   height: 297px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fffae1 url('../images/about-people-colored.webp') no-repeat right
-    bottom;
-  background-size: 347px;
   border-bottom: 1px solid #e5ba00;
 
   > div {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     padding-top: 24px;
@@ -26,8 +27,21 @@
   @media (max-width: 550px) {
     height: 397px;
     padding-bottom: 100px;
-    background-position-x: center;
-    background-size: contain;
+  }
+}
+
+.heroImage {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 347px;
+  height: auto;
+
+  @media (max-width: 550px) {
+    right: auto;
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%);
   }
 }
 
