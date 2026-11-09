@@ -19,13 +19,8 @@ const API_PROXY_ENABLED =
   process.env.NODE_ENV !== 'production' ||
   process.env.ENABLE_API_PROXY === 'true';
 
-if (!process.env.INTERNAL_API_HOST) {
-  console.warn(
-    `INTERNAL_API_HOST is not set, SSR${
-      API_PROXY_ENABLED ? ' and /graphql proxy' : ''
-    } fall back to ${getServerApiHost()}`,
-  );
-}
+// 啟動時就檢查，沒設定 INTERNAL_API_HOST 直接失敗
+getServerApiHost();
 
 const register = new promClient.Registry();
 
