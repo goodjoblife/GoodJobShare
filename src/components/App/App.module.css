@@ -1,7 +1,7 @@
 @import '../common/reset.module.css';
 @import '../common/global.module.css';
 
-@value primary-font, white-light, border-gray, above-tablet, NAV_HEIGHT, NAV_MOBILE_HEIGHT, TABBAR_HEIGHT from "../common/variables.module.css";
+@value primary-font, white-light, border-gray, above-small, NAV_HEIGHT, NAV_MOBILE_HEIGHT, TABBAR_HEIGHT from "../common/variables.module.css";
 
 .content {
   min-height: 100vh;
@@ -13,7 +13,7 @@
 }
 
 .mobileOnly {
-  @media (min-width: above-tablet) {
+  @media (min-width: above-small) {
     display: none !important;
   }
 }
