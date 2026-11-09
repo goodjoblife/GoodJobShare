@@ -40,7 +40,13 @@ const Footer = () => (
   <footer className={styles.wrapper}>
     <section className={styles.header}>
       <Wrapper size="l" className={styles.inner}>
-        <img src={GjLogo} className={styles.logo} alt="GoodJob" />
+        <img
+          src={GjLogo}
+          className={styles.logo}
+          alt="GoodJob"
+          width="160"
+          height="47"
+        />
         <div className={styles.heading}>職場透明化運動</div>
         <div className={styles.subheading}>
           —— 共享薪水、面試情報，求職不再面議！
@@ -65,7 +71,12 @@ const Footer = () => (
       <section className={styles.medias}>
         <P className={styles.heading}>\ 感謝各大媒體採訪報導 /</P>
         <Link to="/about">
-          <img src={MediasImg} alt="cheers yahoo 蘋果日報 數位時代" />
+          <img
+            src={MediasImg}
+            alt="cheers yahoo 蘋果日報 數位時代"
+            width="258"
+            height="117"
+          />
         </Link>
       </section>
     </Wrapper>
@@ -77,7 +88,7 @@ const Footer = () => (
         </P>
         <div className={styles.g0v}>
           <a href="https://grants.g0v.tw/power/" alt="power by g0v">
-            <img src={LogoG0vImg} alt="g0v" />
+            <img src={LogoG0vImg} alt="g0v" width="313" height="32" />
           </a>
         </div>
       </Wrapper>
