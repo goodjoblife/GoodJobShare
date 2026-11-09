@@ -11,6 +11,16 @@ import Root from './components/Root';
 import Html from './helpers/Html';
 import rootRoutes from './routes';
 import configureStore from './store/configureStore';
+import getServerApiHost from './utils/serverApiHost';
+
+// 瀏覽器的 /graphql 在部署環境由 cloudflared 直接轉到 API，不經過這裡。
+// dev server 一律開啟；本機跑 production build 時以 ENABLE_API_PROXY=true 開啟。
+const API_PROXY_ENABLED =
+  process.env.NODE_ENV !== 'production' ||
+  process.env.ENABLE_API_PROXY === 'true';
+
+// 啟動時就檢查，沒設定 INTERNAL_API_HOST 直接失敗
+getServerApiHost();
 
 const register = new promClient.Registry();
 
@@ -49,6 +59,36 @@ const server = Express();
 server
   .disable('x-powered-by')
   .use(Express.static(process.env.RAZZLE_PUBLIC_DIR, { maxAge: '14d' }));
+
+// 本機用的 /graphql 轉發。body 上限沿用後端 express.json() 的預設 100kb。
+const PROXY_REQUEST_HEADERS = [
+  'content-type',
+  'authorization',
+  'x-forwarded-for',
+];
+
+if (API_PROXY_ENABLED) {
+  server.post(
+    '/graphql',
+    Express.raw({ type: () => true }),
+    wrap(async (req, res) => {
+      const headers = {};
+      PROXY_REQUEST_HEADERS.forEach(name => {
+        const value = req.get(name);
+        if (value) headers[name] = value;
+      });
+      const response = await fetch(`${getServerApiHost()}/graphql`, {
+        method: 'POST',
+        headers,
+        body: Buffer.isBuffer(req.body) ? req.body : undefined,
+      });
+      res.status(response.status);
+      const contentType = response.headers.get('content-type');
+      if (contentType) res.set('Content-Type', contentType);
+      res.send(Buffer.from(await response.arrayBuffer()));
+    }),
+  );
+}
 
 server.get(
   '/metrics',
