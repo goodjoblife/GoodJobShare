@@ -41,7 +41,7 @@ const GenderFriendly: React.FC<GenderFriendlyProps> = ({
       <div className={styles.scoreRow}>
         <AspectScoreCard
           aspect={Aspect.GENDER}
-          emptyShareLinkTo={generateSharePolicyForm()}
+          generateEmptyShareLinkTo={generateSharePolicyForm}
         />
         {femaleManagerStatisticsItem && (
           <EsgItemBlock

@@ -46,7 +46,7 @@ const GenderFriendlySnippetBlock: React.FC = () => {
       <div className={styles.row}>
         <AspectScoreCard
           aspect={Aspect.GENDER}
-          emptyShareLinkTo={generateSharePolicyForm()}
+          generateEmptyShareLinkTo={generateSharePolicyForm}
         />
         {femaleManagerStatisticsItem && (
           <EsgItemBlock

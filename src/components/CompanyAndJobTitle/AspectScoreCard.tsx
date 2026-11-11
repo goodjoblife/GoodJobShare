@@ -1,7 +1,7 @@
-import { LocationDescriptor } from 'history';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { GenerateShareLinkTo } from 'common/ShareExpSection/shareLinkTo';
 import {
   Aspect,
   aspectTranslation,
@@ -56,12 +56,12 @@ export const useAspectsData = (
 // companyName 取自 PageContext，掛到職稱頁時 useCompanyName 會當場擋下
 interface AspectScoreCardProps {
   aspect: Aspect;
-  emptyShareLinkTo?: LocationDescriptor;
+  generateEmptyShareLinkTo?: GenerateShareLinkTo;
 }
 
 const AspectScoreCard: React.FC<AspectScoreCardProps> = ({
   aspect,
-  emptyShareLinkTo,
+  generateEmptyShareLinkTo,
 }) => {
   const companyName = useCompanyName();
   const path = generateAspectURL({ pageName: companyName, aspect });
@@ -69,7 +69,7 @@ const AspectScoreCard: React.FC<AspectScoreCardProps> = ({
   const isFetched = useIsAspectStatisticsFetched(companyName);
   const data = useAspectData({ companyName, aspect });
   if (!isFetched) return null;
-  if (!data && !emptyShareLinkTo) return null;
+  if (!data && !generateEmptyShareLinkTo) return null;
 
   const { averageRating, ratingCount } = data || {
     averageRating: 0,
@@ -82,7 +82,9 @@ const AspectScoreCard: React.FC<AspectScoreCardProps> = ({
       maxValue={5}
       linkTo={path}
       dataCount={ratingCount}
-      emptyShareLinkTo={emptyShareLinkTo}
+      emptyShareLinkTo={
+        generateEmptyShareLinkTo && generateEmptyShareLinkTo({ companyName })
+      }
     />
   );
 };

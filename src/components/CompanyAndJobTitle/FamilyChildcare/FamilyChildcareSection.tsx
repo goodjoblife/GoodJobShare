@@ -49,11 +49,11 @@ const FamilyChildcareSection: React.FC<Props> = ({
       <div className={styles.scoreRow}>
         <AspectScoreCard
           aspect={Aspect.WORK_LIFE_BALANCE}
-          emptyShareLinkTo={generateSharePolicyForm()}
+          generateEmptyShareLinkTo={generateSharePolicyForm}
         />
         <AspectScoreCard
           aspect={Aspect.GENDER}
-          emptyShareLinkTo={generateSharePolicyForm()}
+          generateEmptyShareLinkTo={generateSharePolicyForm}
         />
       </div>
     </div>
