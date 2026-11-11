@@ -211,6 +211,7 @@ const useShowsHeader = () => {
   const isMobile = useMobile();
   const { y: scrollY } = useWindowScroll();
   const [showsHeader, setShowsHeader] = useRafState(true);
+  const [isPinned, setPinned] = useState(false);
   const lastScrollY = useRef(
     typeof window !== 'undefined' ? window.scrollY : 0,
   );
@@ -230,7 +231,7 @@ const useShowsHeader = () => {
     lastScrollY.current = scrollY;
   }, [isMobile, scrollY, setShowsHeader]);
 
-  return showsHeader;
+  return [showsHeader || isPinned, setPinned];
 };
 
 const HamburgerButton = ({ isNavOpen, toggle }) => (
@@ -253,7 +254,7 @@ const Header = ({ searchInputRef }) => {
   const [isLoggedIn, login] = useLogin();
   const [, fetchPermission] = usePermission();
 
-  const showsHeader = useShowsHeader();
+  const [showsHeader, setPinned] = useShowsHeader();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -274,6 +275,8 @@ const Header = ({ searchInputRef }) => {
         className={cn(styles.header, {
           [styles.headerHidden]: !showsHeader,
         })}
+        onFocus={() => setPinned(true)}
+        onBlur={() => setPinned(false)}
       >
         <Wrapper size="l" className={styles.inner}>
           <HamburgerButton isNavOpen={isNavOpen} toggle={toggleNav} />

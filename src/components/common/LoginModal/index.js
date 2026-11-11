@@ -5,8 +5,11 @@ import { P } from 'common/base';
 import FacebookLoginButton from 'common/Login/FacebookLoginButton';
 import GoogleLoginButton from 'common/Login/GoogleLoginButton';
 import Modal, { InlineModal } from 'common/Modal';
+import { ER0022, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import FacebookContext from 'contexts/FacebookContext';
 import LoginModalContext from 'contexts/LoginModalContext';
 import { useIsLoggedIn } from 'hooks/auth';
+import rollbar from 'utils/rollbar';
 
 import styles from './LoginModal.module.css';
 
@@ -14,6 +17,7 @@ const LoginModal = ({ onClose, inline }) => {
   const { isLoginModalDisplayed: isOpen, setLoginModalDisplayed } = useContext(
     LoginModalContext,
   );
+  const FB = useContext(FacebookContext);
 
   const close = useCallback(() => {
     setLoginModalDisplayed(false);
@@ -28,6 +32,21 @@ const LoginModal = ({ onClose, inline }) => {
       close();
     }
   }, [close, isLoggedIn, isOpen]);
+
+  useEffect(() => {
+    if ((!inline && !isOpen) || FB) return undefined;
+
+    const timeoutId = setTimeout(() => {
+      rollbar.error(`[${ER0022}] ${ERROR_CODE_MSG[ER0022].internal}`, {
+        trigger: inline ? 'inline-login' : 'login-modal',
+        route: window.location.pathname,
+        visibilityState: document.visibilityState,
+        webdriver: navigator.webdriver,
+      });
+    }, 10000);
+
+    return () => clearTimeout(timeoutId);
+  }, [FB, inline, isOpen]);
 
   const ModalComponent = inline ? InlineModal : Modal;
 
