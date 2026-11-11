@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { generatePath } from 'react-router';
 
-import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
 import {
   Aspect,
   TabType,
@@ -44,10 +43,7 @@ const GenderFriendlySnippetBlock: React.FC = () => {
       pageName={companyName}
     >
       <div className={styles.row}>
-        <AspectScoreCard
-          aspect={Aspect.GENDER}
-          emptyShareLinkTo={generateSharePolicyForm()}
-        />
+        <AspectScoreCard aspect={Aspect.GENDER} showEmptyState />
         {femaleManagerStatisticsItem && (
           <EsgItemBlock
             className={styles.fixedCard}
