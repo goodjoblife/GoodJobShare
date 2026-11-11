@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { PolicyReviewGroup } from 'apis/queryPolicyReviewGroup';
-import { Heading, P } from 'common/base';
+import { Heading, Link, P } from 'common/base';
 import DividedList, { DividedListItem } from 'common/DividedList';
 import BoxRenderer from 'common/StatusRenderer';
+import { generatePageURL, PageType } from 'constants/companyJobTitle';
 import { policyAnswerOf, policyTranslation } from 'constants/policy';
 import { formatSimpleDate } from 'utils/dateUtil';
 import FetchBox from 'utils/fetchBox';
@@ -20,7 +21,23 @@ const PolicyReviewGroupDetail: React.FC<Props> = ({ box }) => (
     render={(group: PolicyReviewGroup): React.ReactElement => (
       <div className={styles.group}>
         <Heading size="sl" Tag="h3">
-          {group.company.name} － {group.jobTitle}
+          <Link
+            to={generatePageURL({
+              pageType: PageType.COMPANY,
+              pageName: group.company.name,
+            })}
+          >
+            {group.company.name}
+          </Link>
+          {' － '}
+          <Link
+            to={generatePageURL({
+              pageType: PageType.JOB_TITLE,
+              pageName: group.jobTitle,
+            })}
+          >
+            {group.jobTitle}
+          </Link>
         </Heading>
         {group.sector && (
           <P size="s" className={styles.sector}>
