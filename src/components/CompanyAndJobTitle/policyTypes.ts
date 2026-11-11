@@ -21,3 +21,7 @@ export type LeaveSection = {
   availability: PolicyDistribution;
   compliance?: PolicyDistribution;
 };
+
+// 一列的卡片都由同一批制度回饋算出來，因此沒有資料即整列皆空
+export const isLeaveSectionEmpty = (section: LeaveSection): boolean =>
+  section.dataCount === 0;
