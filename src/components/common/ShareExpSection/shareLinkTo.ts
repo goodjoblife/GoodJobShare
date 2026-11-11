@@ -15,6 +15,11 @@ type ShareLinkTo = {
   };
 };
 
+// 表單的公司名題目會從 location state 取 companyName 當預設值
+export type GenerateShareLinkTo = (options?: {
+  companyName?: string;
+}) => ShareLinkTo;
+
 // please follow the convention: () => To (react-router)
 export const generateShareInterviewTypeForm = ({
   companyName,
@@ -33,9 +38,14 @@ export const generateShareTimeSalaryTypeFormHideProgressBar = (): ShareLinkTo =>
 export const generateShareWork = (): ShareLinkTo => ({
   state: { share: STATE_SHARE.WORK_EXPERIENCE },
 });
-export const generateSharePolicyForm = (): ShareLinkTo => ({
-  state: { share: STATE_SHARE.POLICY },
-});
+export const generateSharePolicyForm = ({
+  companyName,
+}: { companyName?: string } = {}): ShareLinkTo => {
+  if (companyName) {
+    return { state: { share: STATE_SHARE.POLICY, companyName } };
+  }
+  return { state: { share: STATE_SHARE.POLICY } };
+};
 export const generatePolicyReviewGroupModal = (
   policyReviewGroupId: string,
 ): ShareLinkTo => ({
