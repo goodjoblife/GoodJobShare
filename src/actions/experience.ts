@@ -103,7 +103,7 @@ export const queryRelatedExperiencesOnExperience = (
       id: experienceId,
       start: page * 5,
       limit: 5,
-      algoId: AlgoId.LATEST_EXPERIENCE_OF_SAME_COMPANY_OR_JOB_TITLE,
+      algoId: AlgoId.ERNIE_TWO_TOWER_V1,
     });
 
     const prev = relatedExperiencesCabinSelector(getState());
@@ -148,7 +148,7 @@ export const loadMoreRelatedExperiences = (): Thunk => async (
       id: experienceId,
       start: page * 5,
       limit: 5,
-      algoId: AlgoId.LATEST_EXPERIENCE_OF_SAME_COMPANY_OR_JOB_TITLE,
+      algoId: AlgoId.ERNIE_TWO_TOWER_V1,
     });
 
     const prev = relatedExperiencesCabinSelector(getState());
