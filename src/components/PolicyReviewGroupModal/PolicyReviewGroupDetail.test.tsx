@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 
 import { PolicyReviewGroup } from 'apis/queryPolicyReviewGroup';
 import { Policy, RemoteWorkPolicy, YesNoOrUnknown } from 'constants/policy';
@@ -42,7 +43,11 @@ const group: PolicyReviewGroup = {
 const renderDetail = (
   box: FetchBox<PolicyReviewGroup> = getFetched(group),
 ): void => {
-  render(<PolicyReviewGroupDetail box={box} />);
+  render(
+    <MemoryRouter>
+      <PolicyReviewGroupDetail box={box} />
+    </MemoryRouter>,
+  );
 };
 
 // prettier 的 TypeScript parser 不吃 ?.，所以用 as 斷言往上走
@@ -50,12 +55,21 @@ const parentOf = (element: HTMLElement): HTMLElement =>
   element.parentElement as HTMLElement;
 
 describe('PolicyReviewGroupDetail', () => {
-  it('shows the company and job title of the group', () => {
+  it('links the company of the group to its company page', () => {
     renderDetail();
 
     expect(
-      screen.getByText('好工作股份有限公司 － 前端工程師'),
-    ).toBeInTheDocument();
+      screen.getByRole('link', { name: '好工作股份有限公司' }),
+    ).toHaveAttribute('href', '/companies/好工作股份有限公司');
+  });
+
+  it('links the job title of the group to its job title page', () => {
+    renderDetail();
+
+    expect(screen.getByRole('link', { name: '前端工程師' })).toHaveAttribute(
+      'href',
+      '/job-titles/前端工程師',
+    );
   });
 
   it('shows the sector of the group', () => {
@@ -69,7 +83,7 @@ describe('PolicyReviewGroupDetail', () => {
 
     expect(screen.queryByText('台北總部')).not.toBeInTheDocument();
     expect(
-      screen.getByText('好工作股份有限公司 － 前端工程師'),
+      screen.getByRole('link', { name: '好工作股份有限公司' }),
     ).toBeInTheDocument();
   });
 
@@ -137,7 +151,7 @@ describe('PolicyReviewGroupDetail', () => {
     renderDetail(toFetching());
 
     expect(
-      screen.queryByText('好工作股份有限公司 － 前端工程師'),
+      screen.queryByRole('link', { name: '好工作股份有限公司' }),
     ).not.toBeInTheDocument();
     expect(screen.queryByText('生理假')).not.toBeInTheDocument();
   });
