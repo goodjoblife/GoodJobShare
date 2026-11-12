@@ -1,6 +1,12 @@
 import 'isomorphic-fetch';
-import { API_HOST } from 'config';
 import { GraphqlError, HttpError } from 'utils/errors';
+import getServerApiHost from 'utils/serverApiHost';
+
+// 瀏覽器用同網域相對路徑（免 CORS preflight）；SSR 的 fetch 不接受相對路徑，直接打後端。
+const getGraphqlUrl = (): string =>
+  process.env.BUILD_TARGET === 'server'
+    ? `${getServerApiHost()}/graphql`
+    : '/graphql';
 
 type GraphqlClientArgs = {
   query: string;
@@ -19,7 +25,7 @@ const graphqlClient = async <T>({
     headers.append('Authorization', `Bearer ${token}`);
   }
 
-  const response = await fetch(`${API_HOST}/graphql`, {
+  const response = await fetch(getGraphqlUrl(), {
     method: 'POST',
     headers: headers,
     body: JSON.stringify({ query, variables }),
