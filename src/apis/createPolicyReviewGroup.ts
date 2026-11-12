@@ -7,6 +7,9 @@ const createPolicyReviewGroupGql = /* GraphQL */ `
       success
       policyReviewGroup {
         groupId
+        company {
+          name
+        }
       }
     }
   }
@@ -17,6 +20,9 @@ type CreatePolicyReviewGroupData = {
     success: boolean;
     policyReviewGroup: {
       groupId: string;
+      company: {
+        name: string;
+      };
     };
   };
 };

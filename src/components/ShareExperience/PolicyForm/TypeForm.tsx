@@ -2,7 +2,10 @@ import { LocationDescriptor } from 'history';
 import React, { useCallback } from 'react';
 
 import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
-import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
+import {
+  CreatePolicyReviewGroupResult,
+  PolicyReviewInput,
+} from 'apis/createPolicyReviewGroup';
 import { generatePolicyReviewGroupModal } from 'common/ShareExpSection/shareLinkTo';
 import { generatePageURL, PageType } from 'constants/companyJobTitle';
 import {
@@ -28,6 +31,8 @@ import {
   createSectorQuestion,
   createSubmitQuestion,
 } from '../questionCreators';
+
+type CreatedPolicyReviewGroup = CreatePolicyReviewGroupResult['policyReviewGroup'];
 
 const header = <Header title="請分享你的公司制度實況" />;
 
@@ -105,22 +110,13 @@ export const toPolicyReviewInput = ([
 const companyOverviewPathnameOf = (companyName: string): string =>
   generatePageURL({ pageType: PageType.COMPANY, pageName: companyName });
 
-export const companyOverviewWithPolicyReviewGroupOf = (
-  companyName: string,
-  groupId: string,
-): LocationDescriptor => ({
-  pathname: companyOverviewPathnameOf(companyName),
+export const companyOverviewWithPolicyReviewGroupOf = ({
+  company,
+  groupId,
+}: CreatedPolicyReviewGroup): LocationDescriptor => ({
+  pathname: companyOverviewPathnameOf(company.name),
   ...generatePolicyReviewGroupModal(groupId),
 });
-
-const redirectToCompanyOverview = (
-  groupId: string,
-  draft: Record<string, unknown>,
-): LocationDescriptor =>
-  companyOverviewWithPolicyReviewGroupOf(
-    draft[DATA_KEY_COMPANY_NAME] as string,
-    groupId,
-  );
 
 const TypeForm = ({
   open,
@@ -143,7 +139,7 @@ const TypeForm = ({
           ),
         }),
       );
-      return policyReviewGroup.groupId;
+      return policyReviewGroup;
     },
     [dispatch],
   );
@@ -160,7 +156,7 @@ const TypeForm = ({
       onSubmitError={onSubmitError}
       onClose={onClose}
       hideProgressBar={false}
-      redirectLocationOnSuccess={redirectToCompanyOverview}
+      redirectLocationOnSuccess={companyOverviewWithPolicyReviewGroupOf}
     />
   );
 };

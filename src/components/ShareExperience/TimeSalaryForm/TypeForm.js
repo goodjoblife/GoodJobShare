@@ -122,11 +122,14 @@ const salaryTabPathnameOf = companyName =>
     tabType: TabType.TIME_AND_SALARY,
   });
 
-const redirectToSalaryTab = (_, draft) =>
-  salaryTabPathnameOf(draft[DATA_KEY_COMPANY_NAME]);
+// 後端會把公司名稱正規化（去空白、轉大寫），導頁要用正規化後的名稱才找得到資料
+const companyNameOf = ({ working }) => working.company.name;
 
-const toPolicyDraft = salaryDraft => ({
-  companyName: salaryDraft[DATA_KEY_COMPANY_NAME],
+const redirectToSalaryTab = result =>
+  salaryTabPathnameOf(companyNameOf(result));
+
+const toPolicyDraft = (result, salaryDraft) => ({
+  companyName: companyNameOf(result),
   jobTitle: salaryDraft[DATA_KEY_JOB_TITLE],
   sector: salaryDraft[DATA_KEY_SECTOR],
 });
@@ -235,7 +238,7 @@ SalaryTypeForm.propTypes = {
 const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
   const [policyDraft, setPolicyDraft] = useState(null);
   const onContinueToPolicyForm = useCallback(
-    (_, salaryDraft) => setPolicyDraft(toPolicyDraft(salaryDraft)),
+    (result, salaryDraft) => setPolicyDraft(toPolicyDraft(result, salaryDraft)),
     [],
   );
   const closePolicyForm = useCallback(() => setPolicyDraft(null), []);
