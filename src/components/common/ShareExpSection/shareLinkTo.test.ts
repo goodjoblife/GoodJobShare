@@ -1,6 +1,6 @@
 import { createCompanyQuestion } from 'components/ShareExperience/questionCreators';
 
-import { generateSharePolicyForm } from './shareLinkTo';
+import { generateSharePolicyForm, generateShareWork } from './shareLinkTo';
 
 describe('generateSharePolicyForm', () => {
   it('把公司名放進 location state', () => {
@@ -13,6 +13,20 @@ describe('generateSharePolicyForm', () => {
 
   it('沒有公司名時只帶表單類型', () => {
     expect(generateSharePolicyForm()).toEqual({ state: { share: 'policy' } });
+  });
+});
+
+describe('generateShareWork', () => {
+  it('把公司名放進 location state', () => {
+    expect(generateShareWork({ companyName: '良興股份有限公司' })).toEqual({
+      state: { share: 'work-experience', companyName: '良興股份有限公司' },
+    });
+  });
+
+  it('沒有公司名時只帶表單類型', () => {
+    expect(generateShareWork()).toEqual({
+      state: { share: 'work-experience' },
+    });
   });
 });
 

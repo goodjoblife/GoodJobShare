@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Section } from 'common/base';
-import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
 import { Aspect } from 'constants/companyJobTitle';
 
 import AspectScoreCard from '../AspectScoreCard';
@@ -47,14 +46,8 @@ const FamilyChildcareSection: React.FC<Props> = ({
   <Section Tag="main" paddingBottom>
     <div className={styles.section}>
       <div className={styles.scoreRow}>
-        <AspectScoreCard
-          aspect={Aspect.WORK_LIFE_BALANCE}
-          generateEmptyShareLinkTo={generateSharePolicyForm}
-        />
-        <AspectScoreCard
-          aspect={Aspect.GENDER}
-          generateEmptyShareLinkTo={generateSharePolicyForm}
-        />
+        <AspectScoreCard aspect={Aspect.WORK_LIFE_BALANCE} showEmptyState />
+        <AspectScoreCard aspect={Aspect.GENDER} showEmptyState />
       </div>
     </div>
     <PolicySection

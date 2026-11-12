@@ -35,9 +35,14 @@ export const generateShareTimeSalaryTypeForm = (): ShareLinkTo => ({
 export const generateShareTimeSalaryTypeFormHideProgressBar = (): ShareLinkTo => ({
   state: { share: STATE_SHARE.SALARY_WORK_TIME_NO_PROGRESS_BAR },
 });
-export const generateShareWork = (): ShareLinkTo => ({
-  state: { share: STATE_SHARE.WORK_EXPERIENCE },
-});
+export const generateShareWork = ({
+  companyName,
+}: { companyName?: string } = {}): ShareLinkTo => {
+  if (companyName) {
+    return { state: { share: STATE_SHARE.WORK_EXPERIENCE, companyName } };
+  }
+  return { state: { share: STATE_SHARE.WORK_EXPERIENCE } };
+};
 export const generateSharePolicyForm = ({
   companyName,
 }: { companyName?: string } = {}): ShareLinkTo => {
