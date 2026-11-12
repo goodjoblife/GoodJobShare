@@ -46,12 +46,6 @@ const SimpleTypeForm = ({
 }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
 
-  const redirectLocationOnSuccess = useCallback(
-    (groupId: string) =>
-      companyOverviewWithPolicyReviewGroupOf(companyName, groupId),
-    [companyName],
-  );
-
   const onSubmit = useCallback(
     async (draft: Record<string, unknown>) => {
       const { policyReviewGroup } = await dispatch(
@@ -62,7 +56,7 @@ const SimpleTypeForm = ({
           policyReviews: toPolicyReviews(draft),
         }),
       );
-      return policyReviewGroup.groupId;
+      return policyReviewGroup;
     },
     [companyName, dispatch, jobTitle, sector],
   );
@@ -85,7 +79,7 @@ const SimpleTypeForm = ({
       onSubmitError={onSubmitError}
       onClose={onClose}
       hideProgressBar={false}
-      redirectLocationOnSuccess={redirectLocationOnSuccess}
+      redirectLocationOnSuccess={companyOverviewWithPolicyReviewGroupOf}
       redirectLocationOnQuit={redirectLocationOnQuit}
     />
   );

@@ -3,7 +3,6 @@ import React from 'react';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { Heading, Section } from 'common/base';
 import NotFoundStatus from 'common/routing/NotFound';
-import { generateSharePolicyForm } from 'common/ShareExpSection/shareLinkTo';
 import { Aspect } from 'constants/companyJobTitle';
 
 import menstrualLeaveIcon from '../menstrualLeaveIcon.svg';
@@ -59,10 +58,7 @@ const GenderFriendly: React.FC<GenderFriendlyProps> = ({
             性別友善
           </Heading>
           <div className={styles.scoreRow}>
-            <AspectScoreCard
-              aspect={Aspect.GENDER}
-              emptyShareLinkTo={generateSharePolicyForm()}
-            />
+            <AspectScoreCard aspect={Aspect.GENDER} showEmptyState />
             {femaleManagerStatisticsItem && (
               <EsgItemBlock
                 className={styles.femaleManagerCard}
