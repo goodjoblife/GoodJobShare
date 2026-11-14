@@ -4,7 +4,11 @@ import { Heading } from 'common/base';
 
 import LeaveSectionBlock from './LeaveSectionBlock';
 import styles from './PolicySection.module.css';
-import { LeaveBulletByLabel, LeaveSection } from './policyTypes';
+import {
+  isLeaveSectionEmpty,
+  LeaveBulletByLabel,
+  LeaveSection,
+} from './policyTypes';
 
 type Props = {
   className?: string;
@@ -22,13 +26,17 @@ const PolicySection: React.FC<Props> = ({
   className,
   title,
   ...leaveSectionBlockProps
-}) => (
-  <div className={className}>
-    <Heading className={styles.sectionTitle} Tag="h2">
-      {title}
-    </Heading>
-    <LeaveSectionBlock title={title} {...leaveSectionBlockProps} />
-  </div>
-);
+}) => {
+  if (isLeaveSectionEmpty(leaveSectionBlockProps.section)) return null;
+
+  return (
+    <div className={className}>
+      <Heading className={styles.sectionTitle} Tag="h2">
+        {title}
+      </Heading>
+      <LeaveSectionBlock title={title} {...leaveSectionBlockProps} />
+    </div>
+  );
+};
 
 export default PolicySection;
