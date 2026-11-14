@@ -1,7 +1,16 @@
+import { faSlidersH } from '@fortawesome/fontawesome-free-solid';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import cn from 'classnames';
 import { subMonths, subYears } from 'date-fns';
 import { LocationState } from 'history';
 import qs from 'qs';
-import React, { useCallback, useMemo } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useHistory } from 'react-router';
 
 import {
@@ -9,7 +18,7 @@ import {
   ExperienceInYearRange,
   YearMonth,
 } from 'apis/salaryWorkTime';
-import { GENDER_OPTIONS } from 'constants/gender';
+import { Gender, GENDER_OPTIONS } from 'constants/gender';
 import {
   DATA_TIME_OPTIONS,
   DataTime,
@@ -21,8 +30,8 @@ import {
 import { useQuery } from 'hooks/routing';
 import {
   dataTimeFromQuerySelector,
-  experienceFromQuerySelector,
-  genderFromQuerySelector,
+  experiencesFromQuerySelector,
+  gendersFromQuerySelector,
   sortByFromQuerySelector,
 } from 'selectors/salaryFilter';
 
@@ -30,8 +39,8 @@ import styles from './SalaryFilter.module.css';
 
 export {
   dataTimeFromQuerySelector,
-  experienceFromQuerySelector,
-  genderFromQuerySelector,
+  experiencesFromQuerySelector,
+  gendersFromQuerySelector,
   sortByFromQuerySelector,
 } from 'selectors/salaryFilter';
 
@@ -46,17 +55,21 @@ type TSalaryFilterProps = {
   y?: TScrollY;
 };
 
+type Option<T extends string> = { value: T; label: string };
+
 type TSalaryFilterSelectProps = {
-  options: { value: string; label: string }[];
+  options: Option<string>[];
   defaultLabel: string;
+  ariaLabel: string;
   value: string | null | undefined;
   onChange: (value: string | null) => void;
 };
 
-type TQueryHookResult = readonly [
-  string | undefined,
-  ReturnType<TUseUpdateQuery>,
-];
+type FilterValues = {
+  dataTime: DataTime | null;
+  experiences: ExperienceInYears[];
+  genders: Gender[];
+};
 
 const createYearMonth = (date: Date): YearMonth => ({
   year: date.getFullYear(),
@@ -70,6 +83,8 @@ export const getDataTimeRange = (
   if (!dataTime) return undefined;
   const end = createYearMonth(now);
   switch (dataTime) {
+    case DataTime.UNLIMITED:
+      return undefined;
     case DataTime.PAST_MONTH:
       return { start: createYearMonth(subMonths(now, 1)), end };
     case DataTime.PAST_YEAR:
@@ -79,9 +94,9 @@ export const getDataTimeRange = (
   }
 };
 
-export const getExperienceInYearRange = (
-  experience: ExperienceInYears | null | undefined,
-): ExperienceInYearRange | undefined => {
+const getExperienceInYearRange = (
+  experience: ExperienceInYears,
+): ExperienceInYearRange => {
   switch (experience) {
     case ExperienceInYears.ZERO_THREE:
       return { start: 0, end: 3 };
@@ -89,10 +104,15 @@ export const getExperienceInYearRange = (
       return { start: 4, end: 7 };
     case ExperienceInYears.EIGHT_PLUS:
       return { start: 8, end: 100 };
-    default:
-      return undefined;
   }
 };
+
+export const getExperienceInYearRanges = (
+  experiences: ExperienceInYears[],
+): ExperienceInYearRange[] | undefined =>
+  experiences.length > 0
+    ? experiences.map(getExperienceInYearRange)
+    : undefined;
 
 const useUpdateQuery: TUseUpdateQuery = (key, state) => {
   const history = useHistory();
@@ -115,32 +135,24 @@ const useUpdateQuery: TUseUpdateQuery = (key, state) => {
   );
 };
 
-export const useDataTimeFromQuery = (
+export const useDataTimeFromQuery = (): DataTime | undefined => {
+  const query = useQuery();
+  return useMemo(() => dataTimeFromQuerySelector(query), [query]);
+};
+
+export const useExperiencesFromQuery = (): ExperienceInYears[] => {
+  const query = useQuery();
+  return useMemo(() => experiencesFromQuerySelector(query), [query]);
+};
+
+export const useGendersFromQuery = (): Gender[] => {
+  const query = useQuery();
+  return useMemo(() => gendersFromQuerySelector(query), [query]);
+};
+
+export const useSortByFromQuery = (
   y: TScrollY = null,
-): readonly [DataTime | undefined, ReturnType<TUseUpdateQuery>] => {
-  const query = useQuery();
-  const state = useMemo(() => ({ y }), [y]);
-  const setDataTime = useUpdateQuery(SalaryFilterQueryKey.DATA_TIME, state);
-  return [dataTimeFromQuerySelector(query), setDataTime] as const;
-};
-
-export const useExperienceFromQuery = (
-  y: TScrollY = null,
-): TQueryHookResult => {
-  const query = useQuery();
-  const state = useMemo(() => ({ y }), [y]);
-  const setExperience = useUpdateQuery(SalaryFilterQueryKey.EXPERIENCE, state);
-  return [experienceFromQuerySelector(query), setExperience] as const;
-};
-
-export const useGenderFromQuery = (y: TScrollY = null): TQueryHookResult => {
-  const query = useQuery();
-  const state = useMemo(() => ({ y }), [y]);
-  const setGender = useUpdateQuery(SalaryFilterQueryKey.GENDER, state);
-  return [genderFromQuerySelector(query), setGender] as const;
-};
-
-export const useSortByFromQuery = (y: TScrollY = null): TQueryHookResult => {
+): readonly [string | undefined, ReturnType<TUseUpdateQuery>] => {
   const query = useQuery();
   const state = useMemo(() => ({ y }), [y]);
   const setSortBy = useUpdateQuery(SalaryFilterQueryKey.SORT_BY, state);
@@ -150,57 +162,251 @@ export const useSortByFromQuery = (y: TScrollY = null): TQueryHookResult => {
 const SalaryFilterSelect = ({
   options,
   defaultLabel,
+  ariaLabel,
   value,
   onChange,
 }: TSalaryFilterSelectProps): React.ReactElement => (
   <select
     className={styles.select}
+    aria-label={ariaLabel}
     value={value || ''}
-    onChange={(e): void => onChange(e.target.value || null)}
+    onChange={(event): void => onChange(event.target.value || null)}
   >
     <option value="">{defaultLabel}</option>
-    {options.map(o => (
-      <option key={o.value} value={o.value}>
-        {o.label}
+    {options.map(option => (
+      <option key={option.value} value={option.value}>
+        {option.label}
       </option>
     ))}
   </select>
 );
 
+const toggleValue = <T extends string>(values: T[], value: T): T[] =>
+  values.includes(value)
+    ? values.filter(currentValue => currentValue !== value)
+    : [...values, value];
+
+const DataTimeFilterRow = ({
+  value,
+  onChange,
+}: {
+  value: DataTime | null;
+  onChange: (value: DataTime) => void;
+}): React.ReactElement => (
+  <fieldset className={styles.filterRow}>
+    <legend>參考時間</legend>
+    <div className={styles.options}>
+      {DATA_TIME_OPTIONS.map(option => {
+        const selected = value === option.value;
+        return (
+          <button
+            type="button"
+            key={option.value}
+            aria-pressed={selected}
+            className={cn(styles.option, { [styles.selected]: selected })}
+            onClick={(): void => onChange(option.value)}
+          >
+            {option.label}
+          </button>
+        );
+      })}
+    </div>
+  </fieldset>
+);
+
+const FilterRow = <T extends string>({
+  label,
+  options,
+  values,
+  onChange,
+}: {
+  label: string;
+  options: Option<T>[];
+  values: T[];
+  onChange: (values: T[]) => void;
+}): React.ReactElement => {
+  const allSelected = values.length === options.length;
+  return (
+    <fieldset className={styles.filterRow}>
+      <legend>{label}</legend>
+      <div className={styles.options}>
+        <button
+          type="button"
+          className={styles.option}
+          onClick={(): void =>
+            onChange(allSelected ? [] : options.map(option => option.value))
+          }
+        >
+          {allSelected ? '清除' : '全部'}
+        </button>
+        {options.map(option => {
+          const selected = values.includes(option.value);
+          return (
+            <button
+              type="button"
+              key={option.value}
+              aria-pressed={selected}
+              className={cn(styles.option, { [styles.selected]: selected })}
+              onClick={(): void => onChange(toggleValue(values, option.value))}
+            >
+              {option.label}
+            </button>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
+};
+
 const SalaryFilter = ({ y = null }: TSalaryFilterProps): React.ReactElement => {
-  const [dataTime, setDataTime] = useDataTimeFromQuery(y);
-  const [experience, setExperience] = useExperienceFromQuery(y);
-  const [gender, setGender] = useGenderFromQuery(y);
+  const history = useHistory();
+  const query = useQuery();
+  const filterRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const dataTime = useMemo(() => dataTimeFromQuerySelector(query), [query]);
+  const experiences = useMemo(() => experiencesFromQuerySelector(query), [
+    query,
+  ]);
+  const genders = useMemo(() => gendersFromQuerySelector(query), [query]);
+  const [draft, setDraft] = useState<FilterValues>({
+    dataTime: dataTime || null,
+    experiences,
+    genders,
+  });
   const [sortBy, setSortBy] = useSortByFromQuery(y);
+
+  const openFilter = (): void => {
+    setDraft({ dataTime: dataTime || null, experiences, genders });
+    setIsOpen(true);
+  };
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const closeOnOutsideClick = (event: MouseEvent): void => {
+      if (
+        filterRef.current &&
+        !filterRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    const closeOnEscape = (event: KeyboardEvent): void => {
+      if (event.key === 'Escape') setIsOpen(false);
+    };
+    document.addEventListener('mousedown', closeOnOutsideClick);
+    document.addEventListener('keydown', closeOnEscape);
+    return (): void => {
+      document.removeEventListener('mousedown', closeOnOutsideClick);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [isOpen]);
+
+  const apply = (): void => {
+    const { p, ...restQuery } = query;
+    const nextQuery = { ...restQuery };
+    const setQueryValues = (
+      key: SalaryFilterQueryKey,
+      values: string[],
+    ): void => {
+      if (values.length > 0) nextQuery[key] = values;
+      else delete nextQuery[key];
+    };
+    if (draft.dataTime)
+      nextQuery[SalaryFilterQueryKey.DATA_TIME] = draft.dataTime;
+    else delete nextQuery[SalaryFilterQueryKey.DATA_TIME];
+    setQueryValues(SalaryFilterQueryKey.EXPERIENCE, draft.experiences);
+    setQueryValues(SalaryFilterQueryKey.GENDER, draft.genders);
+    history.push({
+      search: qs.stringify(nextQuery, {
+        addQueryPrefix: true,
+        arrayFormat: 'repeat',
+      }),
+      state: { y },
+    });
+    setIsOpen(false);
+  };
 
   return (
     <div className={styles.filterBar}>
-      <div className={styles.group}>
-        <span className={styles.label}>篩選：</span>
-        <SalaryFilterSelect
-          options={DATA_TIME_OPTIONS}
-          defaultLabel="所有參考時間"
-          value={dataTime}
-          onChange={setDataTime}
-        />
-        <SalaryFilterSelect
-          options={EXPERIENCE_OPTIONS}
-          defaultLabel="所有工作經歷"
-          value={experience}
-          onChange={setExperience}
-        />
-        <SalaryFilterSelect
-          options={GENDER_OPTIONS}
-          defaultLabel="所有性別"
-          value={gender}
-          onChange={setGender}
-        />
+      <div ref={filterRef} className={styles.filterControl}>
+        <button
+          type="button"
+          className={styles.filterButton}
+          aria-expanded={isOpen}
+          aria-haspopup="dialog"
+          onClick={(): void => (isOpen ? setIsOpen(false) : openFilter())}
+        >
+          <span className={styles.filterIcon} aria-hidden="true">
+            <FontAwesomeIcon icon={faSlidersH} />
+          </span>
+          篩選
+          <span className={styles.chevron} aria-hidden="true" />
+        </button>
+        {isOpen && (
+          <>
+            <button
+              type="button"
+              className={styles.backdrop}
+              aria-label="關閉篩選"
+              onClick={(): void => setIsOpen(false)}
+            />
+            <div className={styles.panel} role="dialog" aria-label="薪資篩選">
+              <div className={styles.rows}>
+                <DataTimeFilterRow
+                  value={draft.dataTime}
+                  onChange={(value): void =>
+                    setDraft(current => ({ ...current, dataTime: value }))
+                  }
+                />
+                <FilterRow
+                  label="工作經歷"
+                  options={EXPERIENCE_OPTIONS}
+                  values={draft.experiences}
+                  onChange={(values): void =>
+                    setDraft(current => ({ ...current, experiences: values }))
+                  }
+                />
+                <FilterRow
+                  label="性別"
+                  options={GENDER_OPTIONS}
+                  values={draft.genders}
+                  onChange={(values): void =>
+                    setDraft(current => ({ ...current, genders: values }))
+                  }
+                />
+              </div>
+              <div className={styles.actions}>
+                <button
+                  type="button"
+                  className={styles.clearButton}
+                  onClick={(): void =>
+                    setDraft({
+                      dataTime: null,
+                      experiences: [],
+                      genders: [],
+                    })
+                  }
+                >
+                  清除全部
+                </button>
+                <button
+                  type="button"
+                  className={styles.applyButton}
+                  onClick={apply}
+                >
+                  套用
+                </button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <div className={styles.sortGroup}>
         <span className={styles.label}>排序：</span>
         <SalaryFilterSelect
           options={SORT_OPTIONS}
           defaultLabel="參考時間（新→舊）"
+          ariaLabel="排序"
           value={sortBy}
           onChange={setSortBy}
         />

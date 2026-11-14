@@ -16,8 +16,8 @@ const queryJobTitleSalaryWorkTimeGql = /* GraphQL */ `
     $start: Int!
     $limit: Int!
     $dataTimeRange: DataTimeRange
-    $experienceInYearRange: ExperienceInYearRange
-    $gender: Gender
+    $experienceInYearRanges: [ExperienceInYearRange!]
+    $genders: [Gender!]
     $sortBy: SalaryResultSortOption
   ) {
     job_title(name: $jobTitle) {
@@ -27,8 +27,8 @@ const queryJobTitleSalaryWorkTimeGql = /* GraphQL */ `
         start: $start
         limit: $limit
         dataTimeRange: $dataTimeRange
-        experienceInYearRange: $experienceInYearRange
-        gender: $gender
+        experienceInYearRanges: $experienceInYearRanges
+        genders: $genders
         sortBy: $sortBy
       ) {
         count
@@ -58,8 +58,8 @@ const queryJobTitleSalaryWorkTime = ({
   start,
   limit,
   dataTimeRange,
-  experienceInYearRange,
-  gender,
+  experienceInYearRanges,
+  genders,
   sortBy,
 }: {
   jobTitle: string;
@@ -67,8 +67,8 @@ const queryJobTitleSalaryWorkTime = ({
   start: number;
   limit: number;
   dataTimeRange?: DataTimeRange;
-  experienceInYearRange?: ExperienceInYearRange;
-  gender?: string;
+  experienceInYearRanges?: ExperienceInYearRange[];
+  genders?: string[];
   sortBy?: string;
 }): Promise<QueryJobTitleSalaryWorkTimeData['job_title']> =>
   graphqlClient<QueryJobTitleSalaryWorkTimeData>({
@@ -79,8 +79,8 @@ const queryJobTitleSalaryWorkTime = ({
       start,
       limit,
       dataTimeRange,
-      experienceInYearRange,
-      gender,
+      experienceInYearRanges,
+      genders,
       sortBy,
     },
   }).then(R.prop('job_title'));

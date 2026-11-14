@@ -11,7 +11,7 @@ export const genderTranslation: Record<Gender, string> = {
 };
 
 export const GENDER_OPTIONS = [
-  { value: Gender.MALE, label: genderTranslation[Gender.MALE] },
-  { value: Gender.FEMALE, label: genderTranslation[Gender.FEMALE] },
+  { value: Gender.MALE, label: '男性' },
+  { value: Gender.FEMALE, label: '女性' },
   { value: Gender.OTHER, label: genderTranslation[Gender.OTHER] },
 ];

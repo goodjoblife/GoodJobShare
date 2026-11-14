@@ -16,8 +16,8 @@ const queryCompanySalaryWorkTimeGql = /* GraphQL */ `
     $start: Int!
     $limit: Int!
     $dataTimeRange: DataTimeRange
-    $experienceInYearRange: ExperienceInYearRange
-    $gender: Gender
+    $experienceInYearRanges: [ExperienceInYearRange!]
+    $genders: [Gender!]
     $sortBy: SalaryResultSortOption
   ) {
     company(name: $companyName) {
@@ -27,8 +27,8 @@ const queryCompanySalaryWorkTimeGql = /* GraphQL */ `
         start: $start
         limit: $limit
         dataTimeRange: $dataTimeRange
-        experienceInYearRange: $experienceInYearRange
-        gender: $gender
+        experienceInYearRanges: $experienceInYearRanges
+        genders: $genders
         sortBy: $sortBy
       ) {
         count
@@ -58,8 +58,8 @@ const queryCompanySalaryWorkTime = ({
   start,
   limit,
   dataTimeRange,
-  experienceInYearRange,
-  gender,
+  experienceInYearRanges,
+  genders,
   sortBy,
 }: {
   companyName: string;
@@ -67,8 +67,8 @@ const queryCompanySalaryWorkTime = ({
   start: number;
   limit: number;
   dataTimeRange?: DataTimeRange;
-  experienceInYearRange?: ExperienceInYearRange;
-  gender?: string;
+  experienceInYearRanges?: ExperienceInYearRange[];
+  genders?: string[];
   sortBy?: string;
 }): Promise<QueryCompanySalaryWorkTimeData['company']> =>
   graphqlClient<QueryCompanySalaryWorkTimeData>({
@@ -79,8 +79,8 @@ const queryCompanySalaryWorkTime = ({
       start,
       limit,
       dataTimeRange,
-      experienceInYearRange,
-      gender,
+      experienceInYearRanges,
+      genders,
       sortBy,
     },
   }).then(R.prop('company'));
