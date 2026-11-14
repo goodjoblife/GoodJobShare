@@ -171,7 +171,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
       onSubmitError={onSubmitError}
       onClose={onClose}
       hideProgressBar={hideProgressBar}
-      redirectPathnameOnSuccess={({ experience: { id } }) =>
+      redirectLocationOnSuccess={({ experience: { id } }) =>
         `/experiences/${id}`
       }
     />

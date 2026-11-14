@@ -1,0 +1,88 @@
+import { LocationDescriptor } from 'history';
+import React, { useCallback } from 'react';
+
+import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
+import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
+import useAppDispatch from 'hooks/useAppDispatch';
+
+import {
+  companyOverviewWithPolicyReviewGroupOf,
+  toPolicyReviewInput,
+} from './TypeForm';
+import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
+import { CompanyJobTitleHeader } from '../common/TypeFormHeader';
+import {
+  createPolicyQuestions,
+  createSubmitQuestion,
+} from '../questionCreators';
+
+const policyQuestions = createPolicyQuestions();
+
+const questions = [...policyQuestions, createSubmitQuestion({ label: '制度' })];
+
+const toPolicyReviews = (draft: Record<string, unknown>): PolicyReviewInput[] =>
+  policyQuestions.map(({ label, dataKey }) => {
+    const answer = draft[dataKey];
+    const [hasPolicy, detail] = Array.isArray(answer) ? answer : [answer, null];
+    return toPolicyReviewInput([label, hasPolicy, detail, null]);
+  });
+
+type Props = {
+  open: boolean;
+  onClose: () => void;
+  companyName: string;
+  jobTitle: string;
+  sector?: string;
+  redirectLocationOnQuit: LocationDescriptor | (() => LocationDescriptor);
+};
+
+const SimpleTypeForm = ({
+  open,
+  onClose,
+  companyName,
+  jobTitle,
+  sector,
+  redirectLocationOnQuit,
+}: Props): React.ReactElement => {
+  const dispatch = useAppDispatch();
+
+  const onSubmit = useCallback(
+    async (draft: Record<string, unknown>) => {
+      const { policyReviewGroup } = await dispatch(
+        createPolicyReviewGroup({
+          company: { query: companyName },
+          jobTitle,
+          sector: sector || undefined,
+          policyReviews: toPolicyReviews(draft),
+        }),
+      );
+      return policyReviewGroup;
+    },
+    [companyName, dispatch, jobTitle, sector],
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const onSubmitError = useCallback(() => {}, []);
+
+  return (
+    <SubmittableFormBuilder
+      open={open}
+      questions={questions}
+      header={
+        <CompanyJobTitleHeader
+          label="制度"
+          companyName={companyName}
+          jobTitle={jobTitle}
+        />
+      }
+      onSubmit={onSubmit}
+      onSubmitError={onSubmitError}
+      onClose={onClose}
+      hideProgressBar={false}
+      redirectLocationOnSuccess={companyOverviewWithPolicyReviewGroupOf}
+      redirectLocationOnQuit={redirectLocationOnQuit}
+    />
+  );
+};
+
+export default SimpleTypeForm;

@@ -4,14 +4,21 @@ export const STATE_SHARE = {
   SALARY_WORK_TIME: 'salary-work-times',
   SALARY_WORK_TIME_NO_PROGRESS_BAR: 'salary-work-times-no-progress-bar',
   POLICY: 'policy',
+  POLICY_REVIEW_GROUP: 'policy-review-group',
 };
 
 type ShareLinkTo = {
   state: {
     share: string;
     companyName?: string;
+    policyReviewGroupId?: string;
   };
 };
+
+// 表單的公司名題目會從 location state 取 companyName 當預設值
+export type GenerateShareLinkTo = (options?: {
+  companyName?: string;
+}) => ShareLinkTo;
 
 // please follow the convention: () => To (react-router)
 export const generateShareInterviewTypeForm = ({
@@ -28,9 +35,24 @@ export const generateShareTimeSalaryTypeForm = (): ShareLinkTo => ({
 export const generateShareTimeSalaryTypeFormHideProgressBar = (): ShareLinkTo => ({
   state: { share: STATE_SHARE.SALARY_WORK_TIME_NO_PROGRESS_BAR },
 });
-export const generateShareWork = (): ShareLinkTo => ({
-  state: { share: STATE_SHARE.WORK_EXPERIENCE },
-});
-export const generateSharePolicyForm = (): ShareLinkTo => ({
-  state: { share: STATE_SHARE.POLICY },
+export const generateShareWork = ({
+  companyName,
+}: { companyName?: string } = {}): ShareLinkTo => {
+  if (companyName) {
+    return { state: { share: STATE_SHARE.WORK_EXPERIENCE, companyName } };
+  }
+  return { state: { share: STATE_SHARE.WORK_EXPERIENCE } };
+};
+export const generateSharePolicyForm = ({
+  companyName,
+}: { companyName?: string } = {}): ShareLinkTo => {
+  if (companyName) {
+    return { state: { share: STATE_SHARE.POLICY, companyName } };
+  }
+  return { state: { share: STATE_SHARE.POLICY } };
+};
+export const generatePolicyReviewGroupModal = (
+  policyReviewGroupId: string,
+): ShareLinkTo => ({
+  state: { share: STATE_SHARE.POLICY_REVIEW_GROUP, policyReviewGroupId },
 });

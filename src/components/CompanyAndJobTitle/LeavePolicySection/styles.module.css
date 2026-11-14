@@ -1,0 +1,89 @@
+@value main-black from "../../common/variables.module.css";
+
+.title {
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.content {
+  padding-bottom: 64px;
+
+  @media (max-width: 550px) {
+    padding-bottom: 48px;
+  }
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.filterLabel {
+  font-size: 14px;
+  color: main-black;
+}
+
+.filterButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid #bdbdbd;
+  border-radius: 18px;
+  background: white;
+  color: #424242;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.filterButton:hover {
+  background: main-black;
+  border-color: main-black;
+  color: #fff;
+}
+
+.checkboxInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkboxInput:checked + .filterButton {
+  background: main-black;
+  border-color: main-black;
+  color: #fff;
+}
+
+.checkboxInput:checked + .filterButton:hover {
+  background: main-black;
+}
+
+.checkbox {
+  position: relative;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #bdbdbd;
+  border-radius: 2px;
+  background-color: #fff;
+}
+
+.checkboxInput:checked + .filterButton .checkbox {
+  border-color: #fff;
+}
+
+.checkboxInput:checked + .filterButton .checkbox::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0;
+  width: 4px;
+  height: 8px;
+  border-right: 2px solid main-black;
+  border-bottom: 2px solid main-black;
+  transform: rotate(40deg);
+}

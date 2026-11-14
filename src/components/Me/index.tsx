@@ -3,6 +3,7 @@ import React, { Fragment, useEffect } from 'react';
 import { Heading, Section, Wrapper } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Comment2 from 'common/icons/Comment2';
+import { generatePolicyReviewGroupModal } from 'common/ShareExpSection/shareLinkTo';
 import BoxRenderer from 'common/StatusRenderer';
 import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 import { PublishStatus } from 'constants/publishStatus';
@@ -13,6 +14,7 @@ import { sortByCreatedAtDesc } from './sortByCreatedAtDesc';
 import {
   useFetchMyPublishesBox,
   useToggleExperienceStatus,
+  useTogglePolicyReviewGroupStatus,
   useToggleReplyStatus,
   useToggleSalaryWorkTimeStatus,
 } from './useQuery';
@@ -21,6 +23,7 @@ const Me: React.FC = () => {
   const [myPublishesBox, fetchMyPublishes] = useFetchMyPublishesBox();
   const toggleExperienceStatus = useToggleExperienceStatus();
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
+  const togglePolicyReviewGroupStatus = useTogglePolicyReviewGroupStatus();
   const toggleReplyStatus = useToggleReplyStatus();
 
   useEffect(() => {
@@ -87,6 +90,28 @@ const Me: React.FC = () => {
                               }
                               publishHandler={async (): Promise<void> => {
                                 await toggleSalaryWorkTimeStatus(o);
+                                await fetchMyPublishes();
+                              }}
+                              archive={o.archive}
+                            />
+                          ),
+                        })),
+                        ...me.policyReviewGroupList.map(o => ({
+                          createdAt: o.createdAt,
+                          element: (
+                            <ShareBlockElement
+                              key={`policy-review-group-${o.groupId}`}
+                              type="制度"
+                              heading={o.company.name}
+                              position={o.jobTitle}
+                              to={generatePolicyReviewGroupModal(o.groupId)}
+                              linkTitle="檢視制度"
+                              disabled={
+                                o.status === PublishStatus.HIDDEN ||
+                                (o.archive && o.archive.is_archived)
+                              }
+                              publishHandler={async (): Promise<void> => {
+                                await togglePolicyReviewGroupStatus(o);
                                 await fetchMyPublishes();
                               }}
                               archive={o.archive}

@@ -3,21 +3,33 @@ import cn from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Button from 'common/button/Button';
 import Modal from 'common/Modal';
 
 import styles from './styles.module.css';
 
-const ConfirmModal = ({ title, subtitle, description, actions, ...props }) => (
+const ConfirmModal = ({
+  title,
+  subtitle = '',
+  description,
+  actions,
+  ...props
+}) => (
   <Modal {...props} size="xs" contentClassName={styles.content}>
     <div className={styles.title}>{title}</div>
     <div className={cn(styles.subTitle, { [styles.hidden]: !subtitle })}>
       {subtitle}
     </div>
     <div className={styles.description}>{description}</div>
-    {actions.map(([text, action]) => (
-      <button key={text} className={styles.btn} onClick={action}>
+    {actions.map(([text, action, appearance = 'black']) => (
+      <Button
+        key={text}
+        className={styles.btn}
+        btnStyle={appearance === 'white' ? 'blackLine' : 'black'}
+        onClick={action}
+      >
         {text}
-      </button>
+      </Button>
     ))}
   </Modal>
 );
@@ -27,6 +39,7 @@ ConfirmModal.propTypes = {
     withShape(PropTypes.array.isRequired, {
       0: PropTypes.string.isRequired,
       1: PropTypes.func.isRequired,
+      2: PropTypes.oneOf(['black', 'white']),
     }),
   ),
   description: PropTypes.string,

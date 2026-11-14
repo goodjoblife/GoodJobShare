@@ -13,7 +13,7 @@ export const DATA_KEY_JOB_TENURE = 'experienceInYear';
 export const DATA_KEY_JOB_LEVEL = 'jobLevel';
 export const DATA_KEY_SALARY = 'salary';
 export const DATA_KEY_EXPERIENCE_IN_YEAR = 'experienceInYear';
-export const DATA_KEY_DAY_PROMISED_WORK_TIME = 'dayPromisedWorkTime';
+export const DATA_KEY_JOB_LADDER = 'jobLadder';
 export const DATA_KEY_DAY_REAL_WORK_TIME = 'dayRealWorkTime';
 export const DATA_KEY_WEEK_WORK_TIME = 'weekWorkTime';
 export const DATA_KEY_OVERTIME_FREQUENCY = 'overtimeFrequency';
@@ -22,6 +22,12 @@ export const DATA_KEY_HAS_COMPENSATORY_DAYOFF = 'hasCompensatoryDayoff';
 export const DATA_KEY_SENSITIVE_QUESTIONS = 'sensitiveQuestions';
 export const DATA_KEY_SECTIONS = 'sections';
 export const DATA_KEY_POLICIES = 'policies';
+export const DATA_KEY_POLICY_MENSTRUAL_LEAVE = 'policyMenstrualLeave';
+export const DATA_KEY_POLICY_PARENTAL_LEAVE = 'policyParentalLeave';
+export const DATA_KEY_POLICY_FAMILY_CARE_LEAVE = 'policyFamilyCareLeave';
+export const DATA_KEY_POLICY_FLEXIBLE_WORKING_HOUR =
+  'policyFlexibleWorkingHour';
+export const DATA_KEY_POLICY_REMOTE_WORK = 'policyRemoteWork';
 
 export const REGION_OPTIONS = [
   '基隆市',
