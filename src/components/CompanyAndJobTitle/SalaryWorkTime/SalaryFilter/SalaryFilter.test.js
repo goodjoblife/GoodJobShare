@@ -4,10 +4,8 @@ import qs from 'qs';
 import React from 'react';
 import { Router } from 'react-router-dom';
 
-import SalaryFilter, {
-  getDataTimeRange,
-  getExperienceInYearRanges,
-} from './SalaryFilter';
+import { getDataTimeRange, getExperienceInYearRanges } from './filterRanges';
+import SalaryFilter from './SalaryFilter';
 
 describe('getDataTimeRange', () => {
   test('不限時間時不送篩選條件', () => {
