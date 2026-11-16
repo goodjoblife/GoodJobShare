@@ -43,7 +43,10 @@ const useUpdateQuery: TUseUpdateQuery = (key, state) => {
         delete nextQuery[key];
       }
       history.push({
-        search: qs.stringify(nextQuery, { addQueryPrefix: true }),
+        search: qs.stringify(nextQuery, {
+          addQueryPrefix: true,
+          arrayFormat: 'repeat',
+        }),
         state,
       });
     },

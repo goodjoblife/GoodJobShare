@@ -196,4 +196,18 @@ describe('SalaryFilter', () => {
 
     expect(screen.queryByRole('dialog', { name: '薪資篩選' })).toBeNull();
   });
+
+  test('換排序時，多選參數維持重複 key 的 URL 格式', () => {
+    const history = renderFilter(
+      '/companies/example?experience=0_3&experience=4_7',
+    );
+
+    fireEvent.change(screen.getByRole('combobox', { name: '排序' }), {
+      target: { value: 'HIGH_HOUR_SALARY_FIRST' },
+    });
+
+    expect(history.location.search).toBe(
+      '?experience=0_3&experience=4_7&sort_by=HIGH_HOUR_SALARY_FIRST',
+    );
+  });
 });
