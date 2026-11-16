@@ -1,0 +1,36 @@
+@value below-small, below-little from "../../../common/variables.module.css";
+
+.sortGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+
+  @media (max-width: below-small) {
+    flex: 1;
+    margin-left: 0;
+    min-width: 0;
+
+    .label {
+      display: none;
+    }
+
+    .select {
+      min-width: 0;
+      flex: 1;
+    }
+  }
+
+  @media (max-width: below-little) {
+    width: 100%;
+    flex: none;
+  }
+}
+
+.select {
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid #bdbdbd;
+  background: #fff;
+  cursor: pointer;
+}

@@ -1,29 +1,58 @@
 import { ParsedQs } from 'qs';
 
-import { DataTime, SalaryFilterQueryKey } from 'constants/salaryFilter';
+import { Gender } from 'constants/gender';
+import {
+  DataTime,
+  ExperienceInYears,
+  SalaryFilterQueryKey,
+} from 'constants/salaryFilter';
 
-const stringFromQuery = (query: ParsedQs, key: string): string | undefined => {
-  const val = query[key];
-  return typeof val === 'string' ? val : undefined;
+const stringsFromQuery = (query: ParsedQs, key: string): string[] => {
+  const value = query[key];
+  if (typeof value === 'string') return [value];
+  if (!Array.isArray(value)) return [];
+  return value.filter((item): item is string => typeof item === 'string');
 };
 
-const isDataTime = (val: string): val is DataTime =>
-  (Object.values(DataTime) as string[]).includes(val);
+const enumValuesFromQuery = <T extends string>(
+  query: ParsedQs,
+  key: string,
+  values: readonly T[],
+): T[] => {
+  const allowedValues = new Set<string>(values);
+  return stringsFromQuery(query, key).filter((value): value is T =>
+    allowedValues.has(value),
+  );
+};
 
 export const dataTimeFromQuerySelector = (
   query: ParsedQs,
-): DataTime | undefined => {
-  const val = stringFromQuery(query, SalaryFilterQueryKey.DATA_TIME);
-  return val !== undefined && isDataTime(val) ? val : undefined;
-};
+): DataTime | undefined =>
+  enumValuesFromQuery(
+    query,
+    SalaryFilterQueryKey.DATA_TIME,
+    Object.values(DataTime),
+  )[0];
 
-export const experienceFromQuerySelector = (
+export const experiencesFromQuerySelector = (
   query: ParsedQs,
-): string | undefined =>
-  stringFromQuery(query, SalaryFilterQueryKey.EXPERIENCE);
+): ExperienceInYears[] =>
+  enumValuesFromQuery(
+    query,
+    SalaryFilterQueryKey.EXPERIENCE,
+    Object.values(ExperienceInYears),
+  );
 
-export const genderFromQuerySelector = (query: ParsedQs): string | undefined =>
-  stringFromQuery(query, SalaryFilterQueryKey.GENDER);
+export const gendersFromQuerySelector = (query: ParsedQs): Gender[] =>
+  enumValuesFromQuery(
+    query,
+    SalaryFilterQueryKey.GENDER,
+    Object.values(Gender),
+  );
 
-export const sortByFromQuerySelector = (query: ParsedQs): string | undefined =>
-  stringFromQuery(query, SalaryFilterQueryKey.SORT_BY);
+export const sortByFromQuerySelector = (
+  query: ParsedQs,
+): string | undefined => {
+  const value = query[SalaryFilterQueryKey.SORT_BY];
+  return typeof value === 'string' ? value : undefined;
+};
