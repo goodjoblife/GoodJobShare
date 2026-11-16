@@ -26,7 +26,7 @@
   height: 32px;
   padding: 0 12px;
   border: 1px solid #bdbdbd;
-  border-radius: 2px;
+  border-radius: 16px;
   color: #555;
   background: #fff;
 }
@@ -46,37 +46,26 @@
 }
 
 .backdrop {
-  display: none;
-
-  @media (max-width: below-small) {
-    position: fixed;
-    z-index: 99;
-    display: block;
-    inset: 0;
-    border: 0;
-    background: modal-overlay-background;
-    cursor: default;
-  }
+  position: fixed;
+  z-index: 99;
+  inset: 0;
+  border: 0;
+  background: modal-overlay-background;
+  cursor: default;
 }
 
 .panel {
-  position: absolute;
+  position: fixed;
   z-index: 100;
-  top: calc(100% + 8px);
-  left: 0;
+  top: 50%;
+  left: 50%;
   width: 430px;
+  max-width: calc(100vw - 32px);
   color: #333;
   border: 1px solid #c1c1c1;
   background: #fff;
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.12);
-
-  @media (max-width: below-small) {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    max-width: calc(100vw - 32px);
-    transform: translate(-50%, -50%);
-  }
+  transform: translate(-50%, -50%);
 }
 
 .rows {

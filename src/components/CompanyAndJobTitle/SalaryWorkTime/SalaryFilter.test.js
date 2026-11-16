@@ -190,7 +190,7 @@ describe('SalaryFilter', () => {
     ).toBe('true');
   });
 
-  test('點擊小螢幕遮罩會關閉篩選器', () => {
+  test('點擊遮罩會關閉篩選器', () => {
     renderFilter();
     fireEvent.click(screen.getByRole('button', { name: '篩選' }));
 

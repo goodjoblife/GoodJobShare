@@ -4,13 +4,7 @@ import cn from 'classnames';
 import { subMonths, subYears } from 'date-fns';
 import { LocationState } from 'history';
 import qs from 'qs';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router';
 
 import {
@@ -260,7 +254,6 @@ const FilterRow = <T extends string>({
 const SalaryFilter = ({ y = null }: TSalaryFilterProps): React.ReactElement => {
   const history = useHistory();
   const query = useQuery();
-  const filterRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const dataTime = useMemo(() => dataTimeFromQuerySelector(query), [query]);
   const experiences = useMemo(() => experiencesFromQuerySelector(query), [
@@ -281,21 +274,11 @@ const SalaryFilter = ({ y = null }: TSalaryFilterProps): React.ReactElement => {
 
   useEffect(() => {
     if (!isOpen) return undefined;
-    const closeOnOutsideClick = (event: MouseEvent): void => {
-      if (
-        filterRef.current &&
-        !filterRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
     const closeOnEscape = (event: KeyboardEvent): void => {
       if (event.key === 'Escape') setIsOpen(false);
     };
-    document.addEventListener('mousedown', closeOnOutsideClick);
     document.addEventListener('keydown', closeOnEscape);
     return (): void => {
-      document.removeEventListener('mousedown', closeOnOutsideClick);
       document.removeEventListener('keydown', closeOnEscape);
     };
   }, [isOpen]);
@@ -327,7 +310,7 @@ const SalaryFilter = ({ y = null }: TSalaryFilterProps): React.ReactElement => {
 
   return (
     <div className={styles.filterBar}>
-      <div ref={filterRef} className={styles.filterControl}>
+      <div className={styles.filterControl}>
         <button
           type="button"
           className={styles.filterButton}
