@@ -64,7 +64,7 @@ const WorkExperiences: React.FC<Props> = ({
             jobTitles={TABS.work.jobTitles}
             appliedTitles={appliedJobTitles}
             onApply={setAppliedJobTitles}
-            onClearAll={() => setAppliedJobTitles([])}
+            onClearAll={(): void => setAppliedJobTitles([])}
           />
           <Sorter />
         </div>
