@@ -8,7 +8,6 @@ import { Element as ScrollElement, scroller } from 'react-scroll';
 import {
   queryExperience,
   queryExperienceIfUnfetched,
-  queryRelatedExperiencesOnExperience,
 } from 'actions/experience';
 import { Section, Wrapper } from 'common/base';
 import BreadCrumb from 'common/BreadCrumb';
@@ -164,10 +163,7 @@ ExperienceDetail.propTypes = {
 ExperienceDetail.fetchData = ({ store: { dispatch }, ...props }) => {
   const params = paramsSelector(props);
   const experienceId = experienceIdSelector(params);
-  return Promise.all([
-    dispatch(queryExperience(experienceId)),
-    dispatch(queryRelatedExperiencesOnExperience(experienceId)),
-  ]);
+  return dispatch(queryExperience(experienceId));
 };
 
 export default ExperienceDetail;
