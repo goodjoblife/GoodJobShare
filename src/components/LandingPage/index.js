@@ -139,6 +139,8 @@ LandingPage.fetchData = ({ store: { dispatch } }) => {
   return Promise.all([
     dispatch(queryPopularExperiences()),
     dispatch(queryMenuIfUnfetched()),
+    dispatch(queryPopularCompanyAverageSalary()),
+    dispatch(queryPopularJobTitleSalaryDistribution()),
   ]);
 };
 

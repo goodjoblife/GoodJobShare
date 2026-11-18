@@ -12,9 +12,8 @@ const setPopularCompanyAverageSalary = box => ({
 export const queryPopularCompanyAverageSalary = () => async dispatch => {
   dispatch(setPopularCompanyAverageSalary(toFetching()));
 
-  const popularCompanyAverageSalary = await getPopularCompanyAverageSalaryApi();
-
   try {
+    const popularCompanyAverageSalary = await getPopularCompanyAverageSalaryApi();
     dispatch(
       setPopularCompanyAverageSalary(getFetched(popularCompanyAverageSalary)),
     );

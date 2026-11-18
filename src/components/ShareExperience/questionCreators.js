@@ -645,7 +645,7 @@ export const createFamilyCareLeaveQuestion = () => ({
   footnote: (
     <PolicyLawNote lawName="性別平等工作法">
       家庭照顧假一年至多 7
-      天，不得扣全勤獎金、影響考績或其他不利行為，屬主不得拒絕。
+      天，不得扣全勤獎金、影響考績或其他不利行為，雇主不得拒絕。
     </PolicyLawNote>
   ),
   validateOrWarn: validateOrWarnRadioElseRadio,
