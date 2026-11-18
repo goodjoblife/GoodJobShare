@@ -20,10 +20,7 @@ export const NavigatorButton = ({
   <button
     {...restProps}
     onMouseDown={(e): void => {
-      // 按下時不讓輸入框失焦：失焦會讓 FormBuilder 輸入時隱藏的 header／footer 立刻出現、
-      // 手機鍵盤也同時收起，版面在點擊途中變動，手指放開時已不在按鈕上，造成要點兩次
       e.preventDefault();
-      // 外部傳入的 onMouseDown 也要呼叫，避免被上面的處理默默覆蓋
       if (onMouseDown) onMouseDown(e);
     }}
     className={cn(className, styles.btn)}

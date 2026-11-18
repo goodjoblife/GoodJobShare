@@ -144,8 +144,6 @@ const TextInput = forwardRef(
               key={autocompleteItemKeySelector(item)}
               ref={e => handleItemRef(e, i)}
               active={highlightedIndex === i}
-              // 按下選項時不讓輸入框失焦：失焦會讓外層版面（例如 FormBuilder 輸入時隱藏的 header）
-              // 在點擊途中變動，手指放開時已不在原本的選項上，造成要點兩次才帶入
               onMouseDown={e => e.preventDefault()}
               onClick={() => handleMouseClickItem(i)}
               onMouseEnter={() => handleMouseEnterItem(i)}
