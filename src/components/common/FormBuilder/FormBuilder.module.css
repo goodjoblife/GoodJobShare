@@ -35,6 +35,16 @@
   .body {
     flex: 1;
   }
+
+  /* 觸控裝置輸入時虛擬鍵盤會吃掉大半高度，先隱藏 header 與 footer，把空間留給題目與按鈕列 */
+  &.typing {
+    @media (hover: none) and (pointer: coarse) {
+      .header,
+      .footer {
+        display: none;
+      }
+    }
+  }
 }
 
 .body {
