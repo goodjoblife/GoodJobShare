@@ -66,6 +66,7 @@
   border: 1px solid #b4b4b4;
   max-height: 150px;
   overflow-y: scroll;
+  overscroll-behavior: contain;
   background: #fff;
 
   &.visible {
