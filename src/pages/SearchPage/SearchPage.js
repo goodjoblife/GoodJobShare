@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { queryKeyword } from 'actions/search';
 import { P } from 'common/base';
 import Wrapper from 'common/base/Wrapper';
-import FanPageBlock from 'common/FanPageBlock';
+import FollowUsBlock from 'common/FollowUsBlock';
 import Loading from 'common/Loader';
 import Pagination from 'common/Pagination';
 import Redirect from 'common/routing/Redirect';
@@ -105,7 +105,7 @@ const SearchPage = () => {
             />
           </>
         )}
-        <FanPageBlock className={styles.fanPageBlock} />
+        <FollowUsBlock className={styles.followUsBlock} />
       </section>
     </Wrapper>
   );

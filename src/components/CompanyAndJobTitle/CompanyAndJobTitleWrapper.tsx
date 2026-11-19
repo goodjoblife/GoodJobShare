@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { Wrapper } from 'common/base';
 import Heading from 'common/base/Heading';
 import BreadCrumb from 'common/BreadCrumb';
-import FanPageBlock from 'common/FanPageBlock';
+import FollowUsBlock from 'common/FollowUsBlock';
 import TabLinkGroup from 'common/TabLinkGroup';
 import StatisticsCard from 'components/CompanyAndJobTitle/StatisticsCard';
 import SubscribeNotificationButton from 'components/CompanyAndJobTitle/SubscribeNotificationButton';
@@ -92,7 +92,7 @@ const CompanyAndJobTitleWrapper: React.FC<CompanyAndJobTitleWrapperProps> = ({
         </Wrapper>
         {children}
         <Wrapper size="l">
-          <FanPageBlock className={styles.fanPageBlock} />
+          <FollowUsBlock className={styles.followUsBlock} />
         </Wrapper>
       </div>
     </PageContextProvider>
