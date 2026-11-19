@@ -2,6 +2,8 @@ import cn from 'classnames';
 import PropTypes from 'prop-types';
 import React, { forwardRef, useCallback, useRef } from 'react';
 
+import { keepFocusOnMouseDown } from 'utils/eventUtils';
+
 import styles from './TextInput.module.css';
 import useAutocomplete from './useAutocomplete';
 import useEnterConfirm from './useEnterConfirm';
@@ -145,7 +147,7 @@ const TextInput = forwardRef(
               key={autocompleteItemKeySelector(item)}
               ref={e => handleItemRef(e, i)}
               active={highlightedIndex === i}
-              onMouseDown={e => e.preventDefault()}
+              onMouseDown={keepFocusOnMouseDown}
               onClick={() => handleMouseClickItem(i)}
               onMouseEnter={() => handleMouseEnterItem(i)}
               onMouseLeave={() => handleMouseLeaveItem(i)}

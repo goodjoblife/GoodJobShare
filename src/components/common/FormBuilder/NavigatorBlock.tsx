@@ -1,6 +1,8 @@
 import cn from 'classnames';
 import React from 'react';
 
+import { keepFocusOnMouseDown } from 'utils/eventUtils';
+
 import styles from './NavigatorBlock.module.css';
 
 export type NavigatorButtonProps = {
@@ -20,7 +22,7 @@ export const NavigatorButton = ({
   <button
     {...restProps}
     onMouseDown={(e): void => {
-      e.preventDefault();
+      keepFocusOnMouseDown(e);
       if (onMouseDown) onMouseDown(e);
     }}
     className={cn(className, styles.btn)}
