@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { queryMenuIfUnfetched } from 'actions/laborRights';
 import { Heading, Section, Wrapper } from 'common/base';
 import Columns from 'common/Columns';
-import FanPageBlock from 'common/FanPageBlock';
+import FollowUsBlock from 'common/FollowUsBlock';
 import Loader from 'common/Loader';
 import StaticHelmet from 'common/StaticHelmet';
 import { useShareLink } from 'hooks/experiments';
@@ -65,7 +65,7 @@ const LaborRightsMenu = () => {
         </section>
       </Wrapper>
       <Wrapper size="s">
-        <FanPageBlock className={styles.fanPageBlock} />
+        <FollowUsBlock className={styles.followUsBlock} />
       </Wrapper>
     </Section>
   );

@@ -1,0 +1,72 @@
+$below-small: 850px;
+
+.followUsBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: $below-small) {
+    flex-direction: column;
+  }
+}
+
+.img {
+  width: 190px;
+
+  @media (max-width: $below-small) {
+    width: 150px;
+    margin-bottom: 30px;
+  }
+}
+
+.content {
+  margin-left: 45px;
+
+  @media (max-width: $below-small) {
+    margin-left: 0;
+  }
+}
+
+.links {
+  text-align: center;
+
+  > a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 16px;
+    width: 60px;
+    height: 60px;
+    background-color: #000;
+    border-radius: 50%;
+    transition-property: background-color;
+    transition-duration: 0.25s;
+
+    @media (max-width: 550px) {
+      width: 48px;
+      height: 48px;
+    }
+
+    svg {
+      width: 28px;
+      height: auto;
+      fill: #fff;
+
+      @media (max-width: 550px) {
+        width: 24px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1025px) {
+  .facebook:hover {
+    background-color: #3b5998;
+  }
+  .instagram:hover {
+    background-color: #e4405f;
+  }
+  .threads:hover {
+    background-color: #555;
+  }
+}
