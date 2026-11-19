@@ -9,6 +9,10 @@ import styles from './FollowUsBlock.module.css';
 import instagramIcon from './instagram.svg';
 import threadsIcon from './threads.svg';
 
+type FollowUsBlockProps = {
+  className?: string;
+};
+
 const SOCIAL_LINKS = [
   {
     title: 'Facebook',
@@ -29,10 +33,6 @@ const SOCIAL_LINKS = [
     className: styles.threads,
   },
 ];
-
-type FollowUsBlockProps = {
-  className?: string;
-};
 
 const FollowUsBlock: React.FC<FollowUsBlockProps> = ({ className }) => (
   <div className={cn(styles.followUsBlock, className)}>
