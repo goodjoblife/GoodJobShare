@@ -47,10 +47,9 @@ $below-small: 850px;
       height: 48px;
     }
 
-    svg {
+    img {
       width: 28px;
       height: auto;
-      fill: #fff;
 
       @media (max-width: 550px) {
         width: 24px;

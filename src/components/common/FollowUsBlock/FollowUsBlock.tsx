@@ -2,30 +2,30 @@ import cn from 'classnames';
 import React from 'react';
 
 import { Heading } from 'common/base';
-import Facebook from 'common/icons/Facebook';
-import Instagram from 'common/icons/Instagram';
-import Threads from 'common/icons/Threads';
 
+import facebookIcon from './facebook.svg';
 import FollowUsImage from './follow-us.png';
 import styles from './FollowUsBlock.module.css';
+import instagramIcon from './instagram.svg';
+import threadsIcon from './threads.svg';
 
 const SOCIAL_LINKS = [
   {
     title: 'Facebook',
     href: 'https://www.facebook.com/goodjob.life',
-    Icon: Facebook,
+    icon: facebookIcon,
     className: styles.facebook,
   },
   {
     title: 'Instagram',
     href: 'https://www.instagram.com/goodjob_dot_life/',
-    Icon: Instagram,
+    icon: instagramIcon,
     className: styles.instagram,
   },
   {
     title: 'Threads',
     href: 'https://www.threads.com/@goodjob_dot_life',
-    Icon: Threads,
+    icon: threadsIcon,
     className: styles.threads,
   },
 ];
@@ -42,7 +42,7 @@ const FollowUsBlock: React.FC<FollowUsBlockProps> = ({ className }) => (
         追蹤我們
       </Heading>
       <div className={styles.links}>
-        {SOCIAL_LINKS.map(({ title, href, Icon, className: linkClassName }) => (
+        {SOCIAL_LINKS.map(({ title, href, icon, className: linkClassName }) => (
           <a
             key={title}
             href={href}
@@ -52,7 +52,7 @@ const FollowUsBlock: React.FC<FollowUsBlockProps> = ({ className }) => (
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Icon />
+            <img src={icon} alt="" />
           </a>
         ))}
       </div>
