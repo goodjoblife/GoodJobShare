@@ -27,7 +27,6 @@ import QuestionBuilder, { QuestionTypePropType } from './QuestionBuilder';
 import { OptionPropType } from './QuestionBuilder/Checkbox/PropTypes';
 import SubmissionBlock from './SubmissionBlock';
 import useDraft from './useDraft';
-import useIsTyping from './useIsTyping';
 
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
@@ -113,7 +112,6 @@ const FormBuilder = ({
 
   const [isWarningShown, setWarningShown] = useState(false);
   const [showsNavigation, setShowsNavigation] = useState(true);
-  const [isTyping, handleFocus, handleBlur] = useIsTyping();
   const dispatch = useDispatch();
 
   const isSubmittable = useMemo(
@@ -189,11 +187,7 @@ const FormBuilder = ({
   if (typeof footer === 'function') footer = footer(draft);
 
   return (
-    <div
-      className={cn(styles.container, { [styles.typing]: isTyping })}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-    >
+    <div className={styles.container}>
       <div className={styles.header}>
         <button className={styles.closeBtn} onClick={onClose}>
           <X className={styles.icon} />

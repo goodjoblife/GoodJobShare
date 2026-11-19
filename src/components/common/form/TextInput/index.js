@@ -16,6 +16,7 @@ const AutoCompleteMenu = ({ className, open, ...props }) => (
       },
       className,
     )}
+    data-autocomplete-open={open || undefined}
     {...props}
   />
 );
