@@ -1,11 +1,6 @@
 .frame {
   position: relative;
   white-space: nowrap;
-  overflow: hidden;
-
-  &:has([data-autocomplete-open]) {
-    overflow: visible;
-  }
 
   .page {
     width: 100%;

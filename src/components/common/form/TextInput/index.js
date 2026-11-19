@@ -2,12 +2,12 @@ import cn from 'classnames';
 import PropTypes from 'prop-types';
 import React, { forwardRef, useCallback, useRef } from 'react';
 
-import { keepFocusOnMouseDown } from 'utils/eventUtils';
-
 import styles from './TextInput.module.css';
 import useAutocomplete from './useAutocomplete';
 import useEnterConfirm from './useEnterConfirm';
 import useKeyNavigation from './useKeyNavigation';
+
+const preventInputBlur = e => e.preventDefault();
 
 const AutoCompleteMenu = ({ className, open, ...props }) => (
   <div
@@ -18,7 +18,6 @@ const AutoCompleteMenu = ({ className, open, ...props }) => (
       },
       className,
     )}
-    data-autocomplete-open={open || undefined}
     {...props}
   />
 );
@@ -147,7 +146,7 @@ const TextInput = forwardRef(
               key={autocompleteItemKeySelector(item)}
               ref={e => handleItemRef(e, i)}
               active={highlightedIndex === i}
-              onMouseDown={keepFocusOnMouseDown}
+              onMouseDown={preventInputBlur}
               onClick={() => handleMouseClickItem(i)}
               onMouseEnter={() => handleMouseEnterItem(i)}
               onMouseLeave={() => handleMouseLeaveItem(i)}
