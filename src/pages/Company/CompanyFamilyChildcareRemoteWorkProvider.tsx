@@ -7,11 +7,14 @@ import {
 } from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
 import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJobTitleWrapper';
+import {
+  REMOTE_WORK_AVAILABILITY_BULLET_BY_LABEL,
+  REMOTE_WORK_FREQUENCY_BULLET_BY_LABEL,
+} from 'components/CompanyAndJobTitle/constants';
 import LeavePolicySection, {
   FilterOption,
 } from 'components/CompanyAndJobTitle/LeavePolicySection';
 import { toLeaveSection } from 'components/CompanyAndJobTitle/policyReviewStatistics';
-import { LeaveBulletByLabel } from 'components/CompanyAndJobTitle/policyTypes';
 import remoteWorkIcon from 'components/CompanyAndJobTitle/remoteWorkIcon.svg';
 import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { Policy } from 'constants/policy';
@@ -24,19 +27,6 @@ import useCompanyNameParam, {
 import useCompanyPolicyReviewsBox from './useCompanyPolicyReviewsBox';
 import useCompanyPolicyReviewStatistics from './useCompanyPolicyReviewStatistics';
 import useHasPolicyFilter from './useHasPolicyFilter';
-
-const AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
-  是: '有遠端工作制度',
-  否: '無遠端工作制度',
-  不知道: '不確定是否有遠端工作制度',
-};
-
-const COMPLIANCE_BULLET_BY_LABEL: LeaveBulletByLabel = {
-  '1天': '每週遠端工作 1 天',
-  '2天': '每週遠端工作 2 天',
-  '3天': '每週遠端工作 3 天',
-  大於3天: '每週遠端工作超過 3 天',
-};
 
 const FILTER_OPTIONS: FilterOption[] = [
   { value: 'yes', label: '可以遠端工作' },
@@ -77,9 +67,9 @@ const CompanyFamilyChildcareRemoteWorkProvider: React.FC &
         title="遠端工作制度"
         icon={remoteWorkIcon}
         availabilityTitle="是否可以遠端工作？"
-        availabilityBulletByLabel={AVAILABILITY_BULLET_BY_LABEL}
+        availabilityBulletByLabel={REMOTE_WORK_AVAILABILITY_BULLET_BY_LABEL}
         complianceTitle="遠端工作每週天數？"
-        complianceBulletByLabel={COMPLIANCE_BULLET_BY_LABEL}
+        complianceBulletByLabel={REMOTE_WORK_FREQUENCY_BULLET_BY_LABEL}
         section={section}
         availabilityColumnTitle="是否可以遠端工作"
         complianceColumnTitle="每週遠端工作天數"
