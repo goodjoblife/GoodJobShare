@@ -31,13 +31,13 @@ export const FAMILY_CARE_LEAVE_COMPLIANCE_BULLET_BY_LABEL: LeaveBulletByLabel = 
 };
 
 export const FLEXIBLE_HOURS_AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
-  是: '有彈性上下班時間制度',
+  是: { text: '有彈性上下班時間制度', icon: <Glike /> },
   否: '無彈性上下班時間制度',
   不知道: '不確定是否有彈性上下班時間制度',
 };
 
 export const REMOTE_WORK_AVAILABILITY_BULLET_BY_LABEL: LeaveBulletByLabel = {
-  是: '有遠端工作制度',
+  是: { text: '有遠端工作制度', icon: <Glike /> },
   否: '無遠端工作制度',
   不知道: '不確定是否有遠端工作制度',
 };
