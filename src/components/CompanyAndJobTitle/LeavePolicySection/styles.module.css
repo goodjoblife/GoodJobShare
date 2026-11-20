@@ -87,3 +87,9 @@
   border-bottom: 2px solid main-black;
   transform: rotate(40deg);
 }
+
+.empty {
+  padding: 24px 0;
+  color: #adadad;
+  text-align: center;
+}
