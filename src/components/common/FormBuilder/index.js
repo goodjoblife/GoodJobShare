@@ -254,7 +254,7 @@ const FormBuilder = ({
           <SubmissionBlock onSubmit={handleSubmit} />
         </div>
       </div>
-      <div>{footer}</div>
+      <div className={styles.footer}>{footer}</div>
     </div>
   );
 };
