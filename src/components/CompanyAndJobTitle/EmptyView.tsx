@@ -20,7 +20,7 @@ const EmptyView: React.FC<EmptyViewProps> = ({ pageName, tabType }) => (
       尚未有「
       {pageName}
       」的
-      {formatTabName(tabType)}
+      {formatTabName(tabType)}資料
       <br />
       搜尋看看其他？
     </P>

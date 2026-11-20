@@ -1,7 +1,8 @@
 import createPolicyReviewGroupApi, {
+  CreatePolicyReviewGroupResult,
   PolicyReviewInput,
 } from 'apis/createPolicyReviewGroup';
-import { Dispatch, GetState, Thunk } from 'reducers';
+import { AppThunk } from 'reducers';
 import { tokenSelector } from 'selectors/authSelector';
 
 import { queryMyPublishIds } from './me';
@@ -16,10 +17,10 @@ export const createPolicyReviewGroup = ({
   jobTitle: string;
   sector?: string;
   policyReviews: PolicyReviewInput[];
-}): Thunk => async (
-  dispatch: Dispatch,
-  getState: GetState,
-): Promise<unknown> => {
+}): AppThunk<Promise<CreatePolicyReviewGroupResult>> => async (
+  dispatch,
+  getState,
+) => {
   const token = tokenSelector(getState());
 
   const result = await createPolicyReviewGroupApi({

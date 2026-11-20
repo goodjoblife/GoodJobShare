@@ -1,12 +1,27 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import { Heading, P } from 'common/base';
 import Button from 'common/button/Button';
+import DividedList, { DividedListItem } from 'common/DividedList';
 
 import styles from './ReportList.module.css';
 
-const ReportList = ({ reports, reportCount, onShowReportForm }) => {
+type Report = {
+  reasonCategory: string;
+  reason: string;
+};
+
+type Props = {
+  reports: Report[];
+  reportCount?: number;
+  onShowReportForm: () => void;
+};
+
+const ReportList: React.FC<Props> = ({
+  reports,
+  reportCount,
+  onShowReportForm,
+}) => {
   return (
     <div className={styles.reportList}>
       {reportCount === 0 ? (
@@ -19,16 +34,17 @@ const ReportList = ({ reports, reportCount, onShowReportForm }) => {
           <P className={styles.totalReport}>共 {reportCount} 個回報</P>
         </div>
       )}
-      {reports.map(({ reasonCategory, reason }, i) => (
-        <div key={i} className={styles.reportItem}>
-          <P size="m" bold>
-            {reasonCategory}
-          </P>
-          <P size="m" className={styles.reason}>
-            {reason}
-          </P>
-        </div>
-      ))}
+      {reports.length > 0 && (
+        <DividedList>
+          {reports.map(({ reasonCategory, reason }, i) => (
+            <DividedListItem key={i} label={reasonCategory}>
+              <P size="m" className={styles.reason}>
+                {reason}
+              </P>
+            </DividedListItem>
+          ))}
+        </DividedList>
+      )}
       <Button
         className={styles.reportButton}
         circleSize="md"
@@ -39,12 +55,6 @@ const ReportList = ({ reports, reportCount, onShowReportForm }) => {
       </Button>
     </div>
   );
-};
-
-ReportList.propTypes = {
-  onShowReportForm: PropTypes.func.isRequired,
-  reportCount: PropTypes.number,
-  reports: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default ReportList;
