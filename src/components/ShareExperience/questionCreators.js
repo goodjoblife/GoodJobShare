@@ -620,9 +620,9 @@ export const createParentalLeaveQuestion = () => ({
   ],
   footnote: (
     <PolicyLawNote lawName="性別平等工作法">
-      工作年資 6 個月以上，子女未滿 3
-      歲的雙親，可分別申請育嬰假（育嬰留職停薪），最長 2 年。2026
-      年起可以「日」為單位請育嬰假。
+      工作年資 6 個月以上，子女未滿 9
+      歲的雙親，可分別申請育嬰假（育兒留職停薪），最長 2 年。2027
+      年起每名子女每年可請 60 天育兒假，以「日」為單位，日數併入 2 年期間計算。
     </PolicyLawNote>
   ),
   validateOrWarn: validateOrWarnRadioElseRadio,
