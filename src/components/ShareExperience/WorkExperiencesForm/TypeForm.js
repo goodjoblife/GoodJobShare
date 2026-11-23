@@ -224,7 +224,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
         open={open}
         onClose={onClose}
         hideProgressBar={hideProgressBar}
-        successDescription="再回答幾個問題，讓大家看見這間公司的制度實況！"
+        successDescription="再回答幾個問題，加碼解鎖 14 天。"
         onSuccessContinue={onContinueToPolicyForm}
       />
       <PolicySimpleTypeForm
