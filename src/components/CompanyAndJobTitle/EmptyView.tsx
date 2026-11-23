@@ -9,7 +9,6 @@ import {
   generateShareInterviewTypeForm,
   generateShareTimeSalaryTypeForm,
   generateShareWork,
-  ShareLinkTo,
   SharePrefill,
 } from 'common/ShareExpSection/shareLinkTo';
 import {
@@ -26,13 +25,30 @@ import { usePageContext } from './PageContextProvider';
 const formatTabName = (tabType: TabType | undefined): string =>
   (tabType && tabTypeTranslation[tabType]) || '資料';
 
-// 總覽沒有單一對應的表單，因此這張表不是每個 tab 都有
-const shareFormByTabType: Partial<
-  Record<TabType, (prefill?: SharePrefill) => ShareLinkTo>
-> = {
-  [TabType.TIME_AND_SALARY]: generateShareTimeSalaryTypeForm,
-  [TabType.WORK_EXPERIENCE]: generateShareWork,
-  [TabType.INTERVIEW_EXPERIENCE]: generateShareInterviewTypeForm,
+// 每個 tab 的分享按鈕：按鈕上「分享你的___」，以及點下去要去哪。
+// 總覽沒有單一對應的表單，去 /share 的選單讓使用者自己挑
+type Shareable = {
+  name: string;
+  generateTo: (prefill?: SharePrefill) => LocationDescriptor;
+};
+
+const shareableByTabType: Record<TabType, Shareable> = {
+  [TabType.TIME_AND_SALARY]: {
+    name: tabTypeDetailTranslation[TabType.TIME_AND_SALARY],
+    generateTo: generateShareTimeSalaryTypeForm,
+  },
+  [TabType.WORK_EXPERIENCE]: {
+    name: tabTypeDetailTranslation[TabType.WORK_EXPERIENCE],
+    generateTo: generateShareWork,
+  },
+  [TabType.INTERVIEW_EXPERIENCE]: {
+    name: tabTypeDetailTranslation[TabType.INTERVIEW_EXPERIENCE],
+    generateTo: generateShareInterviewTypeForm,
+  },
+  [TabType.OVERVIEW]: {
+    name: '職場資訊',
+    generateTo: generateShareEntry,
+  },
 };
 
 // 公司頁的頁名是公司名，職稱頁的是職稱，各自預填到表單對應的欄位
@@ -41,49 +57,22 @@ const prefillOf = (pageType: PageType, pageName: string): SharePrefill =>
     ? { companyName: pageName }
     : { jobTitle: pageName };
 
-type ShareTarget = {
-  to: LocationDescriptor;
-  label: string;
-};
-
-const formTargetOf = (
-  tabType: TabType,
-  prefill: SharePrefill,
-): ShareTarget | undefined => {
-  const generateTo = shareFormByTabType[tabType];
-  return (
-    generateTo && {
-      to: generateTo(prefill),
-      label: `分享你的${tabTypeDetailTranslation[tabType]}`,
-    }
-  );
-};
-
-// 沒有對應的表單就交給 /share 讓使用者自己挑
-const shareTargetOf = (
-  tabType: TabType | undefined,
-  prefill: SharePrefill,
-): ShareTarget =>
-  (tabType && formTargetOf(tabType, prefill)) || {
-    to: generateShareEntry(prefill),
-    label: '分享你的職場資訊',
-  };
-
 type ShareButtonProps = {
   pageName: string;
   tabType: TabType | undefined;
 };
 
+// 不知道在哪個 tab 時（SnippetBlock 這類轉手的呼叫端）比照總覽
 const ShareButton: React.FC<ShareButtonProps> = ({ pageName, tabType }) => {
   const { pageType } = usePageContext();
-  const { to, label } = shareTargetOf(tabType, prefillOf(pageType, pageName));
+  const { name, generateTo } = shareableByTabType[tabType || TabType.OVERVIEW];
 
   return (
     <Link
-      to={to}
+      to={generateTo(prefillOf(pageType, pageName))}
       className={cn('buttonCircleL', 'buttonBlack2', styles.shareButton)}
     >
-      {label}
+      分享你的{name}
     </Link>
   );
 };
