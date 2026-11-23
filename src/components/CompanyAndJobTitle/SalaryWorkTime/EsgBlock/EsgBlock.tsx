@@ -10,11 +10,13 @@ import { EsgYearStatistics } from 'utils/esgYearUtils';
 import { formatNumberWithSign } from 'utils/stringUtil';
 
 import styles from './EsgBlock.module.css';
+import { EsgIndicator, esgIndicatorDescription } from './esgIndicator';
+import EsgInfoModal from './EsgInfoModal';
 import snippetStyles from '../../SnippetBlock.module.css';
 
 type EsgItemBlockProps = {
   className?: string;
-  title: string;
+  indicator: EsgIndicator;
   year: number;
   value: number;
   valueCompared?: number;
@@ -31,44 +33,69 @@ type EsgBlockProps = {
 
 const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
   className,
-  title,
+  indicator,
   year,
   value,
   valueCompared,
   unit,
-}) => (
-  <Card className={className}>
-    <div className={styles.badge}>{year} 年</div>
-    <div className={styles.titleContainer}>
-      <div className={styles.title}>{title}</div>
-      <Info className={styles.icon} />
-    </div>
-    <div className={styles.data}>
-      <span className={styles.value}>{value.toFixed(1)}</span> {unit}
-    </div>
-    <div
-      className={styles.caption}
-      style={{ visibility: valueCompared ? 'visible' : 'hidden' }}
-    >
-      與同業相比
-      <span
-        className={cn(
-          styles.value,
-          valueCompared && value >= valueCompared
-            ? styles.positive
-            : styles.negative,
-        )}
+}) => {
+  const [isInfoOpen, setInfoOpen] = useState(false);
+
+  const openInfo = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    // 避免觸發卡片本身的其他互動（例如整塊點擊收合）
+    e.stopPropagation();
+    setInfoOpen(true);
+  }, []);
+
+  const closeInfo = useCallback(() => {
+    setInfoOpen(false);
+  }, []);
+
+  return (
+    <Card className={className}>
+      <div className={styles.badge}>{year} 年</div>
+      <div className={styles.titleContainer}>
+        <div className={styles.title}>{indicator}</div>
+        <button
+          className={styles.infoButton}
+          aria-label={`${indicator}說明`}
+          onClick={openInfo}
+        >
+          <Info className={styles.icon} />
+        </button>
+      </div>
+      {isInfoOpen && (
+        <EsgInfoModal close={closeInfo} title={indicator}>
+          {esgIndicatorDescription[indicator]}
+        </EsgInfoModal>
+      )}
+      <div className={styles.data}>
+        <span className={styles.value}>{value.toFixed(1)}</span> {unit}
+      </div>
+      <div
+        className={styles.caption}
+        style={{ visibility: valueCompared ? 'visible' : 'hidden' }}
       >
-        {valueCompared &&
-          formatNumberWithSign(
-            ((value - valueCompared) / valueCompared) * 100,
-            0,
+        與同業相比
+        <span
+          className={cn(
+            styles.value,
+            valueCompared && value >= valueCompared
+              ? styles.positive
+              : styles.negative,
           )}
-        %
-      </span>
-    </div>
-  </Card>
-);
+        >
+          {valueCompared &&
+            formatNumberWithSign(
+              ((value - valueCompared) / valueCompared) * 100,
+              0,
+            )}
+          %
+        </span>
+      </div>
+    </Card>
+  );
+};
 
 const EsgBlock: React.FC<EsgBlockProps> = ({
   className,
@@ -137,6 +164,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {showsToggle && (
             <button
               className={cn(styles.toggle, { [styles.collapsed]: isCollapsed })}
+              aria-label="企業ESG公開薪資揭露"
               aria-expanded={!isCollapsed}
               onClick={toggleCollapsed}
             >
@@ -157,7 +185,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {avgSalaryStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
-              title="員工薪資平均數"
+              indicator={EsgIndicator.AVG_SALARY}
               year={avgSalaryStatisticsItem.year}
               value={avgSalaryStatisticsItem.average / 10000}
               valueCompared={
@@ -169,7 +197,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {nonManagerAvgSalaryStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
-              title="非主管全時員工薪資平均數"
+              indicator={EsgIndicator.NON_MANAGER_AVG_SALARY}
               year={nonManagerAvgSalaryStatisticsItem.year}
               value={nonManagerAvgSalaryStatisticsItem.average / 10000}
               valueCompared={
@@ -181,7 +209,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {nonManagerMedianSalaryStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
-              title="非主管全時員工薪資中位數"
+              indicator={EsgIndicator.NON_MANAGER_MEDIAN_SALARY}
               year={nonManagerMedianSalaryStatisticsItem.year}
               value={nonManagerMedianSalaryStatisticsItem.median / 10000}
               unit="萬 / 年"
@@ -190,7 +218,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {femaleManagerStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
-              title="管理職女性主管佔比"
+              indicator={EsgIndicator.FEMALE_MANAGER_PERCENTAGE}
               year={femaleManagerStatisticsItem.year}
               value={femaleManagerStatisticsItem.percentage * 100}
               unit="%"
