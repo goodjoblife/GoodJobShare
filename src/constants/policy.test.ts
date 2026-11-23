@@ -15,7 +15,7 @@ describe('policyByLabel', () => {
       生理假: Policy.MENSTRUAL_LEAVE,
       育嬰假: Policy.PARENTAL_LEAVE,
       家庭照顧假: Policy.FAMILY_CARE_LEAVE,
-      彈性上下班時間: Policy.FLEXIBLE_WORKING_HOUR,
+      彈性上下班: Policy.FLEXIBLE_WORKING_HOUR,
       遠端工作: Policy.REMOTE_WORK,
     });
   });
