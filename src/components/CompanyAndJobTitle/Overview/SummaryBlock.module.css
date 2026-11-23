@@ -2,15 +2,13 @@
 
 .summaryBlock {
   display: flex;
+  gap: 21px;
   margin-bottom: 22px;
 
   @media (max-width: below-tablet) {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  > * + * {
-    margin-left: 21px;
+    gap: 10px;
   }
 }
 
@@ -33,14 +31,11 @@
 .scoreCard {
   @media (max-width: below-tablet) {
     width: 100%;
-    margin-left: 0;
-    margin-top: 10px;
   }
 }
 
 .barChart {
   flex: 1;
-  max-width: 547px;
   height: 265px;
 }
 
