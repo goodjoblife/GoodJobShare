@@ -36,7 +36,12 @@
 
 .barChart {
   flex: 1;
+  max-width: 547px;
   height: 265px;
+}
+
+.barChart:nth-last-child(n + 3) {
+  max-width: none;
 }
 
 .barChartSm {
