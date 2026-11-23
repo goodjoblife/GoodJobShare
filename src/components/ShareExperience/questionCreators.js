@@ -652,7 +652,7 @@ export const createFamilyCareLeaveQuestion = () => ({
 });
 
 export const createFlexibleWorkingHourQuestion = () => ({
-  label: '彈性上下班時間',
+  label: '彈性上下班',
   title: '是否有彈性上下班時間制度？',
   type: QUESTION_TYPE.RADIO,
   dataKey: DATA_KEY_POLICY_FLEXIBLE_WORKING_HOUR,

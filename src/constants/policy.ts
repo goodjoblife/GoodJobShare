@@ -12,7 +12,7 @@ export const policyTranslation: Record<Policy, string> = {
   [Policy.MENSTRUAL_LEAVE]: '生理假',
   [Policy.PARENTAL_LEAVE]: '育嬰假',
   [Policy.FAMILY_CARE_LEAVE]: '家庭照顧假',
-  [Policy.FLEXIBLE_WORKING_HOUR]: '彈性上下班時間',
+  [Policy.FLEXIBLE_WORKING_HOUR]: '彈性上下班',
   [Policy.REMOTE_WORK]: '遠端工作',
 };
 
