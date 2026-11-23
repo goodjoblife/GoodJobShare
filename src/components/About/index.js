@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 import { Heading, P, Section, Wrapper } from 'common/base';
 import CallToActionBanner from 'common/CallToAction/CallToActionBanner';
 import editorStyles from 'common/Editor.module.css';
-import Email from 'common/icons/Email';
-import Facebook from 'common/icons/Facebook';
-import Github from 'common/icons/Github';
+import SocialIconLinks, {
+  EMAIL_LINK,
+  FACEBOOK_LINK,
+  GITHUB_LINK,
+} from 'common/SocialIconLinks';
 import StaticHelmet from 'common/StaticHelmet';
 
 import About01 from './about-01.png';
@@ -161,29 +163,7 @@ const About = () => (
         <Heading size="l" center marginBottom>
           聯絡我們
         </Heading>
-        <div className={styles.contact}>
-          <a
-            href="https://www.facebook.com/goodjob.life"
-            className={styles.facebook}
-            title="facebook"
-          >
-            <Facebook />
-          </a>
-          <a
-            href="https://github.com/goodjoblife/GoodJobShare"
-            className={styles.github}
-            title="Github"
-          >
-            <Github />
-          </a>
-          <a
-            href="mailto:findyourgoodjob@gmail.com"
-            className={styles.email}
-            title="findyourgoodjob@gmail.com"
-          >
-            <Email />
-          </a>
-        </div>
+        <SocialIconLinks links={[FACEBOOK_LINK, GITHUB_LINK, EMAIL_LINK]} />
       </Wrapper>
     </Section>
     <Section padding id="joinUs">
