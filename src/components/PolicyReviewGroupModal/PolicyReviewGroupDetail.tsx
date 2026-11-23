@@ -29,15 +29,7 @@ const PolicyReviewGroupDetail: React.FC<Props> = ({ box }) => (
           >
             {group.company.name}
           </Link>
-          {' － '}
-          <Link
-            to={generatePageURL({
-              pageType: PageType.JOB_TITLE,
-              pageName: group.jobTitle,
-            })}
-          >
-            {group.jobTitle}
-          </Link>
+          {` － ${group.jobTitle}`}
         </Heading>
         {group.sector && (
           <P size="s" className={styles.sector}>

@@ -63,13 +63,16 @@ describe('PolicyReviewGroupDetail', () => {
     ).toHaveAttribute('href', '/companies/好工作股份有限公司');
   });
 
-  it('links the job title of the group to its job title page', () => {
+  it('shows the job title of the group without linking it', () => {
     renderDetail();
 
-    expect(screen.getByRole('link', { name: '前端工程師' })).toHaveAttribute(
-      'href',
-      '/job-titles/前端工程師',
+    // 制度資料只屬於公司，不屬於職稱，所以職稱不連到職稱頁
+    expect(screen.getByRole('heading')).toHaveTextContent(
+      '好工作股份有限公司 － 前端工程師',
     );
+    expect(
+      screen.queryByRole('link', { name: '前端工程師' }),
+    ).not.toBeInTheDocument();
   });
 
   it('shows the sector of the group', () => {
