@@ -46,20 +46,28 @@ type ShareTarget = {
   label: string;
 };
 
+const formTargetOf = (
+  tabType: TabType,
+  prefill: SharePrefill,
+): ShareTarget | undefined => {
+  const generateTo = shareFormByTabType[tabType];
+  return (
+    generateTo && {
+      to: generateTo(prefill),
+      label: `分享你的${tabTypeDetailTranslation[tabType]}`,
+    }
+  );
+};
+
+// 沒有對應的表單就交給 /share 讓使用者自己挑
 const shareTargetOf = (
   tabType: TabType | undefined,
   prefill: SharePrefill,
-): ShareTarget => {
-  const generateShareFormTo = tabType && shareFormByTabType[tabType];
-  if (tabType && generateShareFormTo) {
-    return {
-      to: generateShareFormTo(prefill),
-      label: `分享你的${tabTypeDetailTranslation[tabType]}`,
-    };
-  }
-  // 沒有對應的表單就交給 /share 讓使用者自己挑
-  return { to: generateShareEntry(prefill), label: '分享你的職場資訊' };
-};
+): ShareTarget =>
+  (tabType && formTargetOf(tabType, prefill)) || {
+    to: generateShareEntry(prefill),
+    label: '分享你的職場資訊',
+  };
 
 type ShareButtonProps = {
   pageName: string;
