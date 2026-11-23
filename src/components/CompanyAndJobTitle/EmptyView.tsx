@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import { LocationDescriptor } from 'history';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -24,7 +25,7 @@ import { usePageContext } from './PageContextProvider';
 const formatTabName = (tabType: TabType | undefined): string =>
   (tabType && tabTypeTranslation[tabType]) || '資料';
 
-// 總覽沒有對應的表單，因此這張表不是每個 tab 都有
+// 總覽沒有單一對應的表單，因此這張表不是每個 tab 都有
 const shareFormByTabType: Partial<
   Record<TabType, (prefill?: SharePrefill) => ShareLinkTo>
 > = {
@@ -39,6 +40,29 @@ const prefillOf = (pageType: PageType, pageName: string): SharePrefill =>
     ? { companyName: pageName }
     : { jobTitle: pageName };
 
+type ShareEntry = {
+  to: LocationDescriptor;
+  label: string;
+};
+
+const shareEntryOf = (
+  tabType: TabType | undefined,
+  prefill: SharePrefill,
+): ShareEntry => {
+  const generateShareFormTo = tabType && shareFormByTabType[tabType];
+  if (tabType && generateShareFormTo) {
+    return {
+      to: generateShareFormTo(prefill),
+      label: `分享你的${tabTypeDetailTranslation[tabType]}`,
+    };
+  }
+  // 沒有對應的表單就交給 /share 讓使用者自己挑，預填值一起帶過去
+  return {
+    to: { pathname: '/share', state: prefill },
+    label: '分享你的職場資訊',
+  };
+};
+
 type ShareButtonProps = {
   pageName: string;
   tabType: TabType | undefined;
@@ -46,17 +70,14 @@ type ShareButtonProps = {
 
 const ShareButton: React.FC<ShareButtonProps> = ({ pageName, tabType }) => {
   const { pageType } = usePageContext();
-  if (!tabType) return null;
-
-  const generateShareFormTo = shareFormByTabType[tabType];
-  if (!generateShareFormTo) return null;
+  const { to, label } = shareEntryOf(tabType, prefillOf(pageType, pageName));
 
   return (
     <Link
-      to={generateShareFormTo(prefillOf(pageType, pageName))}
+      to={to}
       className={cn('buttonCircleL', 'buttonBlack2', styles.shareButton)}
     >
-      分享你的{tabTypeDetailTranslation[tabType]}
+      {label}
     </Link>
   );
 };

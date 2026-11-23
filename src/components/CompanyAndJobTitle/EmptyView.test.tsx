@@ -9,11 +9,14 @@ import EmptyView from './EmptyView';
 import { PageContextProvider } from './PageContextProvider';
 
 // 分享按鈕的預填值放在 location state 裡，DOM 上看不到，因此把它印出來
-const LocationState: React.FC = () => (
-  <div data-testid="location-state">
-    {JSON.stringify(useLocation().state || null)}
-  </div>
-);
+const LocationState: React.FC = () => {
+  const { pathname, state } = useLocation();
+  return (
+    <div data-testid="location-state">
+      {JSON.stringify({ pathname, state: state || null })}
+    </div>
+  );
+};
 
 const renderEmptyView = ({
   pageType,
@@ -49,7 +52,10 @@ describe('EmptyView 的分享按鈕', () => {
     fireEvent.click(screen.getByText('分享你的面試經驗'));
 
     expect(screen.getByTestId('location-state')).toHaveTextContent(
-      JSON.stringify({ share: 'interview', companyName: '沒薪水資料公司' }),
+      JSON.stringify({
+        pathname: '/',
+        state: { share: 'interview', companyName: '沒薪水資料公司' },
+      }),
     );
   });
 
@@ -64,19 +70,26 @@ describe('EmptyView 的分享按鈕', () => {
 
     expect(screen.getByTestId('location-state')).toHaveTextContent(
       JSON.stringify({
-        share: 'salary-work-times',
-        jobTitle: '軟體工程師',
+        pathname: '/',
+        state: { share: 'salary-work-times', jobTitle: '軟體工程師' },
       }),
     );
   });
 
-  it('總覽沒有對應的表單，不顯示按鈕', () => {
+  it('總覽沒有單一對應的表單，改帶預填值去 /share 讓使用者自己挑', () => {
     renderEmptyView({
       pageType: PageType.COMPANY,
       pageName: '沒薪水資料公司',
       tabType: TabType.OVERVIEW,
     });
 
-    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByText('分享你的職場資訊'));
+
+    expect(screen.getByTestId('location-state')).toHaveTextContent(
+      JSON.stringify({
+        pathname: '/share',
+        state: { companyName: '沒薪水資料公司' },
+      }),
+    );
   });
 });
