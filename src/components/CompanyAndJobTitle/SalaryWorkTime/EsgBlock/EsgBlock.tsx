@@ -114,11 +114,16 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
     [],
   );
 
+  const stopPropagation = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+  }, []);
+
   const yearSelect = availableYears.length > 1 && (
     <div
       className={
         yearSelectInContent ? styles.mobileYearSelect : styles.yearSelect
       }
+      onClick={stopPropagation}
     >
       <Select
         hasNullOption={false}
@@ -130,15 +135,23 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
   );
 
   return (
-    <Card className={cn(styles.card, className)}>
+    <Card
+      className={cn(
+        styles.card,
+        { [styles.clickable]: showsToggle },
+        className,
+      )}
+      onClick={showsToggle ? toggleCollapsed : undefined}
+    >
       <div className={styles.header}>
         <div className={snippetStyles.title}>
           企業ESG公開薪資揭露
+          {/* 不掛 onClick，點擊（含鍵盤 Enter / Space）冒泡到整張 Card 處理 */}
           {showsToggle && (
             <button
               className={cn(styles.toggle, { [styles.collapsed]: isCollapsed })}
               aria-expanded={!isCollapsed}
-              onClick={toggleCollapsed}
+              aria-label="展開/收合企業ESG公開薪資揭露"
             >
               <Caret />
             </button>
@@ -204,6 +217,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
             href="https://mops.twse.com.tw/mops/web/t214sb01"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={stopPropagation}
           >
             臺灣證券交易所 公開資訊觀測站
           </a>
