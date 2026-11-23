@@ -146,7 +146,6 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
       <div className={styles.header}>
         <div className={snippetStyles.title}>
           企業ESG公開薪資揭露
-          {/* 不掛 onClick，點擊（含鍵盤 Enter / Space）冒泡到整張 Card 處理 */}
           {showsToggle && (
             <button
               className={cn(styles.toggle, { [styles.collapsed]: isCollapsed })}
