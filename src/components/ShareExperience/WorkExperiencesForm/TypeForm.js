@@ -191,6 +191,7 @@ const WorkExperiencesTypeForm = ({
       onClose={onClose}
       hideProgressBar={hideProgressBar}
       redirectLocationOnSuccess={redirectToExperience}
+      successSubtitle="你已解鎖全站資訊 14 天囉！"
       successDescription={successDescription}
       onSuccessContinue={onSuccessContinue}
     />
