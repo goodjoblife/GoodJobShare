@@ -69,18 +69,18 @@ import WorkTimeExample from './WorkTimeExample';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 import Emoji from '../common/icons/Emoji';
 
+// 由 common/ShareExpSection/shareLinkTo 放進 history state 的預填值
+const prefilledByShareLink = key => () => {
+  if (typeof window === 'undefined') return '';
+  const state = path(['history', 'state', 'state'], window) || {};
+  return state[key] || '';
+};
+
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',
   type: QUESTION_TYPE.TEXT,
   dataKey: DATA_KEY_COMPANY_NAME,
-  defaultValue: () => {
-    const state =
-      typeof window === 'undefined'
-        ? {}
-        : path(['history', 'state', 'state'], window) || {};
-    const companyName = state.companyName || '';
-    return companyName;
-  },
+  defaultValue: prefilledByShareLink('companyName'),
   required: true,
   validateOrWarn: value => isEmpty(trim(value)) && '請填寫公司名稱',
   placeholder: 'ＯＯ 股份有限公司',
@@ -104,7 +104,7 @@ export const createJobTitleQuestion = ({ header }) => ({
   title: '職稱',
   type: QUESTION_TYPE.TEXT,
   dataKey: DATA_KEY_JOB_TITLE,
-  defaultValue: '',
+  defaultValue: prefilledByShareLink('jobTitle'),
   required: true,
   validateOrWarn: value => isEmpty(trim(value)) && '請填寫職稱',
   placeholder: '軟體工程師',
