@@ -18,16 +18,21 @@ export type ShareLinkTo = {
   } & SharePrefill;
 };
 
+export type ShareEntryLinkTo = {
+  pathname: string;
+  state: SharePrefill;
+};
+
 // 沒給的欄位就不要放進 state，讓表單走自己的預設值
-const generateShareTypeForm = (share: string) => ({
-  companyName,
-  jobTitle,
-}: SharePrefill = {}): ShareLinkTo => ({
-  state: {
-    share,
-    ...(companyName ? { companyName } : {}),
-    ...(jobTitle ? { jobTitle } : {}),
-  },
+const stateOf = ({ companyName, jobTitle }: SharePrefill): SharePrefill => ({
+  ...(companyName ? { companyName } : {}),
+  ...(jobTitle ? { jobTitle } : {}),
+});
+
+const generateShareTypeForm = (share: string) => (
+  prefill: SharePrefill = {},
+): ShareLinkTo => ({
+  state: { share, ...stateOf(prefill) },
 });
 
 // please follow the convention: () => To (react-router)
@@ -46,3 +51,11 @@ export const generateShareWork = generateShareTypeForm(
 export const generateSharePolicyForm = generateShareTypeForm(
   STATE_SHARE.POLICY,
 );
+
+// 不指定表單，交給 /share 的選單；預填值由 ShareExpSection 接力傳給使用者挑中的那張
+export const generateShareEntry = (
+  prefill: SharePrefill = {},
+): ShareEntryLinkTo => ({
+  pathname: '/share',
+  state: stateOf(prefill),
+});

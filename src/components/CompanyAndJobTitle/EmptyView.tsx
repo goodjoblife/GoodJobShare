@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { P, Section } from 'common/base';
 import {
+  generateShareEntry,
   generateShareInterviewTypeForm,
   generateShareTimeSalaryTypeForm,
   generateShareWork,
@@ -40,15 +41,15 @@ const prefillOf = (pageType: PageType, pageName: string): SharePrefill =>
     ? { companyName: pageName }
     : { jobTitle: pageName };
 
-type ShareEntry = {
+type ShareTarget = {
   to: LocationDescriptor;
   label: string;
 };
 
-const shareEntryOf = (
+const shareTargetOf = (
   tabType: TabType | undefined,
   prefill: SharePrefill,
-): ShareEntry => {
+): ShareTarget => {
   const generateShareFormTo = tabType && shareFormByTabType[tabType];
   if (tabType && generateShareFormTo) {
     return {
@@ -56,11 +57,8 @@ const shareEntryOf = (
       label: `分享你的${tabTypeDetailTranslation[tabType]}`,
     };
   }
-  // 沒有對應的表單就交給 /share 讓使用者自己挑，預填值一起帶過去
-  return {
-    to: { pathname: '/share', state: prefill },
-    label: '分享你的職場資訊',
-  };
+  // 沒有對應的表單就交給 /share 讓使用者自己挑
+  return { to: generateShareEntry(prefill), label: '分享你的職場資訊' };
 };
 
 type ShareButtonProps = {
@@ -70,7 +68,7 @@ type ShareButtonProps = {
 
 const ShareButton: React.FC<ShareButtonProps> = ({ pageName, tabType }) => {
   const { pageType } = usePageContext();
-  const { to, label } = shareEntryOf(tabType, prefillOf(pageType, pageName));
+  const { to, label } = shareTargetOf(tabType, prefillOf(pageType, pageName));
 
   return (
     <Link
