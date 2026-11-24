@@ -95,15 +95,51 @@ test('只有單一年份時不顯示年份下拉，但仍顯示卡片', () => {
 
 test('toggle 按鈕以 aria-expanded 反映收合狀態', () => {
   render(<EsgBlock data={esgYearStatisticsList} hasPreviewed />);
-  const toggle = screen.getByRole('button', { name: '企業ESG公開薪資揭露' });
+  const toggle = screen.getByRole('button', {
+    name: '展開/收合企業ESG公開薪資揭露',
+  });
   expect(toggle).toHaveAttribute('aria-expanded', 'false'); // hasPreviewed 初始為收合
   fireEvent.click(toggle);
   expect(toggle).toHaveAttribute('aria-expanded', 'true');
 });
 
+test('點擊區塊內任何位置皆可 toggle', () => {
+  render(<EsgBlock data={esgYearStatisticsList} hasPreviewed />);
+  const toggle = screen.getByRole('button', {
+    name: '展開/收合企業ESG公開薪資揭露',
+  });
+  expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  fireEvent.click(screen.getByText('企業ESG公開薪資揭露'));
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  fireEvent.click(screen.getByText('員工薪資平均數'));
+  expect(toggle).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('點擊年份下拉與資料來源連結不會 toggle', () => {
+  render(<EsgBlock data={esgYearStatisticsList} />);
+  const toggle = screen.getByRole('button', {
+    name: '展開/收合企業ESG公開薪資揭露',
+  });
+  fireEvent.click(screen.getByRole('combobox'));
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  fireEvent.click(screen.getByText('臺灣證券交易所 公開資訊觀測站'));
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
+});
+
+test('手機版預覽狀態下不可 toggle', () => {
+  render(<EsgBlock data={esgYearStatisticsList} showsToggle={false} />);
+  expect(
+    screen.queryByRole('button', { name: '展開/收合企業ESG公開薪資揭露' }),
+  ).not.toBeInTheDocument();
+  fireEvent.click(screen.getByText('企業ESG公開薪資揭露'));
+  expect(screen.getByText('員工薪資平均數')).toBeVisible();
+});
+
 test('收合狀態下切換年份會自動展開區塊', () => {
   render(<EsgBlock data={esgYearStatisticsList} hasPreviewed />);
-  const toggle = screen.getByRole('button', { name: '企業ESG公開薪資揭露' });
+  const toggle = screen.getByRole('button', {
+    name: '展開/收合企業ESG公開薪資揭露',
+  });
   expect(toggle).toHaveAttribute('aria-expanded', 'false');
   fireEvent.change(screen.getByRole('combobox'), {
     target: { value: '2023' },
@@ -113,7 +149,9 @@ test('收合狀態下切換年份會自動展開區塊', () => {
 
 test('展開狀態下切換年份維持展開', () => {
   render(<EsgBlock data={esgYearStatisticsList} />);
-  const toggle = screen.getByRole('button', { name: '企業ESG公開薪資揭露' });
+  const toggle = screen.getByRole('button', {
+    name: '展開/收合企業ESG公開薪資揭露',
+  });
   expect(toggle).toHaveAttribute('aria-expanded', 'true');
   fireEvent.change(screen.getByRole('combobox'), {
     target: { value: '2023' },
@@ -124,7 +162,7 @@ test('展開狀態下切換年份維持展開', () => {
 test('未預覽過時預設為展開', () => {
   render(<EsgBlock data={esgYearStatisticsList} />);
   expect(
-    screen.getByRole('button', { name: '企業ESG公開薪資揭露' }),
+    screen.getByRole('button', { name: '展開/收合企業ESG公開薪資揭露' }),
   ).toHaveAttribute('aria-expanded', 'true');
 });
 
@@ -179,7 +217,9 @@ test('說明彈窗可按 Esc 關閉', () => {
 
 test('點擊 (!) 不會觸發區塊收合', () => {
   render(<EsgBlock data={esgYearStatisticsList} />);
-  const toggle = screen.getByRole('button', { name: '企業ESG公開薪資揭露' });
+  const toggle = screen.getByRole('button', {
+    name: '展開/收合企業ESG公開薪資揭露',
+  });
   expect(toggle).toHaveAttribute('aria-expanded', 'true');
 
   fireEvent.click(screen.getByRole('button', { name: '員工薪資平均數說明' }));

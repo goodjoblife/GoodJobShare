@@ -4,8 +4,10 @@ import React from 'react';
 
 import styles from './Card.module.css';
 
-const Card = ({ className, children }) => (
-  <div className={cn(styles.card, className)}>{children}</div>
+const Card = ({ className, children, ...props }) => (
+  <div className={cn(styles.card, className)} {...props}>
+    {children}
+  </div>
 );
 
 Card.propTypes = {
