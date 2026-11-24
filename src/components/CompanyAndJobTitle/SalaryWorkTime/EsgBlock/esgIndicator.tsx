@@ -9,10 +9,12 @@ export enum EsgIndicator {
   FEMALE_MANAGER_PERCENTAGE = '管理職女性主管佔比',
 }
 
+export const ESG_DISCLOSURE_URL = 'https://mops.twse.com.tw/mops/web/t214sb01';
+
 const EsgDisclosureLink: React.FC = () => (
   <a
     className={linkStyles.link}
-    href="https://mops.twse.com.tw/mops/#/web/t214sb01"
+    href={ESG_DISCLOSURE_URL}
     target="_blank"
     rel="noopener noreferrer"
   >
@@ -23,7 +25,7 @@ const EsgDisclosureLink: React.FC = () => (
 const NonManagerSalaryLink: React.FC = () => (
   <a
     className={linkStyles.link}
-    href="https://mops.twse.com.tw/mops/#/web/t100sb15"
+    href="https://mops.twse.com.tw/mops/web/t100sb15"
     target="_blank"
     rel="noopener noreferrer"
   >

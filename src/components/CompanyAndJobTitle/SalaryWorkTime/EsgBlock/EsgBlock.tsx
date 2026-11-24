@@ -10,7 +10,11 @@ import { EsgYearStatistics } from 'utils/esgYearUtils';
 import { formatNumberWithSign } from 'utils/stringUtil';
 
 import styles from './EsgBlock.module.css';
-import { EsgIndicator, esgIndicatorDescription } from './esgIndicator';
+import {
+  ESG_DISCLOSURE_URL,
+  EsgIndicator,
+  esgIndicatorDescription,
+} from './esgIndicator';
 import EsgInfoModal from './EsgInfoModal';
 import snippetStyles from '../../SnippetBlock.module.css';
 
@@ -243,7 +247,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           資料來源：
           <a
             className={linkStyles.link}
-            href="https://mops.twse.com.tw/mops/web/t214sb01"
+            href={ESG_DISCLOSURE_URL}
             target="_blank"
             rel="noopener noreferrer"
             onClick={stopPropagation}
