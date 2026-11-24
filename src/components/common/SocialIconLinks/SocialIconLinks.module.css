@@ -1,0 +1,57 @@
+@value below-mobile, above-desktop from "../variables.module.css";
+
+.socialIconLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+
+  @media (max-width: below-mobile) {
+    gap: 12px;
+  }
+
+  > a {
+    display: inline-flex;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background-color: #000;
+    border-radius: 50%;
+    transition-property: background-color;
+    transition-duration: 0.25s;
+
+    @media (max-width: below-mobile) {
+      width: 48px;
+      height: 48px;
+    }
+
+    img {
+      width: 28px;
+      height: auto;
+
+      @media (max-width: below-mobile) {
+        width: 24px;
+      }
+    }
+  }
+}
+
+@media (min-width: above-desktop) {
+  .facebook:hover {
+    background-color: #3b5998;
+  }
+  .instagram:hover {
+    background-color: #e4405f;
+  }
+  .threads:hover {
+    background-color: #555;
+  }
+  .github:hover {
+    background-color: #555;
+  }
+  .email:hover {
+    background-color: #d14836;
+  }
+}
