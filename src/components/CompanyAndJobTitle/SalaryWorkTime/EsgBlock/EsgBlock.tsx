@@ -58,7 +58,6 @@ const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
   }, []);
 
   return (
-    // 點擊卡片（含說明彈窗）不觸發整個區塊收合
     <Card className={className} onClick={stopPropagation}>
       <div className={styles.badge}>{year} 年</div>
       <div className={styles.titleContainer}>
