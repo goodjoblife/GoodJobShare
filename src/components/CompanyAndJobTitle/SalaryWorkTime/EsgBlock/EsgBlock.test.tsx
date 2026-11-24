@@ -103,7 +103,7 @@ test('toggle 按鈕以 aria-expanded 反映收合狀態', () => {
   expect(toggle).toHaveAttribute('aria-expanded', 'true');
 });
 
-test('點擊區塊內任何位置皆可 toggle', () => {
+test('點擊卡片以外的區塊位置皆可 toggle', () => {
   render(<EsgBlock data={esgYearStatisticsList} hasPreviewed />);
   const toggle = screen.getByRole('button', {
     name: '展開/收合企業ESG公開薪資揭露',
@@ -111,8 +111,18 @@ test('點擊區塊內任何位置皆可 toggle', () => {
   expect(toggle).toHaveAttribute('aria-expanded', 'false');
   fireEvent.click(screen.getByText('企業ESG公開薪資揭露'));
   expect(toggle).toHaveAttribute('aria-expanded', 'true');
-  fireEvent.click(screen.getByText('員工薪資平均數'));
+  fireEvent.click(screen.getByText('企業ESG公開薪資揭露'));
   expect(toggle).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('點擊個別卡片不會 toggle', () => {
+  render(<EsgBlock data={esgYearStatisticsList} />);
+  const toggle = screen.getByRole('button', {
+    name: '展開/收合企業ESG公開薪資揭露',
+  });
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  fireEvent.click(screen.getByText('員工薪資平均數'));
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
 });
 
 test('點擊年份下拉與資料來源連結不會 toggle', () => {

@@ -35,6 +35,10 @@ type EsgBlockProps = {
   yearSelectInContent?: boolean;
 };
 
+const stopPropagation = (e: React.MouseEvent): void => {
+  e.stopPropagation();
+};
+
 const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
   className,
   indicator,
@@ -45,9 +49,7 @@ const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
 }) => {
   const [isInfoOpen, setInfoOpen] = useState(false);
 
-  const openInfo = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    // 避免觸發卡片本身的其他互動（例如整塊點擊收合）
-    e.stopPropagation();
+  const openInfo = useCallback(() => {
     setInfoOpen(true);
   }, []);
 
@@ -56,7 +58,8 @@ const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
   }, []);
 
   return (
-    <Card className={className}>
+    // 點擊卡片（含說明彈窗）不觸發整個區塊收合
+    <Card className={className} onClick={stopPropagation}>
       <div className={styles.badge}>{year} 年</div>
       <div className={styles.titleContainer}>
         <div className={styles.title}>{indicator}</div>
@@ -69,12 +72,9 @@ const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
         </button>
       </div>
       {isInfoOpen && (
-        // 彈窗在區塊卡片內，點擊外圍不可冒泡觸發區塊收合
-        <div onClick={(e): void => e.stopPropagation()}>
-          <EsgInfoModal close={closeInfo} title={indicator}>
-            {esgIndicatorDescription[indicator]}
-          </EsgInfoModal>
-        </div>
+        <EsgInfoModal close={closeInfo} title={indicator}>
+          {esgIndicatorDescription[indicator]}
+        </EsgInfoModal>
       )}
       <div className={styles.data}>
         <span className={styles.value}>{value.toFixed(1)}</span> {unit}
@@ -147,10 +147,6 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
     },
     [],
   );
-
-  const stopPropagation = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-  }, []);
 
   const yearSelect = availableYears.length > 1 && (
     <div
