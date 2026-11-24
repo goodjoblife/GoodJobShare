@@ -1,0 +1,23 @@
+.title {
+  font-size: 20px;
+  line-height: 1.4;
+  margin-bottom: 24px;
+}
+
+.description {
+  font-size: 15px;
+
+  ul {
+    margin-top: 0.5em;
+  }
+
+  li {
+    margin-bottom: 0.4em;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}

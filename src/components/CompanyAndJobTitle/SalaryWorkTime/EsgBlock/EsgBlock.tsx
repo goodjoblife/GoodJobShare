@@ -1,7 +1,6 @@
 import cn from 'classnames';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import linkStyles from 'common/base/Link.module.css';
 import Card from 'common/Card';
 import Select from 'common/form/Select';
 import Caret from 'common/icons/Caret';
@@ -10,11 +9,18 @@ import { EsgYearStatistics } from 'utils/esgYearUtils';
 import { formatNumberWithSign } from 'utils/stringUtil';
 
 import styles from './EsgBlock.module.css';
+import {
+  ESG_DISCLOSURE_URL,
+  EsgIndicator,
+  esgIndicatorDescription,
+} from './esgIndicator';
+import EsgInfoModal from './EsgInfoModal';
+import MopsLink from './MopsLink';
 import snippetStyles from '../../SnippetBlock.module.css';
 
 type EsgItemBlockProps = {
   className?: string;
-  title: string;
+  title: EsgIndicator;
   year: number;
   value: number;
   valueCompared?: number;
@@ -29,6 +35,10 @@ type EsgBlockProps = {
   yearSelectInContent?: boolean;
 };
 
+const stopPropagation = (e: React.MouseEvent): void => {
+  e.stopPropagation();
+};
+
 const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
   className,
   title,
@@ -36,39 +46,62 @@ const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
   value,
   valueCompared,
   unit,
-}) => (
-  <Card className={className}>
-    <div className={styles.badge}>{year} 年</div>
-    <div className={styles.titleContainer}>
-      <div className={styles.title}>{title}</div>
-      <Info className={styles.icon} />
-    </div>
-    <div className={styles.data}>
-      <span className={styles.value}>{value.toFixed(1)}</span> {unit}
-    </div>
-    <div
-      className={styles.caption}
-      style={{ visibility: valueCompared ? 'visible' : 'hidden' }}
-    >
-      與同業相比
-      <span
-        className={cn(
-          styles.value,
-          valueCompared && value >= valueCompared
-            ? styles.positive
-            : styles.negative,
-        )}
+}) => {
+  const [isInfoOpen, setInfoOpen] = useState(false);
+
+  const openInfo = useCallback(() => {
+    setInfoOpen(true);
+  }, []);
+
+  const closeInfo = useCallback(() => {
+    setInfoOpen(false);
+  }, []);
+
+  return (
+    <Card className={className} onClick={stopPropagation}>
+      <div className={styles.badge}>{year} 年</div>
+      <div className={styles.titleContainer}>
+        <div className={styles.title}>{title}</div>
+        <button
+          className={styles.infoButton}
+          aria-label={`${title}說明`}
+          onClick={openInfo}
+        >
+          <Info className={styles.icon} />
+        </button>
+      </div>
+      {isInfoOpen && (
+        <EsgInfoModal close={closeInfo} title={title}>
+          {esgIndicatorDescription[title]}
+        </EsgInfoModal>
+      )}
+      <div className={styles.data}>
+        <span className={styles.value}>{value.toFixed(1)}</span> {unit}
+      </div>
+      <div
+        className={styles.caption}
+        style={{ visibility: valueCompared ? 'visible' : 'hidden' }}
       >
-        {valueCompared &&
-          formatNumberWithSign(
-            ((value - valueCompared) / valueCompared) * 100,
-            0,
+        與同業相比
+        <span
+          className={cn(
+            styles.value,
+            valueCompared && value >= valueCompared
+              ? styles.positive
+              : styles.negative,
           )}
-        %
-      </span>
-    </div>
-  </Card>
-);
+        >
+          {valueCompared &&
+            formatNumberWithSign(
+              ((value - valueCompared) / valueCompared) * 100,
+              0,
+            )}
+          %
+        </span>
+      </div>
+    </Card>
+  );
+};
 
 const EsgBlock: React.FC<EsgBlockProps> = ({
   className,
@@ -113,10 +146,6 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
     },
     [],
   );
-
-  const stopPropagation = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-  }, []);
 
   const yearSelect = availableYears.length > 1 && (
     <div
@@ -169,7 +198,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {avgSalaryStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
-              title="員工薪資平均數"
+              title={EsgIndicator.AVG_SALARY}
               year={avgSalaryStatisticsItem.year}
               value={avgSalaryStatisticsItem.average / 10000}
               valueCompared={
@@ -181,7 +210,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {nonManagerAvgSalaryStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
-              title="非主管全時員工薪資平均數"
+              title={EsgIndicator.NON_MANAGER_AVG_SALARY}
               year={nonManagerAvgSalaryStatisticsItem.year}
               value={nonManagerAvgSalaryStatisticsItem.average / 10000}
               valueCompared={
@@ -193,7 +222,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {nonManagerMedianSalaryStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
-              title="非主管全時員工薪資中位數"
+              title={EsgIndicator.NON_MANAGER_MEDIAN_SALARY}
               year={nonManagerMedianSalaryStatisticsItem.year}
               value={nonManagerMedianSalaryStatisticsItem.median / 10000}
               unit="萬 / 年"
@@ -202,7 +231,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {femaleManagerStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
-              title="管理職女性主管佔比"
+              title={EsgIndicator.FEMALE_MANAGER_PERCENTAGE}
               year={femaleManagerStatisticsItem.year}
               value={femaleManagerStatisticsItem.percentage * 100}
               unit="%"
@@ -211,15 +240,9 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
         </div>
         <div className={styles.disclaimer}>
           資料來源：
-          <a
-            className={linkStyles.link}
-            href="https://mops.twse.com.tw/mops/web/t214sb01"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={stopPropagation}
-          >
+          <MopsLink href={ESG_DISCLOSURE_URL} onClick={stopPropagation}>
             臺灣證券交易所 公開資訊觀測站
-          </a>
+          </MopsLink>
         </div>
       </div>
     </Card>
