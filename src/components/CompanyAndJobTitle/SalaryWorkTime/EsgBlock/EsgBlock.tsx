@@ -20,7 +20,7 @@ import snippetStyles from '../../SnippetBlock.module.css';
 
 type EsgItemBlockProps = {
   className?: string;
-  indicator: EsgIndicator;
+  title: EsgIndicator;
   year: number;
   value: number;
   valueCompared?: number;
@@ -41,7 +41,7 @@ const stopPropagation = (e: React.MouseEvent): void => {
 
 const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
   className,
-  indicator,
+  title,
   year,
   value,
   valueCompared,
@@ -61,18 +61,18 @@ const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
     <Card className={className} onClick={stopPropagation}>
       <div className={styles.badge}>{year} 年</div>
       <div className={styles.titleContainer}>
-        <div className={styles.title}>{indicator}</div>
+        <div className={styles.title}>{title}</div>
         <button
           className={styles.infoButton}
-          aria-label={`${indicator}說明`}
+          aria-label={`${title}說明`}
           onClick={openInfo}
         >
           <Info className={styles.icon} />
         </button>
       </div>
       {isInfoOpen && (
-        <EsgInfoModal close={closeInfo} title={indicator}>
-          {esgIndicatorDescription[indicator]}
+        <EsgInfoModal close={closeInfo} title={title}>
+          {esgIndicatorDescription[title]}
         </EsgInfoModal>
       )}
       <div className={styles.data}>
@@ -198,7 +198,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {avgSalaryStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
-              indicator={EsgIndicator.AVG_SALARY}
+              title={EsgIndicator.AVG_SALARY}
               year={avgSalaryStatisticsItem.year}
               value={avgSalaryStatisticsItem.average / 10000}
               valueCompared={
@@ -210,7 +210,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {nonManagerAvgSalaryStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
-              indicator={EsgIndicator.NON_MANAGER_AVG_SALARY}
+              title={EsgIndicator.NON_MANAGER_AVG_SALARY}
               year={nonManagerAvgSalaryStatisticsItem.year}
               value={nonManagerAvgSalaryStatisticsItem.average / 10000}
               valueCompared={
@@ -222,7 +222,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {nonManagerMedianSalaryStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
-              indicator={EsgIndicator.NON_MANAGER_MEDIAN_SALARY}
+              title={EsgIndicator.NON_MANAGER_MEDIAN_SALARY}
               year={nonManagerMedianSalaryStatisticsItem.year}
               value={nonManagerMedianSalaryStatisticsItem.median / 10000}
               unit="萬 / 年"
@@ -231,7 +231,7 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
           {femaleManagerStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
-              indicator={EsgIndicator.FEMALE_MANAGER_PERCENTAGE}
+              title={EsgIndicator.FEMALE_MANAGER_PERCENTAGE}
               year={femaleManagerStatisticsItem.year}
               value={femaleManagerStatisticsItem.percentage * 100}
               unit="%"
