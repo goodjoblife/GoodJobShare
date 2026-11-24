@@ -157,6 +157,7 @@ const TypeForm = ({
       onClose={onClose}
       hideProgressBar={false}
       redirectLocationOnSuccess={companyOverviewWithPolicyReviewGroupOf}
+      reloadOnSuccess={false}
     />
   );
 };

@@ -5,6 +5,7 @@ import createPolicyReviewGroupApi, {
 import { AppThunk } from 'reducers';
 import { tokenSelector } from 'selectors/authSelector';
 
+import { refreshCompanyPolicyReviewStatistics } from './company';
 import { queryMyPublishIds } from './me';
 
 export const createPolicyReviewGroup = ({
@@ -32,6 +33,11 @@ export const createPolicyReviewGroup = ({
   });
 
   await dispatch(queryMyPublishIds());
+
+  // 送出後不再整頁 reload，所以要讓已快取的公司制度統計更新（背景進行，不等待）
+  dispatch(
+    refreshCompanyPolicyReviewStatistics(result.policyReviewGroup.company.name),
+  );
 
   return result;
 };

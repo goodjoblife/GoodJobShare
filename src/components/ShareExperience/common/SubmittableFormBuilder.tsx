@@ -6,6 +6,7 @@ import FormBuilder from 'common/FormBuilder';
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
 import { ER0018, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
+import usePermission from 'hooks/usePermission';
 import rollbar from 'utils/rollbar';
 
 import Footer from './TypeFormFooter';
@@ -45,6 +46,11 @@ type Props<Result> = {
     | LocationDescriptor
     | (() => LocationDescriptor)
     | null;
+  /**
+   * 送出成功導頁時是否整頁 reload（讓目標頁面重新抓資料）。
+   * 設為 false 時在 SPA 內導頁，需由呼叫端自行更新目標頁面已快取的資料。
+   */
+  reloadOnSuccess?: boolean;
   hideProgressBar?: boolean;
   successSubtitle?: string;
   successDescription?: string;
@@ -60,6 +66,7 @@ const SubmittableTypeForm = <Result,>({
   onClose,
   redirectLocationOnSuccess,
   redirectLocationOnQuit = null,
+  reloadOnSuccess = true,
   hideProgressBar,
   successSubtitle = '你已解鎖全站資訊囉！',
   successDescription = '感謝你分享你的資訊，台灣的職場因為有你而變得更好！',
@@ -69,15 +76,24 @@ const SubmittableTypeForm = <Result,>({
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('unsubmitted');
   const [submission, setSubmission] = useState<Submission<Result> | null>(null);
 
-  // reload so the redirected page fetches fresh data; react-router restores
-  // location.state from window.history.state on load
+  const [, fetchPermission] = usePermission();
+
+  // By default reload so the redirected page fetches fresh data; react-router
+  // restores location.state from window.history.state on load.
+  // When reload is false, navigate within the SPA instead. The caller is then
+  // responsible for refreshing any cached data of the target page; the
+  // permission is refreshed here since a submission may unlock the site.
   const replaceLocation = useCallback(
-    (location: LocationDescriptor) => {
+    (location: LocationDescriptor, { reload }: { reload: boolean }) => {
       if (typeof window === 'undefined') return;
       history.replace(location);
-      window.location.reload();
+      if (reload) {
+        window.location.reload();
+      } else {
+        fetchPermission();
+      }
     },
-    [history],
+    [fetchPermission, history],
   );
   const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = useCallback(
@@ -118,8 +134,15 @@ const SubmittableTypeForm = <Result,>({
       typeof redirectLocationOnSuccess === 'function'
         ? redirectLocationOnSuccess(submission.result, submission.draft)
         : redirectLocationOnSuccess,
+      { reload: reloadOnSuccess },
     );
-  }, [onClose, redirectLocationOnSuccess, replaceLocation, submission]);
+  }, [
+    onClose,
+    redirectLocationOnSuccess,
+    reloadOnSuccess,
+    replaceLocation,
+    submission,
+  ]);
 
   const onSuccessContinueClick = useCallback(() => {
     setSubmitStatus('unsubmitted');
@@ -140,6 +163,7 @@ const SubmittableTypeForm = <Result,>({
       typeof redirectLocationOnQuit === 'function'
         ? redirectLocationOnQuit()
         : redirectLocationOnQuit,
+      { reload: true },
     );
   }, [onClose, redirectLocationOnQuit, replaceLocation]);
 

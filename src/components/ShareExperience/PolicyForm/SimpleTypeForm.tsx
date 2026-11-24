@@ -80,6 +80,7 @@ const SimpleTypeForm = ({
       onClose={onClose}
       hideProgressBar={false}
       redirectLocationOnSuccess={companyOverviewWithPolicyReviewGroupOf}
+      reloadOnSuccess={false}
       redirectLocationOnQuit={redirectLocationOnQuit}
     />
   );
