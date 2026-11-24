@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
 import ActiveItem from './ActiveItem';
@@ -89,6 +89,42 @@ describe('取消', () => {
 
     expect(screen.getByText('確定要取消？')).toBeInTheDocument();
     expect(onCancel).not.toHaveBeenCalled();
+  });
+});
+
+describe('選完選項馬上取消', () => {
+  // 選完選項會延遲 300ms 自動確認，測試期間要能手動推進計時器
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  const cancelRightAfterSelecting = (label: string): void => {
+    fireEvent.click(screen.getByLabelText(label));
+    fireEvent.click(screen.getByText('取消'));
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+  };
+
+  it('延遲的自動確認不會把內容存檔', () => {
+    const { onChange } = renderActiveItem();
+
+    cancelRightAfterSelecting('不知道');
+
+    expect(onChange).not.toHaveBeenCalled();
+    expect(screen.getByText('確定要取消？')).toBeInTheDocument();
+  });
+
+  it('延遲的自動確認不會跳到文字頁', () => {
+    renderActiveItem();
+
+    cancelRightAfterSelecting('否');
+
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    expect(screen.getByText('確定要取消？')).toBeInTheDocument();
   });
 });
 

@@ -79,12 +79,14 @@ const ActiveItem = ({
   }, []);
 
   const handleConfirmRadio = useCallback(() => {
+    // 選完選項的自動確認是延遲觸發的，確認視窗開著時不該讓它存檔
+    if (discardAction) return;
     if (hasNext) {
       setSubPage(SubPage.TEXT);
     } else {
       onChange(currentItem);
     }
-  }, [onChange, hasNext, currentItem]);
+  }, [discardAction, onChange, hasNext, currentItem]);
 
   const onBackToRadio = useCallback(() => setSubPage(SubPage.RADIO), []);
   const onClear = useCallback(() => setDiscardAction(DiscardAction.CLEAR), []);
