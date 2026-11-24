@@ -65,9 +65,12 @@ const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
         </button>
       </div>
       {isInfoOpen && (
-        <EsgInfoModal close={closeInfo} title={indicator}>
-          {esgIndicatorDescription[indicator]}
-        </EsgInfoModal>
+        // 彈窗在區塊卡片內，點擊外圍不可冒泡觸發區塊收合
+        <div onClick={(e): void => e.stopPropagation()}>
+          <EsgInfoModal close={closeInfo} title={indicator}>
+            {esgIndicatorDescription[indicator]}
+          </EsgInfoModal>
+        </div>
       )}
       <div className={styles.data}>
         <span className={styles.value}>{value.toFixed(1)}</span> {unit}

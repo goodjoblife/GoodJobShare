@@ -225,3 +225,19 @@ test('點擊 (!) 不會觸發區塊收合', () => {
   fireEvent.click(screen.getByRole('button', { name: '員工薪資平均數說明' }));
   expect(toggle).toHaveAttribute('aria-expanded', 'true');
 });
+
+test('點擊說明彈窗外圍會關閉彈窗，但不會觸發區塊收合', () => {
+  render(<EsgBlock data={esgYearStatisticsList} />);
+  const toggle = screen.getByRole('button', {
+    name: '展開/收合企業ESG公開薪資揭露',
+  });
+  const infoButton = screen.getByRole('button', { name: '員工薪資平均數說明' });
+  fireEvent.click(infoButton);
+  expect(screen.getByText(/員工薪資費用總額/)).toBeInTheDocument();
+
+  const modalWrapper = (infoButton.parentElement as HTMLElement)
+    .nextElementSibling as HTMLElement;
+  fireEvent.click(modalWrapper.firstElementChild as HTMLElement);
+  expect(screen.queryByText(/員工薪資費用總額/)).not.toBeInTheDocument();
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
+});
