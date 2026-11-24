@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { Heading, P, Section, Wrapper } from 'common/base';
 
@@ -26,6 +26,10 @@ const DefaultSubheading = () => (
 );
 
 const ShareExpSection = ({ heading, Subheading }) => {
+  // 從空資料區塊過來時帶著公司名稱／職稱，要接力傳給使用者挑中的那張表單
+  const { companyName, jobTitle } = useLocation().state || {};
+  const prefill = { companyName, jobTitle };
+
   return (
     <Section padding>
       <Wrapper size="l">
@@ -36,7 +40,10 @@ const ShareExpSection = ({ heading, Subheading }) => {
           <Subheading />
         </P>
         <div className={styles.container}>
-          <Link to={generateShareInterviewTypeForm()} className={styles.item}>
+          <Link
+            to={generateShareInterviewTypeForm(prefill)}
+            className={styles.item}
+          >
             <img
               src={InterviewImg}
               alt="分享面試經驗"
@@ -49,7 +56,7 @@ const ShareExpSection = ({ heading, Subheading }) => {
               分享你的面試過程、面試問題，減少大家走冤枉路～
             </P>
           </Link>
-          <Link to={generateShareWork()} className={styles.item}>
+          <Link to={generateShareWork(prefill)} className={styles.item}>
             <img
               src={WorkExperienceImg}
               alt="分享評價"
@@ -62,7 +69,10 @@ const ShareExpSection = ({ heading, Subheading }) => {
               想推薦工作、爆料的，這邊請！
             </P>
           </Link>
-          <Link to={generateShareTimeSalaryTypeForm()} className={styles.item}>
+          <Link
+            to={generateShareTimeSalaryTypeForm(prefill)}
+            className={styles.item}
+          >
             <img
               src={SalaryWorkTimeImg}
               alt="留下工時或薪資"
@@ -75,7 +85,7 @@ const ShareExpSection = ({ heading, Subheading }) => {
               常加班、薪水又少嗎？快分享避免他人踩雷！
             </P>
           </Link>
-          <Link to={generateSharePolicyForm()} className={styles.item}>
+          <Link to={generateSharePolicyForm(prefill)} className={styles.item}>
             <img src={PolicyImg} alt="分享公司制度" className={styles.image} />
             <P size="l" Tag="h3" bold className={styles.button}>
               制度

@@ -4,6 +4,10 @@
   margin-bottom: 50px;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .toggle {
   display: inline-block;
   vertical-align: middle;

@@ -16,6 +16,7 @@ import {
   map,
   not,
   replace,
+  trim,
   type,
   unapply,
 } from 'ramda';
@@ -35,6 +36,7 @@ export const isNot = curry((fn, value) =>
 export const wordCount = compose(
   length,
   replace(/\n/g, ''),
+  trim,
 );
 
 export const parseSalaryAmount = compose(
