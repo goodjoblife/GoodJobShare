@@ -1,7 +1,6 @@
 import cn from 'classnames';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import linkStyles from 'common/base/Link.module.css';
 import Card from 'common/Card';
 import Select from 'common/form/Select';
 import Caret from 'common/icons/Caret';
@@ -16,6 +15,7 @@ import {
   esgIndicatorDescription,
 } from './esgIndicator';
 import EsgInfoModal from './EsgInfoModal';
+import MopsLink from './MopsLink';
 import snippetStyles from '../../SnippetBlock.module.css';
 
 type EsgItemBlockProps = {
@@ -240,15 +240,9 @@ const EsgBlock: React.FC<EsgBlockProps> = ({
         </div>
         <div className={styles.disclaimer}>
           資料來源：
-          <a
-            className={linkStyles.link}
-            href={ESG_DISCLOSURE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={stopPropagation}
-          >
+          <MopsLink href={ESG_DISCLOSURE_URL} onClick={stopPropagation}>
             臺灣證券交易所 公開資訊觀測站
-          </a>
+          </MopsLink>
         </div>
       </div>
     </Card>

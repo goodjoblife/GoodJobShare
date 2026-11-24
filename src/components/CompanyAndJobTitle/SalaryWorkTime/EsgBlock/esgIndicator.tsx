@@ -1,6 +1,6 @@
 import React from 'react';
 
-import linkStyles from 'common/base/Link.module.css';
+import MopsLink from './MopsLink';
 
 export enum EsgIndicator {
   AVG_SALARY = '員工薪資平均數',
@@ -11,27 +11,7 @@ export enum EsgIndicator {
 
 export const ESG_DISCLOSURE_URL = 'https://mops.twse.com.tw/mops/web/t214sb01';
 
-const EsgDisclosureLink: React.FC = () => (
-  <a
-    className={linkStyles.link}
-    href={ESG_DISCLOSURE_URL}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    公開資訊觀測站－企業ESG資訊揭露
-  </a>
-);
-
-const NonManagerSalaryLink: React.FC = () => (
-  <a
-    className={linkStyles.link}
-    href="https://mops.twse.com.tw/mops/web/t100sb15"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    公開資訊觀測站－非擔任主管職務之全時員工薪資資訊
-  </a>
-);
+const NON_MANAGER_SALARY_URL = 'https://mops.twse.com.tw/mops/web/t100sb15';
 
 export const esgIndicatorDescription: Record<EsgIndicator, React.ReactNode> = {
   [EsgIndicator.AVG_SALARY]: (
@@ -57,7 +37,9 @@ export const esgIndicatorDescription: Record<EsgIndicator, React.ReactNode> = {
       </ul>
       <p>
         資料來源：
-        <EsgDisclosureLink />
+        <MopsLink href={ESG_DISCLOSURE_URL}>
+          公開資訊觀測站－企業ESG資訊揭露
+        </MopsLink>
         （每年 6 月起揭露）
       </p>
     </>
@@ -88,7 +70,9 @@ export const esgIndicatorDescription: Record<EsgIndicator, React.ReactNode> = {
       </ul>
       <p>
         資料來源：
-        <NonManagerSalaryLink />
+        <MopsLink href={NON_MANAGER_SALARY_URL}>
+          公開資訊觀測站－非擔任主管職務之全時員工薪資資訊
+        </MopsLink>
         （每年 7 月起揭露）
       </p>
     </>
@@ -108,7 +92,9 @@ export const esgIndicatorDescription: Record<EsgIndicator, React.ReactNode> = {
       </ul>
       <p>
         資料來源：
-        <NonManagerSalaryLink />
+        <MopsLink href={NON_MANAGER_SALARY_URL}>
+          公開資訊觀測站－非擔任主管職務之全時員工薪資資訊
+        </MopsLink>
         （每年 7 月起揭露）
       </p>
     </>
@@ -128,7 +114,9 @@ export const esgIndicatorDescription: Record<EsgIndicator, React.ReactNode> = {
       </ul>
       <p>
         資料來源：
-        <EsgDisclosureLink />
+        <MopsLink href={ESG_DISCLOSURE_URL}>
+          公開資訊觀測站－企業ESG資訊揭露
+        </MopsLink>
       </p>
     </>
   ),
