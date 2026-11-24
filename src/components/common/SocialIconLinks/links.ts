@@ -46,3 +46,11 @@ export const EMAIL_LINK: SocialIconLink = {
   icon: emailIcon,
   className: styles.email,
 };
+
+export const ALL_SOCIAL_ICON_LINKS: SocialIconLink[] = [
+  FACEBOOK_LINK,
+  INSTAGRAM_LINK,
+  THREADS_LINK,
+  GITHUB_LINK,
+  EMAIL_LINK,
+];

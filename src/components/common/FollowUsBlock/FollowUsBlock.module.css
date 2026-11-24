@@ -1,11 +1,11 @@
-$below-small: 850px;
+@value below-small from "../variables.module.css";
 
 .followUsBlock {
   display: flex;
   justify-content: center;
   align-items: center;
 
-  @media (max-width: $below-small) {
+  @media (max-width: below-small) {
     flex-direction: column;
   }
 }
@@ -13,7 +13,7 @@ $below-small: 850px;
 .img {
   width: 190px;
 
-  @media (max-width: $below-small) {
+  @media (max-width: below-small) {
     width: 150px;
     margin-bottom: 30px;
   }
@@ -22,7 +22,7 @@ $below-small: 850px;
 .content {
   margin-left: 45px;
 
-  @media (max-width: $below-small) {
+  @media (max-width: below-small) {
     margin-left: 0;
   }
 }

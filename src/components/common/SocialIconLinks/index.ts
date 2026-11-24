@@ -1,6 +1,7 @@
 import SocialIconLinks from './SocialIconLinks';
 
 export {
+  ALL_SOCIAL_ICON_LINKS,
   EMAIL_LINK,
   FACEBOOK_LINK,
   GITHUB_LINK,

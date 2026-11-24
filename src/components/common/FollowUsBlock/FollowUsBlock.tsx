@@ -2,11 +2,7 @@ import cn from 'classnames';
 import React from 'react';
 
 import { Heading } from 'common/base';
-import SocialIconLinks, {
-  FACEBOOK_LINK,
-  INSTAGRAM_LINK,
-  THREADS_LINK,
-} from 'common/SocialIconLinks';
+import SocialIconLinks, { ALL_SOCIAL_ICON_LINKS } from 'common/SocialIconLinks';
 
 import FollowUsImage from './follow-us.png';
 import styles from './FollowUsBlock.module.css';
@@ -22,7 +18,7 @@ const FollowUsBlock: React.FC<FollowUsBlockProps> = ({ className }) => (
       <Heading size="l" center marginBottom>
         追蹤我們
       </Heading>
-      <SocialIconLinks links={[FACEBOOK_LINK, INSTAGRAM_LINK, THREADS_LINK]} />
+      <SocialIconLinks links={ALL_SOCIAL_ICON_LINKS} />
     </div>
   </div>
 );

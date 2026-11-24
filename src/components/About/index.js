@@ -4,11 +4,7 @@ import { Link } from 'react-router-dom';
 import { Heading, P, Section, Wrapper } from 'common/base';
 import CallToActionBanner from 'common/CallToAction/CallToActionBanner';
 import editorStyles from 'common/Editor.module.css';
-import SocialIconLinks, {
-  EMAIL_LINK,
-  FACEBOOK_LINK,
-  GITHUB_LINK,
-} from 'common/SocialIconLinks';
+import SocialIconLinks, { ALL_SOCIAL_ICON_LINKS } from 'common/SocialIconLinks';
 import StaticHelmet from 'common/StaticHelmet';
 
 import About01 from './about-01.png';
@@ -163,7 +159,7 @@ const About = () => (
         <Heading size="l" center marginBottom>
           聯絡我們
         </Heading>
-        <SocialIconLinks links={[FACEBOOK_LINK, GITHUB_LINK, EMAIL_LINK]} />
+        <SocialIconLinks links={ALL_SOCIAL_ICON_LINKS} />
       </Wrapper>
     </Section>
     <Section padding id="joinUs">
