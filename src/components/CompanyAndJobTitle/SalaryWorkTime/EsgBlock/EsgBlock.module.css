@@ -46,6 +46,7 @@
 }
 
 .itemCard {
+  cursor: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,7 +57,7 @@
     display: flex;
     align-items: center;
 
-    .icon {
+    .infoButton {
       margin-left: 8px;
     }
   }
@@ -97,6 +98,13 @@
   font-weight: 500;
   line-height: 27px;
   text-align: center;
+}
+
+.infoButton {
+  display: flex;
+  align-items: center;
+  flex: none;
+  cursor: pointer;
 }
 
 .icon {

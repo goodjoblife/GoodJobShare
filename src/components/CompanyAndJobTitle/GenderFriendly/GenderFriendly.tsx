@@ -17,6 +17,7 @@ import EmptyView from '../EmptyView';
 import { useCompanyName, usePageContext } from '../PageContextProvider';
 import PolicySection from '../PolicySection';
 import { EsgItemBlock } from '../SalaryWorkTime/EsgBlock/EsgBlock';
+import { EsgIndicator } from '../SalaryWorkTime/EsgBlock/esgIndicator';
 
 export type GenderFriendlyData = {
   menstrualLeave: LeaveSection;
@@ -62,7 +63,7 @@ const GenderFriendly: React.FC<GenderFriendlyProps> = ({
             {femaleManagerStatisticsItem && (
               <EsgItemBlock
                 className={styles.femaleManagerCard}
-                title="管理職女性主管佔比"
+                title={EsgIndicator.FEMALE_MANAGER_PERCENTAGE}
                 year={femaleManagerStatisticsItem.year}
                 value={femaleManagerStatisticsItem.percentage * 100}
                 unit="%"

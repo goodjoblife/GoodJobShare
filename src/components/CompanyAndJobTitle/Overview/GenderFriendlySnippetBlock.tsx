@@ -23,6 +23,7 @@ import { toGenderFriendlyData } from '../policyReviewStatistics';
 import PolicySummaryCard from '../PolicySummaryCard';
 import styles from './PolicySnippetBlock.module.css';
 import { EsgItemBlock } from '../SalaryWorkTime/EsgBlock/EsgBlock';
+import { EsgIndicator } from '../SalaryWorkTime/EsgBlock/esgIndicator';
 import SnippetBlock from '../SnippetBlock';
 
 const GenderFriendlySnippetBlock: React.FC = () => {
@@ -47,7 +48,7 @@ const GenderFriendlySnippetBlock: React.FC = () => {
         {femaleManagerStatisticsItem && (
           <EsgItemBlock
             className={styles.fixedCard}
-            title="管理職女性主管佔比"
+            title={EsgIndicator.FEMALE_MANAGER_PERCENTAGE}
             year={femaleManagerStatisticsItem.year}
             value={femaleManagerStatisticsItem.percentage * 100}
             unit="%"

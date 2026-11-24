@@ -8,7 +8,7 @@ import {
 } from 'actions/laborRights';
 import { Section } from 'common/base';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
-import FanPageBlock from 'common/FanPageBlock';
+import FollowUsBlock from 'common/FollowUsBlock';
 import Loader from 'common/Loader';
 import NotFound from 'common/NotFound';
 import { ServerSideRender } from 'types/serverSideRender';
@@ -51,7 +51,7 @@ const LaborRightsSingle: React.FC & ServerSideRender<Params> = () => {
               description={entryBox.data.description}
               content={entryBox.data.content}
             />
-            <FanPageBlock className={styles.fanPageBlock} />
+            <FollowUsBlock className={styles.followUsBlock} />
             {entryBox.data.nPublicPages && entryBox.data.nPublicPages < 0 && (
               <Section marginTop>
                 <CallToActionFolder />
