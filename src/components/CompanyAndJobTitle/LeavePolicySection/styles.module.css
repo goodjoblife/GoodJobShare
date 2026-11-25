@@ -88,14 +88,6 @@
   transform: rotate(40deg);
 }
 
-.narrowColumn {
-  width: 110px;
-}
-
-.wideColumn {
-  width: 38%;
-}
-
 .experience {
   white-space: pre-line;
   overflow-wrap: anywhere;

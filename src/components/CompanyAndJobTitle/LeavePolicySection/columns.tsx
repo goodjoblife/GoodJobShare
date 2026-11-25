@@ -25,7 +25,6 @@ const getTableColumns = ({
       id: 'region',
       title: '廠區/分公司/部門/團隊',
       dataField: 'region',
-      className: styles.narrowColumn,
     },
     {
       id: 'availability',
@@ -36,6 +35,7 @@ const getTableColumns = ({
       id: 'compliance',
       title: complianceColumnTitle,
       dataField: 'compliance',
+      width: 138,
       isVisible: Boolean(complianceColumnTitle),
     },
     {
@@ -45,13 +45,13 @@ const getTableColumns = ({
       dataFormatter: (experience: string): React.ReactNode => (
         <span className={styles.experience}>{experience}</span>
       ),
-      className: styles.wideColumn,
+      width: '30%',
     },
     {
       id: 'sharedAt',
       title: '分享日期',
       dataField: 'sharedAt',
-      className: styles.narrowColumn,
+      width: 100,
     },
   ];
 

@@ -43,6 +43,11 @@ $block-gutter-s: 20px;
       pointer-events: none;
     }
   }
+  colgroup {
+    @media (max-width: $below-small) {
+      display: none;
+    }
+  }
   th {
     @mixin table-th;
     padding-top: 30px;

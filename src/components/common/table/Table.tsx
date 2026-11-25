@@ -71,8 +71,20 @@ class Table extends Component<TableProps> {
 
     const postRecords = postProcessRows(records, data);
 
+    const widths = Children.toArray(children).map(
+      child => (child as ReactElement<ColumnProps>).props.width,
+    );
+    const hasWidth = widths.some(width => width !== undefined);
+
     return (
       <table className={cn([styles.rwdTable, className])}>
+        {hasWidth && (
+          <colgroup>
+            {widths.map((width, idx) => (
+              <col key={idx} width={width} />
+            ))}
+          </colgroup>
+        )}
         <thead>
           <tr>{children}</tr>
         </thead>
