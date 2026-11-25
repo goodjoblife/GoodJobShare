@@ -11,7 +11,6 @@ export type ColumnProps = {
   title?: string;
   className?: string;
   alignRight?: boolean;
-  // 這兩個由父層 Table 讀 element props 取用，Column 自己不碰
   /* eslint-disable react/no-unused-prop-types, @typescript-eslint/no-explicit-any */
   // 字串代表取該欄位（支援 'a.b' 這種點路徑），函式代表由整列算出內容
   dataField: string | ((row: any, index: number) => React.ReactNode);
