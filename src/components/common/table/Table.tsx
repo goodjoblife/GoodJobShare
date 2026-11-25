@@ -71,9 +71,8 @@ class Table extends Component<TableProps> {
 
     const postRecords = postProcessRows(records, data);
 
-    const widths = Children.toArray(children).map(
-      child => (child as ReactElement<ColumnProps>).props.width,
-    );
+    const columns = Children.toArray(children) as ReactElement<ColumnProps>[];
+    const widths = columns.map(({ props }) => props.width);
     const hasWidth = widths.some(width => width !== undefined);
 
     return (
