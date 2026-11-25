@@ -11,7 +11,7 @@ export type TableRow = ReactElement<{
 }>;
 
 export type TableProps = {
-  children: React.ReactNode;
+  children: ReactElement<ColumnProps> | ReactElement<ColumnProps>[];
   className?: string;
   // 每一列的形狀由各個 Column 的 dataField / dataFormatter 決定，Table 不看
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,8 +40,7 @@ class Table extends Component<TableProps> {
     } = this.props;
 
     const records = data.map((d, i) => {
-      const record = Children.map(children, (child, idx) => {
-        const col = child as ReactElement<ColumnProps>;
+      const record = Children.map(children, (col, idx) => {
         let value: React.ReactNode;
         if (typeof col.props.dataField === 'function') {
           value = col.props.dataField(d, i);
@@ -71,19 +70,13 @@ class Table extends Component<TableProps> {
 
     const postRecords = postProcessRows(records, data);
 
-    const columns = Children.toArray(children) as ReactElement<ColumnProps>[];
-    const widths = columns.map(({ props }) => props.width);
-    const hasWidth = widths.some(width => width !== undefined);
-
     return (
       <table className={cn([styles.rwdTable, className])}>
-        {hasWidth && (
-          <colgroup>
-            {widths.map((width, idx) => (
-              <col key={idx} width={width} />
-            ))}
-          </colgroup>
-        )}
+        <colgroup>
+          {Children.map(children, ({ props }) => (
+            <col width={props.width} />
+          ))}
+        </colgroup>
         <thead>
           <tr>{children}</tr>
         </thead>

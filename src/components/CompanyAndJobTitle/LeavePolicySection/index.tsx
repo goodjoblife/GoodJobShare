@@ -4,6 +4,7 @@ import { HasPolicy } from 'apis/queryCompanyPolicyReviews';
 import { Heading, Link, Wrapper } from 'common/base';
 import Pagination from 'common/Pagination';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
+import { ColumnProps } from 'common/table/Column';
 import Table from 'common/table/Table';
 import BoxRenderer from 'components/common/StatusRenderer/BoxRenderer';
 import { generateTabURL, tabTypeTranslation } from 'constants/companyJobTitle';
@@ -113,7 +114,7 @@ const LeavePolicySection: React.FC<Props> = ({
             <>
               <Table data={records} primaryKey="id">
                 {columns.map(
-                  ({ id, ...colProps }): React.ReactNode => (
+                  ({ id, ...colProps }): React.ReactElement<ColumnProps> => (
                     <Table.Column key={id} {...colProps} />
                   ),
                 )}
