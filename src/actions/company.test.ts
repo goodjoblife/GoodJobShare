@@ -6,10 +6,10 @@ import queryCompanyPolicyReviewStatisticsApi, {
 } from 'apis/queryCompanyPolicyReviewStatistics';
 import companyIndex from 'reducers/companyIndex';
 import { companyPolicyReviewStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import FetchBox, { getFetched, isFetched, isUnfetched } from 'utils/fetchBox';
+import FetchBox, { getFetched, isError, isFetched } from 'utils/fetchBox';
 
 import {
-  refreshCompanyPolicyReviewStatistics,
+  queryCompanyPolicyReviewStatistics,
   SET_POLICY_REVIEW_STATISTICS,
 } from './company';
 
@@ -34,7 +34,7 @@ const setup = (
   initialData?: PolicyReviewStatistics[],
 ): {
   select: () => FetchBox<PolicyReviewStatistics[] | null>;
-  refresh: () => Promise<void>;
+  query: (options?: { force?: boolean }) => Promise<unknown>;
 } => {
   const reducer = combineReducers({ companyIndex });
   const store = createStore(reducer, applyMiddleware(thunk));
@@ -50,64 +50,59 @@ const setup = (
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       store.getState() as any,
     );
-  const refresh = (): Promise<void> =>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    store.dispatch(refreshCompanyPolicyReviewStatistics(COMPANY_NAME) as any);
-  return { select, refresh };
+  const query = (options?: { force?: boolean }): Promise<unknown> =>
+    (store.dispatch(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      queryCompanyPolicyReviewStatistics(COMPANY_NAME, options) as any,
+    ) as unknown) as Promise<unknown>;
+  return { select, query };
 };
 
-describe('refreshCompanyPolicyReviewStatistics', () => {
+describe('queryCompanyPolicyReviewStatistics', () => {
   beforeEach(() => {
     mockQuery.mockReset();
   });
 
-  it('does nothing when there is no cached data (the page fetches on mount)', async () => {
-    const { select, refresh } = setup();
+  it('fetches when there is no cached data', async () => {
+    mockQuery.mockResolvedValue(statistics(1));
+    const { select, query } = setup();
 
-    await refresh();
-
-    expect(mockQuery).not.toHaveBeenCalled();
-    expect(isUnfetched(select())).toBe(true);
-  });
-
-  it('replaces cached data with the latest data', async () => {
-    mockQuery.mockResolvedValue(statistics(2));
-    const { select, refresh } = setup(statistics(1));
-
-    await refresh();
+    await query();
 
     expect(mockQuery).toHaveBeenCalledWith({ companyName: COMPANY_NAME });
     const box = select();
-    expect(isFetched(box) && box.data).toEqual(statistics(2));
+    expect(isFetched(box) && box.data).toEqual(statistics(1));
   });
 
-  it('keeps the cached data while fetching (no loader flash)', async () => {
-    let resolve: (data: PolicyReviewStatistics[]) => void = () => undefined;
-    mockQuery.mockReturnValue(
-      new Promise(r => {
-        resolve = r;
-      }),
-    );
-    const { select, refresh } = setup(statistics(1));
+  it('skips fetching when the data is already cached', async () => {
+    const { select, query } = setup(statistics(1));
 
-    const pending = refresh();
+    await query();
 
-    const during = select();
-    expect(isFetched(during) && during.data).toEqual(statistics(1));
-
-    resolve(statistics(2));
-    await pending;
-    const after = select();
-    expect(isFetched(after) && after.data).toEqual(statistics(2));
-  });
-
-  it('keeps the cached data when the request fails', async () => {
-    mockQuery.mockRejectedValue(new Error('network error'));
-    const { select, refresh } = setup(statistics(1));
-
-    await expect(refresh()).resolves.toBeUndefined();
-
+    expect(mockQuery).not.toHaveBeenCalled();
     const box = select();
     expect(isFetched(box) && box.data).toEqual(statistics(1));
+  });
+
+  describe('with force', () => {
+    it('refetches and replaces the cached data', async () => {
+      mockQuery.mockResolvedValue(statistics(2));
+      const { select, query } = setup(statistics(1));
+
+      await query({ force: true });
+
+      expect(mockQuery).toHaveBeenCalledWith({ companyName: COMPANY_NAME });
+      const box = select();
+      expect(isFetched(box) && box.data).toEqual(statistics(2));
+    });
+
+    it('stores the error when the request fails', async () => {
+      mockQuery.mockRejectedValue(new Error('network error'));
+      const { select, query } = setup(statistics(1));
+
+      await query({ force: true });
+
+      expect(isError(select())).toBe(true);
+    });
   });
 });

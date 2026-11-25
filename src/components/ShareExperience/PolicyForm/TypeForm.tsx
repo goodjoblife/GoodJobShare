@@ -15,6 +15,7 @@ import {
   YesNoOrUnknown,
 } from 'constants/policy';
 import useAppDispatch from 'hooks/useAppDispatch';
+import usePermission from 'hooks/usePermission';
 
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
@@ -126,6 +127,7 @@ const TypeForm = ({
   onClose: () => void;
 }): React.ReactElement => {
   const dispatch = useAppDispatch();
+  const [, fetchPermission] = usePermission();
 
   const onSubmit = useCallback(
     async (draft: Record<string, unknown>) => {
@@ -139,9 +141,11 @@ const TypeForm = ({
           ),
         }),
       );
+      // 送出成功不再 reload，需自行重抓權限（填完制度會解鎖全站）
+      fetchPermission();
       return policyReviewGroup;
     },
-    [dispatch],
+    [dispatch, fetchPermission],
   );
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

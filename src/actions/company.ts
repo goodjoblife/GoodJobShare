@@ -194,11 +194,12 @@ const setPolicyReviewStatistics = (
 
 export const queryCompanyPolicyReviewStatistics = (
   companyName: string,
+  { force = false }: { force?: boolean } = {},
 ): Thunk => async (dispatch, getState): Promise<unknown> => {
   const box = companyPolicyReviewStatisticsBoxSelectorByName(companyName)(
     getState(),
   );
-  if (isFetching(box) || isFetched(box)) {
+  if (!force && (isFetching(box) || isFetched(box))) {
     return;
   }
 
@@ -210,29 +211,6 @@ export const queryCompanyPolicyReviewStatistics = (
     dispatch(setPolicyReviewStatistics(companyName, getFetched(data)));
   } catch (error) {
     dispatch(setPolicyReviewStatistics(companyName, getError(error)));
-  }
-};
-
-/**
- * 重新抓取制度統計，抓到才取代舊資料（不經過 fetching，畫面不會閃 loader）。
- * 只在已有快取時才需要刷新；沒有快取的話，頁面 mount 時會自己抓。
- * 失敗時保留舊資料。
- */
-export const refreshCompanyPolicyReviewStatistics = (
-  companyName: string,
-): Thunk => async (dispatch, getState): Promise<void> => {
-  const box = companyPolicyReviewStatisticsBoxSelectorByName(companyName)(
-    getState(),
-  );
-  if (!isFetched(box)) {
-    return;
-  }
-
-  try {
-    const data = await queryCompanyPolicyReviewStatisticsApi({ companyName });
-    dispatch(setPolicyReviewStatistics(companyName, getFetched(data)));
-  } catch (error) {
-    // 保留舊資料，不影響送出成功的流程
   }
 };
 

@@ -3,8 +3,6 @@ import { createMemoryHistory, MemoryHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 
-import usePermission from 'hooks/usePermission';
-
 import SubmittableFormBuilder from './SubmittableFormBuilder';
 
 // FormBuilder 很重，這裡只需要一顆能觸發 onSubmit / onClose 的按鈕
@@ -27,11 +25,7 @@ jest.mock('hooks/useCount', () => ({
   useExperienceCount: (): number => 0,
   useSalaryWorkTimeCount: (): number => 0,
 }));
-jest.mock('hooks/usePermission');
 jest.mock('utils/rollbar', () => ({ error: jest.fn() }));
-
-const mockFetchPermission = jest.fn();
-(usePermission as jest.Mock).mockReturnValue([false, mockFetchPermission]);
 
 const REDIRECT = { pathname: '/companies/TEST', state: { share: 'x' } };
 const QUIT = { pathname: '/companies/TEST/quit' };
@@ -55,7 +49,6 @@ afterAll(() => {
 
 beforeEach(() => {
   reload.mockClear();
-  mockFetchPermission.mockClear();
 });
 
 const renderForm = (
@@ -102,15 +95,13 @@ describe('SubmittableFormBuilder redirect on success', () => {
 
     expect(reload).toHaveBeenCalledTimes(1);
     expect(history.location.pathname).toBe('/companies/TEST');
-    expect(mockFetchPermission).not.toHaveBeenCalled();
   });
 
-  it('navigates within the SPA and refreshes permission when reloadOnSuccess is false', async () => {
+  it('navigates within the SPA without reloading when reloadOnSuccess is false', async () => {
     const history = renderForm({ reloadOnSuccess: false });
 
     await submitAndConfirm();
 
-    expect(mockFetchPermission).toHaveBeenCalledTimes(1);
     expect(reload).not.toHaveBeenCalled();
     expect(history.location.pathname).toBe('/companies/TEST');
     expect(history.location.state).toEqual({ share: 'x' });
@@ -129,6 +120,5 @@ describe('SubmittableFormBuilder redirect on quit', () => {
 
     expect(reload).toHaveBeenCalledTimes(1);
     expect(history.location.pathname).toBe('/companies/TEST/quit');
-    expect(mockFetchPermission).not.toHaveBeenCalled();
   });
 });

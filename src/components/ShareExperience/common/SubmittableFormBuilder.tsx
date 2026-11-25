@@ -6,7 +6,6 @@ import FormBuilder from 'common/FormBuilder';
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
 import { ER0018, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
-import usePermission from 'hooks/usePermission';
 import rollbar from 'utils/rollbar';
 
 import Footer from './TypeFormFooter';
@@ -48,7 +47,8 @@ type Props<Result> = {
     | null;
   /**
    * 送出成功導頁時是否整頁 reload（讓目標頁面重新抓資料）。
-   * 設為 false 時在 SPA 內導頁，需由呼叫端自行更新目標頁面已快取的資料。
+   * 設為 false 時在 SPA 內導頁，需由呼叫端自行更新目標頁面已快取的資料
+   * （包含權限，送出可能解鎖全站）。
    */
   reloadOnSuccess?: boolean;
   hideProgressBar?: boolean;
@@ -76,24 +76,20 @@ const SubmittableTypeForm = <Result,>({
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('unsubmitted');
   const [submission, setSubmission] = useState<Submission<Result> | null>(null);
 
-  const [, fetchPermission] = usePermission();
-
   // By default reload so the redirected page fetches fresh data; react-router
   // restores location.state from window.history.state on load.
   // When reload is false, navigate within the SPA instead. The caller is then
-  // responsible for refreshing any cached data of the target page; the
-  // permission is refreshed here since a submission may unlock the site.
+  // responsible for refreshing any cached data (including the permission) that
+  // the submission may have changed.
   const replaceLocation = useCallback(
     (location: LocationDescriptor, { reload }: { reload: boolean }) => {
       if (typeof window === 'undefined') return;
       history.replace(location);
       if (reload) {
         window.location.reload();
-      } else {
-        fetchPermission();
       }
     },
-    [fetchPermission, history],
+    [history],
   );
   const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = useCallback(
