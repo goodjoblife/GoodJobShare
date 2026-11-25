@@ -35,6 +35,15 @@
   .body {
     flex: 1;
   }
+
+  &:has(:is(textarea, input[type='text']):focus) {
+    @media (hover: none) and (pointer: coarse) {
+      .header,
+      .footer {
+        display: none;
+      }
+    }
+  }
 }
 
 .body {
