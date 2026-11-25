@@ -7,6 +7,8 @@ import useAutocomplete from './useAutocomplete';
 import useEnterConfirm from './useEnterConfirm';
 import useKeyNavigation from './useKeyNavigation';
 
+const preventInputBlur = e => e.preventDefault();
+
 const AutoCompleteMenu = ({ className, open, ...props }) => (
   <div
     className={cn(
@@ -144,6 +146,7 @@ const TextInput = forwardRef(
               key={autocompleteItemKeySelector(item)}
               ref={e => handleItemRef(e, i)}
               active={highlightedIndex === i}
+              onMouseDown={preventInputBlur}
               onClick={() => handleMouseClickItem(i)}
               onMouseEnter={() => handleMouseEnterItem(i)}
               onMouseLeave={() => handleMouseLeaveItem(i)}

@@ -1,7 +1,6 @@
 .frame {
   position: relative;
   white-space: nowrap;
-  overflow: hidden;
 
   .page {
     width: 100%;
