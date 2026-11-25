@@ -4,6 +4,8 @@ import { HasPolicy } from 'apis/queryCompanyPolicyReviews';
 import { Heading, Link, Wrapper } from 'common/base';
 import Pagination from 'common/Pagination';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
+import { ColumnProps } from 'common/table/Column';
+import Table from 'common/table/Table';
 import BoxRenderer from 'components/common/StatusRenderer/BoxRenderer';
 import { generateTabURL, tabTypeTranslation } from 'constants/companyJobTitle';
 import FetchBox from 'utils/fetchBox';
@@ -12,7 +14,6 @@ import LeaveSectionBlock from '../LeaveSectionBlock';
 import { usePageContext } from '../PageContextProvider';
 import { LeaveBulletByLabel, LeaveSection } from '../policyTypes';
 import FilterToggleButton from './FilterToggleButton';
-import PolicyReviewCard from './PolicyReviewCard';
 import styles from './styles.module.css';
 
 export type LeavePolicyRecord = {
@@ -29,6 +30,13 @@ export type FilterOption = {
   value: HasPolicy;
   label: string;
 };
+
+type ColumnConfig = ColumnProps & { id: string };
+
+// 保留原文換行，並讓沒有空格的長字串在欄內換行，不溢出到隔壁欄
+const renderExperience = (experience: string): React.ReactNode => (
+  <span className={styles.experience}>{experience}</span>
+);
 
 type Props = {
   title: string;
@@ -70,6 +78,43 @@ const LeavePolicySection: React.FC<Props> = ({
   const tabName = tabTypeTranslation[tabType];
   const [createPageLinkTo, handleSectionRef, sectionY] = useCreatePageLinkTo();
 
+  const columns: ColumnConfig[] = [
+    { id: 'jobTitle', title: '職稱', dataField: 'jobTitle' },
+    {
+      id: 'region',
+      title: '廠區/分公司/部門/團隊',
+      dataField: 'region',
+      className: styles.regionColumn,
+    },
+    {
+      id: 'availability',
+      title: availabilityColumnTitle,
+      dataField: 'availability',
+    },
+    ...(complianceColumnTitle
+      ? [
+          {
+            id: 'compliance',
+            title: complianceColumnTitle,
+            dataField: 'compliance',
+          },
+        ]
+      : []),
+    {
+      id: 'experience',
+      title: '經驗分享',
+      dataField: 'experience',
+      dataFormatter: renderExperience,
+      className: styles.experienceColumn,
+    },
+    {
+      id: 'sharedAt',
+      title: '分享日期',
+      dataField: 'sharedAt',
+      className: styles.sharedAtColumn,
+    },
+  ];
+
   return (
     <>
       <Wrapper size="l">
@@ -85,7 +130,7 @@ const LeavePolicySection: React.FC<Props> = ({
           section={section}
         />
       </Wrapper>
-      <Wrapper size="m" className={styles.content}>
+      <Wrapper size="l" className={styles.content}>
         <div
           ref={handleSectionRef as React.Ref<HTMLDivElement>}
           className={styles.filter}
@@ -105,18 +150,13 @@ const LeavePolicySection: React.FC<Props> = ({
           box={reviewsBox}
           render={({ records, totalCount }): React.ReactNode => (
             <>
-              {records.length === 0 ? (
-                <p className={styles.empty}>目前沒有符合條件的經驗分享</p>
-              ) : (
-                records.map(record => (
-                  <PolicyReviewCard
-                    key={record.id}
-                    record={record}
-                    availabilityTitle={availabilityColumnTitle}
-                    complianceTitle={complianceColumnTitle}
-                  />
-                ))
-              )}
+              <Table data={records} primaryKey="id">
+                {columns.map(
+                  ({ id, ...colProps }): React.ReactNode => (
+                    <Table.Column key={id} {...colProps} />
+                  ),
+                )}
+              </Table>
               <Pagination
                 totalCount={totalCount}
                 unit={pageSize}

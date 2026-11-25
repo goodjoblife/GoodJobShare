@@ -88,8 +88,21 @@
   transform: rotate(40deg);
 }
 
-.empty {
-  padding: 24px 0;
-  color: #adadad;
-  text-align: center;
+/* 表格是 table-layout: fixed，預設每欄等寬；經驗分享給較寬的欄，日期只需一行 */
+.experienceColumn {
+  width: 38%;
+}
+
+/* 標題剛好斷成「廠區/分公司/」「部門/團隊」兩行 */
+.regionColumn {
+  width: 110px;
+}
+
+.sharedAtColumn {
+  width: 110px;
+}
+
+.experience {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
 }
