@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import React, { Children, Component, ReactElement } from 'react';
+import React, { Component, ReactElement } from 'react';
 
 import Column, { ColumnProps } from './Column';
 import styles from './Table.module.css';
@@ -11,7 +11,7 @@ export type TableRow = ReactElement<{
 }>;
 
 export type TableProps = {
-  children: ReactElement<ColumnProps> | ReactElement<ColumnProps>[];
+  children: ReactElement<ColumnProps>[];
   className?: string;
   // 每一列的形狀由各個 Column 的 dataField / dataFormatter 決定，Table 不看
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,7 +40,7 @@ class Table extends Component<TableProps> {
     } = this.props;
 
     const records = data.map((d, i) => {
-      const record = Children.map(children, (col, idx) => {
+      const record = children.map((col, idx) => {
         let value: React.ReactNode;
         if (typeof col.props.dataField === 'function') {
           value = col.props.dataField(d, i);
@@ -73,8 +73,8 @@ class Table extends Component<TableProps> {
     return (
       <table className={cn([styles.rwdTable, className])}>
         <colgroup>
-          {Children.map(children, ({ props }) => (
-            <col width={props.width} />
+          {children.map(({ props }, idx) => (
+            <col key={idx} width={props.width} />
           ))}
         </colgroup>
         <thead>
