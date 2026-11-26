@@ -4,6 +4,7 @@ import React, { useCallback } from 'react';
 import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
 import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
 import useAppDispatch from 'hooks/useAppDispatch';
+import usePermission from 'hooks/usePermission';
 
 import {
   companyOverviewWithPolicyReviewGroupOf,
@@ -45,6 +46,7 @@ const SimpleTypeForm = ({
   redirectLocationOnQuit,
 }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
+  const [, fetchPermission] = usePermission();
 
   const onSubmit = useCallback(
     async (draft: Record<string, unknown>) => {
@@ -56,9 +58,11 @@ const SimpleTypeForm = ({
           policyReviews: toPolicyReviews(draft),
         }),
       );
+      // 送出成功不再 reload，需自行重抓權限（填完制度會解鎖全站）
+      fetchPermission();
       return policyReviewGroup;
     },
-    [companyName, dispatch, jobTitle, sector],
+    [companyName, dispatch, fetchPermission, jobTitle, sector],
   );
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -80,6 +84,7 @@ const SimpleTypeForm = ({
       onClose={onClose}
       hideProgressBar={false}
       redirectLocationOnSuccess={companyOverviewWithPolicyReviewGroupOf}
+      reloadOnSuccess={false}
       redirectLocationOnQuit={redirectLocationOnQuit}
     />
   );

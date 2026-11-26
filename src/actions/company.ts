@@ -194,11 +194,12 @@ const setPolicyReviewStatistics = (
 
 export const queryCompanyPolicyReviewStatistics = (
   companyName: string,
+  { force = false }: { force?: boolean } = {},
 ): Thunk => async (dispatch, getState): Promise<unknown> => {
   const box = companyPolicyReviewStatisticsBoxSelectorByName(companyName)(
     getState(),
   );
-  if (isFetching(box) || isFetched(box)) {
+  if (!force && (isFetching(box) || isFetched(box))) {
     return;
   }
 
