@@ -52,4 +52,4 @@ Pages that need SSR data fetching attach a static `fetchData` method to the comp
 
 ### Code Comments
 
-Default to no comments; prefer clearer naming or extracting a well-named function instead. Only explain *why* when the code can't. Don't restate what the code does, repeat an explanation already given at the definition, or describe what changed.
+Keep comments minimal; prefer clearer naming or extracting a well-named function first. Add a comment when it explains *why* or clarifies non-obvious behavior. Don't restate what the code does, repeat an explanation already given at the definition, or describe what changed.
