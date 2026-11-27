@@ -11,7 +11,7 @@ type GetTableColumnsParams = {
   complianceColumnTitle?: string;
 };
 
-const getTableColumns = ({
+export const getTableColumns = ({
   availabilityColumnTitle,
   complianceColumnTitle,
 }: GetTableColumnsParams): ColumnConfig[] => {
@@ -57,5 +57,3 @@ const getTableColumns = ({
 
   return columns.filter(({ isVisible = true }) => isVisible);
 };
-
-export default getTableColumns;

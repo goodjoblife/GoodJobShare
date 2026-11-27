@@ -13,7 +13,7 @@ import FetchBox from 'utils/fetchBox';
 import LeaveSectionBlock from '../LeaveSectionBlock';
 import { usePageContext } from '../PageContextProvider';
 import { LeaveBulletByLabel, LeaveSection } from '../policyTypes';
-import getTableColumns from './columns';
+import { getTableColumns } from './columns';
 import FilterToggleButton from './FilterToggleButton';
 import styles from './styles.module.css';
 
