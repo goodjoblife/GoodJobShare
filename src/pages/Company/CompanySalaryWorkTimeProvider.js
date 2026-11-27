@@ -14,14 +14,14 @@ import CompanyAndJobTitleWrapper from 'components/CompanyAndJobTitle/CompanyAndJ
 import SalaryWorkTime from 'components/CompanyAndJobTitle/SalaryWorkTime';
 import {
   dataTimeFromQuerySelector,
-  experienceFromQuerySelector,
-  genderFromQuerySelector,
+  experiencesFromQuerySelector,
+  gendersFromQuerySelector,
   getDataTimeRange,
-  getExperienceInYearRange,
+  getExperienceInYearRanges,
   sortByFromQuerySelector,
   useDataTimeFromQuery,
-  useExperienceFromQuery,
-  useGenderFromQuery,
+  useExperiencesFromQuery,
+  useGendersFromQuery,
   useSortByFromQuery,
 } from 'components/CompanyAndJobTitle/SalaryWorkTime/SalaryFilter';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
@@ -86,15 +86,15 @@ const CompanySalaryWorkTimeProvider = () => {
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
 
-  const [dataTime] = useDataTimeFromQuery();
-  const [experience] = useExperienceFromQuery();
-  const [gender] = useGenderFromQuery();
+  const dataTime = useDataTimeFromQuery();
+  const experiences = useExperiencesFromQuery();
+  const genders = useGendersFromQuery();
   const [sortBy] = useSortByFromQuery();
 
   const dataTimeRange = useMemo(() => getDataTimeRange(dataTime), [dataTime]);
-  const experienceInYearRange = useMemo(
-    () => getExperienceInYearRange(experience),
-    [experience],
+  const experienceInYearRanges = useMemo(
+    () => getExperienceInYearRanges(experiences),
+    [experiences],
   );
 
   const handleQueryCompanySalaryWorkTime = useCallback(
@@ -107,8 +107,8 @@ const CompanySalaryWorkTimeProvider = () => {
             start,
             limit,
             dataTimeRange,
-            experienceInYearRange,
-            gender: gender || undefined,
+            experienceInYearRanges,
+            genders: genders.length > 0 ? genders : undefined,
             sortBy: sortBy || undefined,
           },
           { force },
@@ -122,8 +122,8 @@ const CompanySalaryWorkTimeProvider = () => {
       start,
       limit,
       dataTimeRange,
-      experienceInYearRange,
-      gender,
+      experienceInYearRanges,
+      genders,
       sortBy,
     ],
   );
@@ -210,11 +210,11 @@ CompanySalaryWorkTimeProvider.fetchData = ({
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   const dataTime = dataTimeFromQuerySelector(query);
-  const experience = experienceFromQuerySelector(query);
-  const gender = genderFromQuerySelector(query);
+  const experiences = experiencesFromQuerySelector(query);
+  const genders = gendersFromQuerySelector(query);
   const sortBy = sortByFromQuerySelector(query);
   const dataTimeRange = getDataTimeRange(dataTime);
-  const experienceInYearRange = getExperienceInYearRange(experience);
+  const experienceInYearRanges = getExperienceInYearRanges(experiences);
   return Promise.all([
     dispatch(
       queryCompanySalaryWorkTime({
@@ -223,8 +223,8 @@ CompanySalaryWorkTimeProvider.fetchData = ({
         start,
         limit,
         dataTimeRange,
-        experienceInYearRange,
-        gender: gender || undefined,
+        experienceInYearRanges,
+        genders: genders.length > 0 ? genders : undefined,
         sortBy: sortBy || undefined,
       }),
     ),

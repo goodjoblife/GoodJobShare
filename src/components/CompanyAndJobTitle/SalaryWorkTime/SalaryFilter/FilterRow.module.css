@@ -1,0 +1,46 @@
+@value main-yellow from "../../../common/variables.module.css";
+
+.filterRow {
+  padding: 14px 0;
+  border-bottom: 1px solid #ededed;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  legend {
+    padding: 0;
+    font-weight: 500;
+  }
+}
+
+.options {
+  display: flex;
+  gap: 12px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  border-radius: 30px;
+  font-size: 13px;
+  white-space: nowrap;
+  flex: 1;
+  transition: background-color 150ms ease;
+}
+
+.selected {
+  background-color: main-yellow;
+}
+
+@media (hover: hover) {
+  .option:hover {
+    background-color: #f5f5f5;
+  }
+
+  .option.selected:hover {
+    background-color: main-yellow;
+  }
+}

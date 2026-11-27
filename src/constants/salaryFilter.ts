@@ -24,8 +24,8 @@ export enum ExperienceInYears {
 }
 
 export const EXPERIENCE_OPTIONS = [
-  { value: ExperienceInYears.ZERO_THREE, label: '0~3 年' },
-  { value: ExperienceInYears.FOUR_SEVEN, label: '4~7 年' },
+  { value: ExperienceInYears.ZERO_THREE, label: '0 ~ 3 年' },
+  { value: ExperienceInYears.FOUR_SEVEN, label: '4 ~ 7 年' },
   { value: ExperienceInYears.EIGHT_PLUS, label: '8 年以上' },
 ];
 

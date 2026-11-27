@@ -1,0 +1,46 @@
+@value below-small, below-little from "../../../common/variables.module.css";
+
+.filterBar {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+
+  @media (max-width: below-small) {
+    width: 100%;
+    padding-bottom: 12px;
+  }
+
+  @media (max-width: below-little) {
+    flex-direction: column;
+  }
+}
+
+.filterControl {
+  position: relative;
+}
+
+.filterButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid #bdbdbd;
+  border-radius: 16px;
+  color: #555;
+  background: #fff;
+}
+
+.filterIcon {
+  width: 14px;
+  font-size: 12px;
+}
+
+.chevron {
+  width: 6px;
+  height: 6px;
+  margin-left: 2px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+}
