@@ -49,3 +49,7 @@ Pages that need SSR data fetching attach a static `fetchData` method to the comp
 ### 換頁／換條件時顯示上一筆資料
 
 列表換頁、換篩選時要保留舊內容而不是閃 Loader，見 [docs/previous-box.md](docs/previous-box.md)。
+
+### Code Comments
+
+Keep comments minimal; prefer clearer naming or extracting a well-named function first. Add a comment when it explains *why* or clarifies non-obvious behavior. Don't restate what the code does, repeat an explanation already given at the definition, or describe what changed.
