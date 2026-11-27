@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { head } from 'ramda';
-import React, { useCallback, useEffect } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useDispatch } from 'react-redux';
 
@@ -27,6 +27,7 @@ import {
   DATA_KEY_WEEK_WORK_TIME,
   JOB_TENURE_OPTIONS,
 } from '../constants';
+import PolicySimpleTypeForm from '../PolicyForm/SimpleTypeForm';
 import {
   createCompanyQuestion,
   createCurrentlyEmployedQuestion,
@@ -110,7 +111,25 @@ const bodyFromDraft = evolve({
   week_work_time: draft => parseInt(draft[DATA_KEY_WEEK_WORK_TIME], 10),
 });
 
-const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
+const experiencePathnameOf = experienceId => `/experiences/${experienceId}`;
+
+const redirectToExperience = ({ experience: { id } }) =>
+  experiencePathnameOf(id);
+
+const toPolicyDraft = ({ experience: { id } }, workExperienceDraft) => ({
+  experienceId: id,
+  companyName: workExperienceDraft[DATA_KEY_COMPANY_NAME],
+  jobTitle: workExperienceDraft[DATA_KEY_JOB_TITLE],
+  sector: workExperienceDraft[DATA_KEY_SECTOR],
+});
+
+const WorkExperiencesTypeForm = ({
+  open,
+  onClose,
+  hideProgressBar,
+  successDescription,
+  onSuccessContinue,
+}) => {
   useEffect(() => {
     if (open) {
       sendEvent('enter_work_form');
@@ -171,10 +190,53 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
       onSubmitError={onSubmitError}
       onClose={onClose}
       hideProgressBar={hideProgressBar}
-      redirectLocationOnSuccess={({ experience: { id } }) =>
-        `/experiences/${id}`
-      }
+      redirectLocationOnSuccess={redirectToExperience}
+      successSubtitle="你已解鎖全站資訊 14 天囉！"
+      successDescription={successDescription}
+      onSuccessContinue={onSuccessContinue}
     />
+  );
+};
+
+WorkExperiencesTypeForm.propTypes = {
+  hideProgressBar: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
+  onSuccessContinue: PropTypes.func,
+  open: PropTypes.bool.isRequired,
+  successDescription: PropTypes.string,
+};
+
+const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
+  const [policyDraft, setPolicyDraft] = useState(null);
+  const onContinueToPolicyForm = useCallback(
+    (result, workExperienceDraft) =>
+      setPolicyDraft(toPolicyDraft(result, workExperienceDraft)),
+    [],
+  );
+  const closePolicyForm = useCallback(() => setPolicyDraft(null), []);
+  const policyFormQuitPathname = useCallback(
+    () => experiencePathnameOf(policyDraft.experienceId),
+    [policyDraft],
+  );
+
+  return (
+    <Fragment>
+      <WorkExperiencesTypeForm
+        open={open}
+        onClose={onClose}
+        hideProgressBar={hideProgressBar}
+        successDescription="再回答幾個問題，加碼解鎖 14 天。"
+        onSuccessContinue={onContinueToPolicyForm}
+      />
+      <PolicySimpleTypeForm
+        open={policyDraft !== null}
+        onClose={closePolicyForm}
+        companyName={policyDraft?.companyName || ''}
+        jobTitle={policyDraft?.jobTitle || ''}
+        sector={policyDraft?.sector || ''}
+        redirectLocationOnQuit={policyFormQuitPathname}
+      />
+    </Fragment>
   );
 };
 
