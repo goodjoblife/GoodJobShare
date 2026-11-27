@@ -20,25 +20,25 @@ export const getTableColumns = ({
       id: 'jobTitle',
       title: '職稱',
       dataField: 'jobTitle',
-      width: 180,
+      width: '15%',
     },
     {
       id: 'region',
       title: '廠區/分公司/部門/團隊',
       dataField: 'region',
-      width: 120,
+      width: '12%',
     },
     {
       id: 'availability',
       title: availabilityColumnTitle,
       dataField: 'availability',
-      width: 120,
+      width: '12%',
     },
     {
       id: 'compliance',
       title: complianceColumnTitle,
       dataField: 'compliance',
-      width: 120,
+      width: '10%',
       isVisible: Boolean(complianceColumnTitle),
     },
     {
@@ -53,7 +53,7 @@ export const getTableColumns = ({
       id: 'sharedAt',
       title: '分享日期',
       dataField: 'sharedAt',
-      width: 120,
+      width: 100,
     },
   ];
 
