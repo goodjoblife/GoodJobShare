@@ -20,22 +20,25 @@ export const getTableColumns = ({
       id: 'jobTitle',
       title: '職稱',
       dataField: 'jobTitle',
+      width: 120,
     },
     {
       id: 'region',
       title: '廠區/分公司/部門/團隊',
       dataField: 'region',
+      width: 80,
     },
     {
       id: 'availability',
       title: availabilityColumnTitle,
       dataField: 'availability',
+      width: 80,
     },
     {
       id: 'compliance',
       title: complianceColumnTitle,
       dataField: 'compliance',
-      width: 138,
+      width: 80,
       isVisible: Boolean(complianceColumnTitle),
     },
     {
@@ -45,13 +48,13 @@ export const getTableColumns = ({
       dataFormatter: (experience: string): React.ReactNode => (
         <span className={styles.experience}>{experience}</span>
       ),
-      width: '30%',
+      width: '40%',
     },
     {
       id: 'sharedAt',
       title: '分享日期',
       dataField: 'sharedAt',
-      width: 100,
+      width: 80,
     },
   ];
 
