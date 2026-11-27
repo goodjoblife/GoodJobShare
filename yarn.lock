@@ -15015,16 +15015,16 @@ write@1.0.3:
     mkdirp "^0.5.1"
 
 ws@^5.2.0:
-  version "5.2.3"
-  resolved "https://registry.npmjs.org/ws/-/ws-5.2.3.tgz"
-  integrity sha512-jZArVERrMsKUatIdnLzqvcfydI85dvd/Fp1u/VOpfdDWQ4c9qWXe+VIeAbQ5FrDwciAkr+lzofXLz3Kuf26AOA==
+  version "5.2.8"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-5.2.8.tgz#73983790af3b5a028b1325ef8313dab071146025"
+  integrity sha512-1uiA1nkfmkDNNEvLlBWhjbjVykN+sgSdYGzxkx/3FZAuoh9HP3SoCLD+nndVScRuaSOsNhtoZTnthunngKkhRQ==
   dependencies:
     async-limiter "~1.0.0"
 
 ws@^6.2.1:
-  version "6.2.2"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.2.tgz#dd5cdbd57a9979916097652d78f1cc5faea0c32e"
-  integrity sha512-zmhltoSR8u1cnDsD43TX59mzoMZsLKqUweyYBAIvTngR3shc0W6aOZylZmq/7hqyVxPdi+5Ud2QInblgyE72fw==
+  version "6.2.7"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.7.tgz#15fe8f287ab66a6969a457b9b90561bc34314877"
+  integrity sha512-Zf1UJBlTF9DUHCi6LG990YXwa3modcX6VsSQbZPzdp45f5aqSVmzMFJL+SliIpb4M719yQGYIw5D3CKYEmmB3g==
   dependencies:
     async-limiter "~1.0.0"
 
