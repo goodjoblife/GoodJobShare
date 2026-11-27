@@ -41,12 +41,15 @@
 }
 
 .item {
+  margin-top: 4px;
+  margin-bottom: 9px;
+}
+
+.itemCard {
   cursor: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 4px;
-  margin-bottom: 9px;
 
   .titleContainer {
     margin-top: 15px;

@@ -1,14 +1,18 @@
 import cn from 'classnames';
+import { LocationDescriptor } from 'history';
 import React from 'react';
+import { Link, LinkProps } from 'react-router-dom';
 
 type ButtonProps = {
   circleSize?: 'lg' | 'md';
   btnStyle?: string;
   disabled?: boolean;
   children?: React.ReactNode;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLElement>;
   style?: React.CSSProperties;
   className?: string;
+  /** 有 to 代表 href 用途，渲染成按鈕 */
+  to?: LocationDescriptor;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -19,6 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   style,
   className,
+  to,
 }) => {
   let cnCircleSize = '';
   let cnBtnStyle;
@@ -80,6 +85,20 @@ const Button: React.FC<ButtonProps> = ({
       break;
     default:
       cnBtnStyle = '';
+  }
+
+  if (to) {
+    return (
+      <Link
+        className={cn(cnCircleSize, cnBtnStyle, className)}
+        to={to}
+        onClick={onClick}
+        style={style}
+      >
+        {/* react-router-dom 的型別依賴另一份 @types/react，ReactNode 不互通，故轉型 */}
+        {children as LinkProps['children']}
+      </Link>
+    );
   }
 
   return (

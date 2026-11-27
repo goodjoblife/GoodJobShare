@@ -6,7 +6,7 @@ import styles from './private.module.css';
 import Scrollable from '../../../Scrollable';
 import commonStyles from '../../styles.module.css';
 
-const Wrapper = ({ warning, children }) => (
+const Wrapper = ({ warning, footnote, children }) => (
   <div
     className={cn(styles.container, { [commonStyles.hasWarning]: !!warning })}
   >
@@ -18,11 +18,13 @@ const Wrapper = ({ warning, children }) => (
       </div>
     </div>
     <div className={commonStyles.warning}>{warning}</div>
+    {footnote && <div className={styles.footnote}>{footnote}</div>}
   </div>
 );
 
 Wrapper.propTypes = {
   children: PropTypes.node,
+  footnote: PropTypes.node,
   warning: PropTypes.string,
 };
 

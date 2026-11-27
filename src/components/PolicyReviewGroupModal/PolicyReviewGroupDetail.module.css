@@ -1,0 +1,28 @@
+.group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sector {
+  margin-top: 8px;
+  color: #808080;
+}
+
+.sharedAt {
+  margin-top: 4px;
+  color: #808080;
+}
+
+.policyReviews {
+  margin-top: 16px;
+}
+
+.answer {
+  margin-top: 10px;
+}
+
+.review {
+  margin-top: 10px;
+  color: #333;
+}

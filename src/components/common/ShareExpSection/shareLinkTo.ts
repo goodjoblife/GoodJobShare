@@ -4,6 +4,7 @@ export const STATE_SHARE = {
   SALARY_WORK_TIME: 'salary-work-times',
   SALARY_WORK_TIME_NO_PROGRESS_BAR: 'salary-work-times-no-progress-bar',
   POLICY: 'policy',
+  POLICY_REVIEW_GROUP: 'policy-review-group',
 };
 
 // 表單的預填值。放在 history state 裡，由 questionCreators 的 defaultValue 讀取
@@ -15,6 +16,7 @@ export type SharePrefill = {
 export type ShareLinkTo = {
   state: {
     share: string;
+    policyReviewGroupId?: string;
   } & SharePrefill;
 };
 
@@ -51,6 +53,11 @@ export const generateShareWork = generateShareTypeForm(
 export const generateSharePolicyForm = generateShareTypeForm(
   STATE_SHARE.POLICY,
 );
+export const generatePolicyReviewGroupModal = (
+  policyReviewGroupId: string,
+): ShareLinkTo => ({
+  state: { share: STATE_SHARE.POLICY_REVIEW_GROUP, policyReviewGroupId },
+});
 
 // 不指定表單，交給 /share 的選單；預填值由 ShareExpSection 接力傳給使用者挑中的那張
 export const generateShareEntry = (

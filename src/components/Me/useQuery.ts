@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 
 import changeExperienceStatus from 'apis/changeExperienceStatus';
+import changePolicyReviewGroupStatus from 'apis/changePolicyReviewGroupStatus';
 import changeReplyStatus from 'apis/changeReplyStatus';
 import changeSalaryWorkTimeStatus from 'apis/changeSalaryWorkTimeStatus';
 import queryMyPublishes from 'apis/queryMyPublishes';
@@ -51,6 +52,26 @@ export const useToggleSalaryWorkTimeStatus = (): ((
         id: o.id,
         status:
           o.status === PublishStatus.PUBLISHED
+            ? PublishStatus.HIDDEN
+            : PublishStatus.PUBLISHED,
+        token,
+      });
+    },
+    [token],
+  );
+};
+
+export const useTogglePolicyReviewGroupStatus = (): ((o: {
+  groupId: string;
+  status: PublishStatus;
+}) => Promise<void>) => {
+  const token = useToken();
+  return useCallback(
+    ({ groupId, status }: { groupId: string; status: PublishStatus }) => {
+      return changePolicyReviewGroupStatus({
+        groupId,
+        status:
+          status === PublishStatus.PUBLISHED
             ? PublishStatus.HIDDEN
             : PublishStatus.PUBLISHED,
         token,

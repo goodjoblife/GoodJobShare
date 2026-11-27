@@ -38,6 +38,11 @@
   }
 }
 
+.footnote {
+  flex-shrink: 0;
+  margin-top: 12px;
+}
+
 .button {
   display: block;
   background-color: #f0f0f0;

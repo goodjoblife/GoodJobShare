@@ -3,19 +3,30 @@ import React from 'react';
 
 import styles from './NavigatorBlock.module.css';
 
+const preventInputBlur = (e: React.MouseEvent): void => e.preventDefault();
+
 export type NavigatorButtonProps = {
   children?: React.ReactNode;
   className?: string;
   disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onMouseDown?: React.MouseEventHandler<HTMLButtonElement>;
   style?: React.CSSProperties;
 };
 
 export const NavigatorButton = ({
   className,
+  onMouseDown,
   ...restProps
 }: NavigatorButtonProps): React.ReactElement => (
-  <button {...restProps} className={cn(className, styles.btn)} />
+  <button
+    {...restProps}
+    onMouseDown={(e): void => {
+      preventInputBlur(e);
+      if (onMouseDown) onMouseDown(e);
+    }}
+    className={cn(className, styles.btn)}
+  />
 );
 
 type NavigatorBlockProps = {

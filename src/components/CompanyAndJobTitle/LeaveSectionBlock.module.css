@@ -1,0 +1,12 @@
+@value below-tablet from "../common/variables.module.css";
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 21px;
+  margin-bottom: 22px;
+
+  @media (max-width: below-tablet) {
+    flex-direction: column;
+  }
+}

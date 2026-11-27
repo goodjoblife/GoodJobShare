@@ -1,9 +1,11 @@
 import createPolicyReviewGroupApi, {
+  CreatePolicyReviewGroupResult,
   PolicyReviewInput,
 } from 'apis/createPolicyReviewGroup';
-import { Dispatch, GetState, Thunk } from 'reducers';
+import { AppThunk } from 'reducers';
 import { tokenSelector } from 'selectors/authSelector';
 
+import { queryCompanyPolicyReviewStatistics } from './company';
 import { queryMyPublishIds } from './me';
 
 export const createPolicyReviewGroup = ({
@@ -16,10 +18,10 @@ export const createPolicyReviewGroup = ({
   jobTitle: string;
   sector?: string;
   policyReviews: PolicyReviewInput[];
-}): Thunk => async (
-  dispatch: Dispatch,
-  getState: GetState,
-): Promise<unknown> => {
+}): AppThunk<Promise<CreatePolicyReviewGroupResult>> => async (
+  dispatch,
+  getState,
+) => {
   const token = tokenSelector(getState());
 
   const result = await createPolicyReviewGroupApi({
@@ -31,6 +33,13 @@ export const createPolicyReviewGroup = ({
   });
 
   await dispatch(queryMyPublishIds());
+
+  // 送出後不再整頁 reload，所以要讓已快取的公司制度統計更新（背景進行，不等待）
+  dispatch(
+    queryCompanyPolicyReviewStatistics(result.policyReviewGroup.company.name, {
+      force: true,
+    }),
+  );
 
   return result;
 };

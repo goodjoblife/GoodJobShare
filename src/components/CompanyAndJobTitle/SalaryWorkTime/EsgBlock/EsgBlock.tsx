@@ -39,7 +39,7 @@ const stopPropagation = (e: React.MouseEvent): void => {
   e.stopPropagation();
 };
 
-const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
+export const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
   className,
   title,
   year,
@@ -58,7 +58,7 @@ const EsgItemBlock: React.FC<EsgItemBlockProps> = ({
   }, []);
 
   return (
-    <Card className={className} onClick={stopPropagation}>
+    <Card className={cn(styles.itemCard, className)} onClick={stopPropagation}>
       <div className={styles.badge}>{year} 年</div>
       <div className={styles.titleContainer}>
         <div className={styles.title}>{title}</div>

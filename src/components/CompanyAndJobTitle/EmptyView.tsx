@@ -7,6 +7,7 @@ import { P, Section } from 'common/base';
 import {
   generateShareEntry,
   generateShareInterviewTypeForm,
+  generateSharePolicyForm,
   generateShareTimeSalaryTypeForm,
   generateShareWork,
   SharePrefill,
@@ -49,6 +50,14 @@ const shareableByTabType: Record<TabType, Shareable> = {
     name: '職場資訊',
     generateTo: generateShareEntry,
   },
+  [TabType.FAMILY_CHILDCARE]: {
+    name: '公司制度',
+    generateTo: generateSharePolicyForm,
+  },
+  [TabType.GENDER_FRIENDLY]: {
+    name: '公司制度',
+    generateTo: generateSharePolicyForm,
+  },
 };
 
 // 公司頁的頁名是公司名，職稱頁的是職稱，各自預填到表單對應的欄位
@@ -89,7 +98,7 @@ const EmptyView: React.FC<EmptyViewProps> = ({ pageName, tabType }) => (
         尚未有「
         {pageName}
         」的
-        {formatTabName(tabType)}
+        {formatTabName(tabType)}資料
         <br />
         搜尋看看其他？
       </P>
