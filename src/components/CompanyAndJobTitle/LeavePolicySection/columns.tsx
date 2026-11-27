@@ -53,7 +53,7 @@ export const getTableColumns = ({
       id: 'sharedAt',
       title: '分享日期',
       dataField: 'sharedAt',
-      width: 100,
+      width: '100px',
     },
   ];
 
