@@ -4,6 +4,7 @@ import { HasPolicy } from 'apis/queryCompanyPolicyReviews';
 import { Heading, Link, Wrapper } from 'common/base';
 import Pagination from 'common/Pagination';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
+import { ColumnProps } from 'common/table/Column';
 import Table from 'common/table/Table';
 import BoxRenderer from 'components/common/StatusRenderer/BoxRenderer';
 import { generateTabURL, tabTypeTranslation } from 'constants/companyJobTitle';
@@ -12,6 +13,7 @@ import FetchBox from 'utils/fetchBox';
 import LeaveSectionBlock from '../LeaveSectionBlock';
 import { usePageContext } from '../PageContextProvider';
 import { LeaveBulletByLabel, LeaveSection } from '../policyTypes';
+import { getTableColumns } from './columns';
 import FilterToggleButton from './FilterToggleButton';
 import styles from './styles.module.css';
 
@@ -29,16 +31,6 @@ export type FilterOption = {
   value: HasPolicy;
   label: string;
 };
-
-type ColumnConfig = {
-  id: string;
-  title: string;
-  dataField: string;
-};
-
-// Table.Column is a JS component; cast to accept arbitrary props including dataField
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const TableColumn = Table.Column as any;
 
 type Props = {
   title: string;
@@ -80,26 +72,10 @@ const LeavePolicySection: React.FC<Props> = ({
   const tabName = tabTypeTranslation[tabType];
   const [createPageLinkTo, handleSectionRef, sectionY] = useCreatePageLinkTo();
 
-  const columns: ColumnConfig[] = [
-    { id: 'jobTitle', title: '職稱', dataField: 'jobTitle' },
-    { id: 'region', title: '廠區/分公司/部門/團隊', dataField: 'region' },
-    {
-      id: 'availability',
-      title: availabilityColumnTitle,
-      dataField: 'availability',
-    },
-    ...(complianceColumnTitle
-      ? [
-          {
-            id: 'compliance',
-            title: complianceColumnTitle,
-            dataField: 'compliance',
-          },
-        ]
-      : []),
-    { id: 'experience', title: '經驗分享', dataField: 'experience' },
-    { id: 'sharedAt', title: '分享日期', dataField: 'sharedAt' },
-  ];
+  const columns = getTableColumns({
+    availabilityColumnTitle,
+    complianceColumnTitle,
+  });
 
   return (
     <>
@@ -138,8 +114,8 @@ const LeavePolicySection: React.FC<Props> = ({
             <>
               <Table data={records} primaryKey="id">
                 {columns.map(
-                  ({ id, ...colProps }): React.ReactNode => (
-                    <TableColumn key={id} {...colProps} />
+                  ({ id, ...colProps }): React.ReactElement<ColumnProps> => (
+                    <Table.Column key={id} {...colProps} />
                   ),
                 )}
               </Table>

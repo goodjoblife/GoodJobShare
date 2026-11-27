@@ -87,3 +87,8 @@
   border-bottom: 2px solid main-black;
   transform: rotate(40deg);
 }
+
+.experience {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
