@@ -16,6 +16,7 @@ const options = [
   {
     label: '方案紀錄',
     to: '/me/subscriptions',
+    exact: true,
   },
 ];
 
